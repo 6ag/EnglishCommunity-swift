@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwipeBack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        JFProgressHUD.setupHUD()
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        window = UIWindow(frame: SCREEN_BOUNDS)
+        window?.rootViewController = JFTabBarController()
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
