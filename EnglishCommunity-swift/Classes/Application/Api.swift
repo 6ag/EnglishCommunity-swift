@@ -11,27 +11,23 @@ import Foundation
 /// 基URL
 let BASE_URL = "http://www.english.com/"
 
+/// 发送手机验证码
+let SEND_CODE = "api/auth/seedCode.api"
+
+/// 注册
+let REGISTER = "api/auth/register.api"
+
+/// 登录
+let LOGIN = "api/auth/login.api"
+
+/// 修改用户密码
+let MODIFY_USER_PASSWORD = "api/auth/modifyUserPassword.api"
+
 /// 获取所有分类信息
-let GET_CATEGORY = "api/category"
+let GET_ALL_CATEGORIES = "api/getAllCategories.api"
 
-/**
- 根据分类id查询视频信息列表
- 
- - parameter categoryID: 分类id
- 
- - returns: 接口
- */
-func GET_VIDEO_INFO_LIST(categoryID: Int) -> String {
-    return "api/category/\(categoryID)/video"
-}
+/// 根据分类id查询视频信息列表
+let GET_VIDEO_INFOS_LIST = "api/getVideoInfosList.api"
 
-/**
- 根据分类id查询视频信息列表
- 
- - parameter videoID: 视频id
- 
- - returns: 接口
- */
-func GET_VIDEO_LIST(videoID: Int) -> String {
-    return "api/video/\(videoID)"
-}
+/// 根据视频信息id查询视频播放列表
+let GET_VIDEO_LIST = "api/getVideoList.api"

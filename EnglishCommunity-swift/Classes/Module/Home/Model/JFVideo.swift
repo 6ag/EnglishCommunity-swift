@@ -35,11 +35,15 @@ class JFVideo: NSObject {
     /**
      加载指定视频信息的视频播放列表
      
-     - parameter videoInfo_id: 视频信息id
+     - parameter video_info_id: 视频信息id
      */
-    class func loadVideoList(videoInfo_id: Int, finished: (videos: [JFVideo]?) -> ()) {
+    class func loadVideoList(video_info_id: Int, finished: (videos: [JFVideo]?) -> ()) {
         
-        JFNetworkTools.shareNetworkTool.get(GET_VIDEO_LIST(videoInfo_id), parameters: nil) { (success, result, error) in
+        let parameters: [String : AnyObject] = [
+            "video_info_id" : video_info_id
+        ]
+        
+        JFNetworkTools.shareNetworkTool.get(GET_VIDEO_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
                 print(success, error)

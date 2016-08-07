@@ -56,12 +56,13 @@ class JFVideoInfo: NSObject {
     class func loadVideoInfoList(page: Int, count: Int, category_id: Int, recommend: Int, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
+            "category_id" : category_id,
             "page" : page,
             "count" : count,
             "recommend" : recommend
         ]
         
-        JFNetworkTools.shareNetworkTool.get(GET_VIDEO_INFO_LIST(category_id), parameters: parameters) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.get(GET_VIDEO_INFOS_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
                 print(success, error)
