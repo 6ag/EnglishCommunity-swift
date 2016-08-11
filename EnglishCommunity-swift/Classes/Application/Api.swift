@@ -31,3 +31,17 @@ let GET_VIDEO_INFOS_LIST = "api/getVideoInfosList.api"
 
 /// 根据视频信息id查询视频播放列表
 let GET_VIDEO_LIST = "api/getVideoList.api"
+
+/// 获取动弹列表
+let GET_TRENDS_LIST = "api/getTrendsList.api"
+
+/// 发布动弹
+let POST_TRENDS = "api/postTrends.api"
+
+/// 获取评论列表
+let GET_COMMENT_LIST = "api/getCommentList.api"
+
+/// 发布评论
+let POST_COMMENT = "api/postComment.api"
+
+

@@ -13,6 +13,12 @@ let SCREEN_BOUNDS = UIScreen.mainScreen().bounds
 let SCREEN_WIDTH = SCREEN_BOUNDS.width
 let SCREEN_HEIGHT = SCREEN_BOUNDS.height
 
+/// 全局边距
+let MARGIN: CGFloat = 12
+
+/// 全局圆角
+let CORNER_RADIUS: CGFloat = 5
+
 /// 视频列表的item的间距
 let LIST_ITEM_PADDING: CGFloat = 10
 
@@ -26,7 +32,7 @@ let LIST_ITEM_HEIGHT: CGFloat = (LIST_ITEM_WIDTH / 16 * 9 + 45)
 let TOP_CATEGORY_HEIGHT: CGFloat = 100
 
 /// 导航栏背景色 - 绿色
-let COLOR_NAV_BG = UIColor(red:0.56, green:0.89, blue:0.83, alpha:1.00)
+let COLOR_NAV_BG = UIColor(red:0.17, green:0.58, blue:0.87, alpha:1.00)
 
 /// 所有控制器背景颜色 - 偏白
 let COLOR_ALL_BG = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.00)
