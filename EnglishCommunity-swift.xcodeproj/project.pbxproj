@@ -47,7 +47,6 @@
 		B21501DA1D5366C2005E4670 /* JFTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501D81D5366C2005E4670 /* JFTabBarController.swift */; };
 		B21501DC1D5366CB005E4670 /* JFTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501DB1D5366CB005E4670 /* JFTabBar.swift */; };
 		B21501DE1D536800005E4670 /* JFHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501DD1D536800005E4670 /* JFHomeViewController.swift */; };
-		B21501E01D53681A005E4670 /* JFExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501DF1D53681A005E4670 /* JFExaminationViewController.swift */; };
 		B21501E21D536824005E4670 /* JFTrendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501E11D536824005E4670 /* JFTrendsViewController.swift */; };
 		B2190B081D4F85C4007FC0E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2190B071D4F85C4007FC0E9 /* Assets.xcassets */; };
 		B2190B0B1D4F85C4007FC0E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2190B091D4F85C4007FC0E9 /* LaunchScreen.storyboard */; };
@@ -55,6 +54,12 @@
 		B2224BF51D55A20C005CEAE4 /* JFDetailHeaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2224BF41D55A20C005CEAE4 /* JFDetailHeaderButton.swift */; };
 		B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2224BF61D55A4FD005CEAE4 /* JFDetailVideoCell.swift */; };
 		B2224BF91D55A4FD005CEAE4 /* JFDetailVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2224BF71D55A4FD005CEAE4 /* JFDetailVideoCell.xib */; };
+		B238B4071D5D762B00E4307A /* JFDataTestViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4051D5D762B00E4307A /* JFDataTestViewViewController.swift */; };
+		B238B4081D5D762B00E4307A /* JFDataTestViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B238B4061D5D762B00E4307A /* JFDataTestViewViewController.xib */; };
+		B238B40E1D5D991400E4307A /* JFGrammarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B40B1D5D991400E4307A /* JFGrammarViewController.swift */; };
+		B238B4121D5D9B2700E4307A /* JFGrammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4111D5D9B2700E4307A /* JFGrammar.swift */; };
+		B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */; };
+		B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */; };
 		B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6A1D54394000476D0E /* JFVideoCategory.swift */; };
 		B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6C1D54396700476D0E /* JFVideoInfo.swift */; };
 		B2512A6F1D5439C800476D0E /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6E1D5439C800476D0E /* Api.swift */; };
@@ -166,7 +171,6 @@
 		B21501D81D5366C2005E4670 /* JFTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTabBarController.swift; sourceTree = "<group>"; };
 		B21501DB1D5366CB005E4670 /* JFTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTabBar.swift; sourceTree = "<group>"; };
 		B21501DD1D536800005E4670 /* JFHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFHomeViewController.swift; sourceTree = "<group>"; };
-		B21501DF1D53681A005E4670 /* JFExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFExaminationViewController.swift; sourceTree = "<group>"; };
 		B21501E11D536824005E4670 /* JFTrendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTrendsViewController.swift; sourceTree = "<group>"; };
 		B2190AFD1D4F85C4007FC0E9 /* EnglishCommunity-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EnglishCommunity-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2190B071D4F85C4007FC0E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -176,6 +180,12 @@
 		B2224BF41D55A20C005CEAE4 /* JFDetailHeaderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDetailHeaderButton.swift; sourceTree = "<group>"; };
 		B2224BF61D55A4FD005CEAE4 /* JFDetailVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDetailVideoCell.swift; sourceTree = "<group>"; };
 		B2224BF71D55A4FD005CEAE4 /* JFDetailVideoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFDetailVideoCell.xib; sourceTree = "<group>"; };
+		B238B4051D5D762B00E4307A /* JFDataTestViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDataTestViewViewController.swift; sourceTree = "<group>"; };
+		B238B4061D5D762B00E4307A /* JFDataTestViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFDataTestViewViewController.xib; sourceTree = "<group>"; };
+		B238B40B1D5D991400E4307A /* JFGrammarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarViewController.swift; sourceTree = "<group>"; };
+		B238B4111D5D9B2700E4307A /* JFGrammar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammar.swift; sourceTree = "<group>"; };
+		B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarListCell.swift; sourceTree = "<group>"; };
+		B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarDetailViewController.swift; sourceTree = "<group>"; };
 		B2512A6A1D54394000476D0E /* JFVideoCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoCategory.swift; sourceTree = "<group>"; };
 		B2512A6C1D54396700476D0E /* JFVideoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoInfo.swift; sourceTree = "<group>"; };
 		B2512A6E1D5439C800476D0E /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
@@ -373,38 +383,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		B21501C11D5364DC005E4670 /* Examination */ = {
-			isa = PBXGroup;
-			children = (
-				B21501C21D5364DC005E4670 /* Controller */,
-				B21501C31D5364DC005E4670 /* Model */,
-				B21501C41D5364DC005E4670 /* View */,
-			);
-			path = Examination;
-			sourceTree = "<group>";
-		};
-		B21501C21D5364DC005E4670 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				B21501DF1D53681A005E4670 /* JFExaminationViewController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		B21501C31D5364DC005E4670 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		B21501C41D5364DC005E4670 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		B21501C51D5364E8005E4670 /* Trends */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +453,41 @@
 			path = "EnglishCommunity-swift";
 			sourceTree = "<group>";
 		};
+		B238B4091D5D991400E4307A /* Grammar */ = {
+			isa = PBXGroup;
+			children = (
+				B238B40A1D5D991400E4307A /* Controller */,
+				B238B40C1D5D991400E4307A /* Model */,
+				B238B40D1D5D991400E4307A /* View */,
+			);
+			path = Grammar;
+			sourceTree = "<group>";
+		};
+		B238B40A1D5D991400E4307A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B238B40B1D5D991400E4307A /* JFGrammarViewController.swift */,
+				B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B238B40C1D5D991400E4307A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B238B4111D5D9B2700E4307A /* JFGrammar.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B238B40D1D5D991400E4307A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B28D93D31D534AA700128D20 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,8 +536,8 @@
 			children = (
 				B28D93D81D534AA700128D20 /* Main */,
 				B21501BD1D5364C9005E4670 /* Home */,
-				B21501C11D5364DC005E4670 /* Examination */,
 				B21501C51D5364E8005E4670 /* Trends */,
+				B238B4091D5D991400E4307A /* Grammar */,
 				B2FC66891D5C15DF0032703D /* Profile */,
 			);
 			path = Module;
@@ -546,6 +559,8 @@
 				B21501D71D5366C2005E4670 /* JFNavigationController.swift */,
 				B21501D81D5366C2005E4670 /* JFTabBarController.swift */,
 				B21465091D5B4EC200C5EDFD /* JFTestViewController.swift */,
+				B238B4051D5D762B00E4307A /* JFDataTestViewViewController.swift */,
+				B238B4061D5D762B00E4307A /* JFDataTestViewViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -816,6 +831,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B28D93FB1D534AA700128D20 /* JFPlayer_fullscreen@2x.png in Resources */,
+				B238B4081D5D762B00E4307A /* JFDataTestViewViewController.xib in Resources */,
 				B2FC66DD1D5C2EA10032703D /* JFForgotViewController.xib in Resources */,
 				B28D93FD1D534AA700128D20 /* JFPlayer_mask_image@2x.png in Resources */,
 				B213E3EC1D54D40A00589058 /* JFCategoriesCellItem.xib in Resources */,
@@ -920,6 +936,8 @@
 				B21501E21D536824005E4670 /* JFTrendsViewController.swift in Sources */,
 				B2FC66E31D5C6A8C0032703D /* JFTrendsListCell.swift in Sources */,
 				B2FC66CB1D5C15DF0032703D /* JFProfileCellSwitchModel.swift in Sources */,
+				B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */,
+				B238B4071D5D762B00E4307A /* JFDataTestViewViewController.swift in Sources */,
 				B21436391D551BE300F201AF /* JFTopBarView.swift in Sources */,
 				B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */,
 				B20D13651D5CB79900B2DDCE /* JFComment.swift in Sources */,
@@ -929,14 +947,15 @@
 				B2FC66C31D5C15DF0032703D /* JFRegisterViewController.swift in Sources */,
 				B28D940C1D534AA700128D20 /* JFPlayerClearityChooseButton.swift in Sources */,
 				B2FC66D31D5C167E0032703D /* JFAccountModel.swift in Sources */,
+				B238B40E1D5D991400E4307A /* JFGrammarViewController.swift in Sources */,
 				B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */,
 				B2FC66B61D5C15DF0032703D /* JFForgotViewController.swift in Sources */,
+				B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */,
 				B21501D91D5366C2005E4670 /* JFNavigationController.swift in Sources */,
 				B213E3EE1D54D40A00589058 /* JFHomeCellItem.swift in Sources */,
 				B2FC66C11D5C15DF0032703D /* JFLoginViewController.swift in Sources */,
 				B213E3F01D54D40A00589058 /* JFHomeSectionHeaderView.swift in Sources */,
 				B2FC66C71D5C15DF0032703D /* JFProfileCellArrowModel.swift in Sources */,
-				B21501E01D53681A005E4670 /* JFExaminationViewController.swift in Sources */,
 				B21501D51D5366A4005E4670 /* JFNetworkTools.swift in Sources */,
 				B2FC66C91D5C15DF0032703D /* JFProfileCellLabelModel.swift in Sources */,
 				B213E3ED1D54D40A00589058 /* JFHomeCell.swift in Sources */,
@@ -960,6 +979,7 @@
 				B21501CE1D53668B005E4670 /* Config.swift in Sources */,
 				B20D13681D5CB7BF00B2DDCE /* JFCommentCell.swift in Sources */,
 				B2FC66B51D5C15DF0032703D /* JFCommentListTableViewController.swift in Sources */,
+				B238B4121D5D9B2700E4307A /* JFGrammar.swift in Sources */,
 				B213E3DE1D54BCF100589058 /* JFCategoryViewController.swift in Sources */,
 				B2FC66BC1D5C15DF0032703D /* JFBaseTableViewController.swift in Sources */,
 				B256441D1D5CC481002F0FE8 /* JFTrendsDetailHeaderView.swift in Sources */,

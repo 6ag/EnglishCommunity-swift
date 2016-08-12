@@ -8,6 +8,7 @@ target 'EnglishCommunity-swift' do
   # Pods for EnglishCommunity-swift
 pod 'SnapKit', '~> 0.21.0'
 pod 'YYWebImage', '1.0.3'
+pod 'YYText'
 pod 'SVProgressHUD', '~> 2.0.3'
 pod 'Alamofire', '~> 3.4.0'
 pod 'SwiftyJSON', '~> 2.3.2'

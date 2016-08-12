@@ -23,8 +23,8 @@ class JFTabBarController: UITabBarController {
         let essenceVc = JFHomeViewController()
         configChildViewController(essenceVc, title: "首页", imageName: "tabbar_video_icon_normal", selectedImageName: "tabbar_video_icon_selected")
         
-        let newVc = JFExaminationViewController()
-        configChildViewController(newVc, title: "题库", imageName: "tabbar_examination_icon_normal", selectedImageName: "tabbar_examination_icon_selected")
+        let newVc = JFGrammarViewController()
+        configChildViewController(newVc, title: "语法大全", imageName: "tabbar_grammar_icon_normal", selectedImageName: "tabbar_grammar_icon_selected")
         
         let friendTrendsVc = JFTrendsViewController()
         configChildViewController(friendTrendsVc, title: "动态", imageName: "tabbar_trends_icon_normal", selectedImageName: "tabbar_trends_icon_selected")

@@ -44,4 +44,8 @@ let GET_COMMENT_LIST = "api/getCommentList.api"
 /// 发布评论
 let POST_COMMENT = "api/postComment.api"
 
+/// 获取语法手册
+let GET_GRAMMAR_MANUAL = "api/getGramarManual.api"
+
+
 

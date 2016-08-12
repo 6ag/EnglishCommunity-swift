@@ -52,6 +52,7 @@ extension JFNetworkTools {
      */
     func post(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
         
+        print("\(BASE_URL)\(APIString)")
         Alamofire.request(.POST, "\(BASE_URL)\(APIString)", parameters: parameters).responseJSON { (response) -> Void in
             
             if let data = response.data {
