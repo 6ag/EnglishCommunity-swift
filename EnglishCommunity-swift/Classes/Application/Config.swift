@@ -19,6 +19,9 @@ let MARGIN: CGFloat = 12
 /// 全局圆角
 let CORNER_RADIUS: CGFloat = 5
 
+/// 全局遮罩透明度
+let GLOBAL_SHADOW_ALPHA: CGFloat = 0.5
+
 /// 视频列表的item的间距
 let LIST_ITEM_PADDING: CGFloat = 10
 
