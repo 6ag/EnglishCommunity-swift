@@ -99,6 +99,17 @@ class JFPhotoBrowserCell: UICollectionViewCell {
      */
     private func prepareUI() {
         
+        // 添加单击双击事件
+        let oneTap = UITapGestureRecognizer(target: self, action: #selector(didOneTappedPhotoDetailView(_:)))
+        addGestureRecognizer(oneTap)
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(didDoubleTappedPhotoDetailView(_:)))
+        doubleTap.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTap)
+        
+        // 如果监听到双击事件，单击事件则不触发
+        oneTap.requireGestureRecognizerToFail(doubleTap)
+        
         contentView.addSubview(scrollView)
         scrollView.addSubview(imageView)
         contentView.addSubview(indicator)
@@ -116,6 +127,22 @@ class JFPhotoBrowserCell: UICollectionViewCell {
             make.center.equalTo(contentView)
         }
         
+    }
+    
+    // MARK: - 各种手势
+    /**
+     图秀详情界面单击事件，隐藏除去图片外的所有UI
+     */
+    func didOneTappedPhotoDetailView(tap: UITapGestureRecognizer) {
+        cellDelegate?.didOneTappedPhotoDetailView(scrollView)
+    }
+    
+    /**
+     图秀详情界面双击事件，缩放
+     */
+    func didDoubleTappedPhotoDetailView(tap: UITapGestureRecognizer) {
+        let touchPoint = tap.locationInView(self)
+        cellDelegate?.didDoubleTappedPhotoDetailView(scrollView, touchPoint: touchPoint)
     }
     
     // MARK: - 懒加载
@@ -136,6 +163,12 @@ protocol JFPhotoBrowserCellDelegate: NSObjectProtocol {
     
     // 通知控制器关闭
     func cellDismiss()
+    
+    // 单击事件
+    func didOneTappedPhotoDetailView(scrollView: UIScrollView)
+    
+    // 双击事件
+    func didDoubleTappedPhotoDetailView(scrollView: UIScrollView, touchPoint: CGPoint)
 }
 
 // MARK: - UIScrollViewDelegate

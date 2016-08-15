@@ -76,9 +76,10 @@ class JFTweetsDetailViewController: UIViewController {
     
     /// 动弹内容区域
     lazy var headerView: JFTweetsDetailHeaderView = {
-        let trendsDetailView = JFTweetsDetailHeaderView()
-        trendsDetailView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: trendsDetailView.getRowHeight(self.tweets!))
-        return trendsDetailView
+        let tweetsDetailHeaderView = JFTweetsDetailHeaderView()
+        tweetsDetailHeaderView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: tweetsDetailHeaderView.getRowHeight(self.tweets!))
+        tweetsDetailHeaderView.tweetsDetailHeaderDelegate = self
+        return tweetsDetailHeaderView
     }()
 
     /// 内容区域
@@ -122,5 +123,17 @@ extension JFTweetsDetailViewController: UITableViewDataSource, UITableViewDelega
         
     }
     
+}
+
+// MARK: - JFTweetsDetailHeaderViewDelegate
+extension JFTweetsDetailViewController: JFTweetsDetailHeaderViewDelegate {
+    
+    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedAvatarButton button: UIButton) {
+        print(headerView.tweets?.author?.nickname)
+    }
+    
+    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedLikeButton button: UIButton) {
+        print(headerView.tweets?.id)
+    }
 }
 

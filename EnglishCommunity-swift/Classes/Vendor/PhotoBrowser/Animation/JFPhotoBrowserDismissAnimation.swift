@@ -11,7 +11,7 @@ import UIKit
 class JFPhotoBrowserDismissAnimation: NSObject, UIViewControllerAnimatedTransitioning {
 
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 0.25
+        return 0.3
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {

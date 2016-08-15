@@ -60,18 +60,11 @@ class JFPhotoBrowserViewController: UIViewController {
         view.addSubview(bkgView)
         view.addSubview(collectionView)
         view.addSubview(pageLabel)
-        view.addSubview(closeButton)
         view.addSubview(saveButton)
         
         pageLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(20)
-        }
-        
-        closeButton.snp_makeConstraints { (make) in
-            make.left.equalTo(8)
-            make.bottom.equalTo(-8)
-            make.size.equalTo(CGSize(width: 60, height: 35))
         }
         
         saveButton.snp_makeConstraints { (make) in
@@ -83,13 +76,6 @@ class JFPhotoBrowserViewController: UIViewController {
     }
     
     // MARK: - 按钮点击事件
-    /**
-     关闭
-     */
-    func close() {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     /**
      保存图片
      */
@@ -138,17 +124,6 @@ class JFPhotoBrowserViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
-    }()
-    
-    /// 关闭
-    private lazy var closeButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setBackgroundImage(UIImage(named: "health_button_orange_line"), forState: UIControlState.Normal)
-        button.setTitle("关闭", forState: UIControlState.Normal)
-        button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(12)
-        button.addTarget(self, action: #selector(JFPhotoBrowserViewController.close), forControlEvents: UIControlEvents.TouchUpInside)
-        return button
     }()
     
     /// 保存
@@ -202,6 +177,7 @@ extension JFPhotoBrowserViewController: UICollectionViewDataSource, UICollection
         selectedIndex = indexPath.item
         pageLabel.text = "\(selectedIndex + 1) / \(photoModels.count)"
     }
+    
 }
 
 // MARK: - JFPhotoBrowserCellDelegate
@@ -217,12 +193,33 @@ extension JFPhotoBrowserViewController: JFPhotoBrowserCellDelegate {
     }
     
     /**
-     关闭控制器
+     缩放到一定比例关闭控制器
      */
     func cellDismiss() {
         // 关闭是不需要动画
         dismissViewControllerAnimated(false, completion: nil)
     }
+    
+    /**
+     单击事件退出
+     */
+    func didOneTappedPhotoDetailView(scrollView: UIScrollView) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    /**
+     双击事件放大
+     */
+    func didDoubleTappedPhotoDetailView(scrollView: UIScrollView, touchPoint: CGPoint) -> Void {
+        if scrollView.zoomScale <= 1.0 {
+            let scaleX = touchPoint.x + scrollView.contentOffset.x
+            let scaleY = touchPoint.y + scrollView.contentOffset.y
+            scrollView.zoomToRect(CGRect(x: scaleX, y: scaleY, width: 10, height: 10), animated: true)
+        } else {
+            scrollView.setZoomScale(1.0, animated: true)
+        }
+    }
+    
 }
 
 // MARK: - UIViewControllerTransitioningDelegate

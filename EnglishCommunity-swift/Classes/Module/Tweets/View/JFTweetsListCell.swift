@@ -11,20 +11,7 @@ import YYWebImage
 
 protocol JFTweetsListCellDelegate: NSObjectProtocol {
     
-    /**
-     点击了头像
-     
-     - parameter cell:   动弹列表cell
-     - parameter button: 被点击的按钮
-     */
     func tweetsListCell(cell: JFTweetsListCell, didTappedAvatarButton button: UIButton)
-    
-    /**
-     点击了赞
-     
-     - parameter cell:   动弹列表cell
-     - parameter button: 被点击的按钮
-     */
     func tweetsListCell(cell: JFTweetsListCell, didTappedLikeButton button: UIButton)
 }
 

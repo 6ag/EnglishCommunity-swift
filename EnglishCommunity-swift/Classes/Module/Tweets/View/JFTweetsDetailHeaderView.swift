@@ -9,6 +9,12 @@
 import UIKit
 import YYWebImage
 
+protocol JFTweetsDetailHeaderViewDelegate: NSObjectProtocol {
+    
+    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedAvatarButton button: UIButton)
+    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedLikeButton button: UIButton)
+}
+
 class JFTweetsDetailHeaderView: UIView {
     
     // MARK: - 初始化cell
@@ -22,6 +28,8 @@ class JFTweetsDetailHeaderView: UIView {
     }
     
     let grayColor = UIColor.grayColor()
+    
+    var tweetsDetailHeaderDelegate: JFTweetsDetailHeaderViewDelegate?
     
     /// 动弹模型
     var tweets: JFTweets? {
@@ -124,12 +132,28 @@ class JFTweetsDetailHeaderView: UIView {
         return CGRectGetMaxY(publishTimeLabel.frame) + 15
     }
     
+    // MARK: - 点击事件
+    /**
+     点击头像按钮
+     */
+    @objc private func didTappedAvatarButton(button: UIButton) {
+        tweetsDetailHeaderDelegate?.tweetsDetailHeaderView(self, didTappedAvatarButton: button)
+    }
+    
+    /**
+     点击赞按钮
+     */
+    @objc private func didTappedLikeButton(button: UIButton) {
+        tweetsDetailHeaderDelegate?.tweetsDetailHeaderView(self, didTappedLikeButton: button)
+    }
+    
     // MARK: - 懒加载
     /// 头像
     private lazy var avatarButton: UIButton = {
         let button = UIButton(type: .Custom)
         button.layer.cornerRadius = 20
         button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), forControlEvents: .TouchUpInside)
         return button
     }()
     
@@ -175,6 +199,7 @@ class JFTweetsDetailHeaderView: UIView {
         button.titleLabel?.font = UIFont.systemFontOfSize(12)
         button.setTitleColor(self.grayColor, forState: .Normal)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        button.addTarget(self, action: #selector(didTappedLikeButton(_:)), forControlEvents: .TouchUpInside)
         return button
     }()
     

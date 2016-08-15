@@ -36,22 +36,8 @@ class JFTweetsViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFTweetsViewController.selectedPicture(_:)), name: JFStatusPictureViewCellSelectedPictureNotification, object: nil)
     }
     
-    /// 配图视图 cell 点击的 处理方法
-    func selectedPicture(notification: NSNotification) {
-        guard let models = notification.userInfo?[JFStatusPictureViewCellSelectedPictureModelKey] as? [JFPhotoBrowserModel] else {
-            print("models有问题")
-            return
-        }
-        
-        guard let index = notification.userInfo?[JFStatusPictureViewCellSelectedPictureIndexKey] as? Int else {
-            print("index有问题")
-            return
-        }
-        
-        let photoBrowserVC = JFPhotoBrowserViewController(models: models, selectedIndex: index)
-        photoBrowserVC.transitioningDelegate = photoBrowserVC
-        photoBrowserVC.modalPresentationStyle = UIModalPresentationStyle.Custom
-        presentViewController(photoBrowserVC, animated: true, completion: nil)
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: JFStatusPictureViewCellSelectedPictureNotification, object: nil)
     }
     
     /**
@@ -167,7 +153,7 @@ extension JFTweetsViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-// MARK: - JFTweetsListCellDelegate
+// MARK: - JFTweetsListCellDelegate - JFStatusPictureViewCellSelectedPictureNotification
 extension JFTweetsViewController: JFTweetsListCellDelegate {
     
     /**
@@ -188,5 +174,22 @@ extension JFTweetsViewController: JFTweetsListCellDelegate {
      */
     func tweetsListCell(cell: JFTweetsListCell, didTappedLikeButton button: UIButton) {
         print(cell.tweets?.id)
+    }
+    
+    /**
+     选择了动弹配图
+     */
+    func selectedPicture(notification: NSNotification) {
+        guard let models = notification.userInfo?[JFStatusPictureViewCellSelectedPictureModelKey] as? [JFPhotoBrowserModel] else {
+            return
+        }
+        guard let index = notification.userInfo?[JFStatusPictureViewCellSelectedPictureIndexKey] as? Int else {
+            return
+        }
+        
+        let photoBrowserVC = JFPhotoBrowserViewController(models: models, selectedIndex: index)
+        photoBrowserVC.transitioningDelegate = photoBrowserVC
+        photoBrowserVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+        presentViewController(photoBrowserVC, animated: true, completion: nil)
     }
 }
