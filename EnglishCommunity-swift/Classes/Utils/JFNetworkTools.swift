@@ -30,7 +30,7 @@ extension JFNetworkTools {
      */
     func get(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
         
-        print("\(BASE_URL)\(APIString)", parameters)
+        print("\(BASE_URL)\(APIString)")
         Alamofire.request(.GET, "\(BASE_URL)\(APIString)", parameters: parameters).responseJSON { (response) -> Void in
             
             if let data = response.data {
@@ -62,5 +62,46 @@ extension JFNetworkTools {
                 finished(success: false, result: nil, error: response.result.error)
             }
         }
+    }
+    
+    /**
+     可以带其他参数的图片上传方式
+     
+     - parameter APIString:  urlString
+     - parameter image:      要上传的image对象
+     - parameter parameters: 参数
+     - parameter finished:   完成回调
+     */
+    func uploadPhoto(APIString: String, image: UIImage, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+        
+        print("\(BASE_URL)\(APIString)")
+        Alamofire.upload(.POST, "\(BASE_URL)\(APIString)", multipartFormData: { multipartFormData in
+            
+            // 如果有参数则一起加入
+            if let parameters = parameters {
+                for (key, value) in parameters {
+                    multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key)
+                }
+            }
+            
+            let imageData = UIImageJPEGRepresentation(image, 1)!
+            multipartFormData.appendBodyPart(data: imageData, name: "photo")
+            
+            },encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .Success(let upload, _, _):
+                    upload.responseJSON { response in
+                        if let data = response.data {
+                            let json = JSON(data: data)
+                            finished(success: true, result: json, error: nil)
+                        } else {
+                            finished(success: false, result: nil, error: response.result.error)
+                        }
+                    }
+                case .Failure(_):
+                    finished(success: false, result: nil, error: nil)
+                }
+        })
+        
     }
 }

@@ -1,5 +1,5 @@
 //
-//  JFTrendsDetailViewController.swift
+//  JFTweetsDetailViewController.swift
 //  EnglishCommunity-swift
 //
 //  Created by zhoujianfeng on 16/8/11.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JFTrendsDetailViewController: UIViewController {
+class JFTweetsDetailViewController: UIViewController {
     
     /// 当前页码
     var page: Int = 1
@@ -20,14 +20,14 @@ class JFTrendsDetailViewController: UIViewController {
     var comments = [JFComment]()
     
     /// 动弹模型
-    var trends: JFTrends?
+    var tweets: JFTweets?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         prepareUI()
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
-        updateData("trends", page: page, method: 0, source_id: trends!.id)
+        updateData("tweet", page: page, method: 0, source_id: tweets!.id)
     }
     
     /**
@@ -46,7 +46,7 @@ class JFTrendsDetailViewController: UIViewController {
      */
     @objc private func pullUpMoreData() {
         page += 1
-        updateData("trends", page: page, method: 1, source_id: trends!.id)
+        updateData("tweet", page: page, method: 1, source_id: tweets!.id)
     }
     
     /**
@@ -73,12 +73,11 @@ class JFTrendsDetailViewController: UIViewController {
         }
         
     }
-
     
     /// 动弹内容区域
-    lazy var headerView: JFTrendsDetailHeaderView = {
-        let trendsDetailView = NSBundle.mainBundle().loadNibNamed("JFTrendsDetailHeaderView", owner: nil, options: nil).last as! JFTrendsDetailHeaderView
-        trendsDetailView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: trendsDetailView.getRowHeight(self.trends!))
+    lazy var headerView: JFTweetsDetailHeaderView = {
+        let trendsDetailView = JFTweetsDetailHeaderView()
+        trendsDetailView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: trendsDetailView.getRowHeight(self.tweets!))
         return trendsDetailView
     }()
 
@@ -95,7 +94,7 @@ class JFTrendsDetailViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
-extension JFTrendsDetailViewController: UITableViewDataSource, UITableViewDelegate {
+extension JFTweetsDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
@@ -120,7 +119,6 @@ extension JFTrendsDetailViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
         
     }
     

@@ -35,22 +35,22 @@ class JFAccountModel: NSObject, NSCoding {
     var sex: Int = 0
     
     /// qq登录
-    var qq_binding: Int = 0
+    var qqBinding: Int = 0
     
     /// 微信登录
-    var weixin_binding: Int = 0
+    var weixinBinding: Int = 0
     
     /// 微博登录
-    var weibo_binding: Int = 0
+    var weiboBinding: Int = 0
     
     /// 邮箱登录
-    var email_binding: Int = 0
+    var emailBinding: Int = 0
     
     /// 手机登录
-    var mobile_binding: Int = 0
+    var mobileBinding: Int = 0
     
     /// 注册时间
-    var register_time: String?
+    var registerTime: String?
     
     // KVC 字典转模型
     init(dict: [String: AnyObject]) {
@@ -119,12 +119,12 @@ class JFAccountModel: NSObject, NSCoding {
         aCoder.encodeObject(mobile, forKey: "mobile_key")
         aCoder.encodeObject(email, forKey: "email_key")
         aCoder.encodeInt(Int32(sex), forKey: "sex_key")
-        aCoder.encodeInt(Int32(qq_binding), forKey: "qq_binding_key")
-        aCoder.encodeInt(Int32(weixin_binding), forKey: "weixin_binding_key")
-        aCoder.encodeInt(Int32(weibo_binding), forKey: "weibo_binding_key")
-        aCoder.encodeInt(Int32(email_binding), forKey: "email_binding_key")
-        aCoder.encodeInt(Int32(mobile_binding), forKey: "mobile_binding_key")
-        aCoder.encodeObject(register_time, forKey: "register_time_key")
+        aCoder.encodeInt(Int32(qqBinding), forKey: "qq_binding_key")
+        aCoder.encodeInt(Int32(weixinBinding), forKey: "weixin_binding_key")
+        aCoder.encodeInt(Int32(weiboBinding), forKey: "weibo_binding_key")
+        aCoder.encodeInt(Int32(emailBinding), forKey: "email_binding_key")
+        aCoder.encodeInt(Int32(mobileBinding), forKey: "mobile_binding_key")
+        aCoder.encodeObject(registerTime, forKey: "register_time_key")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -136,12 +136,12 @@ class JFAccountModel: NSObject, NSCoding {
         mobile = aDecoder.decodeObjectForKey("mobile_key") as? String
         email = aDecoder.decodeObjectForKey("email_key") as? String
         sex = Int(aDecoder.decodeIntForKey("sex_key"))
-        qq_binding = Int(aDecoder.decodeIntForKey("qq_binding_key"))
-        weixin_binding = Int(aDecoder.decodeIntForKey("weixin_binding_key"))
-        weibo_binding = Int(aDecoder.decodeIntForKey("weibo_binding_key"))
-        email_binding = Int(aDecoder.decodeIntForKey("email_binding_key"))
-        mobile_binding = Int(aDecoder.decodeIntForKey("mobile_binding_key"))
-        register_time = aDecoder.decodeObjectForKey("register_time_key") as? String
+        qqBinding = Int(aDecoder.decodeIntForKey("qq_binding_key"))
+        weixinBinding = Int(aDecoder.decodeIntForKey("weixin_binding_key"))
+        weiboBinding = Int(aDecoder.decodeIntForKey("weibo_binding_key"))
+        emailBinding = Int(aDecoder.decodeIntForKey("email_binding_key"))
+        mobileBinding = Int(aDecoder.decodeIntForKey("mobile_binding_key"))
+        registerTime = aDecoder.decodeObjectForKey("register_time_key") as? String
     }
 }
 
@@ -204,7 +204,7 @@ extension JFAccountModel {
                 return
             }
             
-            let account = JFAccountModel(dict: result!["data"].dictionaryObject!)
+            let account = JFAccountModel(dict: result!["result"].dictionaryObject!)
             account.updateUserInfo()
             finished(success: true, tip: "登录成功")
         }

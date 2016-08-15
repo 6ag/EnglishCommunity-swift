@@ -19,8 +19,8 @@ class JFHomeCellItem: UICollectionViewCell {
     
     var videoInfo: JFVideoInfo? {
         didSet {
-            photoImageView.yy_setImageWithURL(NSURL(string: "\(BASE_URL)\(videoInfo!.photo!)"), options: YYWebImageOptions.AllowBackgroundTask)
-            teacherLabel.text = videoInfo!.teacher!
+            photoImageView.yy_setImageWithURL(NSURL(string: videoInfo!.cover!), options: YYWebImageOptions.AllowBackgroundTask)
+            teacherLabel.text = videoInfo!.teacherName!
             viewLabel.text = "\(videoInfo!.view)"
             titleLabel.text = videoInfo!.title!
         }

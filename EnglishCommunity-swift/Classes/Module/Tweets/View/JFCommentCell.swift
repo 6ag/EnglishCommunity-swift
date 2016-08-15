@@ -18,16 +18,19 @@ class JFCommentCell: UITableViewCell {
                 return
             }
             
-            // 是回复评论
-            if comment.pid != 0 {
-                contentLabel.text = "回复 \(comment.puser_nickname!) : \(comment.content!)"
-            } else {
-                contentLabel.text = comment.content
+            guard let author = comment.author else {
+                return
             }
             
-            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: "\(BASE_URL)\(comment.user_avatar!)"), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
-            nicknameLabel.text = comment.user_nickname
-            publishTimeLabel.text = comment.publishTime
+            contentLabel.text = comment.content
+            
+            if let extendsAuthor = comment.extendsAuthor {
+                contentLabel.text = "回复 \(extendsAuthor.nickname!) : \(comment.content!)"
+            }
+            
+            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: author.avatar!), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
+            nicknameLabel.text = author.nickname!
+            publishTimeLabel.text = comment.publishTime?.timeStampToDate().dateToDescription()
         }
     }
     

@@ -16,26 +16,20 @@ class JFVideoInfo: NSObject {
     /// 视频标题
     var title: String?
     
-    /// 视频简介
-    var intro: String?
-    
     /// 视频封面图
-    var photo: String?
+    var cover: String?
     
     /// 视频浏览量
     var view: Int = 0
     
-    /// 视频所属分类的id
-    var category_id: Int = 0
-    
     /// 视频讲师
-    var teacher: String?
-    
-    /// 视频是否被推荐 1：推荐 0：没推荐
-    var recommend: Int = 0
+    var teacherName: String?
     
     /// 视频类型 youku tudou 根据类型可以做一些视频解析的操作
-    var type: String?
+    var videoType: String?
+    
+    /// 视频是否被推荐 1：推荐 0：没推荐
+    var recommended: Int = 0
     
     init(dict: [String : AnyObject]) {
         super.init()
@@ -70,7 +64,7 @@ class JFVideoInfo: NSObject {
                 return
             }
             
-            let data = result["data"]["data"].arrayObject as! [[String : AnyObject]]
+            let data = result["result"]["data"].arrayObject as! [[String : AnyObject]]
             var videoInfos = [JFVideoInfo]()
             
             for dict in data {

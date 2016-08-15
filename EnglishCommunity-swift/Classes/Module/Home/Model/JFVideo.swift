@@ -17,10 +17,10 @@ class JFVideo: NSObject {
     var title: String?
     
     /// 视频id
-    var video_info_id: Int = 0
+    var videoInfoId: Int = 0
     
     /// 视频小节的地址
-    var video_url: String?
+    var videoUrl: String?
     
     /// 视频序号 - 第几小节
     var order: Int = 0
@@ -51,7 +51,7 @@ class JFVideo: NSObject {
                 return
             }
             
-            let data = result["data"].arrayObject as! [[String : AnyObject]]
+            let data = result["result"].arrayObject as! [[String : AnyObject]]
             var videos = [JFVideo]()
             
             for dict in data {

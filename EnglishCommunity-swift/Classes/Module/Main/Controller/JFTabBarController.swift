@@ -26,7 +26,7 @@ class JFTabBarController: UITabBarController {
         let newVc = JFGrammarViewController()
         configChildViewController(newVc, title: "语法大全", imageName: "tabbar_grammar_icon_normal", selectedImageName: "tabbar_grammar_icon_selected")
         
-        let friendTrendsVc = JFTrendsViewController()
+        let friendTrendsVc = JFTweetsViewController()
         configChildViewController(friendTrendsVc, title: "动态", imageName: "tabbar_trends_icon_normal", selectedImageName: "tabbar_trends_icon_selected")
         
         let profileVc = JFProfileViewController()

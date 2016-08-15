@@ -53,7 +53,7 @@ class JFHomeViewController: UIViewController {
         var titles = [String]()
         
         for model in topVideoInfos {
-            images.append("\(BASE_URL)\(model.photo!)")
+            images.append(model.cover!)
             titles.append(model.title!)
         }
         
@@ -93,7 +93,7 @@ class JFHomeViewController: UIViewController {
      */
     private func loadCategoriesData() {
         
-        JFVideoCategory.loadVideoCategories(1, count: 4) { (videoCategories) in
+        JFVideoCategory.loadAllCategories(1, count: 4) { (videoCategories) in
             
             self.tableView.mj_header.endRefreshing()
             

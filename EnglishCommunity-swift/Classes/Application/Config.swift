@@ -14,7 +14,7 @@ let SCREEN_WIDTH = SCREEN_BOUNDS.width
 let SCREEN_HEIGHT = SCREEN_BOUNDS.height
 
 /// 全局边距
-let MARGIN: CGFloat = 12
+let MARGIN: CGFloat = 15
 
 /// 全局圆角
 let CORNER_RADIUS: CGFloat = 5
@@ -50,7 +50,7 @@ let COLOR_NAV_ITEM_HIGH = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.00)
  RGB颜色构造
  */
 func RGB(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
-    return UIColor(red: r / 255.0, green: g/255.0, blue: b/255.0, alpha: 1.0)
+    return UIColor(red: r / 255.0, green: g/255.0, blue: b/255.0, alpha: alpha)
 }
 
 /**

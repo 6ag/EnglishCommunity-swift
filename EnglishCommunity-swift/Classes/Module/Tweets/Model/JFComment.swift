@@ -8,7 +8,52 @@
 
 import UIKit
 
+/// 评论回复人
+class JFCommentAuthor: NSObject {
+    /// 用户id
+    var id: Int = 0
+    
+    /// 昵称
+    var nickname: String?
+    
+    /// 头像
+    var avatar: String?
+    
+    init(dict: [String : AnyObject]) {
+        super.init()
+        setValuesForKeysWithDictionary(dict)
+    }
+    
+    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+}
+
+/// 评论被回复的人
+class JFCommentExtendsAuthor: NSObject {
+    /// 用户id
+    var id: Int = 0
+    
+    /// 昵称
+    var nickname: String?
+    
+    /// 头像
+    var avatar: String?
+    
+    init(dict: [String : AnyObject]) {
+        super.init()
+        setValuesForKeysWithDictionary(dict)
+    }
+    
+    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+}
+
+/// 评论模型
 class JFComment: NSObject {
+    
+    /// 评论回复人
+    var author: JFCommentAuthor?
+    
+    /// 评论被回复人
+    var extendsAuthor: JFCommentExtendsAuthor?
     
     /// 评论id
     var id = 0
@@ -17,39 +62,13 @@ class JFComment: NSObject {
     var type: String?
     
     /// 评论资源
-    var source_id = 0
-    
-    /// 评论用户id
-    var user_id = 0
-    
-    /// 评论用户头像
-    var user_nickname: String?
-    
-    /// 评论用户头像
-    var user_avatar: String?
-    
-    /// 被回复用户id
-    var puser_id = 0
-    
-    /// 被回复用户头像
-    var puser_nickname: String?
-    
-    /// 被回复用户头像
-    var puser_avatar: String?
+    var sourceId = 0
     
     /// 评论内容
     var content: String?
     
-    /// 回复的评论id
-    var pid = 0
-    
     /// 发布时间
-    var created_at: String?
-    
-    /// 发布时间
-    var publishTime: String {
-        return created_at!.stringToTimeStamp().timeStampToDate().dateToDescription()
-    }
+    var publishTime: String?
 
     /// 缓存高度
     var rowHeight: CGFloat = 0
@@ -60,6 +79,19 @@ class JFComment: NSObject {
     }
     
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    
+    override func setValue(value: AnyObject?, forKey key: String) {
+        
+        if key == "author" {
+            author = JFCommentAuthor(dict: value as! [String : AnyObject])
+            return
+        } else if key == "extendsAuthor" {
+            extendsAuthor = JFCommentExtendsAuthor(dict: value as! [String : AnyObject])
+            return
+        }
+        
+        return super.setValue(value, forKey: key)
+    }
     
     /**
      加载评论列表
@@ -86,7 +118,7 @@ class JFComment: NSObject {
                 return
             }
             
-            let data = result["data"]["data"].arrayObject as! [[String : AnyObject]]
+            let data = result["result"]["data"].arrayObject as! [[String : AnyObject]]
             var comments = [JFComment]()
             
             for dict in data {

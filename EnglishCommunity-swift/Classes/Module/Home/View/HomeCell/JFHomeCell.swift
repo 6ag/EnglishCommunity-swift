@@ -32,7 +32,7 @@ class JFHomeCell: UITableViewCell {
     /// 所以分类模型数组
     var videoCategory: JFVideoCategory? {
         didSet {
-            self.collectionView.reloadData()
+            collectionView.reloadData()
         }
     }
     

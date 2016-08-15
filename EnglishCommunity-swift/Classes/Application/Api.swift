@@ -33,10 +33,13 @@ let GET_VIDEO_INFOS_LIST = "api/getVideoInfosList.api"
 let GET_VIDEO_LIST = "api/getVideoList.api"
 
 /// 获取动弹列表
-let GET_TRENDS_LIST = "api/getTrendsList.api"
+let GET_TWEETS_LIST = "api/getTweetsList.api"
+
+/// 获取动弹列表
+let GET_TWEETS_DETAIL = "api/getTweetsDetail.api"
 
 /// 发布动弹
-let POST_TRENDS = "api/postTrends.api"
+let POST_TWEETS = "api/postTweets.api"
 
 /// 获取评论列表
 let GET_COMMENT_LIST = "api/getCommentList.api"

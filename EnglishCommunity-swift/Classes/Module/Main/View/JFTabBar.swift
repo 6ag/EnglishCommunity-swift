@@ -37,8 +37,6 @@ class JFTabBar: UITabBar {
     @objc private func didTappedAddButton(button: UIButton) {
         print("+ 点击")
         
-        let centerView = JFCenterView()
-        centerView.show()
     }
     
     override func layoutSubviews() {

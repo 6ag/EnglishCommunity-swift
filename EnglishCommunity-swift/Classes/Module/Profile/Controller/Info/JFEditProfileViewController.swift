@@ -19,7 +19,7 @@ class JFEditProfileViewController: JFBaseTableViewController {
         let group1CellModel2 = JFProfileCellArrowModel(title: "修改安全信息", destinationVc: JFModifySafeTableViewController.classForCoder())
         let group1 = JFProfileCellGroupModel(cells: [group1CellModel1, group1CellModel2])
         
-        let group2CellModel1 = JFProfileCellLabelModel(title: "注册时间", text: JFAccountModel.shareAccount()!.register_time!)
+        let group2CellModel1 = JFProfileCellLabelModel(title: "注册时间", text: JFAccountModel.shareAccount()!.registerTime!.timeStampToString())
         let group2CellModel2 = JFProfileCellLabelModel(title: "我的积分", text: "")
         let group2CellModel3 = JFProfileCellLabelModel(title: "我的等级", text: "")
         let group2 = JFProfileCellGroupModel(cells: [group2CellModel1, group2CellModel2, group2CellModel3])

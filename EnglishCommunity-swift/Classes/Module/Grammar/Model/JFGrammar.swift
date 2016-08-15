@@ -44,7 +44,7 @@ class JFGrammar: NSObject {
                 return
             }
             
-            let data = result["data"]["data"].arrayObject as! [[String : AnyObject]]
+            let data = result["result"]["data"].arrayObject as! [[String : AnyObject]]
             var grammars = [JFGrammar]()
             
             for dict in data {
