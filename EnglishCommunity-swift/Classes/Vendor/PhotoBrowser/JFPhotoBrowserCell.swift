@@ -13,15 +13,12 @@ import SnapKit
 class JFPhotoBrowserCell: UICollectionViewCell {
     
     // MARK: - 属性
-    /// 代理
     weak var cellDelegate: JFPhotoBrowserCellDelegate?
     
-    /// 要显示图片的url地址
+    /// 图片模型
     var photoModel: JFPhotoBrowserModel? {
         didSet {
-            // 下载图片
             guard let imageURL = photoModel?.url else {
-                print("imageURL 为空")
                 return
             }
             
@@ -29,19 +26,15 @@ class JFPhotoBrowserCell: UICollectionViewCell {
             imageView.image = nil
             resetProperties()
             
-            // 显示下载指示器
             indicator.startAnimating()
-            
             imageView.yy_setImageWithURL(imageURL, placeholder: nil, options: YYWebImageOptions.AllowBackgroundTask) { (image, url, _, _, error) in
                 self.indicator.stopAnimating()
-                if error != nil {
-                    print("下载大图片出错:error: \(error), url:\(imageURL)")
+                guard let _ = error else {
                     return
                 }
                 
-                // 刚缓存的图片会有一点处理时间保存到本地
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-                    self.layoutImageView(image!)
+                if let image = image {
+                    self.layoutImageView(image)
                 }
                 
             }

@@ -98,6 +98,14 @@
 		B2B770FC1D61689E0042AA5E /* JFPhotoBrowserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F61D61689E0042AA5E /* JFPhotoBrowserCell.swift */; };
 		B2B770FD1D61689E0042AA5E /* JFPhotoBrowserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F71D61689E0042AA5E /* JFPhotoBrowserModel.swift */; };
 		B2B770FE1D61689E0042AA5E /* JFPhotoBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F81D61689E0042AA5E /* JFPhotoBrowserViewController.swift */; };
+		B2B771041D619FB50042AA5E /* JFPlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B771031D619FB50042AA5E /* JFPlaceholderTextView.swift */; };
+		B2B771081D61A0670042AA5E /* JFPhotoSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B771061D61A0670042AA5E /* JFPhotoSelectorViewController.swift */; };
+		B2B771091D61A0670042AA5E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B771071D61A0670042AA5E /* UIImage+Extension.swift */; };
+		B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710B1D61A0790042AA5E /* JFEmoticon.swift */; };
+		B2B771111D61A0790042AA5E /* JFEmoticonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710C1D61A0790042AA5E /* JFEmoticonViewController.swift */; };
+		B2B771121D61A0790042AA5E /* JFTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710D1D61A0790042AA5E /* JFTextAttachment.swift */; };
+		B2B771131D61A0790042AA5E /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2B7710E1D61A0790042AA5E /* Emoticons.bundle */; };
+		B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */; };
 		B2FC66B41D5C15DF0032703D /* JFCollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC668C1D5C15DF0032703D /* JFCollectionTableViewController.swift */; };
 		B2FC66B51D5C15DF0032703D /* JFCommentListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC668E1D5C15DF0032703D /* JFCommentListTableViewController.swift */; };
 		B2FC66B61D5C15DF0032703D /* JFForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC66901D5C15DF0032703D /* JFForgotViewController.swift */; };
@@ -228,6 +236,14 @@
 		B2B770F61D61689E0042AA5E /* JFPhotoBrowserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserCell.swift; sourceTree = "<group>"; };
 		B2B770F71D61689E0042AA5E /* JFPhotoBrowserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserModel.swift; sourceTree = "<group>"; };
 		B2B770F81D61689E0042AA5E /* JFPhotoBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserViewController.swift; sourceTree = "<group>"; };
+		B2B771031D619FB50042AA5E /* JFPlaceholderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPlaceholderTextView.swift; sourceTree = "<group>"; };
+		B2B771061D61A0670042AA5E /* JFPhotoSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoSelectorViewController.swift; sourceTree = "<group>"; };
+		B2B771071D61A0670042AA5E /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		B2B7710B1D61A0790042AA5E /* JFEmoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFEmoticon.swift; sourceTree = "<group>"; };
+		B2B7710C1D61A0790042AA5E /* JFEmoticonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFEmoticonViewController.swift; sourceTree = "<group>"; };
+		B2B7710D1D61A0790042AA5E /* JFTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTextAttachment.swift; sourceTree = "<group>"; };
+		B2B7710E1D61A0790042AA5E /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
+		B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoticon.swift"; sourceTree = "<group>"; };
 		B2FC668C1D5C15DF0032703D /* JFCollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCollectionTableViewController.swift; sourceTree = "<group>"; };
 		B2FC668E1D5C15DF0032703D /* JFCommentListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCommentListTableViewController.swift; sourceTree = "<group>"; };
 		B2FC66901D5C15DF0032703D /* JFForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFForgotViewController.swift; sourceTree = "<group>"; };
@@ -483,6 +499,7 @@
 		B238B41A1D5DCC0F00E4307A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B2B771031D619FB50042AA5E /* JFPlaceholderTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -631,6 +648,8 @@
 		B28D93DD1D534AA700128D20 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B2B7710A1D61A0790042AA5E /* Emoticon */,
+				B2B771051D61A0670042AA5E /* PhotoSelector */,
 				B2B770F11D61689E0042AA5E /* PhotoBrowser */,
 				B28D93DE1D534AA700128D20 /* JFPlayer */,
 			);
@@ -695,6 +714,27 @@
 				B2B770F31D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		B2B771051D61A0670042AA5E /* PhotoSelector */ = {
+			isa = PBXGroup;
+			children = (
+				B2B771061D61A0670042AA5E /* JFPhotoSelectorViewController.swift */,
+				B2B771071D61A0670042AA5E /* UIImage+Extension.swift */,
+			);
+			path = PhotoSelector;
+			sourceTree = "<group>";
+		};
+		B2B7710A1D61A0790042AA5E /* Emoticon */ = {
+			isa = PBXGroup;
+			children = (
+				B2B7710B1D61A0790042AA5E /* JFEmoticon.swift */,
+				B2B7710C1D61A0790042AA5E /* JFEmoticonViewController.swift */,
+				B2B7710D1D61A0790042AA5E /* JFTextAttachment.swift */,
+				B2B7710E1D61A0790042AA5E /* Emoticons.bundle */,
+				B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */,
+			);
+			path = Emoticon;
 			sourceTree = "<group>";
 		};
 		B2FC66891D5C15DF0032703D /* Profile */ = {
@@ -911,6 +951,7 @@
 				B28D940A1D534AA700128D20 /* JFPlayer_slider_thumb@3x.png in Resources */,
 				B28D93FE1D534AA700128D20 /* JFPlayer_mask_image@3x.png in Resources */,
 				B2FC66D91D5C268B0032703D /* JFLoginViewController.xib in Resources */,
+				B2B771131D61A0790042AA5E /* Emoticons.bundle in Resources */,
 				B28D94071D534AA700128D20 /* JFPlayer_seek_to_image@2x.png in Resources */,
 				B28D93F91D534AA700128D20 /* JFPlayer_back@2x.png in Resources */,
 				B28D94031D534AA700128D20 /* JFPlayer_portialscreen@2x.png in Resources */,
@@ -982,6 +1023,7 @@
 				B249AE351D607D41005C0A41 /* JFCommentCell.swift in Sources */,
 				B2512A731D54426B00476D0E /* JFVideo.swift in Sources */,
 				B21501D21D536697005E4670 /* UIViewExtension.swift in Sources */,
+				B2B771121D61A0790042AA5E /* JFTextAttachment.swift in Sources */,
 				B214650A1D5B4EC200C5EDFD /* JFTestViewController.swift in Sources */,
 				B21501DC1D5366CB005E4670 /* JFTabBar.swift in Sources */,
 				B2FC66CE1D5C15DF0032703D /* JFProfileCell.swift in Sources */,
@@ -1007,7 +1049,9 @@
 				B28D940C1D534AA700128D20 /* JFPlayerClearityChooseButton.swift in Sources */,
 				B2FC66D31D5C167E0032703D /* JFAccountModel.swift in Sources */,
 				B238B40E1D5D991400E4307A /* JFGrammarViewController.swift in Sources */,
+				B2B771091D61A0670042AA5E /* UIImage+Extension.swift in Sources */,
 				B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */,
+				B2B771111D61A0790042AA5E /* JFEmoticonViewController.swift in Sources */,
 				B2FC66B61D5C15DF0032703D /* JFForgotViewController.swift in Sources */,
 				B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */,
 				B21501D91D5366C2005E4670 /* JFNavigationController.swift in Sources */,
@@ -1022,6 +1066,7 @@
 				B213E3ED1D54D40A00589058 /* JFHomeCell.swift in Sources */,
 				B2FC66D61D5C16EA0032703D /* StringExtension.swift in Sources */,
 				B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */,
+				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,
 				B2FC66D71D5C16EA0032703D /* UIImageExtension.swift in Sources */,
 				B28D940E1D534AA700128D20 /* JFPlayerItem.swift in Sources */,
 				B249AE311D607D41005C0A41 /* JFTweetsDetailViewController.swift in Sources */,
@@ -1032,6 +1077,7 @@
 				B21501D61D5366A4005E4670 /* JFProgressHUD.swift in Sources */,
 				B2FC66C61D5C15DF0032703D /* JFUserCommentModel.swift in Sources */,
 				B2FC66C01D5C15DF0032703D /* JFProfileViewController.swift in Sources */,
+				B2B771041D619FB50042AA5E /* JFPlaceholderTextView.swift in Sources */,
 				B2B770F91D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift in Sources */,
 				B2512A6F1D5439C800476D0E /* Api.swift in Sources */,
 				B2FC66B81D5C15DF0032703D /* JFEditProfileViewController.swift in Sources */,
@@ -1048,11 +1094,13 @@
 				B2FC66BC1D5C15DF0032703D /* JFBaseTableViewController.swift in Sources */,
 				B249AE391D607D41005C0A41 /* JFTweetsListCell.swift in Sources */,
 				B213E3EB1D54D40A00589058 /* JFCategoriesCellItem.swift in Sources */,
+				B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */,
 				B2FC66B41D5C15DF0032703D /* JFCollectionTableViewController.swift in Sources */,
 				B2FC66C81D5C15DF0032703D /* JFProfileCellGroupModel.swift in Sources */,
 				B249AE331D607D41005C0A41 /* JFComment.swift in Sources */,
 				B213E3EA1D54D40A00589058 /* JFCategoriesCell.swift in Sources */,
 				B21501DE1D536800005E4670 /* JFHomeViewController.swift in Sources */,
+				B2B771081D61A0670042AA5E /* JFPhotoSelectorViewController.swift in Sources */,
 				B2224BF51D55A20C005CEAE4 /* JFDetailHeaderButton.swift in Sources */,
 				B28D940D1D534AA700128D20 /* JFPlayerControlView.swift in Sources */,
 				B28D940B1D534AA700128D20 /* JFPlayer.swift in Sources */,

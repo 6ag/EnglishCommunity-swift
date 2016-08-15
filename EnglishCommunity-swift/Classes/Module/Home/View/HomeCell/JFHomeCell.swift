@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-protocol JFHomeCellDelegate {
+protocol JFHomeCellDelegate: NSObjectProtocol {
     func homeCell(cell: UITableViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath)
 }
 
@@ -27,7 +27,7 @@ class JFHomeCell: UITableViewCell {
     }
     
     let categoryIdentifier = "JFHomeCellItem"
-    var delegate: JFHomeCellDelegate?
+    weak var delegate: JFHomeCellDelegate?
     
     /// 所以分类模型数组
     var videoCategory: JFVideoCategory? {

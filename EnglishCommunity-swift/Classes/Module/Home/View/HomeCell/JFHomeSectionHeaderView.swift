@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol JFHomeSectionHeaderViewDelegate {
+protocol JFHomeSectionHeaderViewDelegate: NSObjectProtocol {
     func didTappedMoreButton(section: Int)
 }
 
@@ -17,7 +17,8 @@ class JFHomeSectionHeaderView: UIView {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
-    var delegate: JFHomeSectionHeaderViewDelegate?
+    
+    weak var delegate: JFHomeSectionHeaderViewDelegate?
     
     // 当前组
     var section = 0

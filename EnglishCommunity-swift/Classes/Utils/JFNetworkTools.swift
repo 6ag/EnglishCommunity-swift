@@ -65,43 +65,33 @@ extension JFNetworkTools {
     }
     
     /**
-     可以带其他参数的图片上传方式
+     发布动弹
      
-     - parameter APIString:  urlString
-     - parameter image:      要上传的image对象
-     - parameter parameters: 参数
-     - parameter finished:   完成回调
+     - parameter APIString: urlString
+     - parameter userId:    用户id
+     - parameter text:      文字内容
+     - parameter images:    图片
+     - parameter finished:  完成回调
      */
-    func uploadPhoto(APIString: String, image: UIImage, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+    func sendTweets(APIString: String, userId: Int, text: String, images: [UIImage]?, finished: NetworkFinished) {
         
-        print("\(BASE_URL)\(APIString)")
-        Alamofire.upload(.POST, "\(BASE_URL)\(APIString)", multipartFormData: { multipartFormData in
-            
-            // 如果有参数则一起加入
-            if let parameters = parameters {
-                for (key, value) in parameters {
-                    multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding)!, name: key)
-                }
+        var parameters = [String : AnyObject]()
+        parameters["user_id"] = userId;
+        parameters["content"] = text;
+        
+        if let images = images {
+            var imageBase64s = [String]()
+            for image in images {
+                let imageData = UIImageJPEGRepresentation(image, 1)!
+                let imageBase64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue:0))
+//                imageBase64 = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, imageBase64, nil, ":/?@!$&'()*+,;=", CFStringBuiltInEncodings.UTF8.rawValue) as String
+                imageBase64s.append(imageBase64)
             }
-            
-            let imageData = UIImageJPEGRepresentation(image, 1)!
-            multipartFormData.appendBodyPart(data: imageData, name: "photo")
-            
-            },encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .Success(let upload, _, _):
-                    upload.responseJSON { response in
-                        if let data = response.data {
-                            let json = JSON(data: data)
-                            finished(success: true, result: json, error: nil)
-                        } else {
-                            finished(success: false, result: nil, error: response.result.error)
-                        }
-                    }
-                case .Failure(_):
-                    finished(success: false, result: nil, error: nil)
-                }
-        })
+            parameters["photos"] = imageBase64s
+        }
         
+        // 发送请求
+        post(APIString, parameters: parameters, finished: finished)
     }
+    
 }

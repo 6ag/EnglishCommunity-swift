@@ -13,7 +13,9 @@ class JFTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setValue(JFTabBar(), forKey: "tabBar")
+        let tabBar = JFTabBar()
+        tabBar.tabBarDelegate = self
+        setValue(tabBar, forKey: "tabBar")
         
         prepareVc()
     }
@@ -60,3 +62,20 @@ class JFTabBarController: UITabBarController {
         tabBar.frame = tabFrame
     }
 }
+
+// MARK: - JFTabBarDelegate
+extension JFTabBarController: JFTabBarDelegate {
+    
+    /**
+     点击了发布按钮
+     */
+    func didTappedAddButton() {
+        
+        let publishVc = JFNavigationController(rootViewController: JFPublishViewController())
+        let loginVc = JFNavigationController(rootViewController: UIViewController(nibName: "JFLoginViewController", bundle: nil))
+        let vc = JFAccountModel.isLogin() ? publishVc : loginVc
+        presentViewController(vc, animated: true, completion: nil)
+    }
+}
+
+

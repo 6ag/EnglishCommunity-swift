@@ -29,7 +29,7 @@ class JFTweetsDetailHeaderView: UIView {
     
     let grayColor = UIColor.grayColor()
     
-    var tweetsDetailHeaderDelegate: JFTweetsDetailHeaderViewDelegate?
+    weak var tweetsDetailHeaderDelegate: JFTweetsDetailHeaderViewDelegate?
     
     /// 动弹模型
     var tweets: JFTweets? {

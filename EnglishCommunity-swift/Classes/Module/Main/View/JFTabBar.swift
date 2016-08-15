@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol JFTabBarDelegate: NSObjectProtocol {
+    func didTappedAddButton()
+}
+
 class JFTabBar: UITabBar {
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,12 +35,13 @@ class JFTabBar: UITabBar {
         addSubview(addButton)
     }
     
+    weak var tabBarDelegate: JFTabBarDelegate?
+    
     /**
      +号按钮点击事件
      */
     @objc private func didTappedAddButton(button: UIButton) {
-        print("+ 点击")
-        
+        tabBarDelegate?.didTappedAddButton()
     }
     
     override func layoutSubviews() {

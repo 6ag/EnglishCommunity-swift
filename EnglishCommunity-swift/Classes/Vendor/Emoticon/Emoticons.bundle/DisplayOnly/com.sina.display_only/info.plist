@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>id</key>
+	<string>com.sina.display_only</string>
+	<key>version</key>
+	<real>2</real>
+	<key>group_name_cn</key>
+	<string>仅显示</string>
+	<key>group_name_tw</key>
+	<string>仅显示</string>
+	<key>group_name_en</key>
+	<string>DisplayOnly</string>
+	<key>display_only</key>
+	<integer>1</integer>
+	<key>emoticons</key>
+	<array>
+		<dict>
+			<key>chs</key>
+			<string>[星星]</string>
+			<key>cht</key>
+			<string>[星星]</string>
+			<key>png</key>
+			<string>composer_rating_small_icon_highlighted.png</string>
+			<key>type</key>
+			<string>0</string>
+		</dict>
+		<dict>
+			<key>chs</key>
+			<string>[空星]</string>
+			<key>cht</key>
+			<string>[空星]</string>
+			<key>png</key>
+			<string>composer_rating_small_icon.png</string>
+			<key>type</key>
+			<string>0</string>
+		</dict>
+		<dict>
+			<key>chs</key>
+			<string>[半星]</string>
+			<key>cht</key>
+			<string>[半星]</string>
+			<key>png</key>
+			<string>composer_rating_small_icon_half.png</string>
+			<key>type</key>
+			<string>0</string>
+		</dict>
+	</array>
+</dict>
+</plist>

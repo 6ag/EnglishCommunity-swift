@@ -29,8 +29,8 @@ class JFTweetsListCell: UITableViewCell {
     
     let grayColor = UIColor.grayColor()
     
-    var tweetsListCellDelegate: JFTweetsListCellDelegate?
-
+    weak var tweetsListCellDelegate: JFTweetsListCellDelegate?
+    
     /// 动弹模型
     var tweets: JFTweets? {
         didSet {

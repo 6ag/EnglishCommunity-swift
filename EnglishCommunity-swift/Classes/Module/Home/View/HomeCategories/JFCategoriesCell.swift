@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-protocol JFCategoriesCellDelegate {
+protocol JFCategoriesCellDelegate: NSObjectProtocol {
     func categoriesCell(cell: UITableViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath)
 }
 
@@ -27,7 +27,8 @@ class JFCategoriesCell: UITableViewCell {
     }
     
     let categoryIdentifier = "JFCategoriesCellItem"
-    var delegate: JFCategoriesCellDelegate?
+    
+    weak var delegate: JFCategoriesCellDelegate?
     
     /// 所以分类模型数组
     var videoCategories: [JFVideoCategory]? {
