@@ -74,6 +74,7 @@ class JFTweetsPictureView: UICollectionView {
         if count == 1 {
             let urlString = images![0].thumb!
             let cacheImage = YYImageCache.sharedCache().getImageForKey(urlString)
+            
             var size = CGSize(width: 150, height: 120)
             
             if let image = cacheImage {

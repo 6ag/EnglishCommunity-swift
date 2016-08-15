@@ -91,7 +91,7 @@ class JFProfileViewController: JFBaseTableViewController {
      */
     private func updateHeaderData() {
         if JFAccountModel.isLogin() {
-            headerView.avatarButton.yy_setBackgroundImageWithURL(NSURL(string: "\(BASE_URL)\(JFAccountModel.shareAccount()!.avatar!)"), forState: UIControlState.Normal, options: YYWebImageOptions.AllowBackgroundTask)
+            headerView.avatarButton.yy_setBackgroundImageWithURL(NSURL(string: JFAccountModel.shareAccount()!.avatar!), forState: UIControlState.Normal, options: YYWebImageOptions.AllowBackgroundTask)
             headerView.nameLabel.text = JFAccountModel.shareAccount()!.nickname!
         } else {
             headerView.avatarButton.setBackgroundImage(UIImage(named: "default－portrait"), forState: UIControlState.Normal)

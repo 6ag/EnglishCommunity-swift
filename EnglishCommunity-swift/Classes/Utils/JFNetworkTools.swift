@@ -84,7 +84,6 @@ extension JFNetworkTools {
             for image in images {
                 let imageData = UIImageJPEGRepresentation(image, 1)!
                 let imageBase64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue:0))
-//                imageBase64 = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, imageBase64, nil, ":/?@!$&'()*+,;=", CFStringBuiltInEncodings.UTF8.rawValue) as String
                 imageBase64s.append(imageBase64)
             }
             parameters["photos"] = imageBase64s

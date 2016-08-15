@@ -32,12 +32,14 @@ class JFVideoCategory: NSObject {
     override func setValue(value: AnyObject?, forKey key: String) {
         
         if key == "videoInfoList" {
-            let data = value as! [[String : AnyObject]]
-            var videoInfos = [JFVideoInfo]()
-            for dict in data {
-                videoInfos.append(JFVideoInfo(dict: dict))
+            if let data = value as? [[String : AnyObject]] {
+                var videoInfos = [JFVideoInfo]()
+                for dict in data {
+                    videoInfos.append(JFVideoInfo(dict: dict))
+                }
+                self.videoInfos = videoInfos
             }
-            self.videoInfos = videoInfos
+            
         }
         
         super.setValue(value, forKey: key)
@@ -65,6 +67,7 @@ class JFVideoCategory: NSObject {
                 return
             }
             
+            print(result)
             let data = result["result"].arrayObject as! [[String : AnyObject]]
             var videoCategories = [JFVideoCategory]()
             

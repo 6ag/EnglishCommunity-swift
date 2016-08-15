@@ -128,7 +128,7 @@ class JFTweets: NSObject {
             }
             
             // 判断是否有图片需要下载
-            if let images = tweet.images {
+            if let images = tweet.images where tweet.images?.count == 1 {
                 
                 dispatch_group_enter(group)
                 
@@ -174,6 +174,7 @@ class JFTweets: NSObject {
         
         JFNetworkTools.shareNetworkTool.get(GET_TWEETS_LIST, parameters: parameters) { (success, result, error) in
             
+            print(result)
             guard let result = result where success == true && result["status"] == "success" else {
                 print(success, error)
                 finished(tweetsArray: nil)

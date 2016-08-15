@@ -46,7 +46,7 @@ class JFPlaceholderTextView: UITextView {
         // 当有文字的时候就隐藏
         placeholderLabel.hidden = hasText()
     }
-
+    
     // MARK: - 准备UI
     private func prepareUI() {
         // 添加子控件

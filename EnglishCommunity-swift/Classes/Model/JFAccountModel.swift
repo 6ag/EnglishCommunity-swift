@@ -52,6 +52,9 @@ class JFAccountModel: NSObject, NSCoding {
     /// 注册时间
     var registerTime: String?
     
+    /// 最后一次登录时间
+    var lastLoginTime: String?
+    
     // KVC 字典转模型
     init(dict: [String: AnyObject]) {
         super.init()
@@ -125,6 +128,7 @@ class JFAccountModel: NSObject, NSCoding {
         aCoder.encodeInt(Int32(emailBinding), forKey: "email_binding_key")
         aCoder.encodeInt(Int32(mobileBinding), forKey: "mobile_binding_key")
         aCoder.encodeObject(registerTime, forKey: "register_time_key")
+        aCoder.encodeObject(lastLoginTime, forKey: "last_login_time")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -142,6 +146,7 @@ class JFAccountModel: NSObject, NSCoding {
         emailBinding = Int(aDecoder.decodeIntForKey("email_binding_key"))
         mobileBinding = Int(aDecoder.decodeIntForKey("mobile_binding_key"))
         registerTime = aDecoder.decodeObjectForKey("register_time_key") as? String
+        lastLoginTime = aDecoder.decodeObjectForKey("last_login_time") as? String
     }
 }
 

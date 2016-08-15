@@ -83,7 +83,7 @@ class JFHomeCell: UITableViewCell {
 extension JFHomeCell: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videoCategory!.videoInfos!.count
+        return videoCategory?.videoInfos?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
