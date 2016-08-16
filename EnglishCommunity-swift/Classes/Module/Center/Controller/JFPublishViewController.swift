@@ -219,7 +219,9 @@ class JFPublishViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    /// 发微博
+    /**
+     发布动弹
+     */
     func sendtweets() {
         
         let text = textView.emoticonText()
@@ -230,8 +232,11 @@ class JFPublishViewController: UIViewController {
             return
         }
         
+        // 被at的用户
+        let atUsers = [[String : String]]()
+        
         JFProgressHUD.showWithStatus("正在发送中...")
-        JFNetworkTools.shareNetworkTool.sendTweets(POST_TWEETS, userId: JFAccountModel.shareAccount()!.id, text: text, images: images) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.sendTweets(POST_TWEETS, userId: JFAccountModel.shareAccount()!.id, text: text, images: images, atUsers: atUsers) { (success, result, error) in
             guard let result = result where success == true else {
                 JFProgressHUD.showInfoWithStatus("没发出去")
                 return

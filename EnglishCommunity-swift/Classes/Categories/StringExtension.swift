@@ -49,4 +49,26 @@ extension String {
         let dateSt:Int = Int(dateStamp)
         return String(dateSt)
     }
+    
+    /**
+     传入cell文本内容，解析成元素为昵称的数组
+     
+     - returns: 昵称数组
+     */
+    func checkAtUserNickname() -> [String]? {
+        do {
+            let pattern = "@\\S*"
+            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
+            let results = regex.matchesInString(self, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, self.characters.count))
+            
+            var resultStrings = [String]()
+            for result in results {
+                resultStrings.append(String((self as NSString).substringWithRange(result.range)))
+            }
+            return resultStrings
+        }
+        catch {
+            return nil
+        }
+    }
 }

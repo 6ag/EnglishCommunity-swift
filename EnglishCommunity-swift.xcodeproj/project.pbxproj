@@ -54,15 +54,15 @@
 		B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */; };
 		B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */; };
 		B249AE221D60280F005C0A41 /* JFPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE211D60280F005C0A41 /* JFPublishViewController.swift */; };
-		B249AE311D607D41005C0A41 /* JFTweetsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE251D607D41005C0A41 /* JFTweetsDetailViewController.swift */; };
-		B249AE321D607D41005C0A41 /* JFTweetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE261D607D41005C0A41 /* JFTweetsViewController.swift */; };
+		B249AE311D607D41005C0A41 /* JFTweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE251D607D41005C0A41 /* JFTweetDetailViewController.swift */; };
+		B249AE321D607D41005C0A41 /* JFTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE261D607D41005C0A41 /* JFTweetViewController.swift */; };
 		B249AE331D607D41005C0A41 /* JFComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE281D607D41005C0A41 /* JFComment.swift */; };
-		B249AE341D607D41005C0A41 /* JFTweets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE291D607D41005C0A41 /* JFTweets.swift */; };
+		B249AE341D607D41005C0A41 /* JFTweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE291D607D41005C0A41 /* JFTweet.swift */; };
 		B249AE351D607D41005C0A41 /* JFCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE2B1D607D41005C0A41 /* JFCommentCell.swift */; };
 		B249AE361D607D41005C0A41 /* JFCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B249AE2C1D607D41005C0A41 /* JFCommentCell.xib */; };
-		B249AE371D607D41005C0A41 /* JFTweetsDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE2D1D607D41005C0A41 /* JFTweetsDetailHeaderView.swift */; };
-		B249AE391D607D41005C0A41 /* JFTweetsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE2F1D607D41005C0A41 /* JFTweetsListCell.swift */; };
-		B249AE3E1D60AC79005C0A41 /* JFTweetsPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE3D1D60AC79005C0A41 /* JFTweetsPictureView.swift */; };
+		B249AE371D607D41005C0A41 /* JFTweetDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE2D1D607D41005C0A41 /* JFTweetDetailHeaderView.swift */; };
+		B249AE391D607D41005C0A41 /* JFTweetListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE2F1D607D41005C0A41 /* JFTweetListCell.swift */; };
+		B249AE3E1D60AC79005C0A41 /* JFTweetPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE3D1D60AC79005C0A41 /* JFTweetPictureView.swift */; };
 		B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6A1D54394000476D0E /* JFVideoCategory.swift */; };
 		B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6C1D54396700476D0E /* JFVideoInfo.swift */; };
 		B2512A6F1D5439C800476D0E /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6E1D5439C800476D0E /* Api.swift */; };
@@ -106,6 +106,7 @@
 		B2B771121D61A0790042AA5E /* JFTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710D1D61A0790042AA5E /* JFTextAttachment.swift */; };
 		B2B771131D61A0790042AA5E /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2B7710E1D61A0790042AA5E /* Emoticons.bundle */; };
 		B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */; };
+		B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9A6911D62B17B000B08C4 /* FFLabel.swift */; };
 		B2FC66B41D5C15DF0032703D /* JFCollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC668C1D5C15DF0032703D /* JFCollectionTableViewController.swift */; };
 		B2FC66B51D5C15DF0032703D /* JFCommentListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC668E1D5C15DF0032703D /* JFCommentListTableViewController.swift */; };
 		B2FC66B61D5C15DF0032703D /* JFForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC66901D5C15DF0032703D /* JFForgotViewController.swift */; };
@@ -192,15 +193,15 @@
 		B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarListCell.swift; sourceTree = "<group>"; };
 		B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarDetailViewController.swift; sourceTree = "<group>"; };
 		B249AE211D60280F005C0A41 /* JFPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPublishViewController.swift; sourceTree = "<group>"; };
-		B249AE251D607D41005C0A41 /* JFTweetsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetsDetailViewController.swift; sourceTree = "<group>"; };
-		B249AE261D607D41005C0A41 /* JFTweetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetsViewController.swift; sourceTree = "<group>"; };
+		B249AE251D607D41005C0A41 /* JFTweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetDetailViewController.swift; sourceTree = "<group>"; };
+		B249AE261D607D41005C0A41 /* JFTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetViewController.swift; sourceTree = "<group>"; };
 		B249AE281D607D41005C0A41 /* JFComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFComment.swift; sourceTree = "<group>"; };
-		B249AE291D607D41005C0A41 /* JFTweets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweets.swift; sourceTree = "<group>"; };
+		B249AE291D607D41005C0A41 /* JFTweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweet.swift; sourceTree = "<group>"; };
 		B249AE2B1D607D41005C0A41 /* JFCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCommentCell.swift; sourceTree = "<group>"; };
 		B249AE2C1D607D41005C0A41 /* JFCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFCommentCell.xib; sourceTree = "<group>"; };
-		B249AE2D1D607D41005C0A41 /* JFTweetsDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetsDetailHeaderView.swift; sourceTree = "<group>"; };
-		B249AE2F1D607D41005C0A41 /* JFTweetsListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetsListCell.swift; sourceTree = "<group>"; };
-		B249AE3D1D60AC79005C0A41 /* JFTweetsPictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetsPictureView.swift; sourceTree = "<group>"; };
+		B249AE2D1D607D41005C0A41 /* JFTweetDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetDetailHeaderView.swift; sourceTree = "<group>"; };
+		B249AE2F1D607D41005C0A41 /* JFTweetListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetListCell.swift; sourceTree = "<group>"; };
+		B249AE3D1D60AC79005C0A41 /* JFTweetPictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetPictureView.swift; sourceTree = "<group>"; };
 		B2512A6A1D54394000476D0E /* JFVideoCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoCategory.swift; sourceTree = "<group>"; };
 		B2512A6C1D54396700476D0E /* JFVideoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoInfo.swift; sourceTree = "<group>"; };
 		B2512A6E1D5439C800476D0E /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
@@ -244,6 +245,7 @@
 		B2B7710D1D61A0790042AA5E /* JFTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTextAttachment.swift; sourceTree = "<group>"; };
 		B2B7710E1D61A0790042AA5E /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
 		B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoticon.swift"; sourceTree = "<group>"; };
+		B2C9A6911D62B17B000B08C4 /* FFLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFLabel.swift; sourceTree = "<group>"; };
 		B2FC668C1D5C15DF0032703D /* JFCollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCollectionTableViewController.swift; sourceTree = "<group>"; };
 		B2FC668E1D5C15DF0032703D /* JFCommentListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCommentListTableViewController.swift; sourceTree = "<group>"; };
 		B2FC66901D5C15DF0032703D /* JFForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFForgotViewController.swift; sourceTree = "<group>"; };
@@ -517,8 +519,8 @@
 		B249AE241D607D41005C0A41 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B249AE261D607D41005C0A41 /* JFTweetsViewController.swift */,
-				B249AE251D607D41005C0A41 /* JFTweetsDetailViewController.swift */,
+				B249AE261D607D41005C0A41 /* JFTweetViewController.swift */,
+				B249AE251D607D41005C0A41 /* JFTweetDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -526,7 +528,7 @@
 		B249AE271D607D41005C0A41 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B249AE291D607D41005C0A41 /* JFTweets.swift */,
+				B249AE291D607D41005C0A41 /* JFTweet.swift */,
 				B249AE281D607D41005C0A41 /* JFComment.swift */,
 			);
 			path = Model;
@@ -535,9 +537,9 @@
 		B249AE2A1D607D41005C0A41 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B249AE2F1D607D41005C0A41 /* JFTweetsListCell.swift */,
-				B249AE2D1D607D41005C0A41 /* JFTweetsDetailHeaderView.swift */,
-				B249AE3D1D60AC79005C0A41 /* JFTweetsPictureView.swift */,
+				B249AE2F1D607D41005C0A41 /* JFTweetListCell.swift */,
+				B249AE2D1D607D41005C0A41 /* JFTweetDetailHeaderView.swift */,
+				B249AE3D1D60AC79005C0A41 /* JFTweetPictureView.swift */,
 				B249AE2B1D607D41005C0A41 /* JFCommentCell.swift */,
 				B249AE2C1D607D41005C0A41 /* JFCommentCell.xib */,
 			);
@@ -570,6 +572,7 @@
 		B28D93D51D534AA700128D20 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				B2C9A6911D62B17B000B08C4 /* FFLabel.swift */,
 				B2FC66E01D5C67510032703D /* NSDateExtension.swift */,
 				B2FC66D41D5C16EA0032703D /* StringExtension.swift */,
 				B2FC66D51D5C16EA0032703D /* UIImageExtension.swift */,
@@ -1037,9 +1040,10 @@
 				B2FC66BE1D5C15DF0032703D /* JFProfileFeedbackViewController.swift in Sources */,
 				B2FC66CB1D5C15DF0032703D /* JFProfileCellSwitchModel.swift in Sources */,
 				B2B770FC1D61689E0042AA5E /* JFPhotoBrowserCell.swift in Sources */,
-				B249AE341D607D41005C0A41 /* JFTweets.swift in Sources */,
+				B249AE341D607D41005C0A41 /* JFTweet.swift in Sources */,
 				B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */,
 				B21436391D551BE300F201AF /* JFTopBarView.swift in Sources */,
+				B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */,
 				B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */,
 				B2224BF11D5592BE005CEAE4 /* JFDetailHeaderView.swift in Sources */,
 				B21501DA1D5366C2005E4670 /* JFTabBarController.swift in Sources */,
@@ -1059,7 +1063,7 @@
 				B213E3EE1D54D40A00589058 /* JFHomeCellItem.swift in Sources */,
 				B2FC66C11D5C15DF0032703D /* JFLoginViewController.swift in Sources */,
 				B213E3F01D54D40A00589058 /* JFHomeSectionHeaderView.swift in Sources */,
-				B249AE371D607D41005C0A41 /* JFTweetsDetailHeaderView.swift in Sources */,
+				B249AE371D607D41005C0A41 /* JFTweetDetailHeaderView.swift in Sources */,
 				B2FC66C71D5C15DF0032703D /* JFProfileCellArrowModel.swift in Sources */,
 				B21501D51D5366A4005E4670 /* JFNetworkTools.swift in Sources */,
 				B2FC66C91D5C15DF0032703D /* JFProfileCellLabelModel.swift in Sources */,
@@ -1069,10 +1073,10 @@
 				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,
 				B2FC66D71D5C16EA0032703D /* UIImageExtension.swift in Sources */,
 				B28D940E1D534AA700128D20 /* JFPlayerItem.swift in Sources */,
-				B249AE311D607D41005C0A41 /* JFTweetsDetailViewController.swift in Sources */,
-				B249AE3E1D60AC79005C0A41 /* JFTweetsPictureView.swift in Sources */,
+				B249AE311D607D41005C0A41 /* JFTweetDetailViewController.swift in Sources */,
+				B249AE3E1D60AC79005C0A41 /* JFTweetPictureView.swift in Sources */,
 				B28D940F1D534AA700128D20 /* JFPlayerManager.swift in Sources */,
-				B249AE321D607D41005C0A41 /* JFTweetsViewController.swift in Sources */,
+				B249AE321D607D41005C0A41 /* JFTweetViewController.swift in Sources */,
 				B21501BC1D53616A005E4670 /* AppDelegate.swift in Sources */,
 				B21501D61D5366A4005E4670 /* JFProgressHUD.swift in Sources */,
 				B2FC66C61D5C15DF0032703D /* JFUserCommentModel.swift in Sources */,
@@ -1092,7 +1096,7 @@
 				B238B4121D5D9B2700E4307A /* JFGrammar.swift in Sources */,
 				B213E3DE1D54BCF100589058 /* JFCategoryViewController.swift in Sources */,
 				B2FC66BC1D5C15DF0032703D /* JFBaseTableViewController.swift in Sources */,
-				B249AE391D607D41005C0A41 /* JFTweetsListCell.swift in Sources */,
+				B249AE391D607D41005C0A41 /* JFTweetListCell.swift in Sources */,
 				B213E3EB1D54D40A00589058 /* JFCategoriesCellItem.swift in Sources */,
 				B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */,
 				B2FC66B41D5C15DF0032703D /* JFCollectionTableViewController.swift in Sources */,

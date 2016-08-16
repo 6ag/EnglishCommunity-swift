@@ -1,5 +1,5 @@
 //
-//  JFTweetsDetailViewController.swift
+//  JFTweetDetailViewController.swift
 //  EnglishCommunity-swift
 //
 //  Created by zhoujianfeng on 16/8/11.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JFTweetsDetailViewController: UIViewController {
+class JFTweetDetailViewController: UIViewController {
     
     /// 当前页码
     var page: Int = 1
@@ -20,14 +20,14 @@ class JFTweetsDetailViewController: UIViewController {
     var comments = [JFComment]()
     
     /// 动弹模型
-    var tweets: JFTweets?
+    var tweet: JFTweet?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         prepareUI()
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
-        updateData("tweet", page: page, method: 0, source_id: tweets!.id)
+        updateData("tweet", page: page, method: 0, source_id: tweet!.id)
     }
     
     /**
@@ -46,7 +46,7 @@ class JFTweetsDetailViewController: UIViewController {
      */
     @objc private func pullUpMoreData() {
         page += 1
-        updateData("tweet", page: page, method: 1, source_id: tweets!.id)
+        updateData("tweet", page: page, method: 1, source_id: tweet!.id)
     }
     
     /**
@@ -75,11 +75,11 @@ class JFTweetsDetailViewController: UIViewController {
     }
     
     /// 动弹内容区域
-    lazy var headerView: JFTweetsDetailHeaderView = {
-        let tweetsDetailHeaderView = JFTweetsDetailHeaderView()
-        tweetsDetailHeaderView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: tweetsDetailHeaderView.getRowHeight(self.tweets!))
-        tweetsDetailHeaderView.tweetsDetailHeaderDelegate = self
-        return tweetsDetailHeaderView
+    lazy var headerView: JFTweetDetailHeaderView = {
+        let tweetDetailHeaderView = JFTweetDetailHeaderView()
+        tweetDetailHeaderView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: tweetDetailHeaderView.getRowHeight(self.tweet!))
+        tweetDetailHeaderView.tweetDetailHeaderDelegate = self
+        return tweetDetailHeaderView
     }()
 
     /// 内容区域
@@ -95,7 +95,7 @@ class JFTweetsDetailViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
-extension JFTweetsDetailViewController: UITableViewDataSource, UITableViewDelegate {
+extension JFTweetDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
@@ -125,15 +125,32 @@ extension JFTweetsDetailViewController: UITableViewDataSource, UITableViewDelega
     
 }
 
-// MARK: - JFTweetsDetailHeaderViewDelegate
-extension JFTweetsDetailViewController: JFTweetsDetailHeaderViewDelegate {
+// MARK: - JFTweetDetailHeaderViewDelegate
+extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
     
-    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedAvatarButton button: UIButton) {
-        print(headerView.tweets?.author?.nickname)
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedAvatarButton button: UIButton) {
+        print("user_id = ", headerView.tweet?.author?.id ?? 0)
     }
     
-    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedLikeButton button: UIButton) {
-        print(headerView.tweets?.id)
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedLikeButton button: UIButton) {
+        print(headerView.tweet?.id)
+    }
+    
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedSuperLink url: String) {
+        print(headerView.tweet?.id, url)
+    }
+    
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedAtUser nickname: String, sequence: Int) {
+        
+        guard let atUsers = headerView.tweet?.atUsers else {
+            return
+        }
+        
+        for atUser in atUsers {
+            if atUser.nickname == nickname && atUser.sequence == sequence {
+                print("user_id = ", atUser.id)
+            }
+        }
     }
 }
 

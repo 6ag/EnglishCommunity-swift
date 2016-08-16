@@ -26,8 +26,6 @@ class JFPhotoBrowserCell: UICollectionViewCell {
             imageView.image = nil
             resetProperties()
             
-            print(imageURL)
-            
             indicator.startAnimating()
             imageView.yy_setImageWithURL(imageURL, placeholder: nil, options: YYWebImageOptions.AllowBackgroundTask) { (image, url, _, _, error) in
                 self.indicator.stopAnimating()

@@ -1,5 +1,5 @@
 //
-//  JFTweetsDetailHeaderView.swift
+//  JFTweetDetailHeaderView.swift
 //  EnglishCommunity-swift
 //
 //  Created by zhoujianfeng on 16/8/11.
@@ -9,13 +9,15 @@
 import UIKit
 import YYWebImage
 
-protocol JFTweetsDetailHeaderViewDelegate: NSObjectProtocol {
+protocol JFTweetDetailHeaderViewDelegate: NSObjectProtocol {
     
-    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedAvatarButton button: UIButton)
-    func tweetsDetailHeaderView(headerView: JFTweetsDetailHeaderView, didTappedLikeButton button: UIButton)
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedAvatarButton button: UIButton)
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedLikeButton button: UIButton)
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedSuperLink url: String)
+    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedAtUser nickname: String, sequence: Int)
 }
 
-class JFTweetsDetailHeaderView: UIView {
+class JFTweetDetailHeaderView: UIView {
     
     // MARK: - 初始化cell
     override init(frame: CGRect) {
@@ -29,20 +31,20 @@ class JFTweetsDetailHeaderView: UIView {
     
     let grayColor = UIColor.grayColor()
     
-    weak var tweetsDetailHeaderDelegate: JFTweetsDetailHeaderViewDelegate?
+    weak var tweetDetailHeaderDelegate: JFTweetDetailHeaderViewDelegate?
     
     /// 动弹模型
-    var tweets: JFTweets? {
+    var tweet: JFTweet? {
         didSet {
             
-            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: tweets!.author!.avatar!), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
-            nicknameLabel.text = tweets!.author!.nickname!
-            contentLabel.text = tweets?.content
-            pictureView.images = tweets?.images
-            publishTimeLabel.text = tweets?.publishTime?.timeStampToDate().dateToDescription()
-            appClientLabel.text = tweets?.appClient == 0 ? "iOS客户端" : "Android客户端"
-            likeButton.setTitle("\(tweets!.likeCount)", forState: .Normal)
-            commentButton.setTitle("\(tweets!.commentCount)", forState: .Normal)
+            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: tweet!.author!.avatar!), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
+            nicknameLabel.text = tweet!.author!.nickname!
+            contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet!.content!, font: UIFont.systemFontOfSize(16))
+            pictureView.images = tweet?.images
+            publishTimeLabel.text = tweet?.publishTime?.timeStampToDate().dateToDescription()
+            appClientLabel.text = tweet?.appClient == 0 ? "iOS客户端" : "Android客户端"
+            likeButton.setTitle("\(tweet!.likeCount)", forState: .Normal)
+            commentButton.setTitle("\(tweet!.commentCount)", forState: .Normal)
             
             let margin: CGFloat = 10
             let width = (SCREEN_WIDTH - MARGIN * 2 - margin * 2) / 3
@@ -126,8 +128,8 @@ class JFTweetsDetailHeaderView: UIView {
     /**
      计算cell行高
      */
-    func getRowHeight(tweets: JFTweets) -> CGFloat {
-        self.tweets = tweets
+    func getRowHeight(tweet: JFTweet) -> CGFloat {
+        self.tweet = tweet
         layoutIfNeeded()
         return CGRectGetMaxY(publishTimeLabel.frame) + 15
     }
@@ -137,14 +139,14 @@ class JFTweetsDetailHeaderView: UIView {
      点击头像按钮
      */
     @objc private func didTappedAvatarButton(button: UIButton) {
-        tweetsDetailHeaderDelegate?.tweetsDetailHeaderView(self, didTappedAvatarButton: button)
+        tweetDetailHeaderDelegate?.tweetDetailHeaderView(self, didTappedAvatarButton: button)
     }
     
     /**
      点击赞按钮
      */
     @objc private func didTappedLikeButton(button: UIButton) {
-        tweetsDetailHeaderDelegate?.tweetsDetailHeaderView(self, didTappedLikeButton: button)
+        tweetDetailHeaderDelegate?.tweetDetailHeaderView(self, didTappedLikeButton: button)
     }
     
     // MARK: - 懒加载
@@ -165,15 +167,16 @@ class JFTweetsDetailHeaderView: UIView {
     }()
     
     /// 动弹文字内容
-    private lazy var contentLabel: UILabel = {
-        let label = UILabel()
+    private lazy var contentLabel: FFLabel = {
+        let label = FFLabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFontOfSize(14)
+        label.labelDelegate = self
         return label
     }()
     
     /// 动弹配图
-    private lazy var pictureView = JFTweetsPictureView()
+    private lazy var pictureView = JFTweetPictureView()
     
     /// 动弹发布时间
     private lazy var publishTimeLabel: UILabel = {
@@ -220,4 +223,35 @@ class JFTweetsDetailHeaderView: UIView {
         return lineView
     }()
     
+}
+
+// MARK: - FFLabelDelegate
+extension JFTweetDetailHeaderView: FFLabelDelegate {
+    
+    /**
+     选中高亮的文字后回调
+     
+     - parameter label: 所在的label
+     - parameter text:  被选中的文字
+     */
+    func labelDidSelectedLinkText(label: FFLabel, text: String) {
+        
+        // 点击了 超链接
+        if text.hasPrefix("http") {
+            tweetDetailHeaderDelegate?.tweetDetailHeaderView(self, didTappedSuperLink: text)
+        }
+        
+        // 点击了 @昵称
+        if text.hasPrefix("@") {
+            guard let content = label.text else {
+                return
+            }
+            
+            if let sequence = content.checkAtUserNickname()?.indexOf(text) {
+                let nickname = text.stringByReplacingOccurrencesOfString("@", withString: "")
+                tweetDetailHeaderDelegate?.tweetDetailHeaderView(self, didTappedAtUser: nickname, sequence: Int(sequence))
+            }
+            
+        }
+    }
 }

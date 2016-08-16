@@ -70,15 +70,17 @@ extension JFNetworkTools {
      - parameter APIString: urlString
      - parameter userId:    用户id
      - parameter text:      文字内容
-     - parameter images:    图片
+     - parameter images:    图片     [UIimage]?
+     - parameter atUsers:   被at用户 [[id : String, nickname : String]]?
      - parameter finished:  完成回调
      */
-    func sendTweets(APIString: String, userId: Int, text: String, images: [UIImage]?, finished: NetworkFinished) {
+    func sendTweets(APIString: String, userId: Int, text: String, images: [UIImage]?, atUsers: [[String : String]]?, finished: NetworkFinished) {
         
         var parameters = [String : AnyObject]()
         parameters["user_id"] = userId;
         parameters["content"] = text;
         
+        // 图片
         if let images = images {
             var imageBase64s = [String]()
             for image in images {
@@ -87,6 +89,11 @@ extension JFNetworkTools {
                 imageBase64s.append(imageBase64)
             }
             parameters["photos"] = imageBase64s
+        }
+        
+        // 被at用户
+        if let atUsers = atUsers {
+            parameters["atUsers"] = atUsers
         }
         
         // 发送请求

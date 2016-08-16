@@ -45,14 +45,37 @@ class JFTweetImage: NSObject {
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
 }
 
+/// 动弹被at的用户模型
+class JFTweetAtUser: NSObject {
+    
+    /// 用户id
+    var id: Int = 0
+    
+    /// 昵称
+    var nickname: String?
+    
+    /// at的顺序
+    var sequence = 0
+    
+    init(dict: [String : AnyObject]) {
+        super.init()
+        setValuesForKeysWithDictionary(dict)
+    }
+    
+    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+}
+
 /// 动弹模型
-class JFTweets: NSObject {
+class JFTweet: NSObject {
     
     /// 作者
     var author: JFTweetAuthor?
     
     /// 动弹图片模型数组
     var images: [JFTweetImage]?
+    
+    /// 被at的用户模型数组
+    var atUsers: [JFTweetAtUser]?
     
     /// 动弹id
     var id = 0
@@ -101,6 +124,14 @@ class JFTweets: NSObject {
             }
             self.images = images
             return
+        } else if key == "atUsers" {
+            let data = value as! [[String : AnyObject]]
+            var atUsers = [JFTweetAtUser]()
+            for dict in data {
+                atUsers.append(JFTweetAtUser(dict: dict))
+            }
+            self.atUsers = atUsers
+            return
         }
         
         return super.setValue(value, forKey: key)
@@ -112,16 +143,16 @@ class JFTweets: NSObject {
      - parameter tweetsArray: 动弹模型数组
      - parameter finished:    完成回调
      */
-    class func cacheWebImage(tweetsArray: [JFTweets]?, finished: (tweetsArray: [JFTweets]?) -> ()) {
+    class func cacheWebImage(tweets: [JFTweet]?, finished: (tweets: [JFTweet]?) -> ()) {
         
-        guard let list = tweetsArray else {
-            finished(tweetsArray: nil)
+        guard let tweets = tweets else {
+            finished(tweets: nil)
             return
         }
         
         let group = dispatch_group_create()
         
-        for tweet in list {
+        for tweet in tweets {
             let count = tweet.images?.count ?? 0
             if count == 0 {
                 continue
@@ -145,12 +176,11 @@ class JFTweets: NSObject {
                     dispatch_group_leave(group)
                 }
                 
-                
             }
         }
         
         dispatch_group_notify(group, dispatch_get_main_queue()) { () -> Void in
-            finished(tweetsArray: tweetsArray)
+            finished(tweets: tweets)
         }
     }
     
@@ -163,7 +193,7 @@ class JFTweets: NSObject {
      - parameter user_id:  浏览者id
      - parameter finished: 完成回调
      */
-    class func loadTrendsList(type: String, page: Int, user_id: Int, finished: (tweetsArray: [JFTweets]?) -> ()) {
+    class func loadTrendsList(type: String, page: Int, user_id: Int, finished: (tweets: [JFTweet]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
             "type" : type,
@@ -174,23 +204,21 @@ class JFTweets: NSObject {
         
         JFNetworkTools.shareNetworkTool.get(GET_TWEETS_LIST, parameters: parameters) { (success, result, error) in
             
-            print(result)
             guard let result = result where success == true && result["status"] == "success" else {
                 print(success, error)
-                finished(tweetsArray: nil)
+                finished(tweets: nil)
                 return
             }
             
             let data = result["result"]["data"].arrayObject as! [[String : AnyObject]]
-            var tweetsArray = [JFTweets]()
+            var tweets = [JFTweet]()
             
             for dict in data {
-                let tweets = JFTweets(dict: dict)
-                tweetsArray.append(tweets)
+                let tweet = JFTweet(dict: dict)
+                tweets.append(tweet)
             }
             
-            //            finished(tweetsArray: tweetsArray)
-            cacheWebImage(tweetsArray, finished: finished)
+            cacheWebImage(tweets, finished: finished)
         }
     }
     

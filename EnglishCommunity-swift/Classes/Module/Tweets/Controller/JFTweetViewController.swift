@@ -1,5 +1,5 @@
 //
-//  JFTweetsViewController.swift
+//  JFTweetViewController.swift
 //  EnglishCommunity-swift
 //
 //  Created by zhoujianfeng on 16/8/4.
@@ -8,16 +8,16 @@
 
 import UIKit
 
-class JFTweetsViewController: UIViewController {
+class JFTweetViewController: UIViewController {
 
     /// 当前页码
     var page: Int = 0
     
     /// 动弹模型数组
-    var tweetsArray = [JFTweets]()
+    var tweets = [JFTweet]()
     
     /// 动弹列表cell重用标识
-    let tweetsIdentifier = "tweetsIdentifier"
+    let tweetIdentifier = "tweetIdentifier"
     
     /// 加载类型 / 最新new 最热hot 我的me
     var type = "new"
@@ -33,7 +33,7 @@ class JFTweetsViewController: UIViewController {
         tableView.mj_header.beginRefreshing()
         
         // 监听点击图片的通知
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFTweetsViewController.selectedPicture(_:)), name: JFStatusPictureViewCellSelectedPictureNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFTweetViewController.selectedPicture(_:)), name: JFStatusPictureViewCellSelectedPictureNotification, object: nil)
     }
     
     deinit {
@@ -85,20 +85,20 @@ class JFTweetsViewController: UIViewController {
      */
     private func updateData(type: String, page: Int, method: Int) {
         
-        JFTweets.loadTrendsList(type, page: page, user_id: JFAccountModel.shareAccount()?.id ?? 0) { (tweetsArray) in
+        JFTweet.loadTrendsList(type, page: page, user_id: JFAccountModel.shareAccount()?.id ?? 0) { (tweets) in
             
             self.tableView.mj_header.endRefreshing()
             self.tableView.mj_footer.endRefreshing()
             
-            guard let tweetsArray = tweetsArray else {
+            guard let tweets = tweets else {
                 self.tableView.mj_footer.endRefreshingWithNoMoreData()
                 return
             }
             
             if method == 0 {
-                self.tweetsArray = tweetsArray
+                self.tweets = tweets
             } else {
-                self.tweetsArray += tweetsArray
+                self.tweets += tweets
             }
             
             self.tableView.reloadData()
@@ -112,70 +112,89 @@ class JFTweetsViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.whiteColor()
-        tableView.registerClass(JFTweetsListCell.classForCoder(), forCellReuseIdentifier: self.tweetsIdentifier)
+        tableView.registerClass(JFTweetListCell.classForCoder(), forCellReuseIdentifier: self.tweetIdentifier)
         return tableView
     }()
     
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
-extension JFTweetsViewController: UITableViewDataSource, UITableViewDelegate {
+extension JFTweetViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweetsArray.count
+        return tweets.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        let tweets = tweetsArray[indexPath.row]
-        if Int(tweets.rowHeight) == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(tweetsIdentifier) as! JFTweetsListCell
-            let height = cell.getRowHeight(tweets)
-            tweets.rowHeight = height
+        let tweet = tweets[indexPath.row]
+        if Int(tweet.rowHeight) == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(tweetIdentifier) as! JFTweetListCell
+            let height = cell.getRowHeight(tweet)
+            tweet.rowHeight = height
         }
-        return tweets.rowHeight
+        return tweet.rowHeight
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(tweetsIdentifier) as! JFTweetsListCell
-        cell.tweets = tweetsArray[indexPath.row]
-        cell.tweetsListCellDelegate = self
+        let cell = tableView.dequeueReusableCellWithIdentifier(tweetIdentifier) as! JFTweetListCell
+        cell.tweet = tweets[indexPath.row]
+        cell.tweetListCellDelegate = self
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let detailVc = JFTweetsDetailViewController()
-        detailVc.tweets = tweetsArray[indexPath.row]
+        let detailVc = JFTweetDetailViewController()
+        detailVc.tweet = tweets[indexPath.row]
         navigationController?.pushViewController(detailVc, animated: true)
     }
     
 }
 
 // MARK: - JFTweetsListCellDelegate - JFStatusPictureViewCellSelectedPictureNotification
-extension JFTweetsViewController: JFTweetsListCellDelegate {
+extension JFTweetViewController: JFTweetListCellDelegate {
     
     /**
-     点击了头像
-     
-     - parameter cell:   动弹列表cell
-     - parameter button: 被点击的按钮
+     点击了 头像
      */
-    func tweetsListCell(cell: JFTweetsListCell, didTappedAvatarButton button: UIButton) {
-        print(cell.tweets?.author?.nickname)
+    func tweetListCell(cell: JFTweetListCell, didTappedAvatarButton button: UIButton) {
+        print("user_id = ", cell.tweet?.author?.id ?? 0)
     }
     
     /**
-     点击了赞
-     
-     - parameter cell:   动弹列表cell
-     - parameter button: 被点击的按钮
+     点击了 赞按钮
      */
-    func tweetsListCell(cell: JFTweetsListCell, didTappedLikeButton button: UIButton) {
-        print(cell.tweets?.id)
+    func tweetListCell(cell: JFTweetListCell, didTappedLikeButton button: UIButton) {
+        print(cell.tweet?.id)
     }
     
+    /**
+     点击了 超链接
+     */
+    func tweetListCell(cell: JFTweetListCell, didTappedSuperLink url: String) {
+        print(cell.tweet?.id, url)
+    }
+    
+    /**
+     点击了 @昵称
+     */
+    func tweetListCell(cell: JFTweetListCell, didTappedAtUser nickname: String, sequence: Int) {
+        
+        guard let atUsers = cell.tweet?.atUsers else {
+            return
+        }
+        
+        for atUser in atUsers {
+            if atUser.nickname == nickname && atUser.sequence == sequence {
+                print("user_id = ", atUser.id)
+            }
+        }
+        
+    }
+    
+    // MARK: - 做转场动画
     /**
      选择了动弹配图
      */

@@ -13,9 +13,9 @@ let JFStatusPictureViewCellSelectedPictureNotification = "JFStatusPictureViewCel
 let JFStatusPictureViewCellSelectedPictureModelKey = "JFStatusPictureViewCellSelectedPictureModelKey"
 let JFStatusPictureViewCellSelectedPictureIndexKey = "JFStatusPictureViewCellSelectedPictureIndexKey"
 
-class JFTweetsPictureView: UICollectionView {
+class JFTweetPictureView: UICollectionView {
     
-    private let tweetsPictureViewIdentifier = "tweetsPictureViewIdentifier"
+    private let tweetPictureViewIdentifier = "tweetPictureViewIdentifier"
     
     /// 布局
     private var layout = UICollectionViewFlowLayout()
@@ -34,7 +34,7 @@ class JFTweetsPictureView: UICollectionView {
         scrollEnabled = false
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-        registerClass(JFTweetsPictureViewCell.self, forCellWithReuseIdentifier: tweetsPictureViewIdentifier)
+        registerClass(JFTweetPictureViewCell.self, forCellWithReuseIdentifier: tweetPictureViewIdentifier)
     }
     
     /// 微博模型
@@ -115,14 +115,14 @@ class JFTweetsPictureView: UICollectionView {
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension JFTweetsPictureView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension JFTweetPictureView: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(tweetsPictureViewIdentifier, forIndexPath: indexPath) as! JFTweetsPictureViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(tweetPictureViewIdentifier, forIndexPath: indexPath) as! JFTweetPictureViewCell
         cell.image = images![indexPath.item]
         return cell
     }
@@ -135,7 +135,7 @@ extension JFTweetsPictureView: UICollectionViewDataSource, UICollectionViewDeleg
             let model = JFPhotoBrowserModel()
             
             let url = NSURL(string: (images?[i].href)!)
-            let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as! JFTweetsPictureViewCell
+            let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as! JFTweetPictureViewCell
             
             model.url = url
             model.imageView = cell.iconView
@@ -155,7 +155,7 @@ extension JFTweetsPictureView: UICollectionViewDataSource, UICollectionViewDeleg
 }
 
 /// 自定义配图cell
-class JFTweetsPictureViewCell: UICollectionViewCell {
+class JFTweetPictureViewCell: UICollectionViewCell {
     
     // MARK: - 属性
     var image: JFTweetImage? {
