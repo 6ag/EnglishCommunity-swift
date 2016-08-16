@@ -50,5 +50,9 @@ let POST_COMMENT = "api/postComment.api"
 /// 获取语法手册
 let GET_GRAMMAR_MANUAL = "api/getGramarManual.api"
 
+/// 获取朋友关系列表 粉丝、关注
+let GET_FRIEND_LIST = "api/getFriendList.api"
+
+
 
 

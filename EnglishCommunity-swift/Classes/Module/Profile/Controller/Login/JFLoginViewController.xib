@@ -195,7 +195,7 @@
                 <constraint firstItem="orm-Gv-W4X" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="22" id="xvf-ph-LbH"/>
                 <constraint firstAttribute="trailing" secondItem="HVF-gx-bLC" secondAttribute="trailing" constant="30" id="ydx-3D-4ui"/>
             </constraints>
-            <point key="canvasLocation" x="496" y="461"/>
+            <point key="canvasLocation" x="384" y="474"/>
         </view>
     </objects>
     <resources>

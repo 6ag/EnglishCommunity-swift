@@ -195,6 +195,13 @@ class JFPublishViewController: UIViewController {
     
     func mention() {
         print("@")
+        
+        textView.resignFirstResponder()
+        let selectFriendVc = JFSelectFriendViewController()
+        selectFriendVc.callback = {(atUsers: [[String : AnyObject]]?) -> Void in
+            print(atUsers)
+        }
+        navigationController?.pushViewController(selectFriendVc, animated: true)
     }
     
     /// 切换表情键盘

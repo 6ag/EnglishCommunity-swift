@@ -30,10 +30,10 @@ class JFEmoticonPackage: NSObject {
         super.init()
     }
     
-    /// 对象打印方法
-    override var description: String {
-        return "\n\t表情包模型: id: \(id), group_name_cn:\(group_name_cn), emoticons: \(emoticons)"
-    }
+//    /// 对象打印方法
+//    override var description: String {
+//        return "\n\t表情包模型: id: \(id), group_name_cn:\(group_name_cn), emoticons: \(emoticons)"
+//    }
     
     // 每次进入发微博界面弹出自定义表情键盘都会去磁盘加载所有的表情,比较耗性能,
     // 只加载一次,然后保存到内存中,以后访问内存中的表情数据
@@ -42,7 +42,7 @@ class JFEmoticonPackage: NSObject {
     
     /// 加载所有表情包
     private class func loadPackages() -> [JFEmoticonPackage] {
-        print("加载所有的表情包")
+//        print("加载所有的表情包")
         // 获取Emoticons.bundle的路径
         
         // 拼接 emoticons.plist 的路径
@@ -115,7 +115,7 @@ class JFEmoticonPackage: NSObject {
                 // 字典转模型,创建表情模型
                 emoticons?.append(JFEmoticon(id: id, dict: dict))
                 
-                index++
+                index += 1
                 // 如果是最后一个按钮就添加一个带删除按钮的表情模型
                 if index == 20 {
                     emoticons?.append(JFEmoticon(removeEmoticon: true))
@@ -164,7 +164,7 @@ class JFEmoticonPackage: NSObject {
         }
         
         // 表情模型的使用次数加1
-        emoticon.times++
+        emoticon.times += 1
         
         // 找到 最近 表情包的所有模型
         var recentEmoticons = packages[0].emoticons
@@ -199,8 +199,8 @@ class JFEmoticonPackage: NSObject {
 //        print("recentEmoticons count: \(recentEmoticons?.count)")
         // 记住要复制回去
         packages[0].emoticons = recentEmoticons
-        print("packages[0].emoticons:\(packages[0].emoticons)")
-        print("packages[0].emoticons count: \(packages[0].emoticons?.count)")
+//        print("packages[0].emoticons:\(packages[0].emoticons)")
+//        print("packages[0].emoticons count: \(packages[0].emoticons?.count)")
     }
 }
 
@@ -285,7 +285,7 @@ class JFEmoticon: NSObject {
     /// 将表情模型转成带表情图片的属性文本
     func emoticonToAttrString(font: UIFont) -> NSAttributedString {
         guard let pngP = pngPath else {
-            print("没有图片")
+//            print("没有图片")
             return NSAttributedString(string: "")
         }
         

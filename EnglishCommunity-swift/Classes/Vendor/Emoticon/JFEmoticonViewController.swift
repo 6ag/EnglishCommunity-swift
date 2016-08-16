@@ -96,7 +96,7 @@ class JFEmoticonViewController: UIViewController {
             }
             
             // 添加点击事件
-            button.addTarget(self, action: "itemClick:", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(JFEmoticonViewController.itemClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
             // 创建 barbuttomitem
             let item = UIBarButtonItem(customView: button)
@@ -106,7 +106,7 @@ class JFEmoticonViewController: UIViewController {
             // 添加弹簧
             items.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil))
             
-            index++
+            index += 1
         }
         
         // 移除最后一个多有的弹簧
@@ -117,7 +117,7 @@ class JFEmoticonViewController: UIViewController {
     
     // 处理toolBar点击事件
     func itemClick(button: UIButton) {
-        print("button.tag:\(button.tag)")
+//        print("button.tag:\(button.tag)")
         
         // button.tag 是加上了基准tag的: 从1000 - 1003
         // scction 0 - 3
@@ -127,7 +127,7 @@ class JFEmoticonViewController: UIViewController {
         // indexPath: 要显示的cell的indexPath
         // animated: 是否动画
         // scrollPosition: 滚动位置
-        print("滚动到section = \(indexPath.section)")
+//        print("滚动到section = \(indexPath.section)")
         collectionView.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: UICollectionViewScrollPosition.Left)
         
         switchSelectedButton(button)
@@ -221,7 +221,7 @@ extension JFEmoticonViewController: UICollectionViewDataSource, UICollectionView
         if let indexPath = collectionView.indexPathsForVisibleItems().first {
             // 获取对应的section 0 - 3
             let section = indexPath.section
-            print("停止滚动 section: \(section)")
+//            print("停止滚动 section: \(section)")
             
             // section 和按钮的位置是对应的
             // 获取toolBar上面的button
@@ -229,7 +229,7 @@ extension JFEmoticonViewController: UICollectionViewDataSource, UICollectionView
             // section 0 - 3
             let button = toolBar.viewWithTag(section + baseTag) as! UIButton
             
-            print("查找到的按钮的tag: \(button.tag)")
+//            print("查找到的按钮的tag: \(button.tag)")
             // 让它选中
             switchSelectedButton(button)
         }

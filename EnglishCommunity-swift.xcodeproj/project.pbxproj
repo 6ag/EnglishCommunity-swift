@@ -107,6 +107,10 @@
 		B2B771131D61A0790042AA5E /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2B7710E1D61A0790042AA5E /* Emoticons.bundle */; };
 		B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */; };
 		B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9A6911D62B17B000B08C4 /* FFLabel.swift */; };
+		B2C9A6941D630721000B08C4 /* JFSelectFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9A6931D630721000B08C4 /* JFSelectFriendViewController.swift */; };
+		B2C9A6961D630D16000B08C4 /* JFRelationUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9A6951D630D16000B08C4 /* JFRelationUser.swift */; };
+		B2C9A6991D63169E000B08C4 /* JFSelectFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9A6971D63169E000B08C4 /* JFSelectFriendCell.swift */; };
+		B2C9A69A1D63169E000B08C4 /* JFSelectFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2C9A6981D63169E000B08C4 /* JFSelectFriendCell.xib */; };
 		B2FC66B41D5C15DF0032703D /* JFCollectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC668C1D5C15DF0032703D /* JFCollectionTableViewController.swift */; };
 		B2FC66B51D5C15DF0032703D /* JFCommentListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC668E1D5C15DF0032703D /* JFCommentListTableViewController.swift */; };
 		B2FC66B61D5C15DF0032703D /* JFForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC66901D5C15DF0032703D /* JFForgotViewController.swift */; };
@@ -246,6 +250,10 @@
 		B2B7710E1D61A0790042AA5E /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
 		B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoticon.swift"; sourceTree = "<group>"; };
 		B2C9A6911D62B17B000B08C4 /* FFLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFLabel.swift; sourceTree = "<group>"; };
+		B2C9A6931D630721000B08C4 /* JFSelectFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSelectFriendViewController.swift; sourceTree = "<group>"; };
+		B2C9A6951D630D16000B08C4 /* JFRelationUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFRelationUser.swift; sourceTree = "<group>"; };
+		B2C9A6971D63169E000B08C4 /* JFSelectFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSelectFriendCell.swift; sourceTree = "<group>"; };
+		B2C9A6981D63169E000B08C4 /* JFSelectFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFSelectFriendCell.xib; sourceTree = "<group>"; };
 		B2FC668C1D5C15DF0032703D /* JFCollectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCollectionTableViewController.swift; sourceTree = "<group>"; };
 		B2FC668E1D5C15DF0032703D /* JFCommentListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCommentListTableViewController.swift; sourceTree = "<group>"; };
 		B2FC66901D5C15DF0032703D /* JFForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFForgotViewController.swift; sourceTree = "<group>"; };
@@ -487,6 +495,7 @@
 			isa = PBXGroup;
 			children = (
 				B249AE211D60280F005C0A41 /* JFPublishViewController.swift */,
+				B2C9A6931D630721000B08C4 /* JFSelectFriendViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -494,6 +503,7 @@
 		B238B4191D5DCC0F00E4307A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B2C9A6951D630D16000B08C4 /* JFRelationUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -502,6 +512,8 @@
 			isa = PBXGroup;
 			children = (
 				B2B771031D619FB50042AA5E /* JFPlaceholderTextView.swift */,
+				B2C9A6971D63169E000B08C4 /* JFSelectFriendCell.swift */,
+				B2C9A6981D63169E000B08C4 /* JFSelectFriendCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -948,6 +960,7 @@
 				B28D94091D534AA700128D20 /* JFPlayer_slider_thumb@2x.png in Resources */,
 				B28D94001D534AA700128D20 /* JFPlayer_pause@3x.png in Resources */,
 				B213E3F11D54D40A00589058 /* JFHomeSectionHeaderView.xib in Resources */,
+				B2C9A69A1D63169E000B08C4 /* JFSelectFriendCell.xib in Resources */,
 				B2190B081D4F85C4007FC0E9 /* Assets.xcassets in Resources */,
 				B213E3EF1D54D40A00589058 /* JFHomeCellItem.xib in Resources */,
 				B28D94081D534AA700128D20 /* JFPlayer_seek_to_image@3x.png in Resources */,
@@ -1038,6 +1051,7 @@
 				B2FC66BB1D5C15DF0032703D /* JFAboutMeViewController.swift in Sources */,
 				B2FC66BA1D5C15DF0032703D /* JFModifySafeTableViewController.swift in Sources */,
 				B2FC66BE1D5C15DF0032703D /* JFProfileFeedbackViewController.swift in Sources */,
+				B2C9A6961D630D16000B08C4 /* JFRelationUser.swift in Sources */,
 				B2FC66CB1D5C15DF0032703D /* JFProfileCellSwitchModel.swift in Sources */,
 				B2B770FC1D61689E0042AA5E /* JFPhotoBrowserCell.swift in Sources */,
 				B249AE341D607D41005C0A41 /* JFTweet.swift in Sources */,
@@ -1050,6 +1064,7 @@
 				B2FC66CC1D5C15DF0032703D /* JFInfoHeaderView.swift in Sources */,
 				B2FC66C31D5C15DF0032703D /* JFRegisterViewController.swift in Sources */,
 				B2B770FB1D61689E0042AA5E /* JFImageView.swift in Sources */,
+				B2C9A6941D630721000B08C4 /* JFSelectFriendViewController.swift in Sources */,
 				B28D940C1D534AA700128D20 /* JFPlayerClearityChooseButton.swift in Sources */,
 				B2FC66D31D5C167E0032703D /* JFAccountModel.swift in Sources */,
 				B238B40E1D5D991400E4307A /* JFGrammarViewController.swift in Sources */,
@@ -1089,6 +1104,7 @@
 				B2FC66CA1D5C15DF0032703D /* JFProfileCellModel.swift in Sources */,
 				B213E3F31D54D45B00589058 /* JFPlayerViewController.swift in Sources */,
 				B2FC66CF1D5C15DF0032703D /* JFProfileHeaderView.swift in Sources */,
+				B2C9A6991D63169E000B08C4 /* JFSelectFriendCell.swift in Sources */,
 				B2FC66B91D5C15DF0032703D /* JFModifyInfoTableViewController.swift in Sources */,
 				B2FC66E11D5C67510032703D /* NSDateExtension.swift in Sources */,
 				B21501CE1D53668B005E4670 /* Config.swift in Sources */,
