@@ -11,6 +11,46 @@ import UIKit
 extension UIBarButtonItem {
     
     /**
+     创建只带文字的item
+     
+     - parameter title:  标题
+     - parameter target: 监听方法对象
+     - parameter action: 方法选择器
+     
+     - returns: barButtonItem
+     */
+    class func leftItem(title: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let itemButton = UIButton(type: .Custom)
+        itemButton.size = CGSize(width: 50, height: 44)
+        itemButton.contentHorizontalAlignment = .Left
+        itemButton.setTitle(title, forState: .Normal)
+        itemButton.titleLabel?.font = UIFont.systemFontOfSize(18)
+        itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        return UIBarButtonItem(customView: itemButton)
+    }
+    
+    /**
+     创建只带文字的item
+     
+     - parameter title:  标题
+     - parameter target: 监听方法对象
+     - parameter action: 方法选择器
+     
+     - returns: barButtonItem
+     */
+    class func rightItem(title: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let itemButton = UIButton(type: .Custom)
+        itemButton.size = CGSize(width: 50, height: 44)
+        itemButton.contentHorizontalAlignment = .Right
+        itemButton.setTitle(title, forState: .Normal)
+        itemButton.titleLabel?.font = UIFont.systemFontOfSize(18)
+        itemButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        itemButton.setTitleColor(UIColor(white: 0.9, alpha: 1), forState: .Disabled)
+        itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        return UIBarButtonItem(customView: itemButton)
+    }
+    
+    /**
      快速创建一个图标barButtonItem 左边
      
      - parameter normalImage:      默认图片名

@@ -22,7 +22,7 @@ class JFSelectFriendCell: UITableViewCell {
     
     var relationUser: JFRelationUser? {
         didSet {
-            avatarImageView.yy_setImageWithURL(NSURL(string: relationUser!.relationAvatar!), placeholder: nil)
+            avatarImageView.yy_imageURL = NSURL(string: relationUser!.relationAvatar!)
             nicknameLabel.text = relationUser!.relationNickname!
         }
     }

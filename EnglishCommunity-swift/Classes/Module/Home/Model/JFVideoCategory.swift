@@ -16,6 +16,9 @@ class JFVideoCategory: NSObject {
     /// 分类名称
     var name: String?
     
+    /// 分类别名
+    var alias: String?
+    
     /// 分类浏览量
     var view: Int = 0
     
@@ -62,7 +65,7 @@ class JFVideoCategory: NSObject {
         JFNetworkTools.shareNetworkTool.get(GET_ALL_CATEGORIES, parameters: parameters) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
-                print(success, error)
+                print(success, error, parameters)
                 finished(videoCategories: nil)
                 return
             }

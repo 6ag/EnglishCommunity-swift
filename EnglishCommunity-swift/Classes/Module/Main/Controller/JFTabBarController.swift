@@ -16,7 +16,7 @@ class JFTabBarController: UITabBarController {
         let tabBar = JFTabBar()
         tabBar.tabBarDelegate = self
         setValue(tabBar, forKey: "tabBar")
-        
+        tabBar.tintColor = COLOR_NAV_BG
         prepareVc()
     }
     
@@ -26,13 +26,13 @@ class JFTabBarController: UITabBarController {
         configChildViewController(essenceVc, title: "首页", imageName: "tabbar_video_icon_normal", selectedImageName: "tabbar_video_icon_selected")
         
         let newVc = JFGrammarViewController()
-        configChildViewController(newVc, title: "语法手册", imageName: "tabbar_grammar_icon_normal", selectedImageName: "tabbar_grammar_icon_selected")
+        configChildViewController(newVc, title: "手册", imageName: "tabbar_grammar_icon_normal", selectedImageName: "tabbar_grammar_icon_selected")
         
         let friendTrendsVc = JFTweetViewController()
         configChildViewController(friendTrendsVc, title: "动态", imageName: "tabbar_trends_icon_normal", selectedImageName: "tabbar_trends_icon_selected")
         
         let profileVc = JFProfileViewController()
-        configChildViewController(profileVc, title: "我", imageName: "tab_profile_icon_normal", selectedImageName: "tab_profile_icon_selected")
+        configChildViewController(profileVc, title: "我的", imageName: "tab_profile_icon_normal", selectedImageName: "tab_profile_icon_selected")
     }
     
     /**
@@ -44,23 +44,15 @@ class JFTabBarController: UITabBarController {
      - parameter selectedImageName:   选中图片名
      */
     private func configChildViewController(childViewController: UIViewController, title: String, imageName: String, selectedImageName: String) {
-        childViewController.navigationItem.title = title
+        childViewController.title = title
+        childViewController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -3)
+        childViewController.tabBarItem.setTitleTextAttributes([NSFontAttributeName : UIFont.systemFontOfSize(12)], forState: UIControlState.Normal)
         childViewController.tabBarItem.image = UIImage(named: imageName)?.imageWithRenderingMode(.AlwaysOriginal)
         childViewController.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.imageWithRenderingMode(.AlwaysOriginal)
         let navigationC = JFNavigationController(rootViewController: childViewController)
         addChildViewController(navigationC)
     }
     
-    /**
-     修改tabBar的高度
-     */
-    override func viewWillLayoutSubviews() {
-        
-        var tabFrame = tabBar.frame
-        tabFrame.size.height = 60
-        tabFrame.origin.y = SCREEN_HEIGHT - 60
-        tabBar.frame = tabFrame
-    }
 }
 
 // MARK: - JFTabBarDelegate
@@ -70,7 +62,6 @@ extension JFTabBarController: JFTabBarDelegate {
      点击了发布按钮
      */
     func didTappedAddButton() {
-        
         let publishVc = JFNavigationController(rootViewController: JFPublishViewController())
         let loginVc = JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil))
         let vc = JFAccountModel.isLogin() ? publishVc : loginVc

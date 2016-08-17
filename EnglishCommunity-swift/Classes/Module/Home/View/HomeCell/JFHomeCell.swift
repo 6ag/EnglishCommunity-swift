@@ -41,6 +41,7 @@ class JFHomeCell: UITableViewCell {
      */
     private func prepareUI() {
         
+        contentView.backgroundColor = COLOR_ALL_BG
         contentView.addSubview(collectionView)
         collectionView.snp_makeConstraints { (make) in
             make.edges.equalTo(0)
@@ -67,7 +68,7 @@ class JFHomeCell: UITableViewCell {
         layout.itemSize = CGSize(width: LIST_ITEM_WIDTH, height: LIST_ITEM_HEIGHT)
         
         let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.backgroundColor = COLOR_ALL_BG
         collectionView.scrollEnabled = false
         collectionView.bounces = false
         collectionView.dataSource = self

@@ -39,7 +39,7 @@ class JFGrammar: NSObject {
         JFNetworkTools.shareNetworkTool.get(GET_GRAMMAR_MANUAL, parameters: parameters) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
-                print(success, error)
+                print(success, error, parameters)
                 finished(grammars: nil)
                 return
             }

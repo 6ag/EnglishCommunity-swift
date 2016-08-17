@@ -17,7 +17,7 @@ class JFHomeViewController: UIViewController {
     let homeCellIdentifier = "homeCellIdentifier"
     
     /// 顶部轮播视图
-    var topScrollView: SDCycleScrollView!
+    var topScrollView: SDCycleScrollView?
     var topVideoInfos = [JFVideoInfo]()
     
     /// 所有分类信息模型
@@ -31,13 +31,21 @@ class JFHomeViewController: UIViewController {
         tableView.mj_header.beginRefreshing()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        topScrollView?.adjustWhenControllerViewWillAppera()
+    }
+    
     /**
      准备UI
      */
     private func prepareUI() {
         
         view.backgroundColor = COLOR_ALL_BG
+        tableView.backgroundColor = COLOR_ALL_BG
         view.addSubview(tableView)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("navigation_search_icon", highlightedImage: "navigation_search_icon", target: self, action: #selector(didTappedSearchButton))
     }
     
     /**
@@ -45,22 +53,25 @@ class JFHomeViewController: UIViewController {
      */
     private func prepareScrollView() {
         
-        topScrollView = SDCycleScrollView(frame: CGRect(x:0, y:0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.25), delegate: self, placeholderImage: UIImage(named: "photoview_image_default_white"))
-        topScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight
-        topScrollView.currentPageDotColor = UIColor.blackColor()
+        topScrollView = SDCycleScrollView(frame: CGRect(x:0, y:0, width: SCREEN_WIDTH, height: 188), delegate: self, placeholderImage: UIImage(named: "photoview_image_default_white"))
+        topScrollView?.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter
+        topScrollView?.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated
         
         var images = [String]()
-        var titles = [String]()
-        
         for model in topVideoInfos {
             images.append(model.cover!)
-            titles.append(model.title!)
         }
         
-        topScrollView.imageURLStringsGroup = images
-        topScrollView.titlesGroup = titles
-        topScrollView.autoScrollTimeInterval = 5
+        topScrollView?.imageURLStringsGroup = images
+        topScrollView?.autoScrollTimeInterval = 5
         tableView.tableHeaderView = topScrollView
+        
+    }
+    
+    /**
+     点击了搜索按钮
+     */
+    @objc private func didTappedSearchButton() {
         
     }
     
@@ -147,29 +158,30 @@ extension JFHomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return TOP_CATEGORY_HEIGHT
+            return 87
         } else {
             return LIST_ITEM_HEIGHT * 2 + LIST_ITEM_PADDING
         }
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0.01
+        }
         return 40
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerView = NSBundle.mainBundle().loadNibNamed("JFHomeSectionHeaderView", owner: nil, options: nil).last as! JFHomeSectionHeaderView
-        if section == 0 {
-            headerView.titleLabel.text = "全部分类"
-            headerView.moreButton.hidden = true
-        } else {
+        if section != 0 {
+            let headerView = NSBundle.mainBundle().loadNibNamed("JFHomeSectionHeaderView", owner: nil, options: nil).last as! JFHomeSectionHeaderView
             headerView.titleLabel.text = videoCategories[section - 1].name
             headerView.section = section
             headerView.delegate = self
             headerView.moreButton.hidden = false
+            return headerView
         }
-        return headerView
+        
+        return nil
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

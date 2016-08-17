@@ -25,20 +25,17 @@ let GLOBAL_SHADOW_ALPHA: CGFloat = 0.5
 /// 视频列表的item的间距
 let LIST_ITEM_PADDING: CGFloat = 10
 
-/// 视频列表的item宽度
+/// 首页列表的item宽度
 let LIST_ITEM_WIDTH: CGFloat = ((SCREEN_WIDTH - 3 * 10) / 2)
 
-/// 视频列表的item的高度
-let LIST_ITEM_HEIGHT: CGFloat = (LIST_ITEM_WIDTH / 16 * 9 + 45)
-
-/// 首页顶部分类item高度
-let TOP_CATEGORY_HEIGHT: CGFloat = 100
+/// 首页列表的item的高度
+let LIST_ITEM_HEIGHT: CGFloat = (LIST_ITEM_WIDTH / 16 * 9 + 58)
 
 /// 导航栏背景色 - 绿色
 let COLOR_NAV_BG = UIColor.colorWithHexString("41ca61")
 
 /// 所有控制器背景颜色 - 偏白
-let COLOR_ALL_BG = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.00)
+let COLOR_ALL_BG = UIColor.colorWithHexString("f7f7f7")
 
 /// 导航栏ITEM默认 - 白色
 let COLOR_NAV_ITEM_NORMAL = UIColor(red:0.95, green:0.98, blue:1.00, alpha:1.00)

@@ -21,10 +21,10 @@ class JFTweetDetailViewController: UIViewController {
     
     /// 动弹模型
     var tweet: JFTweet?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         prepareUI()
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
         updateData("tweet", page: page, method: 0, source_id: tweet!.id)
@@ -142,7 +142,8 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         
         // 已经登录
         JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord(ADD_OR_CANCEL_LIKE_RECORD, userId: JFAccountModel.shareAccount()!.id, type: "tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
-            guard let result = result where success == true else {
+            
+            guard let result = result where success == true && result["status"] == "success" else {
                 return
             }
             

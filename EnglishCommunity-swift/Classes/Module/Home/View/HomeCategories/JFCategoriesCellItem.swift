@@ -13,6 +13,7 @@ class JFCategoriesCellItem: UICollectionViewCell {
     var category: JFVideoCategory? {
         didSet {
             titleLabel.text = category!.name!
+            iconView.image = UIImage(named: category!.alias!)
         }
     }
     
@@ -21,7 +22,7 @@ class JFCategoriesCellItem: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        contentView.backgroundColor = UIColor(patternImage: UIImage(named: "fenlei")!)
     }
 
 }

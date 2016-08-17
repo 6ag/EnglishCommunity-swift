@@ -12,25 +12,21 @@ import YYWebImage
 class JFHomeCellItem: UICollectionViewCell {
     
     @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var teacherLabel: UILabel!
-    @IBOutlet weak var viewLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bgView: UIView!
     
     var videoInfo: JFVideoInfo? {
         didSet {
-            photoImageView.yy_setImageWithURL(NSURL(string: videoInfo!.cover!), options: YYWebImageOptions.AllowBackgroundTask)
-            teacherLabel.text = videoInfo!.teacherName!
-            viewLabel.text = "\(videoInfo!.view)"
+            photoImageView.yy_imageURL = NSURL(string: videoInfo!.cover!)
             titleLabel.text = videoInfo!.title!
         }
     }
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        bgView.layer.cornerRadius = 10
+        contentView.backgroundColor = COLOR_ALL_BG
+        bgView.layer.cornerRadius = 3
         bgView.layer.masksToBounds = true
         
     }

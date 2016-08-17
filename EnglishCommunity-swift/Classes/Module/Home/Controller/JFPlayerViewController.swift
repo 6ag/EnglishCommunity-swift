@@ -122,7 +122,7 @@ class JFPlayerViewController: UIViewController {
             self.videos = videos
             self.videoTableView.reloadData()
             self.videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: true, scrollPosition: .Top)
-            self.player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[0].videoUrl!)")!)
+            self.player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[0].videoUrl!)")!, title: videos[0].title!)
         }
     }
     
@@ -207,7 +207,7 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == videoTableView {
             // 切换播放源
             player.prepareToDealloc()
-            player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[indexPath.row].videoUrl!)")!)
+            player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[indexPath.row].videoUrl!)")!, title: videos[indexPath.row].title!)
         } else {
             
         }

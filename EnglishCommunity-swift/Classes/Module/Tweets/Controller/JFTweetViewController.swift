@@ -179,7 +179,8 @@ extension JFTweetViewController: JFTweetListCellDelegate {
         
         // 已经登录
         JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord(ADD_OR_CANCEL_LIKE_RECORD, userId: JFAccountModel.shareAccount()!.id, type: "tweet", sourceID: cell.tweet!.id) { (success, result, error) in
-            guard let result = result where success == true else {
+            
+            guard let result = result where success == true && result["status"] == "success" else {
                 return
             }
             

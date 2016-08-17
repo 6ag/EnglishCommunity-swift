@@ -15,7 +15,6 @@ protocol JFHomeSectionHeaderViewDelegate: NSObjectProtocol {
 class JFHomeSectionHeaderView: UIView {
     
     @IBOutlet weak var moreButton: UIButton!
-    @IBOutlet weak var lineView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
     weak var delegate: JFHomeSectionHeaderViewDelegate?

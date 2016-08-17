@@ -37,7 +37,7 @@ class JFTweetDetailHeaderView: UIView {
     var tweet: JFTweet? {
         didSet {
             
-            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: tweet!.author!.avatar!), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
+            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: tweet!.author!.avatar!), forState: .Normal, options: YYWebImageOptions(rawValue: 0))
             nicknameLabel.text = tweet!.author!.nickname!
             contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet!.content!, font: UIFont.systemFontOfSize(16))
             pictureView.images = tweet?.images

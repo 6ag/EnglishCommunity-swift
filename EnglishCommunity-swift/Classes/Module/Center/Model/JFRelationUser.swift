@@ -44,7 +44,8 @@ class JFRelationUser: NSObject {
         
         JFNetworkTools.shareNetworkTool.get(GET_FRIEND_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where success == true else {
+            guard let result = result where success == true && result["status"] == "success" else {
+                print(success, error, parameters)
                 return
             }
             

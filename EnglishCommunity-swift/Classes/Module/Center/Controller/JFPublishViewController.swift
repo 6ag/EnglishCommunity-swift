@@ -83,9 +83,9 @@ class JFPublishViewController: UIViewController {
     /// 设置导航栏
     private func setupNavigationBar() {
         
-        navigationItem.title = "来一发"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(JFPublishViewController.close))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(JFPublishViewController.sendtweets))
+        navigationItem.title = "来一发"        
+        navigationItem.leftBarButtonItem = UIBarButtonItem.leftItem("取消", target: self, action: #selector(JFPublishViewController.close))
+        navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("发送", target: self, action: #selector(JFPublishViewController.sendtweets))
         navigationItem.rightBarButtonItem?.enabled = false
         
     }
