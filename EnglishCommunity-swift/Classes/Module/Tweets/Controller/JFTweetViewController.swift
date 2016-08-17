@@ -11,6 +11,8 @@ import YYWebImage
 
 class JFTweetViewController: UIViewController {
 
+    var lastSelectedIndex = 0
+    
     /// 当前页码
     var page: Int = 0
     
@@ -21,10 +23,12 @@ class JFTweetViewController: UIViewController {
     let tweetIdentifier = "tweetIdentifier"
     
     /// 加载类型 / 最新new 最热hot 我的me
-    var type = "new"
+    var type = "hot"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tabBarController?.delegate = self
         
         prepareUI()
         tableView.mj_header = setupHeaderRefresh(self, action: #selector(pullDownRefresh))
@@ -166,7 +170,31 @@ extension JFTweetViewController: JFTweetListCellDelegate {
      点击了 赞按钮
      */
     func tweetListCell(cell: JFTweetListCell, didTappedLikeButton button: UIButton) {
-        print(cell.tweet?.id)
+        
+        // 未登录
+        if !JFAccountModel.isLogin() {
+            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: nil)
+            return
+        }
+        
+        // 已经登录
+        JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord(ADD_OR_CANCEL_LIKE_RECORD, userId: JFAccountModel.shareAccount()!.id, type: "tweet", sourceID: cell.tweet!.id) { (success, result, error) in
+            guard let result = result where success == true else {
+                return
+            }
+            
+            if result["result"]["type"].stringValue == "add" {
+                // 赞
+                cell.tweet!.likeCount += 1
+                cell.tweet!.liked = 1
+            } else {
+                // 取消赞
+                cell.tweet!.likeCount -= 1
+                cell.tweet!.liked = 0
+            }
+            
+            self.tableView.reloadData()
+        }
     }
     
     /**
@@ -209,5 +237,21 @@ extension JFTweetViewController: JFTweetListCellDelegate {
         photoBrowserVC.transitioningDelegate = photoBrowserVC
         photoBrowserVC.modalPresentationStyle = UIModalPresentationStyle.Custom
         presentViewController(photoBrowserVC, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UITabBarDelegate
+extension JFTweetViewController: UITabBarControllerDelegate {
+    
+    internal func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        lastSelectedIndex = tabBarController.selectedIndex
+        return true
+    }
+    
+    internal func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        
+        if tabBarController.selectedIndex == lastSelectedIndex {
+            tableView.mj_header.beginRefreshing()
+        }
     }
 }

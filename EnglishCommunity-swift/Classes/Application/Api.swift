@@ -53,6 +53,8 @@ let GET_GRAMMAR_MANUAL = "api/getGramarManual.api"
 /// 获取朋友关系列表 粉丝、关注
 let GET_FRIEND_LIST = "api/getFriendList.api"
 
+/// 添加或取消赞
+let ADD_OR_CANCEL_LIKE_RECORD = "api/addOrCancelLikeRecord.api"
 
 
 

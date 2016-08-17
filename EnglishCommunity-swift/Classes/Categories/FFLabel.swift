@@ -85,6 +85,7 @@ public class FFLabel: UILabel {
                 linkRanges.append(r.rangeAtIndex(0))
             }
         }
+        
     }
     
     /// add line break mode

@@ -134,7 +134,30 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
     }
     
     func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedLikeButton button: UIButton) {
-        print(headerView.tweet?.id)
+        // 未登录
+        if !JFAccountModel.isLogin() {
+            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: nil)
+            return
+        }
+        
+        // 已经登录
+        JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord(ADD_OR_CANCEL_LIKE_RECORD, userId: JFAccountModel.shareAccount()!.id, type: "tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
+            guard let result = result where success == true else {
+                return
+            }
+            
+            if result["result"]["type"].stringValue == "add" {
+                // 赞
+                headerView.tweet!.likeCount += 1
+                headerView.tweet!.liked = 1
+            } else {
+                // 取消赞
+                headerView.tweet!.likeCount -= 1
+                headerView.tweet!.liked = 0
+            }
+            
+            headerView.getRowHeight(headerView.tweet!)
+        }
     }
     
     func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedSuperLink url: String) {

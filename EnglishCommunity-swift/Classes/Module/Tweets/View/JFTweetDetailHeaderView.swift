@@ -44,6 +44,7 @@ class JFTweetDetailHeaderView: UIView {
             publishTimeLabel.text = tweet?.publishTime?.timeStampToDate().dateToDescription()
             appClientLabel.text = tweet?.appClient == 0 ? "iOS客户端" : "Android客户端"
             likeButton.setTitle("\(tweet!.likeCount)", forState: .Normal)
+            likeButton.selected = tweet?.liked == 1
             commentButton.setTitle("\(tweet!.commentCount)", forState: .Normal)
             
             let margin: CGFloat = 10

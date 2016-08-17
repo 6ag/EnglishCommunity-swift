@@ -35,7 +35,7 @@ let LIST_ITEM_HEIGHT: CGFloat = (LIST_ITEM_WIDTH / 16 * 9 + 45)
 let TOP_CATEGORY_HEIGHT: CGFloat = 100
 
 /// 导航栏背景色 - 绿色
-let COLOR_NAV_BG = UIColor(red:0.17, green:0.58, blue:0.87, alpha:1.00)
+let COLOR_NAV_BG = UIColor.colorWithHexString("41ca61")
 
 /// 所有控制器背景颜色 - 偏白
 let COLOR_ALL_BG = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.00)

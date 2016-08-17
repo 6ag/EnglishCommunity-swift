@@ -15,8 +15,8 @@ class JFPublishViewController: UIViewController {
     /// 照片选择器控制器view的底部约束
     private var photoSelectorViewBottomCon: NSLayoutConstraint?
     
-    /// 微博内容的最大长度
-    private let tweetsMaxLength = 20
+    /// 内容的最大长度
+    private let tweetsMaxLength = 250
     
     /// 选取的将要被at的用户
     var relationUsers: [JFRelationUser]?
@@ -178,8 +178,10 @@ class JFPublishViewController: UIViewController {
     }
     
     // MARK: - 按钮点击事件
+    /**
+     图片
+     */
     func picture() {
-        print("图片")
         
         // 让照片选择器的view移动上来
         photoSelectorViewBottomCon?.constant = 0
@@ -192,13 +194,19 @@ class JFPublishViewController: UIViewController {
         }
     }
     
+    /**
+     话题 #话题#
+     */
     func trend() {
-        print("#")
+        let selectStart = textView.selectedRange.location + 1
+        textView.insertText("#请输入教程标题或话题#")
+        textView.selectedRange = NSRange(location: selectStart, length: 10)
     }
     
+    /**
+     谈到某人 @人
+     */
     func mention() {
-        print("@")
-        
         textView.resignFirstResponder()
         let selectFriendVc = JFSelectFriendViewController()
         selectFriendVc.callback = {(relationUsers: [JFRelationUser]?) -> Void in
@@ -252,6 +260,7 @@ class JFPublishViewController: UIViewController {
             return
         }
         
+        // 匹配当前文本框中的 @数量
         var resultStrings = [String]()
         do {
             let pattern = "@\\S*"
@@ -280,12 +289,11 @@ class JFPublishViewController: UIViewController {
         
         JFProgressHUD.showWithStatus("正在发送中...")
         JFNetworkTools.shareNetworkTool.sendTweets(POST_TWEETS, userId: JFAccountModel.shareAccount()!.id, text: text, images: images, atUsers: atUsers) { (success, result, error) in
-            guard let result = result where success == true else {
+            guard let _ = result where success == true else {
                 JFProgressHUD.showInfoWithStatus("没发出去")
                 return
             }
             
-            print(result)
             self.close()
         }
         

@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+/// 网络请求回调
 typealias NetworkFinished = (success: Bool, result: JSON?, error: NSError?) -> ()
 
 class JFNetworkTools: NSObject {
@@ -64,6 +65,11 @@ extension JFNetworkTools {
         }
     }
     
+}
+
+// MARK: - 抽取业务请求
+extension JFNetworkTools {
+    
     /**
      发布动弹
      
@@ -101,15 +107,38 @@ extension JFNetworkTools {
             }
         }
         
-        // 发送请求
         post(APIString, parameters: parameters, finished: finished)
     }
+    
+    /**
+     添加或删除赞记录
+     
+     - parameter APIString: urlString
+     - parameter userId:    用户id
+     - parameter type:      赞的类型 video_info / tweet
+     - parameter sourceID:  视频信息或动弹的id
+     - parameter finished:  完成回调
+     */
+    func addOrCancelLikeRecord(APIString: String, userId: Int, type: String, sourceID: Int, finished: NetworkFinished) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : userId,
+            "type" : type,
+            "source_id" : sourceID
+        ]
+        
+        post(APIString, parameters: parameters, finished: finished)
+    }
+    
+}
+
+// MARK: - 辅助方法
+extension JFNetworkTools {
     
     /**
      对象转json
      */
     private func objectToJson(object: AnyObject) -> NSString? {
-        
         do {
             let data = try NSJSONSerialization.dataWithJSONObject(object, options: NSJSONWritingOptions.PrettyPrinted)
             return NSString(data: data, encoding: NSUTF8StringEncoding)
@@ -117,5 +146,4 @@ extension JFNetworkTools {
             return nil
         }
     }
-    
 }
