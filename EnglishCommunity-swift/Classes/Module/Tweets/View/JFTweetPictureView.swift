@@ -9,9 +9,9 @@
 import UIKit
 import YYWebImage
 
-let JFStatusPictureViewCellSelectedPictureNotification = "JFStatusPictureViewCellSelectedPictureNotification"
-let JFStatusPictureViewCellSelectedPictureModelKey = "JFStatusPictureViewCellSelectedPictureModelKey"
-let JFStatusPictureViewCellSelectedPictureIndexKey = "JFStatusPictureViewCellSelectedPictureIndexKey"
+let JFPictureViewCellSelectedPictureNotification = "JFPictureViewCellSelectedPictureNotification"
+let JFPictureViewCellSelectedPictureModelKey = "JFPictureViewCellSelectedPictureModelKey"
+let JFPictureViewCellSelectedPictureIndexKey = "JFPictureViewCellSelectedPictureIndexKey"
 
 class JFTweetPictureView: UICollectionView {
     
@@ -76,14 +76,8 @@ class JFTweetPictureView: UICollectionView {
             let cacheImage = YYImageCache.sharedCache().getImageForKey(urlString)
             
             var size = CGSize(width: 150, height: 120)
-            
             if let image = cacheImage {
-                // 单图宽度不能超过屏幕一半
-                if image.size.width > SCREEN_WIDTH * 0.5 {
-                    size = image.equalScaleWithWidth(SCREEN_WIDTH * 0.5)
-                } else {
-                    size = image.size
-                }
+                size = CGSize(width: image.size.width * image.scale, height: image.size.height * image.scale)
             }
             
             layout.itemSize = size
@@ -93,13 +87,19 @@ class JFTweetPictureView: UICollectionView {
         layout.minimumInteritemSpacing = margin - 1
         layout.minimumLineSpacing = margin - 1
         
+        // 2图
+        if count == 2 {
+            let width = 2 * itemWidth + margin
+            return CGSize(width: width, height: itemWidth)
+        }
+        
         // 4图
         if count == 4 {
             let width = 2 * itemWidth + margin
             return CGSize(width: width, height: width)
         }
         
-        // 剩下 2, 3, 5, 6, 7, 8, 9图
+        // 剩下 3, 5, 6, 7, 8, 9图
         // 计算行数: 公式: 行数 = (图片数量 + 列数 -1) / 列数
         let row = (count + column - 1) / column
         
@@ -143,12 +143,12 @@ extension JFTweetPictureView: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         let userInfo: [String: AnyObject] = [
-            JFStatusPictureViewCellSelectedPictureModelKey : models,
-            JFStatusPictureViewCellSelectedPictureIndexKey : indexPath.item
+            JFPictureViewCellSelectedPictureModelKey : models,
+            JFPictureViewCellSelectedPictureIndexKey : indexPath.item
         ]
         
         // 点击图片发出通知
-        NSNotificationCenter.defaultCenter().postNotificationName(JFStatusPictureViewCellSelectedPictureNotification, object: self, userInfo: userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName(JFPictureViewCellSelectedPictureNotification, object: self, userInfo: userInfo)
         
     }
     

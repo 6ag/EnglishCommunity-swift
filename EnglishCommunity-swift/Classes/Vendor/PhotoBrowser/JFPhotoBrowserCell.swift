@@ -51,7 +51,7 @@ class JFPhotoBrowserCell: UICollectionViewCell {
     /// 根据长短图,重新布局imageView
     private func layoutImageView(image: UIImage) {
         // 获取等比例缩放后的图片大小
-        let size = image.displaySize()
+        let size = image.equalScaleWithWidth(SCREEN_WIDTH)
         
         // 判断长短图
         if size.height < SCREEN_HEIGHT {

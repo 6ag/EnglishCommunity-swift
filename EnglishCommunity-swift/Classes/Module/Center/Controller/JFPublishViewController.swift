@@ -18,6 +18,9 @@ class JFPublishViewController: UIViewController {
     /// 微博内容的最大长度
     private let tweetsMaxLength = 20
     
+    /// 选取的将要被at的用户
+    var relationUsers: [JFRelationUser]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -198,8 +201,18 @@ class JFPublishViewController: UIViewController {
         
         textView.resignFirstResponder()
         let selectFriendVc = JFSelectFriendViewController()
-        selectFriendVc.callback = {(atUsers: [[String : AnyObject]]?) -> Void in
-            print(atUsers)
+        selectFriendVc.callback = {(relationUsers: [JFRelationUser]?) -> Void in
+            
+            guard let relationUsers = relationUsers else {
+                return
+            }
+            
+            self.relationUsers = relationUsers
+            
+            for relationUser in relationUsers {
+                self.textView.insertText("@\(relationUser.relationNickname!) ")
+            }
+            
         }
         navigationController?.pushViewController(selectFriendVc, animated: true)
     }
@@ -239,8 +252,31 @@ class JFPublishViewController: UIViewController {
             return
         }
         
-        // 被at的用户
-        let atUsers = [[String : String]]()
+        var resultStrings = [String]()
+        do {
+            let pattern = "@\\S*"
+            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
+            let results = regex.matchesInString(text, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, text.characters.count))
+            for result in results {
+                resultStrings.append(String((text as NSString).substringWithRange(result.range).stringByReplacingOccurrencesOfString("@", withString: "")))
+            }
+        } catch {
+            
+        }
+        
+        // 根据当前文本内容，去匹配将要at的用户 - 因为有可能用户插入被at用户后又手动删除
+        var atUsers = [[String : AnyObject]]()
+        if let relationUsers = relationUsers {
+            for relationUser in relationUsers {
+                if resultStrings.contains(relationUser.relationNickname!) {
+                    let atUser: [String : AnyObject] = [
+                        "id" : relationUser.relationUserId,
+                        "nickname" : relationUser.relationNickname!
+                    ]
+                    atUsers.append(atUser)
+                }
+            }
+        }
         
         JFProgressHUD.showWithStatus("正在发送中...")
         JFNetworkTools.shareNetworkTool.sendTweets(POST_TWEETS, userId: JFAccountModel.shareAccount()!.id, text: text, images: images, atUsers: atUsers) { (success, result, error) in

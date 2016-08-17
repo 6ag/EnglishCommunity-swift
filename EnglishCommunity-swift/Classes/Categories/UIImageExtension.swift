@@ -11,22 +11,6 @@ import UIKit
 extension UIImage {
     
     /*
-     将图片等比例缩放, 缩放到图片的宽度等屏幕的宽度
-     */
-    func displaySize() -> CGSize {
-        // 新的高度 / 新的宽度 = 原来的高度 / 原来的宽度
-        
-        // 新的宽度
-        let newWidth = SCREEN_WIDTH
-        
-        // 新的高度
-        let newHeight = newWidth * size.height / size.width
-        
-        let newSize = CGSize(width: newWidth, height: newHeight)
-        return newSize
-    }
-    
-    /*
      指定宽度等比缩放
      
      - parameter newWidth: 需要缩放的宽度
@@ -35,7 +19,7 @@ extension UIImage {
      */
     func equalScaleWithWidth(newWidth: CGFloat) -> CGSize {
         // 新的高度 / 新的宽度 = 原来的高度 / 原来的宽度
-        let newHeight = newWidth * size.height / size.width
+        let newHeight = newWidth * (size.height * scale) / (size.width * scale)
         let newSize = CGSize(width: newWidth, height: newHeight)
         return newSize
     }
@@ -49,7 +33,7 @@ extension UIImage {
      */
     func equalScaleWithWHeight(newHeight: CGFloat) -> CGSize {
         // 新的高度 / 新的宽度 = 原来的高度 / 原来的宽度
-        let newWidth = newHeight / size.height * size.width
+        let newWidth = newHeight / (size.height * scale) * (size.width * scale)
         let newSize = CGSize(width: newWidth, height: newHeight)
         return newSize
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YYWebImage
 
 class JFTweetViewController: UIViewController {
 
@@ -24,8 +25,6 @@ class JFTweetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = COLOR_ALL_BG
         
         prepareUI()
         tableView.mj_header = setupHeaderRefresh(self, action: #selector(pullDownRefresh))
@@ -33,11 +32,11 @@ class JFTweetViewController: UIViewController {
         tableView.mj_header.beginRefreshing()
         
         // 监听点击图片的通知
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFTweetViewController.selectedPicture(_:)), name: JFStatusPictureViewCellSelectedPictureNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFTweetViewController.selectedPicture(_:)), name: JFPictureViewCellSelectedPictureNotification, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: JFStatusPictureViewCellSelectedPictureNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: JFPictureViewCellSelectedPictureNotification, object: nil)
     }
     
     /**
@@ -54,7 +53,7 @@ class JFTweetViewController: UIViewController {
      准备导航栏
      */
     private func prepareNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("", highlightedImage: "", target: self, action: #selector(didTappedRightBarButton(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("MainTagSubIcon", highlightedImage: "MainTagSubIcon", target: self, action: #selector(didTappedRightBarButton(_:)))
     }
     
     /**
@@ -153,7 +152,7 @@ extension JFTweetViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-// MARK: - JFTweetsListCellDelegate - JFStatusPictureViewCellSelectedPictureNotification
+// MARK: - JFTweetsListCellDelegate - JFPictureViewCellSelectedPictureNotification
 extension JFTweetViewController: JFTweetListCellDelegate {
     
     /**
@@ -199,10 +198,10 @@ extension JFTweetViewController: JFTweetListCellDelegate {
      选择了动弹配图
      */
     func selectedPicture(notification: NSNotification) {
-        guard let models = notification.userInfo?[JFStatusPictureViewCellSelectedPictureModelKey] as? [JFPhotoBrowserModel] else {
+        guard let models = notification.userInfo?[JFPictureViewCellSelectedPictureModelKey] as? [JFPhotoBrowserModel] else {
             return
         }
-        guard let index = notification.userInfo?[JFStatusPictureViewCellSelectedPictureIndexKey] as? Int else {
+        guard let index = notification.userInfo?[JFPictureViewCellSelectedPictureIndexKey] as? Int else {
             return
         }
         

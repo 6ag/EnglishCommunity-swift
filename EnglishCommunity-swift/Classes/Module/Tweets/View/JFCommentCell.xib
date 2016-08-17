@@ -31,7 +31,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="老王" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EnR-g7-sK5">
                         <rect key="frame" x="54" y="10" width="28" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1分钟前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdQ-2i-0iV">
@@ -43,19 +43,29 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Mn-us-bRx">
                         <rect key="frame" x="12" y="54" width="33" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVp-wR-bSi">
+                        <rect key="frame" x="0.0" y="104" width="319" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="K6v-hu-0ge"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="EnR-g7-sK5" firstAttribute="top" secondItem="DI8-co-i9W" secondAttribute="top" constant="-2" id="1Fy-G4-GP8"/>
                     <constraint firstItem="DI8-co-i9W" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="3y6-ew-JC8"/>
                     <constraint firstItem="fdQ-2i-0iV" firstAttribute="bottom" secondItem="DI8-co-i9W" secondAttribute="bottom" constant="2" id="97T-Pe-AyY"/>
                     <constraint firstItem="EnR-g7-sK5" firstAttribute="leading" secondItem="DI8-co-i9W" secondAttribute="trailing" constant="12" id="CUg-Rg-oLp"/>
+                    <constraint firstItem="yVp-wR-bSi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="GA6-mb-TSk"/>
+                    <constraint firstAttribute="trailing" secondItem="yVp-wR-bSi" secondAttribute="trailing" id="VI4-Uq-7Sz"/>
                     <constraint firstItem="DI8-co-i9W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="bfa-09-Xqy"/>
                     <constraint firstItem="fdQ-2i-0iV" firstAttribute="leading" secondItem="EnR-g7-sK5" secondAttribute="leading" id="flv-UL-0Yx"/>
                     <constraint firstItem="8Mn-us-bRx" firstAttribute="top" secondItem="DI8-co-i9W" secondAttribute="bottom" constant="12" id="i0v-Ri-bwn"/>
                     <constraint firstItem="8Mn-us-bRx" firstAttribute="leading" secondItem="DI8-co-i9W" secondAttribute="leading" id="iqY-as-eSp"/>
+                    <constraint firstAttribute="bottom" secondItem="yVp-wR-bSi" secondAttribute="bottom" id="q5y-ly-HCC"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

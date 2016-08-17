@@ -277,15 +277,13 @@ extension JFPhotoBrowserViewController {
         // 获取缩略图
         let thumbImage = thumbImageView.image!
         
-        // 计算宽高
-        var newSize = thumbImage.displaySize()
+        // 宽度固定 等比缩放尺寸
+        let newSize = thumbImage.equalScaleWithWidth(SCREEN_WIDTH)
         
         // 判断长短图
         var offestY: CGFloat = 0
         if newSize.height < SCREEN_HEIGHT {
             offestY = (SCREEN_HEIGHT - newSize.height) * 0.5
-        } else {
-            newSize.height = SCREEN_HEIGHT
         }
         
         return CGRect(x: 0, y: offestY, width: newSize.width, height: newSize.height)

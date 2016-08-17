@@ -128,10 +128,10 @@ extension JFPhotoSelectorViewController: UIImagePickerControllerDelegate, UINavi
     
     /// 选择照片时的代理方法
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        print("image:\(image)")
+//        print("image:\(image)")
         
         let newImage = image.scaleImage()
-        print("newImage:\(newImage)")
+//        print("newImage:\(newImage)")
         
         // 当图片比较大的时候将它图片缩小
         

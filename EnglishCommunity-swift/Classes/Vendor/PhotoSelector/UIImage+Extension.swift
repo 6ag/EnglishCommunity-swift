@@ -8,7 +8,6 @@
 
 import UIKit
 
-// 扩展 UIImage
 extension UIImage {
     
     /**
@@ -16,11 +15,15 @@ extension UIImage {
     - returns: 缩小的图片
     */
     func scaleImage() -> UIImage {
-        let newWidth: CGFloat = 300
         
-        // 图片宽度本来就小于300
-        if size.width < newWidth {
+        var newWidth: CGFloat = 700
+        
+        if size.width < 400 {
             return self
+        } else if size.width < 500 {
+            newWidth = 500
+        } else if size.width < 600 {
+            newWidth = 600
         }
         
         // 等比例缩放

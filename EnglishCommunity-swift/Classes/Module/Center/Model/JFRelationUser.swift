@@ -19,6 +19,9 @@ class JFRelationUser: NSObject {
     /// 头像
     var relationAvatar: String?
     
+    /// 是否已经选中
+    var selected: Bool = false
+    
     init(dict: [String : AnyObject]) {
         super.init()
         setValuesForKeysWithDictionary(dict)

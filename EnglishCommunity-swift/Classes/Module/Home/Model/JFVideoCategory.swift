@@ -67,7 +67,6 @@ class JFVideoCategory: NSObject {
                 return
             }
             
-            print(result)
             let data = result["result"].arrayObject as! [[String : AnyObject]]
             var videoCategories = [JFVideoCategory]()
             
