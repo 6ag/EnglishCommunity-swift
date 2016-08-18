@@ -12,30 +12,18 @@ class JFDetailVideoCell: UITableViewCell {
 
     var model: JFVideo? {
         didSet {
-            textLabel?.text = model?.title
+            videoTitleLabel.text = model?.title
         }
     }
     
-    @IBOutlet weak var indicator: UIView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        indicator.backgroundColor = UIColor(red:0.89, green:0.18, blue:0.09, alpha:1.00)
-        backgroundColor = RGB(244, g: 244, b: 244, alpha: 1)
-        backgroundView = UIView()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        textLabel?.y = 2
-        textLabel?.height = contentView.height - 4
-    }
+    @IBOutlet weak var indicatorButton: UIButton!
+    @IBOutlet weak var videoTitleLabel: UILabel!
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        textLabel?.textColor = selected ? UIColor(red:0.89, green:0.18, blue:0.09, alpha:1.00) : UIColor.grayColor()
-        indicator.hidden = !selected
+        videoTitleLabel.textColor = selected ? UIColor.colorWithHexString("41ca61") : UIColor.colorWithHexString("6b6b6b")
+        indicatorButton.selected = selected
     }
     
 }

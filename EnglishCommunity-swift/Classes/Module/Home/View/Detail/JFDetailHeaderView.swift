@@ -1,16 +1,17 @@
+
 //
 //  JFDetailHeaderView.swift
 //  EnglishCommunity-swift
 //
-//  Created by zhoujianfeng on 16/8/6.
+//  Created by zhoujianfeng on 16/8/18.
 //  Copyright © 2016年 zhoujianfeng. All rights reserved.
 //
 
 import UIKit
+import SnapKit
 
 class JFDetailHeaderView: UIView {
-
-    // MARK: - 初始化
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         prepareUI()
@@ -19,48 +20,96 @@ class JFDetailHeaderView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    var videoInfo: JFVideoInfo? {
+        didSet {
+            guard let videoInfo = videoInfo else {
+                print("videoInfo没有值")
+                return
+            }
+            titleLabel.text = videoInfo.title
+            teacherLabel.text = videoInfo.teacherName
+            joinCountLabel.text = "\(videoInfo.view) 人学过"
+            videoCountLabel.text = "共\(videoInfo.videoCount)节"
+        }
+    }
     
     /**
      准备UI
      */
     private func prepareUI() {
         
-        let names = ["线路", "分享", "收藏", "缓存"]
-        let images = ["publish-audio", "publish-offline", "publish-picture", "publish-review"]
+        addSubview(titleLabel)
+        addSubview(teacherIconImageView)
+        addSubview(teacherLabel)
+        addSubview(joinCountLabel)
+        addSubview(videoCountLabel)
         
-        for index in 10...13 {
-            let button = JFDetailHeaderButton(type: .Custom)
-            button.tag = index
-            button.setTitle(names[index - 10], forState: .Normal)
-            button.setTitleColor(UIColor.grayColor(), forState: .Normal)
-            button.setImage(UIImage(named: images[index - 10]), forState: .Normal)
-            button.titleLabel?.font = UIFont.systemFontOfSize(16)
-            button.addTarget(self, action: #selector(didTappedButton(_:)), forControlEvents: .TouchUpInside)
-            addSubview(button)
+        titleLabel.snp_makeConstraints { (make) in
+            make.left.equalTo(16)
+            make.top.equalTo(13)
+        }
+        
+        teacherIconImageView.snp_makeConstraints { (make) in
+            make.left.equalTo(titleLabel)
+            make.top.equalTo(titleLabel.snp_bottom).offset(10)
+            make.size.equalTo(CGSize(width: 10, height: 10))
+        }
+        
+        teacherLabel.snp_makeConstraints { (make) in
+            make.left.equalTo(teacherIconImageView.snp_right).offset(7)
+            make.centerY.equalTo(teacherIconImageView)
+        }
+        
+        joinCountLabel.snp_makeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.centerY.equalTo(teacherLabel)
+        }
+        
+        videoCountLabel.snp_makeConstraints { (make) in
+            make.centerY.equalTo(teacherLabel)
+            make.right.equalTo(-16)
         }
     }
     
-    /**
-     点击了按钮
-     */
-    @objc private func didTappedButton(button: JFDetailHeaderButton) {
-        print(button.tag)
-    }
+    // MARK: - 懒加载
+    /// 课程标题
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFontOfSize(14)
+        label.textColor = UIColor.colorWithHexString("323733")
+        return label
+    }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let y: CGFloat = 0
-        let height = self.height
-        let width = self.width / CGFloat(subviews.count)
-        
-        for view in subviews {
-            let x = CGFloat(view.tag - 10) * width
-            view.frame = CGRect(x: x, y: y, width: width, height: height)
-            print(view.frame)
-        }
-        
-    }
+    /// 讲师图标
+    lazy var teacherIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "category_teacher_icon")
+        return imageView
+    }()
     
+    /// 讲师
+    lazy var teacherLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFontOfSize(12)
+        label.textColor = UIColor.colorWithHexString("B8C2BA")
+        return label
+    }()
+    
+    /// 收藏数量
+    lazy var joinCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFontOfSize(12)
+        label.textColor = UIColor.colorWithHexString("B8C2BA")
+        return label
+    }()
+
+    /// 视频数量
+    lazy var videoCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFontOfSize(12)
+        label.textColor = UIColor.colorWithHexString("B8C2BA")
+        return label
+    }()
 
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JFDetailBottomBarView" customModule="EnglishCommunity_swift" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N1z-0P-F2R">
+                    <rect key="frame" x="0.0" y="0.0" width="188" height="49"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bqx-4b-hX9" userLabel="下载Button">
+                            <rect key="frame" x="69" y="5" width="49" height="39"/>
+                            <state key="normal" image="player_bottom_download_icon" backgroundImage="player_bottom_btn_bg"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2M9-5G-Jju" userLabel="分享Button">
+                            <rect key="frame" x="128" y="5" width="50" height="39"/>
+                            <state key="normal" image="player_bottom_share_icon" backgroundImage="player_bottom_btn_bg"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GY3-WW-hTK" userLabel="线路Button">
+                            <rect key="frame" x="10" y="5" width="49" height="39"/>
+                            <state key="normal" image="player_bottom_route_icon" backgroundImage="player_bottom_btn_bg"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Bqx-4b-hX9" secondAttribute="bottom" constant="5" id="295-sW-8w8"/>
+                        <constraint firstItem="2M9-5G-Jju" firstAttribute="width" secondItem="GY3-WW-hTK" secondAttribute="width" id="2e5-Pb-Pc9"/>
+                        <constraint firstItem="Bqx-4b-hX9" firstAttribute="width" secondItem="GY3-WW-hTK" secondAttribute="width" id="2u3-zm-qu9"/>
+                        <constraint firstItem="Bqx-4b-hX9" firstAttribute="leading" secondItem="GY3-WW-hTK" secondAttribute="trailing" constant="10" id="7MQ-hT-mtV"/>
+                        <constraint firstAttribute="bottom" secondItem="2M9-5G-Jju" secondAttribute="bottom" constant="5" id="Npm-qX-E9F"/>
+                        <constraint firstItem="GY3-WW-hTK" firstAttribute="top" secondItem="N1z-0P-F2R" secondAttribute="top" constant="5" id="OfA-zu-P9X"/>
+                        <constraint firstAttribute="trailing" secondItem="2M9-5G-Jju" secondAttribute="trailing" constant="10" id="f1d-cS-iU4"/>
+                        <constraint firstItem="2M9-5G-Jju" firstAttribute="leading" secondItem="Bqx-4b-hX9" secondAttribute="trailing" constant="10" id="g2s-1N-6hZ"/>
+                        <constraint firstAttribute="bottom" secondItem="GY3-WW-hTK" secondAttribute="bottom" constant="5" id="iOh-ix-T22"/>
+                        <constraint firstItem="Bqx-4b-hX9" firstAttribute="top" secondItem="N1z-0P-F2R" secondAttribute="top" constant="5" id="rpD-wF-D0R"/>
+                        <constraint firstItem="2M9-5G-Jju" firstAttribute="top" secondItem="N1z-0P-F2R" secondAttribute="top" constant="5" id="wvg-Pm-pKJ"/>
+                        <constraint firstItem="GY3-WW-hTK" firstAttribute="leading" secondItem="N1z-0P-F2R" secondAttribute="leading" constant="10" id="zGR-Fa-jmk"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xoY-LC-sjU">
+                    <rect key="frame" x="188" y="0.0" width="187" height="49"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HZy-bY-VVG" userLabel="加入课程Button">
+                            <rect key="frame" x="10" y="5" width="167" height="39"/>
+                            <state key="normal" title="收藏课程" backgroundImage="player_bottom_collection_bg"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="HZy-bY-VVG" firstAttribute="leading" secondItem="xoY-LC-sjU" secondAttribute="leading" constant="10" id="9UC-Sr-w1b"/>
+                        <constraint firstAttribute="trailing" secondItem="HZy-bY-VVG" secondAttribute="trailing" constant="10" id="Dvs-4u-nxx"/>
+                        <constraint firstItem="HZy-bY-VVG" firstAttribute="top" secondItem="xoY-LC-sjU" secondAttribute="top" constant="5" id="QiN-ej-l8g"/>
+                        <constraint firstAttribute="bottom" secondItem="HZy-bY-VVG" secondAttribute="bottom" constant="5" id="T6A-bf-Evc"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="N1z-0P-F2R" secondAttribute="bottom" id="4Oe-iT-eih"/>
+                <constraint firstAttribute="bottom" secondItem="xoY-LC-sjU" secondAttribute="bottom" id="JHv-ds-Ybm"/>
+                <constraint firstItem="xoY-LC-sjU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QRA-RZ-E0g"/>
+                <constraint firstItem="xoY-LC-sjU" firstAttribute="width" secondItem="N1z-0P-F2R" secondAttribute="width" id="WiJ-8Y-8zS"/>
+                <constraint firstAttribute="trailing" secondItem="xoY-LC-sjU" secondAttribute="trailing" id="XFN-Uq-5bF"/>
+                <constraint firstItem="N1z-0P-F2R" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Y3y-bv-AzM"/>
+                <constraint firstItem="xoY-LC-sjU" firstAttribute="leading" secondItem="N1z-0P-F2R" secondAttribute="trailing" id="fpt-oG-fpk"/>
+                <constraint firstItem="N1z-0P-F2R" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mSY-Ac-wbE"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="460.5" y="353.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="player_bottom_btn_bg" width="16" height="16"/>
+        <image name="player_bottom_collection_bg" width="16" height="16"/>
+        <image name="player_bottom_download_icon" width="17" height="16"/>
+        <image name="player_bottom_route_icon" width="16" height="17"/>
+        <image name="player_bottom_share_icon" width="17" height="17"/>
+    </resources>
+</document>

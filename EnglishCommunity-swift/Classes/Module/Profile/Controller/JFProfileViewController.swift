@@ -9,10 +9,13 @@
 import UIKit
 import YYWebImage
 
-class JFProfileViewController: JFBaseTableViewController {
+class JFProfileViewController: UITableViewController {
     
     let imagePickerC = UIImagePickerController()
     let headerHeight = SCREEN_HEIGHT * 0.4
+    let collectionIdentifier = "collectionIdentifier"
+    var page: Int = 0
+    var videoInfos = [JFVideoInfo]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +24,11 @@ class JFProfileViewController: JFBaseTableViewController {
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: headerHeight))
         tableView.showsVerticalScrollIndicator = false
         tableView.addSubview(headerView)
-        
-        prepareData()
+        tableView.separatorStyle = .None
+        tableView.backgroundColor = COLOR_ALL_BG
+        tableView.rowHeight = 84
+        tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: collectionIdentifier)
+        tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -30,60 +36,13 @@ class JFProfileViewController: JFBaseTableViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
         
         updateHeaderData()
-//        tableView.reloadData()
     }
     
     /**
-     配置imagePicker
-     
-     - parameter sourceType:  资源类型
+     上拉加载更多
      */
-    func setupImagePicker(sourceType: UIImagePickerControllerSourceType) {
-        imagePickerC.view.backgroundColor = COLOR_ALL_BG
-        imagePickerC.delegate = self
-        imagePickerC.sourceType = sourceType
-        imagePickerC.allowsEditing = true
-        imagePickerC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-    }
-    
-    /**
-     准备数据
-     */
-    private func prepareData() {
-        
-        // 第一组
-        let group1CellModel1 = JFProfileCellLabelModel(title: "测试", icon: "setting_clear_icon", text: "11111")
-        let group1 = JFProfileCellGroupModel(cells: [group1CellModel1])
-        
-        // 第二组
-        let group2CellModel1 = JFProfileCellLabelModel(title: "清除缓存", icon: "setting_clear_icon", text: "0.0M")
-        group2CellModel1.operation = { () -> Void in
-            JFProgressHUD.showWithStatus("正在清理")
-            YYImageCache.sharedCache().diskCache.removeAllObjectsWithBlock({
-                JFProgressHUD.showSuccessWithStatus("清理成功")
-                group2CellModel1.text = "0.00M"
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.reloadData()
-                })
-            })
-        }
-        let group2CellModel2 = JFProfileCellArrowModel(title: "正文字体", icon: "setting_star_icon")
-        group2CellModel2.operation = { () -> Void in
-            
-        }
-        let group2 = JFProfileCellGroupModel(cells: [group2CellModel1, group2CellModel2])
-        
-        // 第三组
-        let group3CellModel1 = JFProfileCellArrowModel(title: "意见反馈", icon: "setting_feedback_icon", destinationVc: JFProfileFeedbackViewController.classForCoder())
-        let group3CellModel2 = JFProfileCellArrowModel(title: "关于我们", icon: "setting_help_icon", destinationVc: JFAboutMeViewController.classForCoder())
-        let group3CellModel3 = JFProfileCellArrowModel(title: "推荐给好友", icon: "setting_share_icon")
-        group3CellModel3.operation = { () -> Void in
-            
-        }
-        let group3CellModel4 = JFProfileCellLabelModel(title: "当前版本", icon: "setting_upload_icon", text: (NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String))
-        let group3 = JFProfileCellGroupModel(cells: [group3CellModel1, group3CellModel2, group3CellModel3, group3CellModel4])
-        
-        groupModels = [group1, group2, group3]
+    @objc private func pullUpMoreData() {
+        page += 1
     }
     
     /**
@@ -113,27 +72,47 @@ class JFProfileViewController: JFBaseTableViewController {
 // MARK: - UITableViewDelegate/UITableViewDatasource
 extension JFProfileViewController {
     
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return videoInfos.count
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath) as! JFProfileCell
-        
-        // 更新缓存数据
-        if indexPath.section == 0 && indexPath.row == 0 {
-            cell.settingRightLabel.text = "\(String(format: "%.2f", CGFloat(YYImageCache.sharedCache().diskCache.totalCost()) / 1024 / 1024))M"
-        }
+        let cell = tableView.dequeueReusableCellWithIdentifier(collectionIdentifier) as! JFCategoryListCell
+        cell.videoInfo = videoInfos[indexPath.row]
         return cell
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let playerVc = JFPlayerViewController()
+        playerVc.videoInfo = videoInfos[indexPath.item]
+        navigationController?.pushViewController(playerVc, animated: true)
+    }
+    
 }
 
 // MARK: - JFProfileHeaderViewDelegate
 extension JFProfileViewController: JFProfileHeaderViewDelegate {
     
     /**
+     配置imagePicker
+     
+     - parameter sourceType:  资源类型
+     */
+    func setupImagePicker(sourceType: UIImagePickerControllerSourceType) {
+        imagePickerC.view.backgroundColor = COLOR_ALL_BG
+        imagePickerC.delegate = self
+        imagePickerC.sourceType = sourceType
+        imagePickerC.allowsEditing = true
+        imagePickerC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+    }
+    
+    /**
      头像按钮点击
      */
     func didTappedAvatarButton() {
         
-        if JFAccountModel.isLogin() {
+        if isLogin(self) {
             let alertC = UIAlertController()
             let takeAction = UIAlertAction(title: "拍照上传", style: UIAlertActionStyle.Default, handler: { (action) in
                 self.setupImagePicker(.Camera)
@@ -155,46 +134,33 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
             alertC.addAction(albumAction)
             alertC.addAction(cancelAction)
             self.presentViewController(alertC, animated: true, completion: {})
-        } else {
-            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: {
-                
-            })
         }
     }
     
     /**
-     收藏列表
+     朋友列表
      */
-    func didTappedCollectionButton() {
-        if JFAccountModel.isLogin() {
+    func didTappedFriendButton() {
+        if isLogin(self) {
             navigationController?.pushViewController(JFCollectionTableViewController(style: UITableViewStyle.Plain), animated: true)
-        } else {
-            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: {
-            })
         }
     }
     
     /**
-     评论列表
+     消息列表
      */
-    func didTappedCommentButton() {
-        if JFAccountModel.isLogin() {
-            navigationController?.pushViewController(JFCommentListTableViewController(style: UITableViewStyle.Plain), animated: true)
-        } else {
-            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: {
-            })
+    func didTappedMessageButton() {
+        if isLogin(self) {
+           navigationController?.pushViewController(JFCommentListTableViewController(style: UITableViewStyle.Plain), animated: true)
         }
     }
     
     /**
-     修改个人信息
+     资料
      */
     func didTappedInfoButton() {
-        if JFAccountModel.isLogin() {
+        if isLogin(self) {
             navigationController?.pushViewController(JFEditProfileViewController(style: UITableViewStyle.Grouped), animated: true)
-        } else {
-            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: {
-            })
         }
     }
 }
@@ -246,18 +212,4 @@ extension JFProfileViewController: UINavigationControllerDelegate, UIImagePicker
 //            }
 //        }
     }
-    
-    /**
-     保存图片并获取保存的图片路径
-     */
-    func saveImageAndGetURL(image: UIImage, imageName: NSString) -> NSURL {
-        
-        let home = NSHomeDirectory() as NSString
-        let docPath = home.stringByAppendingPathComponent("Documents") as NSString;
-        let fullPath = docPath.stringByAppendingPathComponent(imageName as NSString as String);
-        let imageData: NSData = UIImageJPEGRepresentation(image, 0.5)!
-        imageData.writeToFile(fullPath as String, atomically: false)
-        return NSURL(fileURLWithPath: fullPath)
-    }
-    
 }

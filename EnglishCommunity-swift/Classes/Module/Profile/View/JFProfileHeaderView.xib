@@ -17,10 +17,10 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvA-R7-jJE" userLabel="item1">
                             <rect key="frame" x="0.0" y="0.0" width="125" height="65"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qgd-fn-ej1" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
-                                    <rect key="frame" x="37" y="22" width="50" height="22"/>
+                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qgd-fn-ej1" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
+                                    <rect key="frame" x="39" y="24" width="47" height="19"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <state key="normal" title="收藏" image="profile_topbar_collection">
+                                    <state key="normal" title="好友" image="profile_topbar_collection">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -60,7 +60,7 @@
                             <rect key="frame" x="125" y="0.0" width="125" height="65"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-ZB-j0c" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
-                                    <rect key="frame" x="37" y="22" width="50" height="22"/>
+                                    <rect key="frame" x="39" y="24" width="46" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <state key="normal" title="消息" image="profile_topbar_comment">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -101,8 +101,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zFW-9a-cew" userLabel="item3">
                             <rect key="frame" x="250" y="0.0" width="125" height="65"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="788-jF-aZR" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
-                                    <rect key="frame" x="37" y="22" width="50" height="22"/>
+                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="788-jF-aZR" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
+                                    <rect key="frame" x="39" y="24" width="47" height="19"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <state key="normal" title="资料" image="profile_topbar_info">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -182,7 +182,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.83921568627450982" green="0.23137254901960785" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="rsS-JR-Dap" secondAttribute="trailing" id="67V-uu-lf8"/>
                 <constraint firstItem="CZQ-BM-nPr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="9Fd-ID-F6k"/>
@@ -203,8 +203,8 @@
     </objects>
     <resources>
         <image name="default－portrait" width="36" height="36"/>
-        <image name="profile_topbar_collection" width="22" height="22"/>
-        <image name="profile_topbar_comment" width="22" height="22"/>
-        <image name="profile_topbar_info" width="22" height="22"/>
+        <image name="profile_topbar_collection" width="19" height="19"/>
+        <image name="profile_topbar_comment" width="18" height="18"/>
+        <image name="profile_topbar_info" width="19" height="19"/>
     </resources>
 </document>

@@ -8,14 +8,40 @@
 
 import UIKit
 
-class JFTopBarView: UIView {
+protocol JFTopBarViewDelegate: NSObjectProtocol {
+    func didSelectedMenuButton()
+    func didSelectedCommentButton()
+}
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+class JFTopBarView: UIView {
+    
+    @IBAction func didTappedMenuButton() {
+        delegate?.didSelectedMenuButton()
+        menuButton.selected = true
+        commentButton.selected = false
+        
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.lineView.transform = CGAffineTransformMakeTranslation(0, 0)
+        }) { (_) in
+            
+        }
     }
-    */
+    
+    @IBAction func didTappedCommentButton() {
+        delegate?.didSelectedCommentButton()
+        commentButton.selected = true
+        menuButton.selected = false
+        
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.lineView.transform = CGAffineTransformMakeTranslation(self.commentButton.x - self.menuButton.x, 0)
+        }) { (_) in
+            
+        }
+    }
+    
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var lineView: UIImageView!
+    weak var delegate: JFTopBarViewDelegate?
 
 }

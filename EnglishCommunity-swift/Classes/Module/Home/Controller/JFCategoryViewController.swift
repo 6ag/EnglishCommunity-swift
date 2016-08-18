@@ -14,12 +14,11 @@ class JFCategoryViewController: UIViewController {
     
     var videoInfos = [JFVideoInfo]()
     
-    let categoryIdentifier = "JFCategoryItem"
+    let categoryIdentifier = "JFCategoryCell"
     
     var category: JFVideoCategory? {
         didSet {
             title = category!.name!
-            pullDownRefresh()
         }
     }
     
@@ -27,8 +26,9 @@ class JFCategoryViewController: UIViewController {
         super.viewDidLoad()
         
         prepareUI()
-        collectionView.mj_header = setupHeaderRefresh(self, action: #selector(pullDownRefresh))
-        collectionView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
+        tableView.mj_header = setupHeaderRefresh(self, action: #selector(pullDownRefresh))
+        tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
+        tableView.mj_header.beginRefreshing()
     }
     
     /**
@@ -37,7 +37,7 @@ class JFCategoryViewController: UIViewController {
     private func prepareUI() {
         
         view.backgroundColor = COLOR_ALL_BG
-        view.addSubview(collectionView)
+        view.addSubview(tableView)
     }
     
     /**
@@ -65,11 +65,11 @@ class JFCategoryViewController: UIViewController {
         
         JFVideoInfo.loadVideoInfoList(page, count: 10, category_id: category_id, recommend: 0) { (videoInfos) in
             
-            self.collectionView.mj_header.endRefreshing()
-            self.collectionView.mj_footer.endRefreshing()
+            self.tableView.mj_header.endRefreshing()
+            self.tableView.mj_footer.endRefreshing()
             
             guard let videoInfos = videoInfos else {
-                self.collectionView.mj_footer.endRefreshingWithNoMoreData()
+                self.tableView.mj_footer.endRefreshingWithNoMoreData()
                 return
             }
             
@@ -80,48 +80,44 @@ class JFCategoryViewController: UIViewController {
                 self.videoInfos += videoInfos
             }
             
-            self.collectionView.reloadData()
+            self.tableView.reloadData()
             
         }
     }
 
     // MARK: - 懒加载
-    /// collectionView
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .Vertical
-        layout.minimumInteritemSpacing = LIST_ITEM_PADDING
-        layout.minimumLineSpacing = LIST_ITEM_PADDING
-        layout.sectionInset = UIEdgeInsets(top: 10, left: LIST_ITEM_PADDING, bottom: 0, right: LIST_ITEM_PADDING)
-        layout.itemSize = CGSize(width: LIST_ITEM_WIDTH, height: LIST_ITEM_HEIGHT)
-        
-        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.whiteColor()
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.registerNib(UINib(nibName: "JFHomeCellItem", bundle: nil), forCellWithReuseIdentifier: self.categoryIdentifier)
-        return collectionView
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.Plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .None
+        tableView.backgroundColor = COLOR_ALL_BG
+        tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.categoryIdentifier)
+        return tableView
     }()
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension JFCategoryViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension JFCategoryViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoInfos.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let item = collectionView.dequeueReusableCellWithReuseIdentifier(categoryIdentifier, forIndexPath: indexPath) as! JFHomeCellItem
-        item.videoInfo = videoInfos[indexPath.item]
-        return item
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 84
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(categoryIdentifier) as! JFCategoryListCell
+        cell.videoInfo = videoInfos[indexPath.row]
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let playerVc = JFPlayerViewController()
         playerVc.videoInfo = videoInfos[indexPath.item]
         navigationController?.pushViewController(playerVc, animated: true)
     }
+    
 }

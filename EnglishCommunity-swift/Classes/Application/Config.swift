@@ -72,5 +72,23 @@ func setupHeaderRefresh(target: AnyObject, action: Selector) -> MJRefreshNormalH
     return headerRefresh
 }
 
-
+/**
+ 判断是否登录，如果没有登录则跳转到登录界面
+ 
+ - parameter controller: 当前控制器
+ 
+ - returns: 是否已经登录
+ */
+func isLogin(controller: UIViewController) -> Bool {
+    
+    if JFAccountModel.isLogin() {
+        return true
+    } else {
+        let loginVc = JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil))
+        controller.presentViewController(loginVc, animated: true, completion: { 
+            print("弹出登录界面")
+        })
+        return false
+    }
+}
         

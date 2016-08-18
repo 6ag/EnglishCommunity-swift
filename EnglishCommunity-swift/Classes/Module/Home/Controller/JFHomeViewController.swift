@@ -45,7 +45,7 @@ class JFHomeViewController: UIViewController {
         tableView.backgroundColor = COLOR_ALL_BG
         view.addSubview(tableView)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("navigation_search_icon", highlightedImage: "navigation_search_icon", target: self, action: #selector(didTappedSearchButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("navigation_search_icon", highlightedImage: "navigation_search_icon_selected", target: self, action: #selector(didTappedSearchButton))
     }
     
     /**

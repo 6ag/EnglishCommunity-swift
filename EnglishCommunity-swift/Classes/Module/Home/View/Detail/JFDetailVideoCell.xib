@@ -11,37 +11,51 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CGx-s4-3VD">
+                        <rect key="frame" x="16" y="16" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="aSd-Wn-nSa"/>
+                            <constraint firstAttribute="width" constant="10" id="mm2-BE-jqM"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="player_list_normal_icon"/>
+                        <state key="selected" backgroundImage="player_list_selected_icon"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnN-rj-2qk">
+                        <rect key="frame" x="34" y="13" width="33" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rAS-q1-3SY" userLabel="bottomLineView">
                         <rect key="frame" x="0.0" y="42" width="320" height="1"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="cKo-UA-mh6"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7Q-7M-k2f">
-                        <rect key="frame" x="0.0" y="0.0" width="5" height="43.5"/>
-                        <color key="backgroundColor" red="1" green="0.051105045049999999" blue="0.075655131400000006" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="5" id="RFS-oT-T7d"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="v7Q-7M-k2f" secondAttribute="bottom" id="6nd-ZP-4zN"/>
-                    <constraint firstItem="v7Q-7M-k2f" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8KM-73-fI8"/>
                     <constraint firstItem="rAS-q1-3SY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="B4m-NF-FkV"/>
                     <constraint firstAttribute="trailing" secondItem="rAS-q1-3SY" secondAttribute="trailing" id="RY8-Cp-Aeh"/>
                     <constraint firstAttribute="bottom" secondItem="rAS-q1-3SY" secondAttribute="bottom" id="fLf-AJ-otz"/>
-                    <constraint firstItem="v7Q-7M-k2f" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="zLv-mh-MMO"/>
+                    <constraint firstItem="CGx-s4-3VD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lUQ-h6-DPR"/>
+                    <constraint firstItem="CGx-s4-3VD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="mkN-yU-ygR"/>
+                    <constraint firstItem="AnN-rj-2qk" firstAttribute="centerY" secondItem="CGx-s4-3VD" secondAttribute="centerY" id="pQ5-33-YTu"/>
+                    <constraint firstItem="AnN-rj-2qk" firstAttribute="leading" secondItem="CGx-s4-3VD" secondAttribute="trailing" constant="8" id="wy2-vz-goo"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="indicator" destination="v7Q-7M-k2f" id="oEU-1h-qnx"/>
+                <outlet property="indicatorButton" destination="CGx-s4-3VD" id="8Dv-AE-pNI"/>
+                <outlet property="videoTitleLabel" destination="AnN-rj-2qk" id="fq1-cy-16f"/>
             </connections>
             <point key="canvasLocation" x="-223" y="391"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="player_list_normal_icon" width="10" height="11"/>
+        <image name="player_list_selected_icon" width="10" height="11"/>
+    </resources>
 </document>

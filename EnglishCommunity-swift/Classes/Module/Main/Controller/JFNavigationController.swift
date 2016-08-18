@@ -43,7 +43,7 @@ class JFNavigationController: UINavigationController {
      */
     override func pushViewController(viewController: UIViewController, animated: Bool) {
         if childViewControllers.count > 0 {
-            viewController.navigationItem.leftBarButtonItem = UIBarButtonItem.leftItem("navigationButtonReturn", highlightedImage: "navigationButtonReturnClick", target: self, action: #selector(didTappedBackButton(_:)))
+            viewController.navigationItem.leftBarButtonItem = UIBarButtonItem.leftItem("top_navigation_back_normal", highlightedImage: "top_navigation_back_normal", target: self, action: #selector(didTappedBackButton(_:)))
             viewController.hidesBottomBarWhenPushed = true
         } else {
             viewController.hidesBottomBarWhenPushed = false

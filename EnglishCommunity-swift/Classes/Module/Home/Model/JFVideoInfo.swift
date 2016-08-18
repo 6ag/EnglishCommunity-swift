@@ -31,6 +31,12 @@ class JFVideoInfo: NSObject {
     /// 视频是否被推荐 1：推荐 0：没推荐
     var recommended: Int = 0
     
+    /// 学员数量 - 暂时没用 后面可以改成收藏数量
+    var joinCount = 0
+    
+    /// 视频节数
+    var videoCount = 0
+    
     init(dict: [String : AnyObject]) {
         super.init()
         setValuesForKeysWithDictionary(dict)

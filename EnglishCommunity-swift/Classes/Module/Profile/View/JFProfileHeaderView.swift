@@ -11,8 +11,8 @@ import UIKit
 protocol JFProfileHeaderViewDelegate {
     
     func didTappedAvatarButton()
-    func didTappedCollectionButton()
-    func didTappedCommentButton()
+    func didTappedFriendButton()
+    func didTappedMessageButton()
     func didTappedInfoButton()
 }
 
@@ -27,11 +27,11 @@ class JFProfileHeaderView: UIView {
     }
     
     @IBAction func didTappedCollectionButton() {
-        delegate?.didTappedCollectionButton()
+        delegate?.didTappedFriendButton()
     }
     
     @IBAction func didTappedCommentButton() {
-        delegate?.didTappedCommentButton()
+        delegate?.didTappedMessageButton()
     }
     
     @IBAction func didTappedInfoButton() {

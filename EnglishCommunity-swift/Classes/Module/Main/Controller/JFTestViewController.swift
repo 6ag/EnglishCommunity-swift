@@ -118,6 +118,10 @@ extension JFTestViewController: JFPlayerDelegate {
             print("缓冲中")
         case .BufferFinished:
             print("缓冲完毕")
+        case .FullScreen:
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        case .CompactScreen:
+            navigationController?.setNavigationBarHidden(false, animated: true)
         }
         
     }
