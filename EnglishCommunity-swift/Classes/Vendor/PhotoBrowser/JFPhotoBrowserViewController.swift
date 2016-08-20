@@ -70,7 +70,7 @@ class JFPhotoBrowserViewController: UIViewController {
         saveButton.snp_makeConstraints { (make) in
             make.right.equalTo(-8)
             make.bottom.equalTo(-8)
-            make.size.equalTo(CGSize(width: 60, height: 35))
+            make.size.equalTo(CGSize(width: 50, height: 50))
         }
         
     }
@@ -95,12 +95,13 @@ class JFPhotoBrowserViewController: UIViewController {
      */
     func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         
-        guard let _ = error else {
+        if error != nil {
             JFProgressHUD.showInfoWithStatus("保存失败")
             return
         }
         
         JFProgressHUD.showSuccessWithStatus("保存成功")
+        
     }
     
     // MARK: - 懒加载
@@ -129,10 +130,7 @@ class JFPhotoBrowserViewController: UIViewController {
     /// 保存
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: .Custom)
-        button.setBackgroundImage(UIImage(named: "health_button_orange_line"), forState: UIControlState.Normal)
-        button.setTitle("保存", forState: UIControlState.Normal)
-        button.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(12)
+        button.setImage(UIImage(named: "photo_browser_download"), forState: UIControlState.Normal)
         button.addTarget(self, action: #selector(JFPhotoBrowserViewController.save), forControlEvents: UIControlEvents.TouchUpInside)
         return button
     }()

@@ -113,13 +113,12 @@ extension JFNetworkTools {
     /**
      添加或删除赞记录
      
-     - parameter APIString: urlString
      - parameter userId:    用户id
      - parameter type:      赞的类型 video_info / tweet
      - parameter sourceID:  视频信息或动弹的id
      - parameter finished:  完成回调
      */
-    func addOrCancelLikeRecord(APIString: String, userId: Int, type: String, sourceID: Int, finished: NetworkFinished) {
+    func addOrCancelLikeRecord(userId: Int, type: String, sourceID: Int, finished: NetworkFinished) {
         
         let parameters: [String : AnyObject] = [
             "user_id" : userId,
@@ -127,7 +126,24 @@ extension JFNetworkTools {
             "source_id" : sourceID
         ]
         
-        post(APIString, parameters: parameters, finished: finished)
+        post(ADD_OR_CANCEL_LIKE_RECORD, parameters: parameters, finished: finished)
+    }
+    
+    /**
+     添加或删除收藏
+     
+     - parameter userId:      用户id
+     - parameter VideoInfoId: 视频信息id
+     - parameter finished:    完成回调
+     */
+    func addOrCancelCollection(userId: Int, VideoInfoId: Int, finished: NetworkFinished) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : userId,
+            "video_info_id" : VideoInfoId
+        ]
+        
+        post(ADD_OR_CANCEL_COLLECTION, parameters: parameters, finished: finished)
     }
     
 }

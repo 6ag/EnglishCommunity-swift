@@ -80,6 +80,13 @@ class JFAccountModel: NSObject, NSCoding {
     }
     
     /**
+     是否已经登录
+     */
+    class func isLogin() -> Bool {
+        return JFAccountModel.shareAccount() != nil
+    }
+    
+    /**
      登录保存用户信息
      */
     func updateUserInfo() {
@@ -154,10 +161,29 @@ class JFAccountModel: NSObject, NSCoding {
 extension JFAccountModel {
     
     /**
-     是否已经登录
+     更新用户信息 如果信息失效则退出登录
+     
+     - parameter finished: 完成回调
      */
-    class func isLogin() -> Bool {
-        return JFAccountModel.shareAccount() != nil
+    class func updateUserInfo(finished: () -> ()) {
+        
+        if !JFAccountModel.isLogin() {
+            return
+        }
+        
+        JFNetworkTools.shareNetworkTool.get(GET_USER_INFOMATION, parameters: ["user_id" : JFAccountModel.shareAccount()!.id]) { (success, result, error) in
+            
+            guard let result = result where success == true && result["status"] == "success" else {
+                // 登录信息无效
+                JFAccountModel.logout()
+                finished()
+                return
+            }
+            
+            let account = JFAccountModel(dict: result["result"].dictionaryObject!)
+            account.updateUserInfo()
+            finished()
+        }
     }
     
     /**
@@ -212,6 +238,33 @@ extension JFAccountModel {
             let account = JFAccountModel(dict: result!["result"].dictionaryObject!)
             account.updateUserInfo()
             finished(success: true, tip: "登录成功")
+        }
+    }
+    
+    /**
+     上传用户头像
+     
+     - parameter userId:      用户id
+     - parameter avatarImage: 头像图片对象
+     */
+    class func uploadUserAvatar(userId: Int, avatarImage: UIImage, finished: (success: Bool) -> ()) {
+        
+        let imageData = UIImageJPEGRepresentation(avatarImage, 1)!
+        let imageBase64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue:0))
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : userId,
+            "photo" : imageBase64
+        ]
+        
+        JFNetworkTools.shareNetworkTool.post(UPLOAD_USER_AVATAR, parameters: parameters) { (success, result, error) in
+            
+            guard let _ = result where success == true && result!["status"] == "success" else {
+                finished(success: false)
+                return
+            }
+            
+            finished(success: true)
         }
     }
 }

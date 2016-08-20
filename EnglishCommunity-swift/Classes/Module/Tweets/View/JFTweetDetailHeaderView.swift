@@ -39,7 +39,7 @@ class JFTweetDetailHeaderView: UIView {
             
             avatarButton.yy_setBackgroundImageWithURL(NSURL(string: tweet!.author!.avatar!), forState: .Normal, options: YYWebImageOptions(rawValue: 0))
             nicknameLabel.text = tweet!.author!.nickname!
-            contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet!.content!, font: UIFont.systemFontOfSize(16))
+            contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet!.content!, font: contentLabel.font)
             pictureView.images = tweet?.images
             publishTimeLabel.text = tweet?.publishTime?.timeStampToDate().dateToDescription()
             appClientLabel.text = tweet?.appClient == 0 ? "iOS客户端" : "Android客户端"

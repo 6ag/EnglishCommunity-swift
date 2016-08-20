@@ -50,11 +50,6 @@ class JFPlayerViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
@@ -186,7 +181,7 @@ class JFPlayerViewController: UIViewController {
     }
     
     /**
-     更新数据
+     更新评论数据
      */
     private func updateData(type: String, page: Int, method: Int, source_id: Int) {
         
@@ -365,13 +360,12 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         if tableView == videoTableView {
             player.prepareToDealloc()
             player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[indexPath.row].videoUrl!)")!, title: videos[indexPath.row].title!)
         } else {
-            
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
     

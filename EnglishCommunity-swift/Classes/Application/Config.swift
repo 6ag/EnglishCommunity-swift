@@ -53,12 +53,12 @@ func RGB(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
 /**
  快速创建上拉加载更多控件
  */
-func setupFooterRefresh(target: AnyObject, action: Selector) -> MJRefreshAutoNormalFooter {
-    let footerRefresh = MJRefreshAutoNormalFooter(refreshingTarget: target, refreshingAction: action)
+func setupFooterRefresh(target: AnyObject, action: Selector) -> MJRefreshFooter {
+    let footerRefresh = MJRefreshBackNormalFooter(refreshingTarget: target, refreshingAction: action)
     footerRefresh.automaticallyHidden = true
-    footerRefresh.setTitle("正在为您加载更多...", forState: MJRefreshState.Refreshing)
-    footerRefresh.setTitle("上拉即可加载更多...", forState: MJRefreshState.Idle)
-    footerRefresh.setTitle("没有更多数据啦...", forState: MJRefreshState.NoMoreData)
+    footerRefresh.setTitle("正在加载", forState: MJRefreshState.Refreshing)
+    footerRefresh.setTitle("上拉加载更多", forState: MJRefreshState.Idle)
+    footerRefresh.setTitle("没有啦~~~", forState: MJRefreshState.NoMoreData)
     return footerRefresh
 }
 

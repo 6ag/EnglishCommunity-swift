@@ -22,17 +22,10 @@ class JFTabBar: UITabBar {
         super.init(frame: frame)
         
         shadowImage = UIImage()
-        
-        // 中间加号按钮
-        let addButton = UIButton(type: .Custom)
-        addButton.setImage(UIImage(named: "tabbar_publish_icon_normal"), forState: .Normal)
-        addButton.setImage(UIImage(named: "tabbar_publish_icon_selected"), forState: .Highlighted)
-        addButton.size = CGSize(width: SCREEN_WIDTH / 5, height: SCREEN_WIDTH / 5)
-        addButton.center = CGPoint(x: SCREEN_WIDTH * 0.5, y: 49 * 0.5 - 8)
-        addButton.addTarget(self, action: #selector(didTappedAddButton(_:)), forControlEvents: .TouchUpInside)
         addSubview(addButton)
     }
     
+    /// 自定义tabBar代理
     weak var tabBarDelegate: JFTabBarDelegate?
     
     /**
@@ -42,6 +35,9 @@ class JFTabBar: UITabBar {
         tabBarDelegate?.didTappedAddButton()
     }
     
+    /**
+     重新布局tabBar子控件
+     */
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -65,5 +61,27 @@ class JFTabBar: UITabBar {
         }
         
     }
+    
+    /**
+     处理tabBar子控件的事件响应
+     */
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+//        if point.y < 0 && point.x >= SCREEN_WIDTH / 5 * 2 && point.x <= SCREEN_WIDTH / 5 * 3 {
+//            return addButton
+//        }
+        return super.hitTest(point, withEvent: event)
+    }
+    
+    // MARK: - 懒加载
+    /// 中间 + 号按钮
+    lazy var addButton: UIButton = {
+        let addButton = UIButton(type: .Custom)
+        addButton.setImage(UIImage(named: "tabbar_publish_icon_normal"), forState: .Normal)
+        addButton.setImage(UIImage(named: "tabbar_publish_icon_selected"), forState: .Highlighted)
+        addButton.size = CGSize(width: SCREEN_WIDTH / 5, height: SCREEN_WIDTH / 5)
+        addButton.center = CGPoint(x: SCREEN_WIDTH * 0.5, y: 49 * 0.5 - 8)
+        addButton.addTarget(self, action: #selector(didTappedAddButton(_:)), forControlEvents: .TouchUpInside)
+        return addButton
+    }()
     
 }

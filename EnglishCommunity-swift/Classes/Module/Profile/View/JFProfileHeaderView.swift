@@ -38,4 +38,10 @@ class JFProfileHeaderView: UIView {
         delegate?.didTappedInfoButton()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        avatarButton.layer.borderColor = UIColor.colorWithHexString("58D475").CGColor
+        avatarButton.layer.borderWidth = 4
+    }
+    
 }

@@ -22,10 +22,12 @@ class JFCommentCell: UITableViewCell {
                 return
             }
             
-            contentLabel.text = comment.content
+            let contentString = JFEmoticon.emoticonStringToEmoticonAttrString(comment.content!, font: contentLabel.font)
             
             if let extendsAuthor = comment.extendsAuthor {
-                contentLabel.text = "回复 \(extendsAuthor.nickname!) : \(comment.content!)"
+                contentLabel.text = "回复 \(extendsAuthor.nickname!) : \(contentString)"
+            } else {
+                contentLabel.attributedText = contentString
             }
             
             avatarButton.yy_setBackgroundImageWithURL(NSURL(string: author.avatar!), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
@@ -34,9 +36,27 @@ class JFCommentCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        contentView.backgroundColor = COLOR_ALL_BG
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 76
+    }
+    
+    /**
+     修改cell点击后高亮颜色
+     */
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        
+        if highlighted {
+            contentView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.00)
+        } else {
+            contentView.backgroundColor = UIColor.whiteColor()
+        }
     }
     
     /**

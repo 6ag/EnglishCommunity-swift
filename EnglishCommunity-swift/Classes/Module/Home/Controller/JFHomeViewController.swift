@@ -33,6 +33,9 @@ class JFHomeViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        // 防止轮播卡住一半
         topScrollView?.adjustWhenControllerViewWillAppera()
     }
     

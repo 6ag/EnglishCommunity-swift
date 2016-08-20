@@ -17,8 +17,8 @@ class JFProfileTopButton: UIButton {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageView?.frame = CGRect(x: (frame.size.width - 22) * 0.5, y: 15, width: 22, height: 22)
-        titleLabel?.frame = CGRect(x: 0, y: 38, width: frame.size.width, height: 20)
+        imageView?.frame = CGRect(x: (frame.size.width - 22) * 0.5, y: 20, width: 19, height: 19)
+        titleLabel?.frame = CGRect(x: 0, y: 40, width: frame.size.width, height: 20)
     }
 
 }

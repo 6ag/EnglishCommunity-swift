@@ -8,26 +8,31 @@
 
 import UIKit
 import YYWebImage
+import SnapKit
 
-class JFProfileViewController: UITableViewController {
+class JFProfileViewController: UIViewController {
     
+    /// 图片选择控制器
     let imagePickerC = UIImagePickerController()
+    
+    /// 头部高度
     let headerHeight = SCREEN_HEIGHT * 0.4
+    
+    /// 收藏cell重用标识
     let collectionIdentifier = "collectionIdentifier"
-    var page: Int = 0
+    
+    /// 当前收藏的页码
+    var page: Int = 1
+    
+    /// 视频信息模型数组
     var videoInfos = [JFVideoInfo]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 这个是用来占位的
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: headerHeight))
-        tableView.showsVerticalScrollIndicator = false
-        tableView.addSubview(headerView)
-        tableView.separatorStyle = .None
-        tableView.backgroundColor = COLOR_ALL_BG
-        tableView.rowHeight = 84
-        tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: collectionIdentifier)
+        prepareUI()
+        
+        // 配置上拉加载
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
     }
     
@@ -35,7 +40,56 @@ class JFProfileViewController: UITableViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        updateData()
+    }
+    
+    /**
+     准备tableView
+     */
+    private func prepareUI() {
+        
+        view.addSubview(tableView)
+        view.addSubview(navigationBarView)
+        tableView.addSubview(placeholderButton)
+        
+        let placeholderView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: headerHeight))
+        placeholderView.userInteractionEnabled = false
+        tableView.tableHeaderView = placeholderView
+        tableView.addSubview(headerView)
+        
+        navigationBarView.snp_makeConstraints { (make) in
+            make.left.top.right.equalTo(0)
+            make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: 64))
+        }
+        
+        placeholderButton.snp_makeConstraints { (make) in
+            make.centerX.equalTo(tableView)
+            make.centerY.equalTo(tableView).offset(40)
+            make.size.equalTo(CGSize(width: 120, height: 70))
+        }
+        
+        if JFAccountModel.isLogin() {
+            placeholderButton.setImage(UIImage(named: "placeholder_button_bg"), forState: .Normal)
+        } else {
+            placeholderButton.setImage(UIImage(named: "placeholder_button_bg"), forState: .Normal)
+        }
+    }
+    
+    /**
+     更新数据
+     */
+    private func updateData() {
+        
+        // 更新头部信息
         updateHeaderData()
+        
+        // 更新收藏
+        page = 1
+        loadCollectionVideoInfoList(page, count: 10)
     }
     
     /**
@@ -43,6 +97,40 @@ class JFProfileViewController: UITableViewController {
      */
     @objc private func pullUpMoreData() {
         page += 1
+        loadCollectionVideoInfoList(page, count: 10)
+    }
+    
+    /**
+     加载指定用户的收藏数据
+     
+     - parameter page:  页码
+     - parameter count: 每页数量
+     */
+    private func loadCollectionVideoInfoList(page: Int, count: Int) {
+        
+        JFVideoInfo.loadCollectionVideoInfoList(JFAccountModel.shareAccount()?.id ?? 0, page: page, count: count) { (videoInfos) in
+            
+            self.tableView.mj_footer.endRefreshing()
+            
+            guard let videoInfos = videoInfos else {
+                if self.videoInfos.count == 0 {
+                    self.placeholderButton.hidden = false
+                } else {
+                    self.placeholderButton.hidden = true
+                }
+                self.tableView.mj_footer.endRefreshingWithNoMoreData()
+                return
+            }
+            
+            self.videoInfos += videoInfos
+            self.tableView.reloadData()
+            
+            if self.videoInfos.count == 0 {
+                self.placeholderButton.hidden = false
+            } else {
+                self.placeholderButton.hidden = true
+            }
+        }
     }
     
     /**
@@ -58,35 +146,146 @@ class JFProfileViewController: UITableViewController {
         }
     }
     
+    /**
+     点击了占位按钮
+     */
+    @objc private func didTappedPlaceholderButton(button: UIButton) {
+        if isLogin(self) {
+            tabBarController?.selectedIndex = 0
+        }
+    }
+    
     // MARK: - 懒加载
+    /// 内容区域
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: SCREEN_BOUNDS, style: UITableViewStyle.Plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .None
+        tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = COLOR_ALL_BG
+        tableView.rowHeight = 84
+        tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.collectionIdentifier)
+        return tableView
+    }()
+    
     /// 表头部视图
     lazy var headerView: JFProfileHeaderView = {
         let headerView = NSBundle.mainBundle().loadNibNamed("JFProfileHeaderView", owner: nil, options: nil).last as! JFProfileHeaderView
         headerView.delegate = self
-        headerView.frame = CGRect(x: 0, y: -(SCREEN_HEIGHT * 2 - self.headerHeight + 20), width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 2)
+        headerView.frame = CGRect(x: 0, y: -(SCREEN_HEIGHT * 2 - self.headerHeight), width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 2)
         return headerView
+    }()
+    
+    /// 自定义导航栏
+    lazy var navigationBarView: JFProfileNavigationBarView = {
+        let view = JFProfileNavigationBarView()
+        return view
+    }()
+    
+    /// 没有数据时的占位按钮
+    lazy var placeholderButton: UIButton = {
+        let button = UIButton(type: .Custom)
+        button.hidden = true
+        button.addTarget(self, action: #selector(didTappedPlaceholderButton(_:)), forControlEvents: .TouchUpInside)
+        return button
     }()
     
 }
 
 // MARK: - UITableViewDelegate/UITableViewDatasource
-extension JFProfileViewController {
+extension JFProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoInfos.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(collectionIdentifier) as! JFCategoryListCell
         cell.videoInfo = videoInfos[indexPath.row]
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let playerVc = JFPlayerViewController()
         playerVc.videoInfo = videoInfos[indexPath.item]
         navigationController?.pushViewController(playerVc, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    // 滑动删除事件处理
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let alertC = UIAlertController(title: "你确定删除这套课程？", message: "删除课程后，对应的离线下载内容也会跟着清除", preferredStyle: UIAlertControllerStyle.Alert)
+        let actionConfirm = UIAlertAction(title: "确定删除", style: UIAlertActionStyle.Cancel) { (action) in
+            if editingStyle == .Delete {
+                // 删除视频信息
+                JFProgressHUD.showWithStatus("正在删除")
+                JFNetworkTools.shareNetworkTool.addOrCancelCollection(JFAccountModel.shareAccount()!.id, VideoInfoId: self.videoInfos[indexPath.row].id, finished: { (success, result, error) in
+                    JFProgressHUD.showSuccessWithStatus("操作成功")
+                    guard let result = result where success == true && result["status"] == "success" else {
+                        return
+                    }
+                    
+                    self.videoInfos.removeAtIndex(indexPath.row)
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
+                    if self.videoInfos.count == 0 {
+                        self.placeholderButton.hidden = false
+                    } else {
+                        self.placeholderButton.hidden = true
+                    }
+                })
+            }
+        }
+        let actionCancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Destructive) { (action) in
+            
+        }
+        alertC.addAction(actionConfirm)
+        alertC.addAction(actionCancel)
+        presentViewController(alertC, animated: true) { 
+            
+        }
+        
+    }
+    
+    // 修改滑动删除的文字
+    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+        return "删除"
+    }
+    
+    // 根据偏移量修改导航栏
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        let offsetY = scrollView.contentOffset.y + 20
+        navigationBarView.backgroundColor = UIColor(white: 1, alpha: offsetY * (1 / 223.5))
+        
+        // 导航栏item切换
+        if offsetY > 157.5 {
+            navigationBarView.itemColorChange(false)
+        } else {
+            navigationBarView.itemColorChange(true)
+        }
+        
+        // 导航栏标题切换
+        if offsetY > 223.5 {
+            navigationBarView.titleColorChange(false)
+        } else {
+            navigationBarView.titleColorChange(true)
+        }
+        
+        // 头像缩放动画
+        if offsetY > 85.5 {
+            headerView.avatarButton.transform = CGAffineTransformMakeScale(1 - 85.5 * (1 / 223.5), 1 - 85.5 * (1 / 223.5))
+        } else if offsetY < -20 {
+            headerView.avatarButton.transform = CGAffineTransformMakeScale(1 - -20 * (1 / 223.5), 1 - -20 * (1 / 223.5))
+        } else {
+            headerView.avatarButton.transform = CGAffineTransformMakeScale(1 - offsetY * (1 / 223.5), 1 - offsetY * (1 / 223.5))
+        }
+        
     }
     
 }
@@ -111,19 +310,22 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      头像按钮点击
      */
     func didTappedAvatarButton() {
-        
         if isLogin(self) {
             let alertC = UIAlertController()
-            let takeAction = UIAlertAction(title: "拍照上传", style: UIAlertActionStyle.Default, handler: { (action) in
+            let takeAction = UIAlertAction(title: "拍照", style: UIAlertActionStyle.Default, handler: { (action) in
+                if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+                    JFProgressHUD.showInfoWithStatus("摄像头不可用")
+                    return
+                }
                 self.setupImagePicker(.Camera)
                 self.presentViewController(self.imagePickerC, animated: true, completion: {})
             })
-            let photoLibraryAction = UIAlertAction(title: "图库选择", style: UIAlertActionStyle.Default, handler: { (action) in
+            let photoLibraryAction = UIAlertAction(title: "从相册选择照片", style: UIAlertActionStyle.Default, handler: { (action) in
+                if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+                    JFProgressHUD.showInfoWithStatus("相册不可用")
+                    return
+                }
                 self.setupImagePicker(.PhotoLibrary)
-                self.presentViewController(self.imagePickerC, animated: true, completion: {})
-            })
-            let albumAction = UIAlertAction(title: "相册选择", style: UIAlertActionStyle.Default, handler: { (action) in
-                self.setupImagePicker(.SavedPhotosAlbum)
                 self.presentViewController(self.imagePickerC, animated: true, completion: {})
             })
             let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in
@@ -131,7 +333,6 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
             })
             alertC.addAction(takeAction)
             alertC.addAction(photoLibraryAction)
-            alertC.addAction(albumAction)
             alertC.addAction(cancelAction)
             self.presentViewController(alertC, animated: true, completion: {})
         }
@@ -142,7 +343,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      */
     func didTappedFriendButton() {
         if isLogin(self) {
-            navigationController?.pushViewController(JFCollectionTableViewController(style: UITableViewStyle.Plain), animated: true)
+            navigationController?.pushViewController(JFFriendViewController(style: UITableViewStyle.Plain), animated: true)
         }
     }
     
@@ -151,7 +352,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      */
     func didTappedMessageButton() {
         if isLogin(self) {
-           navigationController?.pushViewController(JFCommentListTableViewController(style: UITableViewStyle.Plain), animated: true)
+            navigationController?.pushViewController(JFMessageListViewController(style: UITableViewStyle.Plain), animated: true)
         }
     }
     
@@ -160,7 +361,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      */
     func didTappedInfoButton() {
         if isLogin(self) {
-            navigationController?.pushViewController(JFEditProfileViewController(style: UITableViewStyle.Grouped), animated: true)
+            navigationController?.pushViewController(JFInfomationViewController(style: UITableViewStyle.Grouped), animated: true)
         }
     }
 }
@@ -169,12 +370,10 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
 // MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate
 extension JFProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        let image = info[UIImagePickerControllerEditedImage] as! UIImage
-        let newImage = image.resizeImageWithNewSize(CGSize(width: 108, height: 108))
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        let newImage = image.resizeImageWithNewSize(CGSize(width: 150, height: 150))
         uploadUserAvatar(newImage)
+        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -188,28 +387,12 @@ extension JFProfileViewController: UINavigationControllerDelegate, UIImagePicker
      */
     func uploadUserAvatar(image: UIImage) {
         
-//        let imagePath = saveImageAndGetURL(image, imageName: "avatar.png")
-        
-//        let parameters: [String : AnyObject] = [
-//            "username" : JFAccountModel.shareAccount()!.username!,
-//            "userid" : "\(JFAccountModel.shareAccount()!.id)",
-//            "token" : JFAccountModel.shareAccount()!.token!,
-//            "action" : "UploadAvatar",
-//            ]
-        
-//        JFProgressHUD.showWithStatus("正在上传")
-//        JFNetworkTool.shareNetworkTool.uploadUserAvatar("\(MODIFY_ACCOUNT_INFO)", imagePath: imagePath, parameters: parameters) { (success, result, error) in
-//            print(result)
-//            if success {
-//                JFProgressHUD.showInfoWithStatus("上传成功")
-//                
-//                // 更新用户信息并刷新tableView
-//                JFAccountModel.checkUserInfo({
-//                    self.updateHeaderData()
-//                })
-//            } else {
-//                JFProgressHUD.showInfoWithStatus("上传失败")
-//            }
-//        }
+        JFAccountModel.uploadUserAvatar(JFAccountModel.shareAccount()!.id, avatarImage: image) { (success) in
+            if success {
+                JFAccountModel.updateUserInfo({ 
+                    self.updateData()
+                })
+            }
+        }
     }
 }

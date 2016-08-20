@@ -30,10 +30,10 @@ class JFEmoticonPackage: NSObject {
         super.init()
     }
     
-//    /// 对象打印方法
-//    override var description: String {
-//        return "\n\t表情包模型: id: \(id), group_name_cn:\(group_name_cn), emoticons: \(emoticons)"
-//    }
+    //    /// 对象打印方法
+    //    override var description: String {
+    //        return "\n\t表情包模型: id: \(id), group_name_cn:\(group_name_cn), emoticons: \(emoticons)"
+    //    }
     
     // 每次进入发微博界面弹出自定义表情键盘都会去磁盘加载所有的表情,比较耗性能,
     // 只加载一次,然后保存到内存中,以后访问内存中的表情数据
@@ -42,7 +42,7 @@ class JFEmoticonPackage: NSObject {
     
     /// 加载所有表情包
     private class func loadPackages() -> [JFEmoticonPackage] {
-//        print("加载所有的表情包")
+        //        print("加载所有的表情包")
         // 获取Emoticons.bundle的路径
         
         // 拼接 emoticons.plist 的路径
@@ -50,7 +50,7 @@ class JFEmoticonPackage: NSObject {
         
         // 加载plist
         let plistDict = NSDictionary(contentsOfFile: plistPath)!
-//        print("plistDict:\(plistDict)")
+        //        print("plistDict:\(plistDict)")
         
         /// 表情包数组
         var packages = [JFEmoticonPackage]()
@@ -58,7 +58,7 @@ class JFEmoticonPackage: NSObject {
         // 手动添加 `最近` 的表情包
         // 创建表情包模型
         let recent = JFEmoticonPackage(id: "")
-
+        
         // 设置表情包名称
         recent.group_name_cn = "最近"
         
@@ -98,7 +98,7 @@ class JFEmoticonPackage: NSObject {
         
         // 加载info.plist
         let infoDict = NSDictionary(contentsOfFile: infoPath)!
-//        print("infoDict:\(infoDict)")
+        //        print("infoDict:\(infoDict)")
         
         // 获取表情包名称
         group_name_cn = infoDict["group_name_cn"] as? String
@@ -131,8 +131,8 @@ class JFEmoticonPackage: NSObject {
     }
     
     /**
-    追加空白表情和删除按钮
-    */
+     追加空白表情和删除按钮
+     */
     private func appendEmptyEmoticon() {
         // 判断最后一页,表情是否满21个
         let count = emoticons!.count % 21
@@ -155,9 +155,9 @@ class JFEmoticonPackage: NSObject {
     }
     
     /**
-    添加表情到最近表情包
-    - parameter emoticon: 要添加的表情
-    */
+     添加表情到最近表情包
+     - parameter emoticon: 要添加的表情
+     */
     class func addFavorate(emoticon: JFEmoticon) {
         if emoticon.removeEmoticon {
             return
@@ -195,12 +195,12 @@ class JFEmoticonPackage: NSObject {
         // 在把删除按钮添加回来
         recentEmoticons?.append(removeEmoticon)
         
-//        print("recentEmoticons:\(recentEmoticons)")
-//        print("recentEmoticons count: \(recentEmoticons?.count)")
+        //        print("recentEmoticons:\(recentEmoticons)")
+        //        print("recentEmoticons count: \(recentEmoticons?.count)")
         // 记住要复制回去
         packages[0].emoticons = recentEmoticons
-//        print("packages[0].emoticons:\(packages[0].emoticons)")
-//        print("packages[0].emoticons count: \(packages[0].emoticons?.count)")
+        //        print("packages[0].emoticons:\(packages[0].emoticons)")
+        //        print("packages[0].emoticons count: \(packages[0].emoticons?.count)")
     }
 }
 
@@ -210,7 +210,7 @@ class JFEmoticon: NSObject {
     
     // 表情包文件夹名称
     var id: String?
-
+    
     // 表情名称,用于网络传输
     var chs: String?
     
@@ -285,31 +285,31 @@ class JFEmoticon: NSObject {
     /// 将表情模型转成带表情图片的属性文本
     func emoticonToAttrString(font: UIFont) -> NSAttributedString {
         guard let pngP = pngPath else {
-//            print("没有图片")
+            //            print("没有图片")
             return NSAttributedString(string: "")
         }
         
         // 创建附件
         let attachment = JFTextAttachment()
-
+        
         // 创建 image
         let image = UIImage(contentsOfFile: pngP)
-
+        
         // 将 image 添加到附件
         attachment.image = image
-
+        
         // 将表情图片的名称赋值
         attachment.name = chs
-
+        
         // 获取font的高度
         let height = font.lineHeight ?? 10
-
+        
         // 设置附件大小
         attachment.bounds = CGRect(x: 0, y: -(height * 0.25), width: height, height: height)
-
+        
         // 创建属性文本
         let attrString = NSMutableAttributedString(attributedString: NSAttributedString(attachment: attachment))
-
+        
         // 发现在表情图片后面在添加表情会很小.原因是前面的这个表请缺少font属性
         // 给属性文本(附件) 添加 font属性
         attrString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: 1))
@@ -342,10 +342,10 @@ class JFEmoticon: NSObject {
     }
     
     /**
-    表情字符串转带表情图片的属性文本
-    - parameter string: 表情字符串
-    - returns: 带表情图片的属性文本
-    */
+     表情字符串转带表情图片的属性文本
+     - parameter string: 表情字符串
+     - returns: 带表情图片的属性文本
+     */
     class func emoticonStringToEmoticonAttrString(string: String, font: UIFont) -> NSAttributedString {
         // 1.解析字符串中表情文本
         // 2.根据表情文本找到对应的表情模型(表情模型里面有表情图片的完整路径) *
@@ -365,8 +365,10 @@ class JFEmoticon: NSObject {
         // 反过来替换文本
         var count = results.count
         while count > 0 {
+            
+            count -= 1
             // 从最后开始获取范围
-            let result = results[--count]
+            let result = results[count]
             //            print("结果数量:\(result.numberOfRanges): result:\(result)")
             let range = result.rangeAtIndex(0)
             

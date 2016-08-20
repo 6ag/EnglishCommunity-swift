@@ -36,9 +36,11 @@ class JFTweetDetailViewController: UIViewController {
     private func prepareUI() {
         
         title = "动态详情"
+        automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = COLOR_ALL_BG
         view.addSubview(tableView)
         tableView.tableHeaderView = headerView
+        view.addSubview(multiTextView)
     }
     
     /**
@@ -50,7 +52,7 @@ class JFTweetDetailViewController: UIViewController {
     }
     
     /**
-     更新数据
+     更新评论数据
      */
     private func updateData(type: String, page: Int, method: Int, source_id: Int) {
         
@@ -84,7 +86,7 @@ class JFTweetDetailViewController: UIViewController {
 
     /// 内容区域
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 40), style: UITableViewStyle.Plain)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
@@ -92,7 +94,14 @@ class JFTweetDetailViewController: UIViewController {
         tableView.registerNib(UINib(nibName: "JFCommentCell", bundle: nil), forCellReuseIdentifier: self.commentIdentifier)
         return tableView
     }()
-
+    
+    /// 评论文本框
+    lazy var multiTextView: JFMultiTextView = {
+        let textView = JFMultiTextView()
+        textView.haveNavigationBar = true
+        textView.delegate = self
+        return textView
+    }()
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -141,7 +150,7 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         }
         
         // 已经登录
-        JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord(ADD_OR_CANCEL_LIKE_RECORD, userId: JFAccountModel.shareAccount()!.id, type: "tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord(JFAccountModel.shareAccount()!.id, type: "tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
                 return
@@ -176,6 +185,27 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
                 print("user_id = ", atUser.id)
             }
         }
+    }
+}
+
+// MARK: - JFMultiTextViewDelegate
+extension JFTweetDetailViewController: JFMultiTextViewDelegate {
+    
+    /**
+     点击了键盘发送按钮
+     
+     - parameter text: 输入的内容
+     */
+    func didTappedSendButton(text: String) {
+        
+        if isLogin(self) {
+            JFComment.publishComment(JFAccountModel.shareAccount()!.id, type: "tweet", sourceId: tweet!.id, content: text, finished: { (success) in
+                if success {
+                    self.updateData("tweet", page: 1, method: 0, source_id: self.tweet!.id)
+                }
+            })
+        }
+        
     }
 }
 

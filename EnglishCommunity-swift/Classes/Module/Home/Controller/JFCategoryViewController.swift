@@ -31,6 +31,11 @@ class JFCategoryViewController: UIViewController {
         tableView.mj_header.beginRefreshing()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     /**
      准备UI
      */
@@ -97,6 +102,7 @@ class JFCategoryViewController: UIViewController {
     }()
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFCategoryViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

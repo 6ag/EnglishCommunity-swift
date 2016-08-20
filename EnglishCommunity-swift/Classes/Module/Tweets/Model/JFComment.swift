@@ -130,5 +130,35 @@ class JFComment: NSObject {
         }
     }
 
-    
+    /**
+     发布评论信息
+     
+     - parameter userId:   当前用户id
+     - parameter type:     评论类型 video_info tweet
+     - parameter sourceId: 类型资源id
+     - parameter content:  评论内容
+     - parameter pid:      回复评论id
+     - parameter finished: 完成回调
+     */
+    class func publishComment(userId: Int, type: String, sourceId: Int, content: String, pid: Int = 0, finished: (success: Bool) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : userId,
+            "type" : type,
+            "source_id" : sourceId,
+            "content" : content,
+            "pid" : pid
+            ]
+        
+        JFNetworkTools.shareNetworkTool.post(POST_COMMENT, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where success == true && result["status"] == "success" else {
+                print(success, error, parameters)
+                finished(success: false)
+                return
+            }
+            
+            finished(success: true)
+        }
+    }
 }

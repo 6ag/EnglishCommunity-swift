@@ -39,7 +39,7 @@ class JFTweetListCell: UITableViewCell {
             
             avatarButton.yy_setBackgroundImageWithURL(NSURL(string: tweet!.author!.avatar!), forState: .Normal, options: YYWebImageOptions(rawValue: 0))
             nicknameLabel.text = tweet!.author!.nickname!
-            contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet!.content!, font: UIFont.systemFontOfSize(16))
+            contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet!.content!, font: contentLabel.font)
             pictureView.images = tweet?.images
             publishTimeLabel.text = tweet?.publishTime?.timeStampToDate().dateToDescription()
             appClientLabel.text = tweet?.appClient == 0 ? "iOS客户端" : "Android客户端"
@@ -63,7 +63,7 @@ class JFTweetListCell: UITableViewCell {
     private func prepareUI() {
         
         selectionStyle = .None
-        
+        contentView.backgroundColor = COLOR_ALL_BG
         contentView.addSubview(avatarButton)
         contentView.addSubview(nicknameLabel)
         contentView.addSubview(contentLabel)
@@ -134,7 +134,7 @@ class JFTweetListCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
-            contentView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.00)
+            contentView.backgroundColor = COLOR_ALL_BG
         } else {
             contentView.backgroundColor = UIColor.whiteColor()
         }
