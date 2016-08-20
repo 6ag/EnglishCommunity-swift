@@ -34,6 +34,12 @@ class JFVideoInfo: NSObject {
     /// 视频节数
     var videoCount = 0
     
+    /// 评论数量
+    var commentCount = 0
+    
+    /// 收藏数量
+    var collectionCount = 0
+    
     /// 是否已经收藏 0未收藏 1收藏
     var collected = 0
     
@@ -90,15 +96,15 @@ class JFVideoInfo: NSObject {
      - parameter count:    每页数量
      - parameter finished: 数据回调
      */
-    class func loadCollectionVideoInfoList(user_id: Int, page: Int, count: Int, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
+    class func loadCollectionVideoInfoList(page: Int, count: Int, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : user_id,
+            "user_id" : JFAccountModel.shareAccount()!.id,
             "page" : page,
             "count" : count
         ]
         
-        JFNetworkTools.shareNetworkTool.get(GET_COLLECTION_LIST, parameters: parameters) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.getWithToken(GET_COLLECTION_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
                 print(success, error, parameters)

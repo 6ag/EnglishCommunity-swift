@@ -161,28 +161,54 @@ class JFAccountModel: NSObject, NSCoding {
 extension JFAccountModel {
     
     /**
-     更新用户信息 如果信息失效则退出登录
+     获取最新用户信息
      
      - parameter finished: 完成回调
      */
-    class func updateUserInfo(finished: () -> ()) {
+    class func getNewUserInfo(finished: (success: Bool) -> ()) {
         
         if !JFAccountModel.isLogin() {
             return
         }
         
-        JFNetworkTools.shareNetworkTool.get(GET_USER_INFOMATION, parameters: ["user_id" : JFAccountModel.shareAccount()!.id]) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.getWithToken(GET_USER_INFOMATION, parameters: ["user_id" : JFAccountModel.shareAccount()!.id]) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
-                // 登录信息无效
-                JFAccountModel.logout()
-                finished()
+                finished(success: false)
                 return
             }
             
             let account = JFAccountModel(dict: result["result"].dictionaryObject!)
             account.updateUserInfo()
-            finished()
+            finished(success: true)
+        }
+    }
+    
+    /**
+     更新用户信息
+     
+     - parameter nickname: 昵称
+     - parameter sex:      性别 0女 1男
+     - parameter say:      个性签名
+     - parameter finished: 完成回调
+     */
+    class func updateUserInfo(nickname: String, sex: Int, say: String, finished: (success: Bool) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()!.id,
+            "nickname" : nickname,
+            "sex" : sex,
+            "say" : say
+        ]
+        
+        JFNetworkTools.shareNetworkTool.postWithToken(UPDATE_USER_INFOMATION, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where success == true && result["status"] == "success" else {
+                finished(success: false)
+                return
+            }
+            
+            finished(success: true)
         }
     }
     
@@ -247,19 +273,19 @@ extension JFAccountModel {
      - parameter userId:      用户id
      - parameter avatarImage: 头像图片对象
      */
-    class func uploadUserAvatar(userId: Int, avatarImage: UIImage, finished: (success: Bool) -> ()) {
+    class func uploadUserAvatar(avatarImage: UIImage, finished: (success: Bool) -> ()) {
         
         let imageData = UIImageJPEGRepresentation(avatarImage, 1)!
         let imageBase64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue:0))
         
         let parameters: [String : AnyObject] = [
-            "user_id" : userId,
+            "user_id" : JFAccountModel.shareAccount()!.id,
             "photo" : imageBase64
         ]
         
-        JFNetworkTools.shareNetworkTool.post(UPLOAD_USER_AVATAR, parameters: parameters) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.postWithToken(UPLOAD_USER_AVATAR, parameters: parameters) { (success, result, error) in
             
-            guard let _ = result where success == true && result!["status"] == "success" else {
+            guard let result = result where success == true && result["status"] == "success" else {
                 finished(success: false)
                 return
             }

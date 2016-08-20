@@ -68,4 +68,7 @@ let UPLOAD_USER_AVATAR = "api/uploadUserAvatar.api"
 /// 获取用户信息
 let GET_USER_INFOMATION = "api/getUserInfomation.api"
 
+/// 更新用户信息
+let UPDATE_USER_INFOMATION = "api/updateUserInfomation.api"
+
 

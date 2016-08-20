@@ -36,10 +36,12 @@
 		B21501DA1D5366C2005E4670 /* JFTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501D81D5366C2005E4670 /* JFTabBarController.swift */; };
 		B21501DC1D5366CB005E4670 /* JFTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501DB1D5366CB005E4670 /* JFTabBar.swift */; };
 		B21501DE1D536800005E4670 /* JFHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501DD1D536800005E4670 /* JFHomeViewController.swift */; };
+		B2155F391D68677C00D3FC65 /* JFSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2155F381D68677C00D3FC65 /* JFSettingViewController.swift */; };
+		B2155F3C1D687BD800D3FC65 /* JFInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2155F3A1D687BD800D3FC65 /* JFInfoHeaderView.swift */; };
+		B2155F3D1D687BD800D3FC65 /* JFInfoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2155F3B1D687BD800D3FC65 /* JFInfoHeaderView.xib */; };
+		B2155F3F1D68A36400D3FC65 /* JFSafeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2155F3E1D68A36400D3FC65 /* JFSafeViewController.swift */; };
 		B2156C591D66ADF90033DBB6 /* JFFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C521D66ADF90033DBB6 /* JFFriendViewController.swift */; };
 		B2156C5A1D66ADF90033DBB6 /* JFInfomationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C541D66ADF90033DBB6 /* JFInfomationViewController.swift */; };
-		B2156C5B1D66ADF90033DBB6 /* JFModifyInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C551D66ADF90033DBB6 /* JFModifyInfoTableViewController.swift */; };
-		B2156C5C1D66ADF90033DBB6 /* JFModifySafeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C561D66ADF90033DBB6 /* JFModifySafeTableViewController.swift */; };
 		B2156C5D1D66ADF90033DBB6 /* JFMessageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C581D66ADF90033DBB6 /* JFMessageListViewController.swift */; };
 		B2156C651D66AE3A0033DBB6 /* JFForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C5F1D66AE3A0033DBB6 /* JFForgotViewController.swift */; };
 		B2156C661D66AE3A0033DBB6 /* JFForgotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2156C601D66AE3A0033DBB6 /* JFForgotViewController.xib */; };
@@ -47,11 +49,9 @@
 		B2156C681D66AE3A0033DBB6 /* JFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2156C621D66AE3A0033DBB6 /* JFLoginViewController.xib */; };
 		B2156C691D66AE3A0033DBB6 /* JFRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C631D66AE3A0033DBB6 /* JFRegisterViewController.swift */; };
 		B2156C6A1D66AE3A0033DBB6 /* JFRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2156C641D66AE3A0033DBB6 /* JFRegisterViewController.xib */; };
-		B2156C6F1D66AE6A0033DBB6 /* JFAboutMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C6C1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */; };
-		B2156C701D66AE6A0033DBB6 /* JFDutyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C6D1D66AE6A0033DBB6 /* JFDutyViewController.swift */; };
+		B2156C701D66AE6A0033DBB6 /* JFAboutMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C6D1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */; };
 		B2156C711D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C6E1D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift */; };
 		B2156C7A1D66AEDA0033DBB6 /* JFProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C731D66AEDA0033DBB6 /* JFProfileCell.swift */; };
-		B2156C7B1D66AEDA0033DBB6 /* JFInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C761D66AEDA0033DBB6 /* JFInfoHeaderView.swift */; };
 		B2156C7E1D66AEF10033DBB6 /* JFBaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C7D1D66AEF10033DBB6 /* JFBaseTableViewController.swift */; };
 		B2156C881D66AF840033DBB6 /* JFPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C811D66AF840033DBB6 /* JFPublishViewController.swift */; };
 		B2156C891D66AF840033DBB6 /* JFSelectFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C821D66AF840033DBB6 /* JFSelectFriendViewController.swift */; };
@@ -181,10 +181,12 @@
 		B21501D81D5366C2005E4670 /* JFTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTabBarController.swift; sourceTree = "<group>"; };
 		B21501DB1D5366CB005E4670 /* JFTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTabBar.swift; sourceTree = "<group>"; };
 		B21501DD1D536800005E4670 /* JFHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFHomeViewController.swift; sourceTree = "<group>"; };
+		B2155F381D68677C00D3FC65 /* JFSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSettingViewController.swift; sourceTree = "<group>"; };
+		B2155F3A1D687BD800D3FC65 /* JFInfoHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFInfoHeaderView.swift; sourceTree = "<group>"; };
+		B2155F3B1D687BD800D3FC65 /* JFInfoHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFInfoHeaderView.xib; sourceTree = "<group>"; };
+		B2155F3E1D68A36400D3FC65 /* JFSafeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSafeViewController.swift; sourceTree = "<group>"; };
 		B2156C521D66ADF90033DBB6 /* JFFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFFriendViewController.swift; sourceTree = "<group>"; };
 		B2156C541D66ADF90033DBB6 /* JFInfomationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFInfomationViewController.swift; sourceTree = "<group>"; };
-		B2156C551D66ADF90033DBB6 /* JFModifyInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFModifyInfoTableViewController.swift; sourceTree = "<group>"; };
-		B2156C561D66ADF90033DBB6 /* JFModifySafeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFModifySafeTableViewController.swift; sourceTree = "<group>"; };
 		B2156C581D66ADF90033DBB6 /* JFMessageListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFMessageListViewController.swift; sourceTree = "<group>"; };
 		B2156C5F1D66AE3A0033DBB6 /* JFForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFForgotViewController.swift; sourceTree = "<group>"; };
 		B2156C601D66AE3A0033DBB6 /* JFForgotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFForgotViewController.xib; sourceTree = "<group>"; };
@@ -192,11 +194,9 @@
 		B2156C621D66AE3A0033DBB6 /* JFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFLoginViewController.xib; sourceTree = "<group>"; };
 		B2156C631D66AE3A0033DBB6 /* JFRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFRegisterViewController.swift; sourceTree = "<group>"; };
 		B2156C641D66AE3A0033DBB6 /* JFRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFRegisterViewController.xib; sourceTree = "<group>"; };
-		B2156C6C1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFAboutMeViewController.swift; sourceTree = "<group>"; };
-		B2156C6D1D66AE6A0033DBB6 /* JFDutyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDutyViewController.swift; sourceTree = "<group>"; };
+		B2156C6D1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFAboutMeViewController.swift; sourceTree = "<group>"; };
 		B2156C6E1D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileFeedbackViewController.swift; sourceTree = "<group>"; };
 		B2156C731D66AEDA0033DBB6 /* JFProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileCell.swift; sourceTree = "<group>"; };
-		B2156C761D66AEDA0033DBB6 /* JFInfoHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFInfoHeaderView.swift; sourceTree = "<group>"; };
 		B2156C7D1D66AEF10033DBB6 /* JFBaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFBaseTableViewController.swift; sourceTree = "<group>"; };
 		B2156C811D66AF840033DBB6 /* JFPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPublishViewController.swift; sourceTree = "<group>"; };
 		B2156C821D66AF840033DBB6 /* JFSelectFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSelectFriendViewController.swift; sourceTree = "<group>"; };
@@ -416,8 +416,6 @@
 			isa = PBXGroup;
 			children = (
 				B2156C541D66ADF90033DBB6 /* JFInfomationViewController.swift */,
-				B2156C551D66ADF90033DBB6 /* JFModifyInfoTableViewController.swift */,
-				B2156C561D66ADF90033DBB6 /* JFModifySafeTableViewController.swift */,
 			);
 			path = Information;
 			sourceTree = "<group>";
@@ -446,9 +444,10 @@
 		B2156C6B1D66AE6A0033DBB6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				B2156C6C1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */,
-				B2156C6D1D66AE6A0033DBB6 /* JFDutyViewController.swift */,
+				B2155F381D68677C00D3FC65 /* JFSettingViewController.swift */,
+				B2156C6D1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */,
 				B2156C6E1D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift */,
+				B2155F3E1D68A36400D3FC65 /* JFSafeViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -471,7 +470,8 @@
 		B2156C751D66AEDA0033DBB6 /* Infomation */ = {
 			isa = PBXGroup;
 			children = (
-				B2156C761D66AEDA0033DBB6 /* JFInfoHeaderView.swift */,
+				B2155F3A1D687BD800D3FC65 /* JFInfoHeaderView.swift */,
+				B2155F3B1D687BD800D3FC65 /* JFInfoHeaderView.xib */,
 			);
 			path = Infomation;
 			sourceTree = "<group>";
@@ -1020,6 +1020,7 @@
 				B2190B081D4F85C4007FC0E9 /* Assets.xcassets in Resources */,
 				B2156C661D66AE3A0033DBB6 /* JFForgotViewController.xib in Resources */,
 				B28D94081D534AA700128D20 /* JFPlayer_seek_to_image@3x.png in Resources */,
+				B2155F3D1D687BD800D3FC65 /* JFInfoHeaderView.xib in Resources */,
 				B28D940A1D534AA700128D20 /* JFPlayer_slider_thumb@3x.png in Resources */,
 				B2156C6A1D66AE3A0033DBB6 /* JFRegisterViewController.xib in Resources */,
 				B2DA011A1D654E0C0095AB7D /* JFCategoryListCell.xib in Resources */,
@@ -1096,7 +1097,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2156C5C1D66ADF90033DBB6 /* JFModifySafeTableViewController.swift in Sources */,
 				B249AE351D607D41005C0A41 /* JFCommentCell.swift in Sources */,
 				B2512A731D54426B00476D0E /* JFVideo.swift in Sources */,
 				B21501D21D536697005E4670 /* UIViewExtension.swift in Sources */,
@@ -1130,21 +1130,21 @@
 				B238B40E1D5D991400E4307A /* JFGrammarViewController.swift in Sources */,
 				B2DA011E1D65583E0095AB7D /* JFDetailHeaderView.swift in Sources */,
 				B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */,
-				B2156C6F1D66AE6A0033DBB6 /* JFAboutMeViewController.swift in Sources */,
 				B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */,
 				B21501D91D5366C2005E4670 /* JFNavigationController.swift in Sources */,
 				B2B770FA1D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift in Sources */,
-				B2156C5B1D66ADF90033DBB6 /* JFModifyInfoTableViewController.swift in Sources */,
 				B249AE371D607D41005C0A41 /* JFTweetDetailHeaderView.swift in Sources */,
 				B21501D51D5366A4005E4670 /* JFNetworkTools.swift in Sources */,
 				B2156C8B1D66AF840033DBB6 /* JFPlaceholderTextView.swift in Sources */,
 				B2156C591D66ADF90033DBB6 /* JFFriendViewController.swift in Sources */,
 				B2156C7E1D66AEF10033DBB6 /* JFBaseTableViewController.swift in Sources */,
 				B2156C9D1D6709CE0033DBB6 /* JFEmoticonView.swift in Sources */,
+				B2155F3F1D68A36400D3FC65 /* JFSafeViewController.swift in Sources */,
 				B2FC66D61D5C16EA0032703D /* StringExtension.swift in Sources */,
 				B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */,
 				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,
 				B2FC66D71D5C16EA0032703D /* UIImageExtension.swift in Sources */,
+				B2155F391D68677C00D3FC65 /* JFSettingViewController.swift in Sources */,
 				B28D940E1D534AA700128D20 /* JFPlayerItem.swift in Sources */,
 				B249AE311D607D41005C0A41 /* JFTweetDetailViewController.swift in Sources */,
 				B249AE3E1D60AC79005C0A41 /* JFTweetPictureView.swift in Sources */,
@@ -1155,15 +1155,15 @@
 				B2156C691D66AE3A0033DBB6 /* JFRegisterViewController.swift in Sources */,
 				B2156C9B1D66C3DE0033DBB6 /* JFMultiTextView.swift in Sources */,
 				B2156C941D66B1EF0033DBB6 /* JFProfileCellGroupModel.swift in Sources */,
-				B2156C701D66AE6A0033DBB6 /* JFDutyViewController.swift in Sources */,
+				B2156C701D66AE6A0033DBB6 /* JFAboutMeViewController.swift in Sources */,
 				B21501D61D5366A4005E4670 /* JFProgressHUD.swift in Sources */,
 				B2FC66C61D5C15DF0032703D /* JFUserCommentModel.swift in Sources */,
 				B2156C931D66B1EF0033DBB6 /* JFProfileCellArrowModel.swift in Sources */,
 				B2FC66C01D5C15DF0032703D /* JFProfileViewController.swift in Sources */,
 				B2B770F91D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift in Sources */,
 				B2156C971D66B1EF0033DBB6 /* JFProfileCellSwitchModel.swift in Sources */,
+				B2155F3C1D687BD800D3FC65 /* JFInfoHeaderView.swift in Sources */,
 				B2156C961D66B1EF0033DBB6 /* JFProfileCellModel.swift in Sources */,
-				B2156C7B1D66AEDA0033DBB6 /* JFInfoHeaderView.swift in Sources */,
 				B2512A6F1D5439C800476D0E /* Api.swift in Sources */,
 				B2B770FD1D61689E0042AA5E /* JFPhotoBrowserModel.swift in Sources */,
 				B213E3F31D54D45B00589058 /* JFPlayerViewController.swift in Sources */,

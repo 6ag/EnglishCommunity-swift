@@ -22,6 +22,9 @@ class JFTweetDetailViewController: UIViewController {
     /// 动弹模型
     var tweet: JFTweet?
     
+    /// 即将回复的评论
+    var revertComment: JFComment?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -131,6 +134,12 @@ extension JFTweetDetailViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        // 即将回复的评论
+        revertComment = comments[indexPath.row]
+        
+        // 弹出键盘并获得第一响应者
+        multiTextView.expansion()
+        multiTextView.placeholderString = "@\(revertComment!.author!.nickname!) "
     }
     
 }
@@ -150,7 +159,7 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         }
         
         // 已经登录
-        JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord(JFAccountModel.shareAccount()!.id, type: "tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord("tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
                 return
@@ -198,8 +207,11 @@ extension JFTweetDetailViewController: JFMultiTextViewDelegate {
      */
     func didTappedSendButton(text: String) {
         
+        let pid = revertComment?.id ?? 0
+        revertComment = nil
+        
         if isLogin(self) {
-            JFComment.publishComment(JFAccountModel.shareAccount()!.id, type: "tweet", sourceId: tweet!.id, content: text, finished: { (success) in
+            JFComment.publishComment("tweet", sourceId: tweet!.id, content: text, pid: pid, finished: { (success) in
                 if success {
                     self.updateData("tweet", page: 1, method: 0, source_id: self.tweet!.id)
                 }

@@ -43,7 +43,7 @@ extension UIBarButtonItem {
         itemButton.size = CGSize(width: 50, height: 44)
         itemButton.contentHorizontalAlignment = .Right
         itemButton.setTitle(title, forState: .Normal)
-        itemButton.titleLabel?.font = UIFont.systemFontOfSize(18)
+        itemButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         itemButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         itemButton.setTitleColor(UIColor(white: 0.9, alpha: 1), forState: .Disabled)
         itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
@@ -64,7 +64,6 @@ extension UIBarButtonItem {
         let itemButton = UIButton(type: .Custom)
         itemButton.size = CGSize(width: 50, height: 44)
         itemButton.contentHorizontalAlignment = .Left
-//        itemButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         itemButton.setImage(UIImage(named: normalImage), forState: .Normal)
         itemButton.setImage(UIImage(named: highlightedImage), forState: .Highlighted)
         itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)

@@ -69,10 +69,10 @@ class JFProfileFeedbackViewController: JFBaseTableViewController {
         
         JFProgressHUD.showWithStatus("正在提交")
         
-        let parameters = [
-            "content" : contentTextView.text,
-            "contact" : contactTextField.text!
-        ]
+//        let parameters = [
+//            "content" : contentTextView.text,
+//            "contact" : contactTextField.text!
+//        ]
         
 //        JFNetworkTool.shareNetworkTool.post("http://120.24.79.174/jiansan/feedback.php", parameters: parameters) { (success, result, error) in
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,Int64(2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {

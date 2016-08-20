@@ -2,87 +2,252 @@
 //  JFInfomationViewController.swift
 //  BaoKanIOS
 //
-//  Created by zhoujianfeng on 16/5/13.
+//  Created by zhoujianfeng on 16/5/26.
 //  Copyright © 2016年 六阿哥. All rights reserved.
 //
 
 import UIKit
+import YYWebImage
 
 class JFInfomationViewController: JFBaseTableViewController {
+    
+    let modifyInfoIdenfitier = "modifyInfoIdenfitier"
+    
+    let imagePickerC = UIImagePickerController()
+    
+    /// 头部高度
+    let headerHeight = SCREEN_HEIGHT * 0.3
+    
+    let left: CGFloat = 70
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "账号管理"
+        title = "个人资料"
+        let placeholderView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: headerHeight - 44))
+        placeholderView.userInteractionEnabled = false
+        tableView.tableHeaderView = placeholderView
+        tableView.addSubview(headerView)
+        updateHeaderData()
+        navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("保存", target: self, action: #selector(didTappedSaveButton))
         
-        let group1CellModel1 = JFProfileCellArrowModel(title: "修改资料", destinationVc: JFModifyInfoTableViewController.classForCoder())
-        let group1CellModel2 = JFProfileCellArrowModel(title: "修改安全信息", destinationVc: JFModifySafeTableViewController.classForCoder())
-        let group1 = JFProfileCellGroupModel(cells: [group1CellModel1, group1CellModel2])
-        
-        let group2CellModel1 = JFProfileCellLabelModel(title: "注册时间", text: JFAccountModel.shareAccount()!.registerTime!.timeStampToString())
-        let group2CellModel2 = JFProfileCellLabelModel(title: "我的积分", text: "")
-        let group2CellModel3 = JFProfileCellLabelModel(title: "我的等级", text: "")
-        let group2 = JFProfileCellGroupModel(cells: [group2CellModel1, group2CellModel2, group2CellModel3])
-        
-        groupModels = [group1, group2]
-        
-        tableView.tableFooterView = footerView
+        let group1CellModel1 = JFProfileCellModel(title: "昵称:")
+        let group1CellModel2 = JFProfileCellModel(title: "性别:")
+        let group1CellModel3 = JFProfileCellModel(title: "签名:")
+        let group1 = JFProfileCellGroupModel(cells: [group1CellModel1, group1CellModel2, group1CellModel3])
+        groupModels = [group1]
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    /**
+     点击了保存
+     */
+    func didTappedSaveButton() {
         
-        tableView.tableHeaderView = JFInfoHeaderView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 70))
-    }
-    
-    private func prepareData() {
+        // 更新内存中的数据
+        JFAccountModel.shareAccount()?.nickname = nicknameField.text
+        JFAccountModel.shareAccount()?.sex = sexField.text == "女" ? 0 : 1
+        JFAccountModel.shareAccount()?.say = sayField.text
         
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 1 {
-            return 20
-        } else {
-            return 0.1
+        JFProgressHUD.showWithStatus("更新资料")
+        JFAccountModel.updateUserInfo(JFAccountModel.shareAccount()?.nickname ?? "", sex: JFAccountModel.shareAccount()?.sex ?? 0, say: JFAccountModel.shareAccount()?.say ?? "") { (success) in
+            JFProgressHUD.showSuccessWithStatus("更新成功")
+            if success {
+                JFAccountModel.getNewUserInfo({ (success) in
+                    if success {
+                        self.updateHeaderData()
+                        self.navigationController?.popViewControllerAnimated(true)
+                    } else {
+                        print("更新头像失败")
+                    }
+                })
+            }
         }
     }
     
     /**
-     退出登录点击
+     更新头部数据
      */
-    func didTappedLogoutButton(button: UIButton) -> Void {
-        
-        let alertC = UIAlertController(title: "确定注销登录状态？", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let action1 = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (action) in
-            JFAccountModel.logout()
-            JFProgressHUD.showSuccessWithStatus("退出成功")
-            self.navigationController?.popViewControllerAnimated(true)
-        }
-        let action2 = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel) { (action) in
-            
-        }
-        alertC.addAction(action1)
-        alertC.addAction(action2)
-        presentViewController(alertC, animated: true) {}
+    private func updateHeaderData() {
+        headerView.avatarButton.yy_setBackgroundImageWithURL(NSURL(string: JFAccountModel.shareAccount()!.avatar!), forState: UIControlState.Normal, options: YYWebImageOptions(rawValue: 0))
+        headerView.nameLabel.text = JFAccountModel.shareAccount()!.nickname!
+    }
+    
+    /**
+     配置文本框
+     
+     - parameter placeholder: 占位符
+     
+     - returns: 返回文本框
+     */
+    private func setupTextField(placeholder: String) -> UITextField {
+        let field = UITextField(frame: CGRect(x: self.left, y: 0, width: SCREEN_WIDTH - 100, height: 44))
+        field.font = UIFont.systemFontOfSize(14)
+        field.textColor = UIColor.colorWithHexString("7b9cac")
+        field.placeholder = placeholder
+        field.clearButtonMode = .WhileEditing
+        return field
     }
     
     // MARK: - 懒加载
-    /// 尾部退出视图
-    private lazy var footerView: UIView = {
-        let logoutButton = UIButton(frame: CGRect(x: 20, y: 0, width: SCREEN_WIDTH - 40, height: 44))
-        logoutButton.addTarget(self, action: #selector(didTappedLogoutButton(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        logoutButton.setTitle("退出登录", forState: UIControlState.Normal)
-        logoutButton.backgroundColor = COLOR_NAV_BG
-        logoutButton.layer.cornerRadius = CORNER_RADIUS
-        
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 44))
-        footerView.addSubview(logoutButton)
-        return footerView
+    /// 头部区域
+    lazy var headerView: JFInfoHeaderView = {
+        let view = NSBundle.mainBundle().loadNibNamed("JFInfoHeaderView", owner: nil, options: nil).last as! JFInfoHeaderView
+        view.delegate = self
+        view.frame = CGRect(x: 0, y: -(SCREEN_HEIGHT * 2 - self.headerHeight), width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 2)
+        return view
     }()
+    
+    /// 昵称
+    private lazy var nicknameField: UITextField = {
+        return self.setupTextField("昵称")
+    }()
+    
+    /// 性别
+    private lazy var sexField: UITextField = {
+        return self.setupTextField("性别")
+    }()
+    
+    /// 签名
+    private lazy var sayField: UITextField = {
+        return self.setupTextField("个性签名")
+    }()
+    
+}
+
+// MARK: - tableView数据源、代理
+extension JFInfomationViewController {
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+        cell.selectionStyle = .None
+        
+        switch indexPath.row {
+        case 0: // 昵称
+            cell.contentView.addSubview(nicknameField)
+            nicknameField.text = JFAccountModel.shareAccount()?.nickname
+            return cell
+        case 1: // 性别
+            cell.contentView.addSubview(sexField)
+            sexField.text = JFAccountModel.shareAccount()?.sex == 0 ? "女" : "男"
+            sexField.userInteractionEnabled = false
+            return cell
+        case 2: // 签名
+            cell.contentView.addSubview(sayField)
+            sayField.text = JFAccountModel.shareAccount()?.say
+            return cell
+        default:
+            return cell
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.row == 1 {
+            let alertC = UIAlertController()
+            let manAction = UIAlertAction(title: "男", style: UIAlertActionStyle.Default, handler: { (action) in
+                JFAccountModel.shareAccount()?.sex = 1
+                self.tableView.reloadData()
+            })
+            let womanAction = UIAlertAction(title: "女", style: UIAlertActionStyle.Cancel, handler: { (action) in
+                JFAccountModel.shareAccount()?.sex = 0
+                self.tableView.reloadData()
+            })
+            alertC.addAction(manAction)
+            alertC.addAction(womanAction)
+            self.presentViewController(alertC, animated: true, completion: {})
+        }
+    }
+    
+}
+
+// MARK: - JFInfoHeaderViewDelegate
+extension JFInfomationViewController: JFInfoHeaderViewDelegate {
+    
+    /**
+     配置imagePicker
+     
+     - parameter sourceType:  资源类型
+     */
+    func setupImagePicker(sourceType: UIImagePickerControllerSourceType) {
+        imagePickerC.view.backgroundColor = COLOR_ALL_BG
+        imagePickerC.delegate = self
+        imagePickerC.sourceType = sourceType
+        imagePickerC.allowsEditing = true
+        imagePickerC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+    }
+    
+    /**
+     头像按钮点击
+     */
+    func didTappedAvatarButton() {
+        let alertC = UIAlertController()
+        let takeAction = UIAlertAction(title: "拍照", style: UIAlertActionStyle.Default, handler: { (action) in
+            if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+                JFProgressHUD.showInfoWithStatus("摄像头不可用")
+                return
+            }
+            self.setupImagePicker(.Camera)
+            self.presentViewController(self.imagePickerC, animated: true, completion: {})
+        })
+        let photoLibraryAction = UIAlertAction(title: "从相册选择照片", style: UIAlertActionStyle.Default, handler: { (action) in
+            if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+                JFProgressHUD.showInfoWithStatus("相册不可用")
+                return
+            }
+            self.setupImagePicker(.PhotoLibrary)
+            self.presentViewController(self.imagePickerC, animated: true, completion: {})
+        })
+        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in
+            
+        })
+        alertC.addAction(takeAction)
+        alertC.addAction(photoLibraryAction)
+        alertC.addAction(cancelAction)
+        self.presentViewController(alertC, animated: true, completion: {})
+    }
+    
+}
+
+// MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate
+extension JFInfomationViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        let newImage = image.resizeImageWithNewSize(CGSize(width: 150, height: 150))
+        uploadUserAvatar(newImage)
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    /**
+     上传用户头像
+     
+     - parameter image: 头像图片
+     */
+    func uploadUserAvatar(image: UIImage) {
+        
+        JFAccountModel.uploadUserAvatar(image) { (success) in
+            if success {
+                JFAccountModel.getNewUserInfo({ (success) in
+                    if success {
+                        self.updateHeaderData()
+                    } else {
+                        print("更新头像失败")
+                    }
+                })
+            }
+        }
+    }
 }

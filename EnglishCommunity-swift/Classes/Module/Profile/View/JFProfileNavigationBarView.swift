@@ -9,6 +9,10 @@
 import UIKit
 import SnapKit
 
+protocol JFProfileNavigationBarViewDelegate: NSObjectProtocol {
+    func didTappedSetting()
+}
+
 class JFProfileNavigationBarView: UIView {
 
     override init(frame: CGRect) {
@@ -40,6 +44,8 @@ class JFProfileNavigationBarView: UIView {
         }
     }
     
+    weak var delegate: JFProfileNavigationBarViewDelegate?
+    
     /**
      标题和状态栏改变
      */
@@ -66,6 +72,13 @@ class JFProfileNavigationBarView: UIView {
         }
     }
     
+    /**
+     点击了设置
+     */
+    @objc private func didTappedSetting() {
+        delegate?.didTappedSetting()
+    }
+    
     // MARK: - 懒加载
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -80,6 +93,7 @@ class JFProfileNavigationBarView: UIView {
         let button = UIButton(type: .Custom)
         button.setImage(UIImage(named: "profile_setting_icon_normal"), forState: .Normal)
 //        button.setImage(UIImage(named: "profile_setting_icon_highlighted"), forState: .Highlighted)
+        button.addTarget(self, action: #selector(didTappedSetting), forControlEvents: .TouchUpInside)
         return button
     }()
 }

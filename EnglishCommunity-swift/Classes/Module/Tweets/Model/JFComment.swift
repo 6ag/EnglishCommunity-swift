@@ -140,17 +140,17 @@ class JFComment: NSObject {
      - parameter pid:      回复评论id
      - parameter finished: 完成回调
      */
-    class func publishComment(userId: Int, type: String, sourceId: Int, content: String, pid: Int = 0, finished: (success: Bool) -> ()) {
+    class func publishComment(type: String, sourceId: Int, content: String, pid: Int = 0, finished: (success: Bool) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : userId,
+            "user_id" : JFAccountModel.shareAccount()!.id,
             "type" : type,
             "source_id" : sourceId,
             "content" : content,
             "pid" : pid
             ]
         
-        JFNetworkTools.shareNetworkTool.post(POST_COMMENT, parameters: parameters) { (success, result, error) in
+        JFNetworkTools.shareNetworkTool.postWithToken(POST_COMMENT, parameters: parameters) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
                 print(success, error, parameters)

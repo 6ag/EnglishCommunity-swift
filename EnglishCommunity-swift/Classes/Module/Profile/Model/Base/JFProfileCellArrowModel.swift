@@ -13,6 +13,9 @@ class JFProfileCellArrowModel: JFProfileCellModel {
     /// 目标控制器
     var destinationVc: AnyClass?
     
+    /// 显示文本
+    var text: String?
+    
     init(title: String, destinationVc: AnyClass) {
         super.init(title: title)
         self.destinationVc = destinationVc
@@ -28,6 +31,12 @@ class JFProfileCellArrowModel: JFProfileCellModel {
     
     init(title: String, icon: String, destinationVc: AnyClass) {
         super.init(title: title, icon: icon)
+        self.destinationVc = destinationVc
+    }
+    
+    init(title: String, text: String, destinationVc: AnyClass) {
+        super.init(title: title)
+        self.text = text
         self.destinationVc = destinationVc
     }
 }

@@ -34,7 +34,9 @@ class JFProfileCell: UITableViewCell {
             // 右边数据
             selectionStyle = cellModel!.isKindOfClass(JFProfileCellArrowModel.self) ? .Default : .None
             if cellModel!.isKindOfClass(JFProfileCellArrowModel.self) {
-                accessoryView = settingArrowView
+                let settingCellArrow = cellModel as! JFProfileCellArrowModel
+                settingRightLabel.text = settingCellArrow.text
+                accessoryView = rightView
             } else if cellModel!.isKindOfClass(JFProfileCellSwitchModel.self) {
                 let settingCellSwitch = cellModel as! JFProfileCellSwitchModel
                 settingSwitchView.on = settingCellSwitch.on
@@ -72,7 +74,7 @@ class JFProfileCell: UITableViewCell {
     private func prepareUI() {
         
         textLabel?.font = UIFont.systemFontOfSize(14)
-        textLabel?.textColor = UIColor.blackColor()
+        textLabel?.textColor = UIColor.colorWithHexString("444444")
         
         detailTextLabel?.font = UIFont.systemFontOfSize(11)
         detailTextLabel?.textColor = UIColor.blackColor()
@@ -90,7 +92,7 @@ class JFProfileCell: UITableViewCell {
         let settingRightLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
         settingRightLabel.textColor = UIColor.grayColor()
         settingRightLabel.textAlignment = .Right
-        settingRightLabel.font = UIFont.systemFontOfSize(14)
+        settingRightLabel.font = UIFont.systemFontOfSize(12)
         return settingRightLabel
     }()
     
@@ -110,6 +112,15 @@ class JFProfileCell: UITableViewCell {
         settingLineView.backgroundColor = UIColor.blackColor()
         settingLineView.alpha = 0.1
         return settingLineView
+    }()
+    
+    lazy var rightView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 180, height: 20))
+        view.addSubview(self.settingArrowView)
+        view.addSubview(self.settingRightLabel)
+        self.settingArrowView.frame = CGRect(x: 170, y: 2.5, width: 15, height: 15)
+        self.settingRightLabel.frame = CGRect(x: 0, y: 0, width: 165, height: 20)
+        return view
     }()
 
 }

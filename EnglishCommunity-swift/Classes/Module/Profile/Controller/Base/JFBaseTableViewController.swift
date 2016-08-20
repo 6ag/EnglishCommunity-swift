@@ -55,13 +55,13 @@ extension JFBaseTableViewController {
         return 0.01
     }
     
-//    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return groupModels![section].footerTitle
-//    }
-//    
-//    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-//        return groupModels![section].headerTitle
-//    }
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return groupModels![section].headerTitle
+    }
+    
+    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return groupModels![section].footerTitle
+    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)

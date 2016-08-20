@@ -65,6 +65,59 @@ extension JFNetworkTools {
         }
     }
     
+    /**
+     带token的GET请求
+     
+     - parameter APIString:  urlString
+     - parameter parameters: 参数
+     - parameter finished:   完成回调
+     */
+    func getWithToken(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+        
+        guard let token = JFAccountModel.shareAccount()?.token else {
+            print("没有登录")
+            return
+        }
+        
+        print("\(BASE_URL)\(APIString)")
+        Alamofire.request(.GET, "\(BASE_URL)\(APIString)", parameters: parameters, encoding: ParameterEncoding.URL, headers: ["Authorization" : "Bearer \(token)"]).responseJSON { (response) -> Void in
+            
+            if let data = response.data {
+                let json = JSON(data: data)
+                finished(success: true, result: json, error: nil)
+            } else {
+                finished(success: false, result: nil, error: response.result.error)
+            }
+        }
+        
+    }
+    
+    /**
+     带token的POST请求
+     
+     - parameter APIString:  urlString
+     - parameter parameters: 参数
+     - parameter finished:   完成回调
+     */
+    func postWithToken(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+        
+        guard let token = JFAccountModel.shareAccount()?.token else {
+            print("没有登录")
+            return
+        }
+        
+        print("\(BASE_URL)\(APIString)")
+        Alamofire.request(.POST, "\(BASE_URL)\(APIString)", parameters: parameters, encoding: ParameterEncoding.JSON, headers: ["Authorization" : "Bearer \(token)"]).responseJSON { (response) -> Void in
+            
+            if let data = response.data {
+                let json = JSON(data: data)
+                finished(success: true, result: json, error: nil)
+            } else {
+                finished(success: false, result: nil, error: response.result.error)
+            }
+        }
+    
+    }
 }
 
 // MARK: - 抽取业务请求
@@ -74,16 +127,15 @@ extension JFNetworkTools {
      发布动弹
      
      - parameter APIString: urlString
-     - parameter userId:    用户id
      - parameter text:      文字内容
      - parameter images:    图片     [UIimage]?
      - parameter atUsers:   被at用户 [[id : AnyObject, nickname : AnyObject]]?
      - parameter finished:  完成回调
      */
-    func sendTweets(APIString: String, userId: Int, text: String, images: [UIImage]?, atUsers: [[String : AnyObject]]?, finished: NetworkFinished) {
+    func sendTweets(text: String, images: [UIImage]?, atUsers: [[String : AnyObject]]?, finished: NetworkFinished) {
         
         var parameters = [String : AnyObject]()
-        parameters["user_id"] = userId;
+        parameters["user_id"] = JFAccountModel.shareAccount()!.id;
         parameters["content"] = text;
         
         // 图片
@@ -107,43 +159,41 @@ extension JFNetworkTools {
             }
         }
         
-        post(APIString, parameters: parameters, finished: finished)
+        postWithToken(POST_TWEETS, parameters: parameters, finished: finished)
     }
     
     /**
      添加或删除赞记录
      
-     - parameter userId:    用户id
      - parameter type:      赞的类型 video_info / tweet
      - parameter sourceID:  视频信息或动弹的id
      - parameter finished:  完成回调
      */
-    func addOrCancelLikeRecord(userId: Int, type: String, sourceID: Int, finished: NetworkFinished) {
+    func addOrCancelLikeRecord(type: String, sourceID: Int, finished: NetworkFinished) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : userId,
+            "user_id" : JFAccountModel.shareAccount()!.id,
             "type" : type,
             "source_id" : sourceID
         ]
         
-        post(ADD_OR_CANCEL_LIKE_RECORD, parameters: parameters, finished: finished)
+        postWithToken(ADD_OR_CANCEL_LIKE_RECORD, parameters: parameters, finished: finished)
     }
     
     /**
      添加或删除收藏
      
-     - parameter userId:      用户id
      - parameter VideoInfoId: 视频信息id
      - parameter finished:    完成回调
      */
-    func addOrCancelCollection(userId: Int, VideoInfoId: Int, finished: NetworkFinished) {
+    func addOrCancelCollection(videoInfoId: Int, finished: NetworkFinished) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : userId,
-            "video_info_id" : VideoInfoId
+            "user_id" : JFAccountModel.shareAccount()!.id,
+            "video_info_id" : videoInfoId
         ]
         
-        post(ADD_OR_CANCEL_COLLECTION, parameters: parameters, finished: finished)
+        postWithToken(ADD_OR_CANCEL_COLLECTION, parameters: parameters, finished: finished)
     }
     
 }

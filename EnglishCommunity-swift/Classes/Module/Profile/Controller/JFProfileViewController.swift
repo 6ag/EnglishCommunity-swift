@@ -69,7 +69,7 @@ class JFProfileViewController: UIViewController {
         placeholderButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(tableView)
             make.centerY.equalTo(tableView).offset(40)
-            make.size.equalTo(CGSize(width: 120, height: 70))
+            make.size.equalTo(CGSize(width: 150, height: 100))
         }
         
         if JFAccountModel.isLogin() {
@@ -108,7 +108,12 @@ class JFProfileViewController: UIViewController {
      */
     private func loadCollectionVideoInfoList(page: Int, count: Int) {
         
-        JFVideoInfo.loadCollectionVideoInfoList(JFAccountModel.shareAccount()?.id ?? 0, page: page, count: count) { (videoInfos) in
+        if !JFAccountModel.isLogin() {
+            self.placeholderButton.hidden = false
+            return
+        }
+        
+        JFVideoInfo.loadCollectionVideoInfoList(page, count: count) { (videoInfos) in
             
             self.tableView.mj_footer.endRefreshing()
             
@@ -138,11 +143,11 @@ class JFProfileViewController: UIViewController {
      */
     private func updateHeaderData() {
         if JFAccountModel.isLogin() {
-            headerView.avatarButton.yy_setBackgroundImageWithURL(NSURL(string: JFAccountModel.shareAccount()!.avatar!), forState: UIControlState.Normal, options: YYWebImageOptions.AllowBackgroundTask)
+            headerView.avatarButton.yy_setBackgroundImageWithURL(NSURL(string: JFAccountModel.shareAccount()!.avatar!), forState: UIControlState.Normal, options: YYWebImageOptions(rawValue: 0))
             headerView.nameLabel.text = JFAccountModel.shareAccount()!.nickname!
         } else {
             headerView.avatarButton.setBackgroundImage(UIImage(named: "default－portrait"), forState: UIControlState.Normal)
-            headerView.nameLabel.text = "登录账号"
+            headerView.nameLabel.text = "登录后可以缓存视频哦"
         }
     }
     
@@ -180,6 +185,7 @@ class JFProfileViewController: UIViewController {
     /// 自定义导航栏
     lazy var navigationBarView: JFProfileNavigationBarView = {
         let view = JFProfileNavigationBarView()
+        view.delegate = self
         return view
     }()
     
@@ -225,7 +231,8 @@ extension JFProfileViewController: UITableViewDataSource, UITableViewDelegate {
             if editingStyle == .Delete {
                 // 删除视频信息
                 JFProgressHUD.showWithStatus("正在删除")
-                JFNetworkTools.shareNetworkTool.addOrCancelCollection(JFAccountModel.shareAccount()!.id, VideoInfoId: self.videoInfos[indexPath.row].id, finished: { (success, result, error) in
+                JFNetworkTools.shareNetworkTool.addOrCancelCollection(self.videoInfos[indexPath.row].id, finished: { (success, result, error) in
+                    
                     JFProgressHUD.showSuccessWithStatus("操作成功")
                     guard let result = result where success == true && result["status"] == "success" else {
                         return
@@ -288,6 +295,17 @@ extension JFProfileViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
+}
+
+// MARK: - JFProfileNavigationBarViewDelegate
+extension JFProfileViewController: JFProfileNavigationBarViewDelegate {
+    
+    /**
+     点击了设置
+     */
+    func didTappedSetting() {
+        navigationController?.pushViewController(JFSettingViewController(style: UITableViewStyle.Grouped), animated: true)
+    }
 }
 
 // MARK: - JFProfileHeaderViewDelegate
@@ -361,7 +379,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      */
     func didTappedInfoButton() {
         if isLogin(self) {
-            navigationController?.pushViewController(JFInfomationViewController(style: UITableViewStyle.Grouped), animated: true)
+            navigationController?.pushViewController(JFInfomationViewController(style: UITableViewStyle.Plain), animated: true)
         }
     }
 }
@@ -387,9 +405,9 @@ extension JFProfileViewController: UINavigationControllerDelegate, UIImagePicker
      */
     func uploadUserAvatar(image: UIImage) {
         
-        JFAccountModel.uploadUserAvatar(JFAccountModel.shareAccount()!.id, avatarImage: image) { (success) in
+        JFAccountModel.uploadUserAvatar(image) { (success) in
             if success {
-                JFAccountModel.updateUserInfo({ 
+                JFAccountModel.getNewUserInfo({ (success) in
                     self.updateData()
                 })
             }
