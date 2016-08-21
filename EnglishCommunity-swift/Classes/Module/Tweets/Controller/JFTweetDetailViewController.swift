@@ -156,7 +156,7 @@ extension JFTweetDetailViewController: JFCommentCellDelegate {
         if atUser.nickname == nickname {
             let otherUser = JFOtherUserViewController()
             otherUser.userId = atUser.id
-            navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+            navigationController?.pushViewController(otherUser, animated: true)
         }
     }
     
@@ -167,7 +167,7 @@ extension JFTweetDetailViewController: JFCommentCellDelegate {
         
         let otherUser = JFOtherUserViewController()
         otherUser.userId = author.id
-        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+        navigationController?.pushViewController(otherUser, animated: true)
     }
 }
 
@@ -182,7 +182,7 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         
         let otherUser = JFOtherUserViewController()
         otherUser.userId = author.id
-        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+        navigationController?.pushViewController(otherUser, animated: true)
     }
     
     func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedLikeButton button: UIButton) {
@@ -227,7 +227,7 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
             if atUser.nickname == nickname && atUser.sequence == sequence {
                 let otherUser = JFOtherUserViewController()
                 otherUser.userId = atUser.id
-                navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+                navigationController?.pushViewController(otherUser, animated: true)
             }
         }
     }

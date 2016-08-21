@@ -57,7 +57,7 @@ class JFInfomationViewController: JFBaseTableViewController {
         JFAccountModel.updateUserInfo(JFAccountModel.shareAccount()?.nickname ?? "", sex: JFAccountModel.shareAccount()?.sex ?? 0, say: JFAccountModel.shareAccount()?.say ?? "") { (success) in
             JFProgressHUD.showSuccessWithStatus("更新成功")
             if success {
-                JFAccountModel.getNewUserInfo({ (success) in
+                JFAccountModel.getSelfUserInfo({ (success) in
                     if success {
                         self.updateHeaderData()
                         self.navigationController?.popViewControllerAnimated(true)
@@ -240,7 +240,7 @@ extension JFInfomationViewController: UINavigationControllerDelegate, UIImagePic
         
         JFAccountModel.uploadUserAvatar(image) { (success) in
             if success {
-                JFAccountModel.getNewUserInfo({ (success) in
+                JFAccountModel.getSelfUserInfo({ (success) in
                     if success {
                         self.updateHeaderData()
                     } else {

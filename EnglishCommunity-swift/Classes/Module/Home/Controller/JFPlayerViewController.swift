@@ -55,7 +55,6 @@ class JFPlayerViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
     }
     
@@ -412,7 +411,7 @@ extension JFPlayerViewController: JFCommentCellDelegate {
         if atUser.nickname == nickname {
             let otherUser = JFOtherUserViewController()
             otherUser.userId = atUser.id
-            navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+            navigationController?.pushViewController(otherUser, animated: true)
         }
     }
     
@@ -423,7 +422,7 @@ extension JFPlayerViewController: JFCommentCellDelegate {
         
         let otherUser = JFOtherUserViewController()
         otherUser.userId = author.id
-        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+        navigationController?.pushViewController(otherUser, animated: true)
     }
 }
 

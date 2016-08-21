@@ -59,16 +59,21 @@ let ADD_OR_CANCEL_LIKE_RECORD = "api/addOrCancelLikeRecord.api"
 /// 获取收藏列表
 let GET_COLLECTION_LIST = "api/getCollectionList.api"
 
-/// 添加视频收藏
+/// 添加或删除视频收藏
 let ADD_OR_CANCEL_COLLECTION = "api/addOrCancelCollectVideoInfo.api"
 
 /// 上传用户头像
 let UPLOAD_USER_AVATAR = "api/uploadUserAvatar.api"
 
-/// 获取用户信息
-let GET_USER_INFOMATION = "api/getUserInfomation.api"
+/// 获取自己的用户信息
+let GET_SELF_USER_INFOMATION = "api/getSelfUserInfomation.api"
+
+/// 获取他人的用户信息
+let GET_OTHER_USER_INFOMATION = "api/getOtherUserInfomation.api"
 
 /// 更新用户信息
 let UPDATE_USER_INFOMATION = "api/updateUserInfomation.api"
 
+/// 添加或删除朋友
+let ADD_OR_CANCEL_FRIEND = "api/addOrCancelFriend.api"
 

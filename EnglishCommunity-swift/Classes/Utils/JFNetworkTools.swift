@@ -200,6 +200,22 @@ extension JFNetworkTools {
         postWithToken(ADD_OR_CANCEL_COLLECTION, parameters: parameters, finished: finished)
     }
     
+    /**
+     添加或删除朋友
+     
+     - parameter relationUserId: 要发生关系用户的id
+     - parameter finished:       完成回调
+     */
+    func addOrCancelFriend(relationUserId: Int, finished: NetworkFinished) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()!.id,
+            "relation_user_id" : relationUserId
+        ]
+        
+        postWithToken(ADD_OR_CANCEL_FRIEND, parameters: parameters, finished: finished)
+    }
+    
 }
 
 // MARK: - 辅助方法

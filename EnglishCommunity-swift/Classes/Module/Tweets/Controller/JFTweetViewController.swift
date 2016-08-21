@@ -170,7 +170,7 @@ extension JFTweetViewController: JFTweetListCellDelegate {
         
         let otherUser = JFOtherUserViewController()
         otherUser.userId = author.id
-        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+        navigationController?.pushViewController(otherUser, animated: true)
     }
     
     /**
@@ -226,7 +226,7 @@ extension JFTweetViewController: JFTweetListCellDelegate {
             if atUser.nickname == nickname && atUser.sequence == sequence {
                 let otherUser = JFOtherUserViewController()
                 otherUser.userId = atUser.id
-                navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+                navigationController?.pushViewController(otherUser, animated: true)
             }
         }
         

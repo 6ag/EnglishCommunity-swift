@@ -55,6 +55,15 @@ class JFAccountModel: NSObject, NSCoding {
     /// 最后一次登录时间
     var lastLoginTime: String?
     
+    /// 粉丝数量
+    var followersCount = 0
+    
+    /// 关注数量
+    var followingCount = 0
+    
+    /// 是否已经关注了某个用户
+    var followed = 0
+    
     // KVC 字典转模型
     init(dict: [String: AnyObject]) {
         super.init()
@@ -134,6 +143,8 @@ class JFAccountModel: NSObject, NSCoding {
         aCoder.encodeInt(Int32(weiboBinding), forKey: "weibo_binding_key")
         aCoder.encodeInt(Int32(emailBinding), forKey: "email_binding_key")
         aCoder.encodeInt(Int32(mobileBinding), forKey: "mobile_binding_key")
+        aCoder.encodeInt(Int32(followersCount), forKey: "followers_count_key")
+        aCoder.encodeInt(Int32(followingCount), forKey: "following_count_key")
         aCoder.encodeObject(registerTime, forKey: "register_time_key")
         aCoder.encodeObject(lastLoginTime, forKey: "last_login_time")
     }
@@ -152,6 +163,8 @@ class JFAccountModel: NSObject, NSCoding {
         weiboBinding = Int(aDecoder.decodeIntForKey("weibo_binding_key"))
         emailBinding = Int(aDecoder.decodeIntForKey("email_binding_key"))
         mobileBinding = Int(aDecoder.decodeIntForKey("mobile_binding_key"))
+        followersCount = Int(aDecoder.decodeIntForKey("followers_count_key"))
+        followingCount = Int(aDecoder.decodeIntForKey("following_count_key"))
         registerTime = aDecoder.decodeObjectForKey("register_time_key") as? String
         lastLoginTime = aDecoder.decodeObjectForKey("last_login_time") as? String
     }
@@ -161,17 +174,21 @@ class JFAccountModel: NSObject, NSCoding {
 extension JFAccountModel {
     
     /**
-     获取最新用户信息
+     获取自己的用户信息 - 获取成功会更新本地用户信息
      
      - parameter finished: 完成回调
      */
-    class func getNewUserInfo(finished: (success: Bool) -> ()) {
+    class func getSelfUserInfo(finished: (success: Bool) -> ()) {
         
         if !JFAccountModel.isLogin() {
             return
         }
         
-        JFNetworkTools.shareNetworkTool.getWithToken(GET_USER_INFOMATION, parameters: ["user_id" : JFAccountModel.shareAccount()!.id]) { (success, result, error) in
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()!.id
+        ]
+        
+        JFNetworkTools.shareNetworkTool.getWithToken(GET_SELF_USER_INFOMATION, parameters: parameters) { (success, result, error) in
             
             guard let result = result where success == true && result["status"] == "success" else {
                 finished(success: false)
@@ -181,6 +198,35 @@ extension JFAccountModel {
             let account = JFAccountModel(dict: result["result"].dictionaryObject!)
             account.updateUserInfo()
             finished(success: true)
+            print("更新用户信息成功")
+        }
+    }
+    
+    /**
+     获取他人的用户信息 - 获取成功返回给调用者
+     
+     - parameter finished: 完成回调
+     */
+    class func getOtherUserInfo(otherUserId: Int, finished: (userInfo: JFAccountModel?) -> ()) {
+        
+        if !JFAccountModel.isLogin() {
+            return
+        }
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()?.id ?? 0,
+            "other_user_id" : otherUserId
+        ]
+        
+        JFNetworkTools.shareNetworkTool.get(GET_OTHER_USER_INFOMATION, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where success == true && result["status"] == "success" else {
+                finished(userInfo: nil)
+                return
+            }
+            
+            let userInfo = JFAccountModel(dict: result["result"].dictionaryObject!)
+            finished(userInfo: userInfo)
         }
     }
     

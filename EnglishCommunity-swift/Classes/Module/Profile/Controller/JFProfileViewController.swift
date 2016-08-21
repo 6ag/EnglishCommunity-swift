@@ -110,6 +110,8 @@ class JFProfileViewController: UIViewController {
         
         if !JFAccountModel.isLogin() {
             self.placeholderButton.hidden = false
+            self.videoInfos.removeAll()
+            self.tableView.reloadData()
             return
         }
         
@@ -413,7 +415,7 @@ extension JFProfileViewController: UINavigationControllerDelegate, UIImagePicker
         
         JFAccountModel.uploadUserAvatar(image) { (success) in
             if success {
-                JFAccountModel.getNewUserInfo({ (success) in
+                JFAccountModel.getSelfUserInfo({ (success) in
                     self.updateData()
                 })
             }
