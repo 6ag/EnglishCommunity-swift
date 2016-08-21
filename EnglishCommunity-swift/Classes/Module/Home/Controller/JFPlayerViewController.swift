@@ -22,11 +22,14 @@ class JFPlayerViewController: UIViewController {
     /// 视频列表模型数组
     var videos = [JFVideo]()
     
+    /// 即将回复的评论
+    var revertComment: JFComment?
+    
     /// 视频信息
     var videoInfo: JFVideoInfo? {
         didSet {
             loadVideoListData(videoInfo!.id)
-            updateData("video_info", page: page, method: 1, source_id: videoInfo!.id)
+            updateData("video_info", page: 1, method: 0, source_id: videoInfo!.id)
         }
     }
     
@@ -50,9 +53,20 @@ class JFPlayerViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+    }
+    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        player.pause()
+    }
+    
+    deinit {
+        print("播放控制器销毁")
         player.prepareToDealloc()
     }
     
@@ -72,6 +86,8 @@ class JFPlayerViewController: UIViewController {
         contentScrollView.addSubview(commentTableView)
         view.addSubview(bottomBarView)
         view.addSubview(player)
+        bottomBarView.joinCollectionButton.setTitle(videoInfo?.collected == 1 ? "取消收藏" : "收藏课程", forState: .Normal)
+        view.addSubview(multiTextView)
         
         // 自定义导航栏
         navigationBarView.snp_makeConstraints { (make) in
@@ -125,7 +141,7 @@ class JFPlayerViewController: UIViewController {
             make.top.equalTo(0)
             make.left.equalTo(SCREEN_WIDTH)
             make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 64)
+            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 154)
         }
         
         // 底部工具条
@@ -134,10 +150,6 @@ class JFPlayerViewController: UIViewController {
             make.height.equalTo(49)
         }
         
-    }
-    
-    deinit {
-        print("播放控制器销毁")
     }
     
     /**
@@ -224,7 +236,7 @@ class JFPlayerViewController: UIViewController {
     
     /// 控制器标题
     lazy var titleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "课程详情"
         label.font = UIFont.systemFontOfSize(18)
         label.textColor = UIColor.colorWithHexString("24262F")
@@ -299,7 +311,17 @@ class JFPlayerViewController: UIViewController {
     /// 底部工具条
     lazy var bottomBarView: JFDetailBottomBarView = {
         let bottomBarView = NSBundle.mainBundle().loadNibNamed("JFDetailBottomBarView", owner: nil, options: nil).last as! JFDetailBottomBarView
+        bottomBarView.delegate = self
         return bottomBarView
+    }()
+    
+    /// 评论文本框
+    lazy var multiTextView: JFMultiTextView = {
+        let textView = JFMultiTextView()
+        textView.haveNavigationBar = false
+        textView.delegate = self
+        textView.alpha = 0
+        return textView
     }()
     
 }
@@ -339,7 +361,7 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             let comment = comments[indexPath.row]
             if Int(comment.rowHeight) == 0 {
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as! JFCommentCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(commentCellIdentifier) as! JFCommentCell
                 let height = cell.getRowHeight(comment)
                 comment.rowHeight = height
             }
@@ -353,8 +375,9 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
             cell.model = videos[indexPath.row]
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(videoCellIdentifier) as! JFCommentCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(commentCellIdentifier) as! JFCommentCell
             cell.comment = comments[indexPath.row]
+            cell.delegate = self
             return cell
         }
     }
@@ -366,9 +389,42 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
             player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[indexPath.row].videoUrl!)")!, title: videos[indexPath.row].title!)
         } else {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            
+            // 即将回复的评论
+            revertComment = comments[indexPath.row]
+            
+            // 弹出键盘并获得第一响应者
+            multiTextView.expansion()
+            multiTextView.placeholderString = "@\(revertComment!.author!.nickname!) "
         }
     }
     
+}
+
+// MARK: - JFCommentCellDelegate
+extension JFPlayerViewController: JFCommentCellDelegate {
+    
+    func commentCell(cell: JFCommentCell, didTappedAtUser nickname: String, sequence: Int) {
+        guard let atUser = cell.comment?.extendsAuthor else {
+            return
+        }
+        
+        if atUser.nickname == nickname {
+            let otherUser = JFOtherUserViewController()
+            otherUser.userId = atUser.id
+            navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+        }
+    }
+    
+    func commentCell(cell: JFCommentCell, didTappedAvatarButton button: UIButton) {
+        guard let author = cell.comment?.author else {
+            return
+        }
+        
+        let otherUser = JFOtherUserViewController()
+        otherUser.userId = author.id
+        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+    }
 }
 
 // MARK: - JFTopBarViewDelegate
@@ -376,10 +432,14 @@ extension JFPlayerViewController: JFTopBarViewDelegate {
     
     func didSelectedMenuButton() {
         contentScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        bottomBarView.alpha = 1
+        multiTextView.alpha = 0
     }
     
     func didSelectedCommentButton() {
         contentScrollView.setContentOffset(CGPoint(x: SCREEN_WIDTH, y: 0), animated: true)
+        bottomBarView.alpha = 0
+        multiTextView.alpha = 1
     }
 }
 
@@ -387,11 +447,84 @@ extension JFPlayerViewController: JFTopBarViewDelegate {
 extension JFPlayerViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        if (scrollView.contentOffset.x >= SCREEN_WIDTH) {
+        if (scrollView.contentOffset.x >= SCREEN_WIDTH) && scrollView == contentScrollView {
             topBarView.didTappedCommentButton()
-        } else {
+            bottomBarView.alpha = 0
+            multiTextView.alpha = 1
+        } else if scrollView == contentScrollView {
             topBarView.didTappedMenuButton()
+            bottomBarView.alpha = 1
+            multiTextView.alpha = 0
         }
+    }
+}
+
+// MARK: - JFDetailBottomBarView
+extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
+    
+    /**
+     切换线路
+     */
+    func didTappedChangeLineButton(button: UIButton) {
+        print("切换线路")
+    }
+    
+    /**
+     下载视频
+     */
+    func didTappedDownloadButton(button: UIButton) {
+        print("下载")
+    }
+    
+    /**
+     分享
+     */
+    func didTappedShareButton(button: UIButton) {
+        print("分享")
+    }
+    
+    /**
+     加入收藏
+     */
+    func didTappedJoinCollectionButton(button: UIButton) {
+        
+        JFNetworkTools.shareNetworkTool.addOrCancelCollection(videoInfo!.id) { (success, result, error) in
+            guard let result = result where success == true && result["status"] == "success" else {
+                return
+            }
+            JFProgressHUD.showInfoWithStatus("操作成功")
+            if result["result"]["type"].stringValue == "add" {
+                // 赞
+                self.bottomBarView.joinCollectionButton.setTitle("取消收藏", forState: .Normal)
+            } else {
+                // 取消赞
+                self.bottomBarView.joinCollectionButton.setTitle("收藏课程", forState: .Normal)
+            }
+        }
+    }
+}
+
+// MARK: - JFMultiTextViewDelegate
+extension JFPlayerViewController: JFMultiTextViewDelegate {
+    
+    /**
+     点击了键盘发送按钮
+     
+     - parameter text: 输入的内容
+     */
+    func didTappedSendButton(text: String) {
+        
+        let pid = revertComment?.id ?? 0
+        revertComment = nil
+        
+        if isLogin(self) {
+            JFComment.publishComment("video_info", sourceId: videoInfo!.id, content: text, pid: pid, finished: { (success) in
+                if success {
+                    self.updateData("video_info", page: 1, method: 0, source_id: self.videoInfo!.id)
+                }
+            })
+        }
+        
     }
 }
 
@@ -452,6 +585,6 @@ extension JFPlayerViewController: JFPlayerDelegate {
             })
             print("竖屏")
         }
-
+        
     }
 }

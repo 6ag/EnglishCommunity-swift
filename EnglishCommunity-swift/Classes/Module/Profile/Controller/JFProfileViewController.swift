@@ -89,7 +89,7 @@ class JFProfileViewController: UIViewController {
         
         // 更新收藏
         page = 1
-        loadCollectionVideoInfoList(page, count: 10)
+        loadCollectionVideoInfoList(page, count: 10, method: 0)
     }
     
     /**
@@ -97,7 +97,7 @@ class JFProfileViewController: UIViewController {
      */
     @objc private func pullUpMoreData() {
         page += 1
-        loadCollectionVideoInfoList(page, count: 10)
+        loadCollectionVideoInfoList(page, count: 10, method: 1)
     }
     
     /**
@@ -106,7 +106,7 @@ class JFProfileViewController: UIViewController {
      - parameter page:  页码
      - parameter count: 每页数量
      */
-    private func loadCollectionVideoInfoList(page: Int, count: Int) {
+    private func loadCollectionVideoInfoList(page: Int, count: Int, method: Int) {
         
         if !JFAccountModel.isLogin() {
             self.placeholderButton.hidden = false
@@ -127,7 +127,12 @@ class JFProfileViewController: UIViewController {
                 return
             }
             
-            self.videoInfos += videoInfos
+            if method == 0 {
+                self.videoInfos = videoInfos
+            } else {
+                self.videoInfos += videoInfos
+            }
+            
             self.tableView.reloadData()
             
             if self.videoInfos.count == 0 {
@@ -214,6 +219,7 @@ extension JFProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         let playerVc = JFPlayerViewController()
         playerVc.videoInfo = videoInfos[indexPath.item]
         navigationController?.pushViewController(playerVc, animated: true)

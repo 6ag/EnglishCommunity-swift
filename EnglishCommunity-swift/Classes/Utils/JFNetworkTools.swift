@@ -36,6 +36,7 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
+                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 finished(success: false, result: nil, error: response.result.error)
@@ -58,6 +59,7 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
+                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 finished(success: false, result: nil, error: response.result.error)
@@ -84,6 +86,7 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
+                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 finished(success: false, result: nil, error: response.result.error)
@@ -111,6 +114,7 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
+                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 finished(success: false, result: nil, error: response.result.error)

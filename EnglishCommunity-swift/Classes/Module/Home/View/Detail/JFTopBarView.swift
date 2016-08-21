@@ -20,8 +20,8 @@ class JFTopBarView: UIView {
         menuButton.selected = true
         commentButton.selected = false
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveLinear, animations: {
-            self.lineView.transform = CGAffineTransformMakeTranslation(0, 0)
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.lineView.transform = CGAffineTransformIdentity
         }) { (_) in
             
         }
@@ -32,7 +32,7 @@ class JFTopBarView: UIView {
         commentButton.selected = true
         menuButton.selected = false
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: UIViewAnimationOptions.CurveLinear, animations: {
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: UIViewAnimationOptions.CurveLinear, animations: {
             self.lineView.transform = CGAffineTransformMakeTranslation(self.commentButton.x - self.menuButton.x, 0)
         }) { (_) in
             

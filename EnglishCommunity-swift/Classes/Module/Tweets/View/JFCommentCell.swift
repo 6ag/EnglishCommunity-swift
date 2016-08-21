@@ -9,7 +9,14 @@
 import UIKit
 import YYWebImage
 
+protocol JFCommentCellDelegate: NSObjectProtocol {
+    func commentCell(cell: JFCommentCell, didTappedAvatarButton button: UIButton)
+    func commentCell(cell: JFCommentCell, didTappedAtUser nickname: String, sequence: Int)
+}
+
 class JFCommentCell: UITableViewCell {
+    
+    weak var delegate: JFCommentCellDelegate?
     
     /// 评论模型
     var comment: JFComment? {
@@ -23,9 +30,9 @@ class JFCommentCell: UITableViewCell {
             }
             
             let contentString = JFEmoticon.emoticonStringToEmoticonAttrString(comment.content!, font: contentLabel.font)
-            
             if let extendsAuthor = comment.extendsAuthor {
-                contentLabel.text = "回复 \(extendsAuthor.nickname!) : \(contentString)"
+                let contentString = "回复 @\(extendsAuthor.nickname!) : \(comment.content!)"
+                contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(contentString, font: contentLabel.font)
             } else {
                 contentLabel.attributedText = contentString
             }
@@ -39,6 +46,7 @@ class JFCommentCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.backgroundColor = COLOR_ALL_BG
+        contentLabel.labelDelegate = self
     }
     
     override func layoutSubviews() {
@@ -69,8 +77,40 @@ class JFCommentCell: UITableViewCell {
         return CGRectGetMaxY(contentLabel.frame) + 15
     }
     
+    @IBAction func didTappedAvatarButton(sender: UIButton) {
+        delegate?.commentCell(self, didTappedAvatarButton: sender)
+    }
+    
     @IBOutlet weak var avatarButton: UIButton!
     @IBOutlet weak var nicknameLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var contentLabel: FFLabel!
     @IBOutlet weak var publishTimeLabel: UILabel!
+}
+
+// MARK: - FFLabelDelegate
+extension JFCommentCell: FFLabelDelegate {
+    
+    /**
+     选中高亮的文字后回调
+     
+     - parameter label: 所在的label
+     - parameter text:  被选中的文字
+     */
+    func labelDidSelectedLinkText(label: FFLabel, text: String) {
+        
+        // 点击了 @昵称
+        if text.hasPrefix("@") {
+            guard let content = label.text else {
+                return
+            }
+            
+            if let sequence = content.checkAtUserNickname()?.indexOf(text) {
+                let nickname = text.stringByReplacingOccurrencesOfString("@", withString: "")
+                delegate?.commentCell(self, didTappedAtUser: nickname, sequence: Int(sequence))
+            }
+            
+        }
+        
+    }
+    
 }

@@ -50,7 +50,7 @@
                     </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="player_top_bar_line" translatesAutoresizingMaskIntoConstraints="NO" id="ga1-1y-BZP">
-                    <rect key="frame" x="87" y="37" width="80" height="3"/>
+                    <rect key="frame" x="87" y="36" width="80" height="3"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="sl9-yg-2tD"/>
                         <constraint firstAttribute="height" constant="3" id="xtr-xX-vfs"/>
@@ -74,7 +74,7 @@
                 <constraint firstItem="Zlh-eQ-nA0" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="YIK-0T-0YP"/>
                 <constraint firstItem="NNx-7Z-uEw" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mBq-TU-wJP"/>
                 <constraint firstItem="lDF-NX-lKg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vRq-sf-Lng"/>
-                <constraint firstAttribute="bottom" secondItem="ga1-1y-BZP" secondAttribute="bottom" id="vUL-SF-AvK"/>
+                <constraint firstAttribute="bottom" secondItem="ga1-1y-BZP" secondAttribute="bottom" constant="1" id="vUL-SF-AvK"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -128,6 +128,7 @@ extension JFTweetDetailViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(commentIdentifier) as! JFCommentCell
         cell.comment = comments[indexPath.row]
+        cell.delegate = self
         return cell
     }
     
@@ -144,11 +145,44 @@ extension JFTweetDetailViewController: UITableViewDataSource, UITableViewDelegat
     
 }
 
+// MARK: - JFCommentCellDelegate
+extension JFTweetDetailViewController: JFCommentCellDelegate {
+    
+    func commentCell(cell: JFCommentCell, didTappedAtUser nickname: String, sequence: Int) {
+        guard let atUser = cell.comment?.extendsAuthor else {
+            return
+        }
+        
+        if atUser.nickname == nickname {
+            let otherUser = JFOtherUserViewController()
+            otherUser.userId = atUser.id
+            navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+        }
+    }
+    
+    func commentCell(cell: JFCommentCell, didTappedAvatarButton button: UIButton) {
+        guard let author = cell.comment?.author else {
+            return
+        }
+        
+        let otherUser = JFOtherUserViewController()
+        otherUser.userId = author.id
+        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
+    }
+}
+
 // MARK: - JFTweetDetailHeaderViewDelegate
 extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
     
     func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedAvatarButton button: UIButton) {
-        print("user_id = ", headerView.tweet?.author?.id ?? 0)
+        
+        guard let author = headerView.tweet?.author else {
+            return
+        }
+        
+        let otherUser = JFOtherUserViewController()
+        otherUser.userId = author.id
+        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
     }
     
     func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedLikeButton button: UIButton) {
@@ -191,7 +225,9 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         
         for atUser in atUsers {
             if atUser.nickname == nickname && atUser.sequence == sequence {
-                print("user_id = ", atUser.id)
+                let otherUser = JFOtherUserViewController()
+                otherUser.userId = atUser.id
+                navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
             }
         }
     }

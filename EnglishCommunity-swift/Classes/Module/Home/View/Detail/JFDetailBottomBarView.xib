@@ -17,14 +17,23 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bqx-4b-hX9" userLabel="下载Button">
                             <rect key="frame" x="69" y="5" width="49" height="39"/>
                             <state key="normal" image="player_bottom_download_icon" backgroundImage="player_bottom_btn_bg"/>
+                            <connections>
+                                <action selector="didTappedDownloadButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="9dt-Vv-v3n"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2M9-5G-Jju" userLabel="分享Button">
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2M9-5G-Jju" userLabel="分享Button">
                             <rect key="frame" x="128" y="5" width="50" height="39"/>
                             <state key="normal" image="player_bottom_share_icon" backgroundImage="player_bottom_btn_bg"/>
+                            <connections>
+                                <action selector="didTappedShareButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="XWW-Ba-Ce0"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GY3-WW-hTK" userLabel="线路Button">
                             <rect key="frame" x="10" y="5" width="49" height="39"/>
                             <state key="normal" image="player_bottom_route_icon" backgroundImage="player_bottom_btn_bg"/>
+                            <connections>
+                                <action selector="didTappedChangeLineButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="lss-ni-ZE0"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -49,6 +58,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HZy-bY-VVG" userLabel="加入课程Button">
                             <rect key="frame" x="10" y="5" width="167" height="39"/>
                             <state key="normal" title="收藏课程" backgroundImage="player_bottom_collection_bg"/>
+                            <connections>
+                                <action selector="didTappedJoinCollectionButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="85O-XI-X1P"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -73,6 +85,12 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="changeLineButton" destination="GY3-WW-hTK" id="x03-hl-q7j"/>
+                <outlet property="downloadButton" destination="Bqx-4b-hX9" id="4PP-AB-bqO"/>
+                <outlet property="joinCollectionButton" destination="HZy-bY-VVG" id="Vxl-9G-ilJ"/>
+                <outlet property="shareButton" destination="2M9-5G-Jju" id="Jso-tS-mrL"/>
+            </connections>
             <point key="canvasLocation" x="460.5" y="353.5"/>
         </view>
     </objects>

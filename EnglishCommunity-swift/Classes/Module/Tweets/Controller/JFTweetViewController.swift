@@ -163,7 +163,14 @@ extension JFTweetViewController: JFTweetListCellDelegate {
      点击了 头像
      */
     func tweetListCell(cell: JFTweetListCell, didTappedAvatarButton button: UIButton) {
-        print("user_id = ", cell.tweet?.author?.id ?? 0)
+        
+        guard let author = cell.tweet?.author else {
+            return
+        }
+        
+        let otherUser = JFOtherUserViewController()
+        otherUser.userId = author.id
+        navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
     }
     
     /**
@@ -217,7 +224,9 @@ extension JFTweetViewController: JFTweetListCellDelegate {
         
         for atUser in atUsers {
             if atUser.nickname == nickname && atUser.sequence == sequence {
-                print("user_id = ", atUser.id)
+                let otherUser = JFOtherUserViewController()
+                otherUser.userId = atUser.id
+                navigationController?.pushViewController(JFOtherUserViewController(), animated: true)
             }
         }
         
