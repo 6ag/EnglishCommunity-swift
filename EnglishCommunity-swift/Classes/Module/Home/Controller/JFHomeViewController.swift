@@ -29,14 +29,29 @@ class JFHomeViewController: UIViewController {
         prepareUI()
         tableView.mj_header = setupHeaderRefresh(self, action: #selector(updateHomeData))
         tableView.mj_header.beginRefreshing()
+        
+        // 配置JPUSH
+        (UIApplication.sharedApplication().delegate as! AppDelegate).setupJPush()
+        // 注册接收推送通知的通知
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveRemoteNotificationOfJPush(_:)), name: JFDidReceiveRemoteNotificationOfJPush, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.setNavigationBarHidden(false, animated: true)
-        // 防止轮播卡住一半
         topScrollView?.adjustWhenControllerViewWillAppera()
+    }
+    
+    /**
+     处理接收到的远程通知处理
+     */
+    func didReceiveRemoteNotificationOfJPush(notification: NSNotification) {
+        JPUSHService.resetBadge()
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        
+        if let userInfo = notification.userInfo {
+            print(userInfo)
+        }
     }
     
     /**

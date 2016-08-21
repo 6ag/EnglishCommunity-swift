@@ -86,6 +86,9 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
+                if json["code"].intValue >= 4000 {
+                    JFAccountModel.logout()
+                }
                 print(json)
                 finished(success: true, result: json, error: nil)
             } else {
@@ -114,6 +117,9 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
+                if json["code"].intValue >= 4000 {
+                    JFAccountModel.logout()
+                }
                 print(json)
                 finished(success: true, result: json, error: nil)
             } else {

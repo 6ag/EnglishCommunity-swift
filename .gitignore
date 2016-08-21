@@ -47,6 +47,8 @@ Pods/
 Podfile.lock
 EnglishCommunity-swift.xcworkspace
 EnglishCommunity-swift/Classes/Vendor/JFPlayer
+EnglishCommunity-swift/Classes/Vendor/JPush
+EnglishCommunity-swift/Classes/Vendor/ShareSDK
 
 # GoogleService
 GoogleService-Info.plist

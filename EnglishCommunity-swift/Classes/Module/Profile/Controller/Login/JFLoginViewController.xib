@@ -123,13 +123,13 @@
                         <constraint firstAttribute="width" constant="1" id="Cz5-eT-OiK"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="orm-Gv-W4X">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="orm-Gv-W4X">
                     <rect key="frame" x="22" y="35" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="ROR-7A-uTc"/>
                         <constraint firstAttribute="width" constant="20" id="uMD-wG-wUj"/>
                     </constraints>
-                    <state key="normal" backgroundImage="top_navigation_close"/>
+                    <state key="normal" image="top_navigation_close"/>
                     <connections>
                         <action selector="didTappedBackButton" destination="-1" eventType="touchUpInside" id="EJ4-Va-lPH"/>
                     </connections>

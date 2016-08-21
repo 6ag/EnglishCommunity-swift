@@ -13,6 +13,9 @@ class JFAccountModel: NSObject, NSCoding {
     /// 令牌
     var token: String?
     
+    /// token过期时间
+    var expiryTime: String?
+    
     /// 用户id
     var id: Int = 0
     
@@ -76,8 +79,8 @@ class JFAccountModel: NSObject, NSCoding {
      注销清理
      */
     class func logout() {
-//        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeQQ)
-//        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeSinaWeibo)
+        //        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeQQ)
+        //        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeSinaWeibo)
         
         // 清除内存中的账号对象和归档
         JFAccountModel.userAccount = nil
@@ -93,6 +96,26 @@ class JFAccountModel: NSObject, NSCoding {
      */
     class func isLogin() -> Bool {
         return JFAccountModel.shareAccount() != nil
+    }
+    
+    /**
+     检查token有效期
+     */
+    class func checkToken() {
+        if JFAccountModel.isLogin() {
+            
+            
+            guard let expiryTime = JFAccountModel.shareAccount()?.expiryTime else {
+                return
+            }
+            
+            // 获取当前时间的时间戳
+            let nowTime = NSDate().timeIntervalSince1970
+            if nowTime > NSTimeInterval(expiryTime) {
+                print("账号登录过期", nowTime, expiryTime)
+                JFAccountModel.logout()
+            }
+        }
     }
     
     /**
@@ -131,6 +154,7 @@ class JFAccountModel: NSObject, NSCoding {
     // MARK: - 归档和解档
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(token, forKey: "token_key")
+        aCoder.encodeObject(expiryTime, forKey: "expiry_time_key")
         aCoder.encodeInt(Int32(id), forKey: "id_key")
         aCoder.encodeObject(nickname, forKey: "nickname_key")
         aCoder.encodeObject(say, forKey: "say_key")
@@ -151,6 +175,7 @@ class JFAccountModel: NSObject, NSCoding {
     
     required init?(coder aDecoder: NSCoder) {
         token = aDecoder.decodeObjectForKey("token_key") as? String
+        expiryTime = aDecoder.decodeObjectForKey("expiry_time_key") as? String
         id = Int(aDecoder.decodeIntForKey("id_key"))
         nickname = aDecoder.decodeObjectForKey("nickname_key") as? String
         say = aDecoder.decodeObjectForKey("say_key") as? String
@@ -195,10 +220,12 @@ extension JFAccountModel {
                 return
             }
             
+            // 更新用户信息而不更新token
             let account = JFAccountModel(dict: result["result"].dictionaryObject!)
+            account.token = JFAccountModel.shareAccount()?.token
             account.updateUserInfo()
+            
             finished(success: true)
-            print("更新用户信息成功")
         }
     }
     
@@ -272,7 +299,7 @@ extension JFAccountModel {
             "identifier" : username,
             "credential" : password,
             "type" : type
-            ]
+        ]
         
         JFNetworkTools.shareNetworkTool.post(REGISTER, parameters: parameters) { (success, result, error) in
             
@@ -299,7 +326,7 @@ extension JFAccountModel {
             "identifier" : username,
             "credential" : password,
             "type" : type
-            ]
+        ]
         
         JFNetworkTools.shareNetworkTool.post(LOGIN, parameters: parameters) { (success, result, error) in
             guard let _ = result where success == true && result!["status"] == "success" else {

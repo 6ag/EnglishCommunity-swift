@@ -73,9 +73,9 @@ class JFProfileViewController: UIViewController {
         }
         
         if JFAccountModel.isLogin() {
-            placeholderButton.setImage(UIImage(named: "placeholder_button_bg"), forState: .Normal)
+            placeholderButton.selected = true
         } else {
-            placeholderButton.setImage(UIImage(named: "placeholder_button_bg"), forState: .Normal)
+            placeholderButton.selected = false
         }
     }
     
@@ -110,6 +110,7 @@ class JFProfileViewController: UIViewController {
         
         if !JFAccountModel.isLogin() {
             self.placeholderButton.hidden = false
+            self.placeholderButton.selected = false
             self.videoInfos.removeAll()
             self.tableView.reloadData()
             return
@@ -200,6 +201,8 @@ class JFProfileViewController: UIViewController {
     lazy var placeholderButton: UIButton = {
         let button = UIButton(type: .Custom)
         button.hidden = true
+        button.setImage(UIImage(named: "weidenglu"), forState: .Normal)
+        button.setImage(UIImage(named: "placeholder_button_bg"), forState: .Selected)
         button.addTarget(self, action: #selector(didTappedPlaceholderButton(_:)), forControlEvents: .TouchUpInside)
         return button
     }()

@@ -123,13 +123,13 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nq-HZ-t5H">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nq-HZ-t5H">
                     <rect key="frame" x="22" y="35" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="RXV-BB-NXh"/>
                         <constraint firstAttribute="height" constant="20" id="iaz-Os-dNQ"/>
                     </constraints>
-                    <state key="normal" backgroundImage="top_navigation_back_normal"/>
+                    <state key="normal" image="top_navigation_back_normal"/>
                     <connections>
                         <action selector="didTappedBackButton" destination="-1" eventType="touchUpInside" id="p1x-OM-RgB"/>
                     </connections>
@@ -161,6 +161,6 @@
     </objects>
     <resources>
         <image name="login_background" width="320" height="567"/>
-        <image name="top_navigation_back_normal" width="20" height="20"/>
+        <image name="top_navigation_back_normal" width="9" height="16"/>
     </resources>
 </document>

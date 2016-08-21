@@ -16,6 +16,17 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_image" translatesAutoresizingMaskIntoConstraints="NO" id="yp4-Dr-r1O">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="yp4-Dr-r1O" secondAttribute="trailing" id="8rf-rP-BHa"/>
+                            <constraint firstItem="yp4-Dr-r1O" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="ddf-2N-TOg"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="yp4-Dr-r1O" secondAttribute="bottom" id="nN0-HT-StD"/>
+                            <constraint firstItem="yp4-Dr-r1O" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="vNb-1R-FKm"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -23,4 +34,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="launch_image" width="375" height="667"/>
+    </resources>
 </document>

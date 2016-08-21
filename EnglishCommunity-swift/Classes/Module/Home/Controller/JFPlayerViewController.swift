@@ -480,6 +480,34 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      */
     func didTappedShareButton(button: UIButton) {
         print("分享")
+        
+//        SSUIShareActionSheetStyle.setShareActionSheetStyle(ShareActionSheetStyle.Simple)
+        
+        let shareParames = NSMutableDictionary()
+        shareParames.SSDKSetupShareParamsByText("分享的文字内容",
+                                                images : "http://ww.png",
+                                                url : NSURL(string: "http://"),
+                                                title : "分享的标题",
+                                                type : SSDKContentType.Auto)
+        let items = [
+            SSDKPlatformType.TypeQQ.rawValue,
+            SSDKPlatformType.TypeWechat.rawValue,
+            SSDKPlatformType.TypeSinaWeibo.rawValue
+        ]
+        
+        ShareSDK.showShareActionSheet(nil, items: items, shareParams: shareParames) { (state : SSDKResponseState, platform: SSDKPlatformType, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!, end: Bool) in
+            switch state {
+            case SSDKResponseState.Success:
+                print("分享成功")
+            case SSDKResponseState.Fail:
+                print("分享失败,错误描述:\(error)")
+            case SSDKResponseState.Cancel:
+                print("取消分享")
+            default:
+                break
+            }
+        }
+
     }
     
     /**

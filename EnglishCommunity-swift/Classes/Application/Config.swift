@@ -44,6 +44,38 @@ let COLOR_NAV_ITEM_NORMAL = UIColor(red:0.95, green:0.98, blue:1.00, alpha:1.00)
 let COLOR_NAV_ITEM_HIGH = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.00)
 
 /**
+ 手机型号枚举
+ */
+enum iPhoneModel {
+    
+    case iPhone4
+    case iPhone5
+    case iPhone6
+    case iPhone6p
+    case iPad
+    
+    /**
+     获取当前手机型号
+     
+     - returns: 返回手机型号枚举
+     */
+    static func getCurrentModel() -> iPhoneModel {
+        switch SCREEN_HEIGHT {
+        case 480:
+            return .iPhone4
+        case 568:
+            return .iPhone5
+        case 667:
+            return .iPhone6
+        case 736:
+            return .iPhone6p
+        default:
+            return .iPad
+        }
+    }
+}
+
+/**
  RGB颜色构造
  */
 func RGB(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
@@ -91,4 +123,32 @@ func isLogin(controller: UIViewController) -> Bool {
         return false
     }
 }
-        
+
+/// 远程推送通知的处理通知
+let JFDidReceiveRemoteNotificationOfJPush = "JFDidReceiveRemoteNotificationOfJPush"
+
+/// 应用id - ok
+let APPLE_ID = "1146271758"
+
+/// shareSDK - ok
+let SHARESDK_APP_KEY = "1653cf104db38"
+let SHARESDK_APP_SECRET = "6b00b63749f0163ac7aa5c7f4ff1032c"
+
+/// 微信
+let WX_APP_ID = "wx878f3a6e37859f9e"
+let WX_APP_SECRET = "ec45fb9165b542deb40c6737dcd82ddb"
+
+/// QQ - ok
+let QQ_APP_ID = "1105560051"
+let QQ_APP_KEY = "LmKVtYNVHhpLMwJw"
+
+/// 微博 - ok
+let WB_APP_KEY = "2001799644"
+let WB_APP_SECRET = "cead655a91ca9ed0f9ad0a2b9dd7b4a1"
+let WB_REDIRECT_URL = "https://blog.6ag.cn"
+
+/// 极光推送 - ok
+let JPUSH_APP_KEY = "1d918a27ec1db14f243a79cf"
+let JPUSH_MASTER_SECRET = "6be3a5f8d0ea165ab2a69632"
+let JPUSH_CHANNEL = "Publish channel"
+let JPUSH_IS_PRODUCTION = true
