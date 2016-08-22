@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      全局样式
      */
     private func setupGlobalStyle() {
-        
+        UIApplication.sharedApplication().statusBarHidden = false
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         JFProgressHUD.setupHUD() // 配置HUD
     }
@@ -86,16 +86,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         // 启动图动画 - 预加载数据
-        let launchVc = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()!
-        launchVc.view.frame = SCREEN_BOUNDS
-        window?.addSubview(launchVc.view)
-        
-        UIView.animateWithDuration(0.6, delay: 2, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
-            launchVc.view.alpha = 0
-        }) { (_) in
-            UIApplication.sharedApplication().statusBarHidden = false
-            launchVc.view.removeFromSuperview()
-        }
+//        let launchVc = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()!
+//        launchVc.view.frame = SCREEN_BOUNDS
+//        window?.addSubview(launchVc.view)
+//        
+//        UIView.animateWithDuration(0.6, delay: 2, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
+//            launchVc.view.alpha = 0
+//        }) { (_) in
+//            UIApplication.sharedApplication().statusBarHidden = false
+//            launchVc.view.removeFromSuperview()
+//        }
         
         //        window?.addSubview(JFFPSLabel(frame: CGRect(x: SCREEN_WIDTH - 60, y: 26, width: 50, height: 30)))
     }

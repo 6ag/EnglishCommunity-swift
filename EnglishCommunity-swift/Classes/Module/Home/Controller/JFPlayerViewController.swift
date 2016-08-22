@@ -179,7 +179,7 @@ class JFPlayerViewController: UIViewController {
             self.videos = videos
             self.videoTableView.reloadData()
             self.videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: true, scrollPosition: .Top)
-            self.player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[0].videoUrl!)")!, title: videos[0].title!)
+            self.player.playWithURL(NSURL(string: "\(BASE_URL)\(PLAY_VIDEO)?url=\(videos[0].videoUrl!)")!, title: videos[0].title!)
         }
     }
     
@@ -385,7 +385,7 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
         
         if tableView == videoTableView {
             player.prepareToDealloc()
-            player.playWithURL(NSURL(string: "\(BASE_URL)parse.php?url=\(videos[indexPath.row].videoUrl!)")!, title: videos[indexPath.row].title!)
+            player.playWithURL(NSURL(string: "\(BASE_URL)\(PLAY_VIDEO)?url=\(videos[indexPath.row].videoUrl!)")!, title: videos[indexPath.row].title!)
         } else {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             
@@ -514,20 +514,22 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      加入收藏
      */
     func didTappedJoinCollectionButton(button: UIButton) {
-        
-        JFNetworkTools.shareNetworkTool.addOrCancelCollection(videoInfo!.id) { (success, result, error) in
-            guard let result = result where success == true && result["status"] == "success" else {
-                return
-            }
-            JFProgressHUD.showInfoWithStatus("操作成功")
-            if result["result"]["type"].stringValue == "add" {
-                // 赞
-                self.bottomBarView.joinCollectionButton.setTitle("取消收藏", forState: .Normal)
-            } else {
-                // 取消赞
-                self.bottomBarView.joinCollectionButton.setTitle("收藏课程", forState: .Normal)
+        if isLogin(self) {
+            JFNetworkTools.shareNetworkTool.addOrCancelCollection(videoInfo!.id) { (success, result, error) in
+                guard let result = result where success == true && result["status"] == "success" else {
+                    return
+                }
+                JFProgressHUD.showInfoWithStatus("操作成功")
+                if result["result"]["type"].stringValue == "add" {
+                    // 赞
+                    self.bottomBarView.joinCollectionButton.setTitle("取消收藏", forState: .Normal)
+                } else {
+                    // 取消赞
+                    self.bottomBarView.joinCollectionButton.setTitle("收藏课程", forState: .Normal)
+                }
             }
         }
+        
     }
 }
 

@@ -517,12 +517,12 @@
 		B2156C5E1D66AE3A0033DBB6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				B2156C5F1D66AE3A0033DBB6 /* JFForgotViewController.swift */,
-				B2156C601D66AE3A0033DBB6 /* JFForgotViewController.xib */,
 				B2156C611D66AE3A0033DBB6 /* JFLoginViewController.swift */,
 				B2156C621D66AE3A0033DBB6 /* JFLoginViewController.xib */,
 				B2156C631D66AE3A0033DBB6 /* JFRegisterViewController.swift */,
 				B2156C641D66AE3A0033DBB6 /* JFRegisterViewController.xib */,
+				B2156C5F1D66AE3A0033DBB6 /* JFForgotViewController.swift */,
+				B2156C601D66AE3A0033DBB6 /* JFForgotViewController.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";

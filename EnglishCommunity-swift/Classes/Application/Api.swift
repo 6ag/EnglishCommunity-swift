@@ -23,6 +23,9 @@ let LOGIN = "api/auth/login.api"
 /// 修改用户密码
 let MODIFY_USER_PASSWORD = "api/auth/modifyUserPassword.api"
 
+/// 重置密码邮件
+let RETRIEVE_PASSWORD_EMAIL = "api/auth/retrievePasswordWithSendEmail.api"
+
 /// 获取所有分类信息
 let GET_ALL_CATEGORIES = "api/getAllCategories.api"
 
@@ -31,6 +34,9 @@ let GET_VIDEO_INFOS_LIST = "api/getVideoInfosList.api"
 
 /// 根据视频信息id查询视频播放列表
 let GET_VIDEO_LIST = "api/getVideoList.api"
+
+/// 播放视频
+let PLAY_VIDEO = "api/playVideo.api"
 
 /// 获取动弹列表
 let GET_TWEETS_LIST = "api/getTweetsList.api"

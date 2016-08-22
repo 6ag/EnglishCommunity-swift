@@ -72,11 +72,7 @@ class JFProfileViewController: UIViewController {
             make.size.equalTo(CGSize(width: 150, height: 100))
         }
         
-        if JFAccountModel.isLogin() {
-            placeholderButton.selected = true
-        } else {
-            placeholderButton.selected = false
-        }
+        changePlaceholderButton()
     }
     
     /**
@@ -109,10 +105,7 @@ class JFProfileViewController: UIViewController {
     private func loadCollectionVideoInfoList(page: Int, count: Int, method: Int) {
         
         if !JFAccountModel.isLogin() {
-            self.placeholderButton.hidden = false
-            self.placeholderButton.selected = false
-            self.videoInfos.removeAll()
-            self.tableView.reloadData()
+            self.changePlaceholderButton()
             return
         }
         
@@ -121,11 +114,7 @@ class JFProfileViewController: UIViewController {
             self.tableView.mj_footer.endRefreshing()
             
             guard let videoInfos = videoInfos else {
-                if self.videoInfos.count == 0 {
-                    self.placeholderButton.hidden = false
-                } else {
-                    self.placeholderButton.hidden = true
-                }
+                self.changePlaceholderButton()
                 self.tableView.mj_footer.endRefreshingWithNoMoreData()
                 return
             }
@@ -137,12 +126,7 @@ class JFProfileViewController: UIViewController {
             }
             
             self.tableView.reloadData()
-            
-            if self.videoInfos.count == 0 {
-                self.placeholderButton.hidden = false
-            } else {
-                self.placeholderButton.hidden = true
-            }
+            self.changePlaceholderButton()
         }
     }
     
@@ -157,6 +141,28 @@ class JFProfileViewController: UIViewController {
             headerView.avatarButton.setBackgroundImage(UIImage(named: "default－portrait"), forState: UIControlState.Normal)
             headerView.nameLabel.text = "登录后可以缓存视频哦"
         }
+    }
+    
+    /**
+     处理占位按钮状态
+     */
+    private func changePlaceholderButton() {
+        
+        if JFAccountModel.isLogin() {
+            if self.videoInfos.count == 0 {
+                self.placeholderButton.hidden = false
+                self.placeholderButton.selected = true
+            } else {
+                self.placeholderButton.hidden = true
+                self.placeholderButton.selected = true
+            }
+        } else {
+            self.placeholderButton.hidden = false
+            self.placeholderButton.selected = false
+            self.videoInfos.removeAll()
+            self.tableView.reloadData()
+        }
+        
     }
     
     /**

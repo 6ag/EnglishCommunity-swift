@@ -69,7 +69,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group3CellModel2 = JFProfileCellArrowModel(title: "关于作者", destinationVc: JFAboutMeViewController.classForCoder())
             let group3CellModel3 = JFProfileCellArrowModel(title: "应用评价")
             group3CellModel3.operation = { () -> Void in
-                let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1120896924")!
+                let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1146271758")!
                 if UIApplication.sharedApplication().canOpenURL(url) {
                     UIApplication.sharedApplication().openURL(url)
                 }
@@ -104,7 +104,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group3CellModel2 = JFProfileCellArrowModel(title: "关于作者", destinationVc: JFAboutMeViewController.classForCoder())
             let group3CellModel3 = JFProfileCellArrowModel(title: "应用评价")
             group3CellModel3.operation = { () -> Void in
-                let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1120896924")!
+                let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1146271758")!
                 if UIApplication.sharedApplication().canOpenURL(url) {
                     UIApplication.sharedApplication().openURL(url)
                 }

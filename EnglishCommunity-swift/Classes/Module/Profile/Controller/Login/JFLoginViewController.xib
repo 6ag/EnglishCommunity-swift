@@ -124,10 +124,10 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="orm-Gv-W4X">
-                    <rect key="frame" x="22" y="35" width="20" height="20"/>
+                    <rect key="frame" x="5" y="20" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="20" id="ROR-7A-uTc"/>
-                        <constraint firstAttribute="width" constant="20" id="uMD-wG-wUj"/>
+                        <constraint firstAttribute="height" constant="44" id="ROR-7A-uTc"/>
+                        <constraint firstAttribute="width" constant="44" id="uMD-wG-wUj"/>
                     </constraints>
                     <state key="normal" image="top_navigation_close"/>
                     <connections>
@@ -189,10 +189,10 @@
                 <constraint firstAttribute="bottom" secondItem="Ju7-aV-c86" secondAttribute="bottom" constant="150" id="dX8-f9-WRo"/>
                 <constraint firstItem="ZZA-9n-u09" firstAttribute="centerX" secondItem="W6E-gI-7ba" secondAttribute="centerX" id="dc7-kR-DWa"/>
                 <constraint firstAttribute="trailing" secondItem="qAE-0F-OrP" secondAttribute="trailing" id="epu-Sp-SEA"/>
-                <constraint firstItem="orm-Gv-W4X" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="35" id="qVF-Qk-6Zh"/>
+                <constraint firstItem="orm-Gv-W4X" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="qVF-Qk-6Zh"/>
                 <constraint firstItem="qAE-0F-OrP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ttJ-XA-qBk"/>
                 <constraint firstItem="HVF-gx-bLC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="wEs-79-puz"/>
-                <constraint firstItem="orm-Gv-W4X" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="22" id="xvf-ph-LbH"/>
+                <constraint firstItem="orm-Gv-W4X" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="xvf-ph-LbH"/>
                 <constraint firstAttribute="trailing" secondItem="HVF-gx-bLC" secondAttribute="trailing" constant="30" id="ydx-3D-4ui"/>
             </constraints>
             <point key="canvasLocation" x="384" y="474"/>
@@ -201,7 +201,7 @@
     <resources>
         <image name="account_snslogin_icon_1" width="40" height="40"/>
         <image name="account_snslogin_icon_3" width="40" height="40"/>
-        <image name="login_background" width="320" height="567"/>
+        <image name="login_background" width="284" height="505"/>
         <image name="top_navigation_close" width="20" height="20"/>
     </resources>
 </document>

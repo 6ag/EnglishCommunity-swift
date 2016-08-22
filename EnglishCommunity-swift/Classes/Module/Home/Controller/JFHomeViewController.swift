@@ -167,7 +167,7 @@ extension JFHomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // 分类 + 1个分类综合
-        return videoCategories.count + 1
+        return videoCategories.count > 0 ? videoCategories.count + 1 : 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
