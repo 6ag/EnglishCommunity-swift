@@ -132,6 +132,7 @@ class JFLoginViewController: UIViewController {
             let avatar = type == "weibo" ? (user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"]! as! String : user.icon) : (user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"]! as! String : user.icon)
             let sex = user.gender.rawValue == 0 ? 1 : 0
             
+            JFProgressHUD.showWithStatus("正在登录")
             JFAccountModel.thirdAccountLogin(type, openid: uid, token: token, nickname: nickname, avatar: avatar, sex: sex, finished: { (success, tip) in
                 if success {
                     JFProgressHUD.dismiss()

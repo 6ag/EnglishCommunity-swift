@@ -37,11 +37,23 @@ let COLOR_NAV_BG = UIColor.colorWithHexString("41ca61")
 /// 所有控制器背景颜色 - 偏白
 let COLOR_ALL_BG = UIColor.colorWithHexString("f7f7f7")
 
+/// cell按下的颜色
+let COLOR_ALL_CELL_HIGH = UIColor(red:0.93, green:0.93, blue:0.93, alpha:1.00)
+
+/// 分割线颜色
+let COLOR_ALL_CELL_SEPARATOR = RGB(0.3, g: 0.3, b: 0.3, alpha: 0.1)
+
 /// 导航栏ITEM默认 - 白色
 let COLOR_NAV_ITEM_NORMAL = UIColor(red:0.95, green:0.98, blue:1.00, alpha:1.00)
 
 /// 导航栏ITEM高亮 - 偏白
 let COLOR_NAV_ITEM_HIGH = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.00)
+
+/// 是否允许蜂窝网播放视频
+let KEY_ALLOW_CELLULAR_PLAY = "KEY_ALLOW_CELLULAR_PLAY"
+
+/// 是否允许蜂窝网下载视频
+let KEY_ALLOW_CELLULAR_DOWNLOAD = "KEY_ALLOW_CELLULAR_DOWNLOAD"
 
 /**
  手机型号枚举

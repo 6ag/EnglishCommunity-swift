@@ -347,7 +347,7 @@ extension JFAccountModel {
     class func thirdAccountLogin(type: String, openid: String, token: String, nickname: String, avatar: String, sex: Int, finished: (success: Bool, tip: String) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "identity_type" : type,
+            "type" : type,
             "identifier" : openid,
             "token" : token,
             "nickname" : nickname,

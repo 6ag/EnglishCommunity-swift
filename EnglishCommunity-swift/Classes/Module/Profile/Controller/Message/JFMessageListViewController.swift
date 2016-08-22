@@ -18,7 +18,7 @@ class JFMessageListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "评论"
+        title = "消息中心"
         tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: identifier)
         let headerRefresh = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(updateNewData))
         headerRefresh.lastUpdatedTimeLabel.hidden = true
@@ -56,66 +56,13 @@ class JFMessageListViewController: UITableViewController {
      */
     private func loadNews(pageIndex: Int, method: Int) {
         
-//        let parameters: [String : AnyObject] = [
-//            "username" : JFAccountModel.shareAccount()!.username!,
-//            "userid" : JFAccountModel.shareAccount()!.id,
-//            "token" : JFAccountModel.shareAccount()!.token!,
-//            "pageIndex" : pageIndex
-//        ]
-        
-//        JFNetworkTool.shareNetworkTool.get(GET_USER_COMMENT, parameters: parameters) { (success, result, error) -> () in
-//            
-//            self.tableView.mj_header.endRefreshing()
-//            self.tableView.mj_footer.endRefreshing()
-//            
-////            print(result)
-//            if success == true {
-//                if let successResult = result {
-//                    let data = successResult["data"].arrayValue.reverse()
-//                    
-//                    let minId = self.articleList.last?.plid ?? "0"
-//                    let maxId = self.articleList.first?.plid ?? "0"
-//                    
-//                    for fava in data {
-//                        
-//                        let dict = [
-//                            "title" : fava["title"].stringValue,
-//                            "classid" : fava["classid"].stringValue,
-//                            "id" : fava["id"].stringValue,
-//                            "tbname" : fava["tbname"].stringValue,
-//                            "saytext" : fava["saytext"].stringValue,
-//                            "saytime" : fava["saytime"].stringValue,
-//                            "plid" : fava["plid"].stringValue,
-//                            "plstep" : fava["plstep"].stringValue,
-//                            "plusername" : fava["plusername"].stringValue,
-//                            "zcnum" : fava["zcnum"].stringValue,
-//                            "userpic" : fava["userpic"].stringValue
-//                        ]
-//                        
-//                        let postModel = JFUserCommentModel(dict: dict)
-//                        
-//                        if method == 0 {
-//                            if Int(maxId) < Int(postModel.plid!) {
-//                                self.articleList.insert(postModel, atIndex: 0)
-//                            }
-//                        } else {
-//                            if Int(minId) > Int(postModel.plid!) {
-//                                self.articleList.append(postModel)
-//                            }
-//                        }
-//                        
-//                    }
-//                    
-//                    self.tableView.reloadData()
-//                    
-//                } else {
-//                    print("error:\(error)")
-//                }
-//                
-//            }
-//        }
-        
     }
+    
+    
+}
+
+// MARK: - Table view data source
+extension JFMessageListViewController {
     
     // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

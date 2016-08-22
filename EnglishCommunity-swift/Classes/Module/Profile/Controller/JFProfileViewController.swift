@@ -69,7 +69,7 @@ class JFProfileViewController: UIViewController {
         placeholderButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(tableView)
             make.centerY.equalTo(tableView).offset(40)
-            make.size.equalTo(CGSize(width: 150, height: 100))
+            make.size.equalTo(CGSize(width: SCREEN_WIDTH - 100, height: 100))
         }
         
         changePlaceholderButton()

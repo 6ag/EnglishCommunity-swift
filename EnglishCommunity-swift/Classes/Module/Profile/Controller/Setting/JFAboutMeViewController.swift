@@ -17,7 +17,7 @@ class JFAboutMeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = COLOR_ALL_BG
         
         let html = "<!doctype html>" +
         "<head>" +

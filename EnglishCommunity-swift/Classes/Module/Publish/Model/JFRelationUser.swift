@@ -19,6 +19,12 @@ class JFRelationUser: NSObject {
     /// 头像
     var relationAvatar: String?
     
+    /// 性别
+    var relationSex = 0
+    
+    /// 个性签名
+    var relationSay: String?
+    
     /// 是否已经选中
     var selected: Bool = false
     

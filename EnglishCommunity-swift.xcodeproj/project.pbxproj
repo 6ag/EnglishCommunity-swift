@@ -119,6 +119,7 @@
 		B28D940D1D534AA700128D20 /* JFPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D93F51D534AA700128D20 /* JFPlayerControlView.swift */; };
 		B28D940E1D534AA700128D20 /* JFPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D93F61D534AA700128D20 /* JFPlayerItem.swift */; };
 		B28D940F1D534AA700128D20 /* JFPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D93F71D534AA700128D20 /* JFPlayerManager.swift */; };
+		B29B5B2D1D6B4FE80050C8A1 /* JFFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29B5B2C1D6B4FE80050C8A1 /* JFFriendCell.swift */; };
 		B29E94E71D6AD2F20052F818 /* JFModifyPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E94E61D6AD2F20052F818 /* JFModifyPasswordViewController.swift */; };
 		B2B770F91D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F31D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift */; };
 		B2B770FA1D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F41D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift */; };
@@ -290,6 +291,7 @@
 		B28D93F51D534AA700128D20 /* JFPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPlayerControlView.swift; sourceTree = "<group>"; };
 		B28D93F61D534AA700128D20 /* JFPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPlayerItem.swift; sourceTree = "<group>"; };
 		B28D93F71D534AA700128D20 /* JFPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPlayerManager.swift; sourceTree = "<group>"; };
+		B29B5B2C1D6B4FE80050C8A1 /* JFFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFFriendCell.swift; sourceTree = "<group>"; };
 		B29E94E61D6AD2F20052F818 /* JFModifyPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFModifyPasswordViewController.swift; sourceTree = "<group>"; };
 		B2B770F31D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserDismissAnimation.swift; sourceTree = "<group>"; };
 		B2B770F41D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserModalAnimation.swift; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 		B2156C741D66AEDA0033DBB6 /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				B29B5B2C1D6B4FE80050C8A1 /* JFFriendCell.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -1348,6 +1351,7 @@
 				B2156C7E1D66AEF10033DBB6 /* JFBaseTableViewController.swift in Sources */,
 				B2156C9D1D6709CE0033DBB6 /* JFEmoticonView.swift in Sources */,
 				B2155F3F1D68A36400D3FC65 /* JFSafeViewController.swift in Sources */,
+				B29B5B2D1D6B4FE80050C8A1 /* JFFriendCell.swift in Sources */,
 				B2FC66D61D5C16EA0032703D /* StringExtension.swift in Sources */,
 				B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */,
 				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,

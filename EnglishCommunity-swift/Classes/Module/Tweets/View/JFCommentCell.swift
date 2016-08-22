@@ -39,6 +39,7 @@ class JFCommentCell: UITableViewCell {
             
             avatarButton.yy_setBackgroundImageWithURL(NSURL(string: author.avatar!), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
             nicknameLabel.text = author.nickname!
+            sexImageView.image = author.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             publishTimeLabel.text = comment.publishTime?.timeStampToDate().dateToDescription()
         }
     }
@@ -61,9 +62,9 @@ class JFCommentCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
-            contentView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.00)
+            contentView.backgroundColor = COLOR_ALL_CELL_HIGH
         } else {
-            contentView.backgroundColor = UIColor.whiteColor()
+            contentView.backgroundColor = COLOR_ALL_BG
         }
     }
     
@@ -83,6 +84,7 @@ class JFCommentCell: UITableViewCell {
     
     @IBOutlet weak var avatarButton: UIButton!
     @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var sexImageView: UIImageView!
     @IBOutlet weak var contentLabel: FFLabel!
     @IBOutlet weak var publishTimeLabel: UILabel!
 }

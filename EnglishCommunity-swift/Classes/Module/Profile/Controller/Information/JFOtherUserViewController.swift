@@ -28,6 +28,7 @@ class JFOtherUserViewController: UIViewController {
             
             avatarImageView.yy_setImageWithURL(NSURL(string: userInfo.avatar!), options: YYWebImageOptions.Progressive)
             nicknameButton.setTitle(userInfo.nickname!, forState: .Normal)
+            sexImageView.image = userInfo.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             followingLabel.text = "关注 \(userInfo.followingCount)"
             followersLabel.text = "粉丝 \(userInfo.followersCount)"
             sayLabel.text = "\"\(userInfo.say!)\""
@@ -62,6 +63,7 @@ class JFOtherUserViewController: UIViewController {
         view.addSubview(headerView)
         view.addSubview(avatarImageView)
         view.addSubview(nicknameButton)
+        view.addSubview(sexImageView)
         view.addSubview(followingLabel)
         view.addSubview(lineView)
         view.addSubview(followersLabel)
@@ -80,8 +82,14 @@ class JFOtherUserViewController: UIViewController {
         }
         
         nicknameButton.snp_makeConstraints { (make) in
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(view).offset(-10)
             make.top.equalTo(avatarImageView.snp_bottom).offset(15)
+        }
+        
+        sexImageView.snp_makeConstraints { (make) in
+            make.left.equalTo(nicknameButton.snp_right).offset(5)
+            make.centerY.equalTo(nicknameButton)
+            make.size.equalTo(CGSize(width: 15, height: 15))
         }
         
         followingLabel.snp_makeConstraints { (make) in
@@ -180,6 +188,12 @@ class JFOtherUserViewController: UIViewController {
         button.setTitleColor(UIColor.colorWithHexString("444444"), forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(18)
         return button
+    }()
+    
+    /// 性别
+    private lazy var sexImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
     }()
     
     /// 粉丝

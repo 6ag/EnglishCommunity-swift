@@ -39,9 +39,9 @@ class JFCategoryListCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
-            contentView.backgroundColor = COLOR_ALL_BG
+            contentView.backgroundColor = COLOR_ALL_CELL_HIGH
         } else {
-            contentView.backgroundColor = UIColor.whiteColor()
+            contentView.backgroundColor = COLOR_ALL_BG
         }
     }
     

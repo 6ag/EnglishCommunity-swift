@@ -105,7 +105,7 @@ class JFFeedbackViewController: JFBaseTableViewController {
         contactTextField.backgroundColor = UIColor.whiteColor()
         contactTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: MARGIN, height: 0))
         contactTextField.attributedPlaceholder = NSAttributedString(string: "请输入您的联系方式 QQ/Email/手机", attributes: [
-            NSForegroundColorAttributeName : UIColor(red:0.833,  green:0.833,  blue:0.833, alpha:1),
+            NSForegroundColorAttributeName : UIColor(red:0.9,  green:0.9,  blue:0.9, alpha:1),
             NSFontAttributeName : UIFont.systemFontOfSize(14)
             ])
         contactTextField.leftViewMode = .Always

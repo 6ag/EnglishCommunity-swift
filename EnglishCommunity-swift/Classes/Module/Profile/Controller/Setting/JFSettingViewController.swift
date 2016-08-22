@@ -60,8 +60,8 @@ class JFSettingViewController: JFBaseTableViewController {
             let group1 = JFProfileCellGroupModel(cells: [group1CellModel1, group1CellModel2])
             
             // 第二组
-            let group2CellModel1 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络观看视频")
-            let group2CellModel2 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络下载视频")
+            let group2CellModel1 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络观看视频", key: KEY_ALLOW_CELLULAR_PLAY)
+            let group2CellModel2 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络下载视频", key: KEY_ALLOW_CELLULAR_DOWNLOAD)
             let group2 = JFProfileCellGroupModel(cells: [group2CellModel1, group2CellModel2])
             
             // 第三组
@@ -95,8 +95,8 @@ class JFSettingViewController: JFBaseTableViewController {
             let group1 = JFProfileCellGroupModel(cells: [group1CellModel1])
             
             // 第二组
-            let group2CellModel1 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络观看视频")
-            let group2CellModel2 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络下载视频")
+            let group2CellModel1 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络观看视频", key: KEY_ALLOW_CELLULAR_PLAY)
+            let group2CellModel2 = JFProfileCellSwitchModel(title: "允许使用2G/3G/4G网络下载视频", key: KEY_ALLOW_CELLULAR_DOWNLOAD)
             let group2 = JFProfileCellGroupModel(cells: [group2CellModel1, group2CellModel2])
             
             // 第三组

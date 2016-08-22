@@ -178,7 +178,7 @@ class JFMultiTextView: UIView {
     /// 背景
     lazy var backgroundView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 40))
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = COLOR_ALL_BG
         view.layer.borderColor = UIColor(white: 0.7, alpha: 0.5).CGColor
         view.layer.borderWidth = 1
         return view

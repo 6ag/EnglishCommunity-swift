@@ -141,7 +141,7 @@ class JFHomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.whiteColor()
+        tableView.backgroundColor = COLOR_ALL_BG
         tableView.separatorColor = UIColor(red:0.9,  green:0.9,  blue:0.9, alpha:1)
         tableView.registerClass(JFCategoriesCell.self, forCellReuseIdentifier: self.categoriesIdentifier)
         tableView.registerClass(JFHomeCell.self, forCellReuseIdentifier: self.homeCellIdentifier)

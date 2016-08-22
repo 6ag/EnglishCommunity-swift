@@ -7,8 +7,18 @@
 //
 
 import UIKit
+import SnapKit
 
 class JFGrammarListCell: UITableViewCell {
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        prepareUI()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     var grammar: JFGrammar? {
         didSet {
@@ -16,9 +26,16 @@ class JFGrammarListCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
+    /**
+     准备UI
+     */
+    private func prepareUI() {
+        contentView.addSubview(lineView)
+        lineView.snp_makeConstraints { (make) in
+            make.left.right.equalTo(0)
+            make.bottom.equalTo(-0.5)
+            make.height.equalTo(0.5)
+        }
     }
     
     /**
@@ -28,16 +45,16 @@ class JFGrammarListCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
-            contentView.backgroundColor = COLOR_ALL_BG
+            contentView.backgroundColor = COLOR_ALL_CELL_HIGH
         } else {
-            contentView.backgroundColor = UIColor.whiteColor()
+            contentView.backgroundColor = COLOR_ALL_BG
         }
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
+    /// 分割线
+    private lazy var lineView: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = COLOR_ALL_CELL_SEPARATOR
+        return lineView
+    }()
 }

@@ -28,13 +28,25 @@ class JFSafeViewController: JFBaseTableViewController {
         let group1 = JFProfileCellGroupModel(cells: [group1Cell1, group1Cell2])
         
         let group2Cell1 = JFProfileCellArrowModel(title: "QQ号", text: JFAccountModel.shareAccount()!.qqBinding == 0 ? "未绑定" : "已绑定", destinationVc: UIViewController.classForCoder())
+        group2Cell1.operation = {() -> Void in
+//            JFProgressHUD.showInfoWithStatus("暂不支持微信绑定")
+        }
         let group2Cell2 = JFProfileCellArrowModel(title: "微信", text: JFAccountModel.shareAccount()!.weixinBinding == 0 ? "未绑定" : "已绑定", destinationVc: UIViewController.classForCoder())
         group2Cell2.operation = {() -> Void in
-            JFProgressHUD.showInfoWithStatus("暂不支持微信绑定")
+//            JFProgressHUD.showInfoWithStatus("暂不支持微信绑定")
         }
         let group2Cell3 = JFProfileCellArrowModel(title: "微博", text: JFAccountModel.shareAccount()!.weiboBinding == 0 ? "未绑定" : "已绑定", destinationVc: UIViewController.classForCoder())
+        group2Cell3.operation = {() -> Void in
+//            JFProgressHUD.showInfoWithStatus("暂不支持微信绑定")
+        }
         let group2Cell4 = JFProfileCellArrowModel(title: "手机号", text: JFAccountModel.shareAccount()!.mobileBinding == 0 ? "未绑定" : JFAccountModel.shareAccount()!.mobile!, destinationVc: UIViewController.classForCoder())
+        group2Cell4.operation = {() -> Void in
+//            JFProgressHUD.showInfoWithStatus("暂不支持微信绑定")
+        }
         let group2Cell5 = JFProfileCellArrowModel(title: "邮箱", text: JFAccountModel.shareAccount()!.emailBinding == 0 ? "未绑定" : JFAccountModel.shareAccount()!.email!, destinationVc: UIViewController.classForCoder())
+        group2Cell5.operation = {() -> Void in
+//            JFProgressHUD.showInfoWithStatus("暂不支持微信绑定")
+        }
         let group2 = JFProfileCellGroupModel(cells: [group2Cell1, group2Cell2, group2Cell3, group2Cell4, group2Cell5])
         group2.footerTitle = "绑定后可以用多种方式登录同一个账号，让登录更方便！"
         

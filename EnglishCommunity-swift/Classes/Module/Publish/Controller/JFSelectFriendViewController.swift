@@ -84,7 +84,7 @@ class JFSelectFriendViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.whiteColor()
+        tableView.backgroundColor = COLOR_ALL_BG
         tableView.registerClass(JFSelectFriendCell.classForCoder(), forCellReuseIdentifier: self.selectFriendIdentifier)
         return tableView
     }()

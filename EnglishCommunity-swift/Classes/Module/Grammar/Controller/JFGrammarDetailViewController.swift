@@ -18,7 +18,7 @@ class JFGrammarDetailViewController: UIViewController {
             
             let attributedString = NSMutableAttributedString(string: grammar!.content!)
             let paragaphStyle = NSMutableParagraphStyle()
-            paragaphStyle.lineSpacing = 5
+            paragaphStyle.lineSpacing = 3
             paragaphStyle.paragraphSpacing = 8
             attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragaphStyle, range: NSRange(location: 0, length: grammar!.content!.characters.count))
             contentLabel.attributedText = attributedString
@@ -37,7 +37,7 @@ class JFGrammarDetailViewController: UIViewController {
     private func prepareUI() {
         
         title = "详情"
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = COLOR_ALL_BG
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(titleLabel)
         contentScrollView.addSubview(contentLabel)
@@ -74,8 +74,8 @@ class JFGrammarDetailViewController: UIViewController {
     }()
     
     /// 内容label
-    private lazy var contentLabel: UILabel = {
-        let contentLabel = UILabel()
+    private lazy var contentLabel: FFLabel = {
+        let contentLabel = FFLabel()
         contentLabel.textColor = UIColor.blackColor()
         contentLabel.font = UIFont.systemFontOfSize(16)
         contentLabel.numberOfLines = 0

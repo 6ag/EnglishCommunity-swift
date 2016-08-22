@@ -19,6 +19,9 @@ class JFCommentAuthor: NSObject {
     /// 头像
     var avatar: String?
     
+    /// 性别
+    var sex = 0
+    
     init(dict: [String : AnyObject]) {
         super.init()
         setValuesForKeysWithDictionary(dict)
@@ -37,6 +40,9 @@ class JFCommentExtendsAuthor: NSObject {
     
     /// 头像
     var avatar: String?
+    
+    /// 性别
+    var sex = 0
     
     init(dict: [String : AnyObject]) {
         super.init()
