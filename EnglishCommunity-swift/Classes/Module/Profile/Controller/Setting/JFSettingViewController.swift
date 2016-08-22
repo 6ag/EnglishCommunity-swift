@@ -65,7 +65,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group2 = JFProfileCellGroupModel(cells: [group2CellModel1, group2CellModel2])
             
             // 第三组
-            let group3CellModel1 = JFProfileCellArrowModel(title: "意见反馈", destinationVc: JFProfileFeedbackViewController.classForCoder())
+            let group3CellModel1 = JFProfileCellArrowModel(title: "意见反馈", destinationVc: JFFeedbackViewController.classForCoder())
             let group3CellModel2 = JFProfileCellArrowModel(title: "关于作者", destinationVc: JFAboutMeViewController.classForCoder())
             let group3CellModel3 = JFProfileCellArrowModel(title: "应用评价")
             group3CellModel3.operation = { () -> Void in
@@ -100,7 +100,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group2 = JFProfileCellGroupModel(cells: [group2CellModel1, group2CellModel2])
             
             // 第三组
-            let group3CellModel1 = JFProfileCellArrowModel(title: "意见反馈", destinationVc: JFProfileFeedbackViewController.classForCoder())
+            let group3CellModel1 = JFProfileCellArrowModel(title: "意见反馈", destinationVc: JFFeedbackViewController.classForCoder())
             let group3CellModel2 = JFProfileCellArrowModel(title: "关于作者", destinationVc: JFAboutMeViewController.classForCoder())
             let group3CellModel3 = JFProfileCellArrowModel(title: "应用评价")
             group3CellModel3.operation = { () -> Void in

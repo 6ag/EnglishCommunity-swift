@@ -50,7 +50,7 @@
 		B2156C691D66AE3A0033DBB6 /* JFRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C631D66AE3A0033DBB6 /* JFRegisterViewController.swift */; };
 		B2156C6A1D66AE3A0033DBB6 /* JFRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2156C641D66AE3A0033DBB6 /* JFRegisterViewController.xib */; };
 		B2156C701D66AE6A0033DBB6 /* JFAboutMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C6D1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */; };
-		B2156C711D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C6E1D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift */; };
+		B2156C711D66AE6A0033DBB6 /* JFFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C6E1D66AE6A0033DBB6 /* JFFeedbackViewController.swift */; };
 		B2156C7A1D66AEDA0033DBB6 /* JFProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C731D66AEDA0033DBB6 /* JFProfileCell.swift */; };
 		B2156C7E1D66AEF10033DBB6 /* JFBaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C7D1D66AEF10033DBB6 /* JFBaseTableViewController.swift */; };
 		B2156C881D66AF840033DBB6 /* JFPublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2156C811D66AF840033DBB6 /* JFPublishViewController.swift */; };
@@ -217,7 +217,7 @@
 		B2156C631D66AE3A0033DBB6 /* JFRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFRegisterViewController.swift; sourceTree = "<group>"; };
 		B2156C641D66AE3A0033DBB6 /* JFRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFRegisterViewController.xib; sourceTree = "<group>"; };
 		B2156C6D1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFAboutMeViewController.swift; sourceTree = "<group>"; };
-		B2156C6E1D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileFeedbackViewController.swift; sourceTree = "<group>"; };
+		B2156C6E1D66AE6A0033DBB6 /* JFFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFFeedbackViewController.swift; sourceTree = "<group>"; };
 		B2156C731D66AEDA0033DBB6 /* JFProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileCell.swift; sourceTree = "<group>"; };
 		B2156C7D1D66AEF10033DBB6 /* JFBaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFBaseTableViewController.swift; sourceTree = "<group>"; };
 		B2156C811D66AF840033DBB6 /* JFPublishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPublishViewController.swift; sourceTree = "<group>"; };
@@ -532,7 +532,7 @@
 			children = (
 				B2155F381D68677C00D3FC65 /* JFSettingViewController.swift */,
 				B2156C6D1D66AE6A0033DBB6 /* JFAboutMeViewController.swift */,
-				B2156C6E1D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift */,
+				B2156C6E1D66AE6A0033DBB6 /* JFFeedbackViewController.swift */,
 				B2155F3E1D68A36400D3FC65 /* JFSafeViewController.swift */,
 			);
 			path = Setting;
@@ -1298,7 +1298,7 @@
 				B2512A731D54426B00476D0E /* JFVideo.swift in Sources */,
 				B21501D21D536697005E4670 /* UIViewExtension.swift in Sources */,
 				B2B771121D61A0790042AA5E /* JFTextAttachment.swift in Sources */,
-				B2156C711D66AE6A0033DBB6 /* JFProfileFeedbackViewController.swift in Sources */,
+				B2156C711D66AE6A0033DBB6 /* JFFeedbackViewController.swift in Sources */,
 				B2DA01151D654DBB0095AB7D /* JFHomeSectionHeaderView.swift in Sources */,
 				B21501DC1D5366CB005E4670 /* JFTabBar.swift in Sources */,
 				B2156C891D66AF840033DBB6 /* JFSelectFriendViewController.swift in Sources */,

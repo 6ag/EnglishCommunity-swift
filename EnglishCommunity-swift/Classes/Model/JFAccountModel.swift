@@ -10,6 +10,7 @@ import UIKit
 
 class JFAccountModel: NSObject, NSCoding {
     
+    // MARK: - 属性
     /// 令牌
     var token: String?
     
@@ -67,6 +68,7 @@ class JFAccountModel: NSObject, NSCoding {
     /// 是否已经关注了某个用户
     var followed = 0
     
+    // MARK: - 转模型
     // KVC 字典转模型
     init(dict: [String: AnyObject]) {
         super.init()
@@ -75,19 +77,16 @@ class JFAccountModel: NSObject, NSCoding {
     
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
     
+    // MARK: - 外部调用接口
     /**
-     注销清理
+     获取用户对象 （这可不是单例哦，只是对象静态化了，保证在内存中不释放）
      */
-    class func logout() {
-        //        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeQQ)
-        //        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeSinaWeibo)
-        
-        // 清除内存中的账号对象和归档
-        JFAccountModel.userAccount = nil
-        do {
-            try NSFileManager.defaultManager().removeItemAtPath(JFAccountModel.accountPath)
-        } catch {
-            print("退出异常")
+    static func shareAccount() -> JFAccountModel? {
+        if userAccount == nil {
+            userAccount = NSKeyedUnarchiver.unarchiveObjectWithFile(accountPath) as? JFAccountModel
+            return userAccount
+        } else {
+            return userAccount
         }
     }
     
@@ -99,12 +98,28 @@ class JFAccountModel: NSObject, NSCoding {
     }
     
     /**
+     注销清理
+     */
+    class func logout() {
+        
+        // 取消第三方登录授权
+        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeQQ)
+        ShareSDK.cancelAuthorize(SSDKPlatformType.TypeSinaWeibo)
+        
+        // 清除内存中的账户数据和归档中的数据
+        JFAccountModel.userAccount = nil
+        do {
+            try NSFileManager.defaultManager().removeItemAtPath(JFAccountModel.accountPath)
+        } catch {
+            print("退出异常")
+        }
+    }
+    
+    /**
      检查token有效期
      */
     class func checkToken() {
         if JFAccountModel.isLogin() {
-            
-            
             guard let expiryTime = JFAccountModel.shareAccount()?.expiryTime else {
                 return
             }
@@ -118,19 +133,15 @@ class JFAccountModel: NSObject, NSCoding {
         }
     }
     
+    // MARK: - 内部处理方法
     /**
      登录保存用户信息
      */
-    func updateUserInfo() {
+    private func saveUserInfo() {
         // 保存到内存中
         JFAccountModel.userAccount = self
         // 归档用户信息
         saveAccount()
-    }
-    
-    // MARK: - 保存对象
-    func saveAccount() {
-        NSKeyedArchiver.archiveRootObject(self, toFile: JFAccountModel.accountPath)
     }
     
     // 持久保存到内存中
@@ -140,15 +151,10 @@ class JFAccountModel: NSObject, NSCoding {
     static let accountPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/Account.plist"
     
     /**
-     获取用户对象 （这可不是单例哦，只是对象静态化了，保证在内存中不释放）
+     归档用户数据
      */
-    static func shareAccount() -> JFAccountModel? {
-        if userAccount == nil {
-            userAccount = NSKeyedUnarchiver.unarchiveObjectWithFile(accountPath) as? JFAccountModel
-            return userAccount
-        } else {
-            return userAccount
-        }
+    private func saveAccount() {
+        NSKeyedArchiver.archiveRootObject(self, toFile: JFAccountModel.accountPath)
     }
     
     // MARK: - 归档和解档
@@ -197,93 +203,6 @@ class JFAccountModel: NSObject, NSCoding {
 
 // MARK: - 各种网络请求
 extension JFAccountModel {
-    
-    /**
-     获取自己的用户信息 - 获取成功会更新本地用户信息
-     
-     - parameter finished: 完成回调
-     */
-    class func getSelfUserInfo(finished: (success: Bool) -> ()) {
-        
-        if !JFAccountModel.isLogin() {
-            return
-        }
-        
-        let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id
-        ]
-        
-        JFNetworkTools.shareNetworkTool.getWithToken(GET_SELF_USER_INFOMATION, parameters: parameters) { (success, result, error) in
-            
-            guard let result = result where success == true && result["status"] == "success" else {
-                finished(success: false)
-                return
-            }
-            
-            // 更新用户信息而不更新token
-            let account = JFAccountModel(dict: result["result"].dictionaryObject!)
-            account.token = JFAccountModel.shareAccount()?.token
-            account.updateUserInfo()
-            
-            finished(success: true)
-        }
-    }
-    
-    /**
-     获取他人的用户信息 - 获取成功返回给调用者
-     
-     - parameter finished: 完成回调
-     */
-    class func getOtherUserInfo(otherUserId: Int, finished: (userInfo: JFAccountModel?) -> ()) {
-        
-        if !JFAccountModel.isLogin() {
-            return
-        }
-        
-        let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()?.id ?? 0,
-            "other_user_id" : otherUserId
-        ]
-        
-        JFNetworkTools.shareNetworkTool.get(GET_OTHER_USER_INFOMATION, parameters: parameters) { (success, result, error) in
-            
-            guard let result = result where success == true && result["status"] == "success" else {
-                finished(userInfo: nil)
-                return
-            }
-            
-            let userInfo = JFAccountModel(dict: result["result"].dictionaryObject!)
-            finished(userInfo: userInfo)
-        }
-    }
-    
-    /**
-     更新用户信息
-     
-     - parameter nickname: 昵称
-     - parameter sex:      性别 0女 1男
-     - parameter say:      个性签名
-     - parameter finished: 完成回调
-     */
-    class func updateUserInfo(nickname: String, sex: Int, say: String, finished: (success: Bool) -> ()) {
-        
-        let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "nickname" : nickname,
-            "sex" : sex,
-            "say" : say
-        ]
-        
-        JFNetworkTools.shareNetworkTool.postWithToken(UPDATE_USER_INFOMATION, parameters: parameters) { (success, result, error) in
-            
-            guard let result = result where success == true && result["status"] == "success" else {
-                finished(success: false)
-                return
-            }
-            
-            finished(success: true)
-        }
-    }
     
     /**
      普通账号注册
@@ -335,7 +254,7 @@ extension JFAccountModel {
             }
             
             let account = JFAccountModel(dict: result!["result"].dictionaryObject!)
-            account.updateUserInfo()
+            account.saveUserInfo()
             finished(success: true, tip: "登录成功")
         }
     }
@@ -364,6 +283,93 @@ extension JFAccountModel {
             }
             
             finished(success: true)
+        }
+    }
+    
+    /**
+     修改更新用户信息
+     
+     - parameter nickname: 昵称
+     - parameter sex:      性别 0女 1男
+     - parameter say:      个性签名
+     - parameter finished: 完成回调
+     */
+    class func updateUserInfo(nickname: String, sex: Int, say: String, finished: (success: Bool) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()!.id,
+            "nickname" : nickname,
+            "sex" : sex,
+            "say" : say
+        ]
+        
+        JFNetworkTools.shareNetworkTool.postWithToken(UPDATE_USER_INFOMATION, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where success == true && result["status"] == "success" else {
+                finished(success: false)
+                return
+            }
+            
+            finished(success: true)
+        }
+    }
+    
+    /**
+     获取自己的用户信息 - 获取成功会更新本地用户信息
+     
+     - parameter finished: 完成回调
+     */
+    class func getSelfUserInfo(finished: (success: Bool) -> ()) {
+        
+        if !JFAccountModel.isLogin() {
+            return
+        }
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()!.id
+        ]
+        
+        JFNetworkTools.shareNetworkTool.getWithToken(GET_SELF_USER_INFOMATION, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where success == true && result["status"] == "success" else {
+                finished(success: false)
+                return
+            }
+            
+            // 更新用户信息而不更新token
+            let account = JFAccountModel(dict: result["result"].dictionaryObject!)
+            account.token = JFAccountModel.shareAccount()?.token
+            account.saveUserInfo()
+            
+            finished(success: true)
+        }
+    }
+    
+    /**
+     获取他人的用户信息 - 获取成功返回给调用者
+     
+     - parameter finished: 完成回调
+     */
+    class func getOtherUserInfo(otherUserId: Int, finished: (userInfo: JFAccountModel?) -> ()) {
+        
+        if !JFAccountModel.isLogin() {
+            return
+        }
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()?.id ?? 0,
+            "other_user_id" : otherUserId
+        ]
+        
+        JFNetworkTools.shareNetworkTool.get(GET_OTHER_USER_INFOMATION, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where success == true && result["status"] == "success" else {
+                finished(userInfo: nil)
+                return
+            }
+            
+            let userInfo = JFAccountModel(dict: result["result"].dictionaryObject!)
+            finished(userInfo: userInfo)
         }
     }
 }

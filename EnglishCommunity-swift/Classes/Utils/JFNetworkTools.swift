@@ -130,7 +130,7 @@ extension JFNetworkTools {
     }
 }
 
-// MARK: - 抽取业务请求
+// MARK: - 抽取业务请求 - 需要token验证
 extension JFNetworkTools {
     
     /**
@@ -222,6 +222,27 @@ extension JFNetworkTools {
         postWithToken(ADD_OR_CANCEL_FRIEND, parameters: parameters, finished: finished)
     }
     
+}
+
+// MARK: - 抽取业务请求 - 免验证
+extension JFNetworkTools {
+    
+    /**
+     提交反馈信息
+     
+     - parameter contact:  联系方式
+     - parameter content:  反馈内容
+     - parameter finished: 完成回调
+     */
+    func postFeedback(contact: String, content: String, finished: NetworkFinished) {
+        
+        let parameters: [String : AnyObject] = [
+            "contact" : contact,
+            "content" : content
+        ]
+        
+        post(POST_FEEDBACK, parameters: parameters, finished: finished)
+    }
 }
 
 // MARK: - 辅助方法

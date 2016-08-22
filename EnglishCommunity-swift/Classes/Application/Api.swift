@@ -77,3 +77,7 @@ let UPDATE_USER_INFOMATION = "api/updateUserInfomation.api"
 /// 添加或删除朋友
 let ADD_OR_CANCEL_FRIEND = "api/addOrCancelFriend.api"
 
+/// 提交反馈信息
+let POST_FEEDBACK = "api/postFeedback.api"
+
+
