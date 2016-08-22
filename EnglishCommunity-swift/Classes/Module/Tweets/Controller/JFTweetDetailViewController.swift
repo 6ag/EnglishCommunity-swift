@@ -195,7 +195,7 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         // 已经登录
         JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord("tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 return
             }
             

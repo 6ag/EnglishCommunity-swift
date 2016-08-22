@@ -317,7 +317,7 @@ class JFPublishViewController: UIViewController {
         JFProgressHUD.showWithStatus("正在发送中...")
         JFNetworkTools.shareNetworkTool.sendTweets(text, images: images, atUsers: atUsers) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 print(success, error)
                 JFProgressHUD.showInfoWithStatus("没发出去")
                 return

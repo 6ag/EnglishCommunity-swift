@@ -76,7 +76,7 @@ class JFFeedbackViewController: JFBaseTableViewController {
         JFNetworkTools.shareNetworkTool.postFeedback(contactTextField.text!, content: contentTextView.text) { (success, result, error) in
             self.tableView.userInteractionEnabled = true
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 JFProgressHUD.showSuccessWithStatus("出问题啦！请联系作者")
                 return
             }

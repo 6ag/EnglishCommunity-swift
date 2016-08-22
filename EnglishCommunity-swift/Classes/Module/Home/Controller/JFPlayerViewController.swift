@@ -516,7 +516,7 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
     func didTappedJoinCollectionButton(button: UIButton) {
         if isLogin(self) {
             JFNetworkTools.shareNetworkTool.addOrCancelCollection(videoInfo!.id) { (success, result, error) in
-                guard let result = result where success == true && result["status"] == "success" else {
+                guard let result = result where result["status"] == "success" else {
                     return
                 }
                 JFProgressHUD.showInfoWithStatus("操作成功")

@@ -139,7 +139,7 @@ class JFOtherUserViewController: UIViewController {
         JFProgressHUD.show()
         JFNetworkTools.shareNetworkTool.addOrCancelFriend(userId, finished: { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 JFProgressHUD.dismiss()
                 return
             }

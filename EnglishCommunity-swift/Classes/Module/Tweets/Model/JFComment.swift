@@ -112,7 +112,7 @@ class JFComment: NSObject {
         
         JFNetworkTools.shareNetworkTool.get(GET_COMMENT_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 print(success, error, parameters)
                 finished(comments: nil)
                 return
@@ -152,7 +152,7 @@ class JFComment: NSObject {
         
         JFNetworkTools.shareNetworkTool.postWithToken(POST_COMMENT, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 print(success, error, parameters)
                 finished(success: false)
                 return

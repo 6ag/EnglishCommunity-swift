@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         JPUSHService.registerForRemoteNotificationTypes(UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Sound.rawValue, categories: nil)
         JPUSHService.setupWithOption(launchOptions, appKey: JPUSH_APP_KEY, channel: JPUSH_CHANNEL, apsForProduction: JPUSH_IS_PRODUCTION)
         JPUSHService.crashLogON()
-        JPUSHService.setLogOFF()
+//        JPUSHService.setLogO()
         
         // 延迟发送通知（app被杀死进程后收到通知，然后通过点击通知打开app在这个方法中发送通知）
         performSelector(#selector(sendNotification(_:)), withObject: launchOptions, afterDelay: 1)

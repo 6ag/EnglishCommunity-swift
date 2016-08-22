@@ -251,7 +251,7 @@ extension JFProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 JFNetworkTools.shareNetworkTool.addOrCancelCollection(self.videoInfos[indexPath.row].id, finished: { (success, result, error) in
                     
                     JFProgressHUD.showSuccessWithStatus("操作成功")
-                    guard let result = result where success == true && result["status"] == "success" else {
+                    guard let result = result where result["status"] == "success" else {
                         return
                     }
                     

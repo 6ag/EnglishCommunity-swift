@@ -205,6 +205,69 @@ class JFAccountModel: NSObject, NSCoding {
 extension JFAccountModel {
     
     /**
+     修改用户密码
+     
+     - parameter credentialOld: 旧密码
+     - parameter credentialNew: 新密码
+     - parameter finished:      完成回调
+     */
+    class func modifyPassword(credentialOld: String, credentialNew: String, finished: (success: Bool, tip: String) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()!.id,
+            "credential_old" : credentialOld,
+            "credential_new" : credentialNew
+            ]
+        
+        JFNetworkTools.shareNetworkTool.postWithToken(MODIFY_USER_PASSWORD, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result else {
+                finished(success: false, tip: "您的网络不给力哦")
+                return
+            }
+            
+            if result["status"] == "success" {
+                finished(success: true, tip: "修改密码成功")
+            } else {
+                finished(success: false, tip: result["message"].stringValue)
+            }
+            
+        }
+        
+    }
+    
+    /**
+     发送重置密码邮箱
+     
+     - parameter username: 账号
+     - parameter email:    绑定邮箱
+     - parameter finished: 完成回调
+     */
+    class func retrievePasswordEmail(username: String, email: String, finished: (success: Bool, tip: String) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "identifier" : username,
+            "email" : email,
+        ]
+        
+        JFNetworkTools.shareNetworkTool.post(RETRIEVE_PASSWORD_EMAIL, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result else {
+                finished(success: false, tip: "您的网络不给力哦")
+                return
+            }
+            
+            if result["status"] == "success" {
+                finished(success: true, tip: "发送成功，请查看邮件")
+            } else {
+                finished(success: false, tip: result["message"].stringValue)
+            }
+            
+        }
+        
+    }
+    
+    /**
      普通账号注册
      
      - parameter type:     注册类型
@@ -222,12 +285,17 @@ extension JFAccountModel {
         
         JFNetworkTools.shareNetworkTool.post(REGISTER, parameters: parameters) { (success, result, error) in
             
-            guard let _ = result where success == true && result!["status"] == "success" else {
-                finished(success: false, tip: result!["message"].string!)
+            guard let result = result else {
+                finished(success: false, tip: "您的网络不给力哦")
                 return
             }
             
-            finished(success: true, tip: "注册成功")
+            if result["status"] == "success" {
+                finished(success: true, tip: "注册成功")
+            } else {
+                finished(success: false, tip: result["message"].stringValue)
+            }
+            
         }
     }
     
@@ -248,14 +316,60 @@ extension JFAccountModel {
         ]
         
         JFNetworkTools.shareNetworkTool.post(LOGIN, parameters: parameters) { (success, result, error) in
-            guard let _ = result where success == true && result!["status"] == "success" else {
-                finished(success: false, tip: result!["message"].string!)
+            
+            guard let result = result else {
+                finished(success: false, tip: "您的网络不给力哦")
                 return
             }
             
-            let account = JFAccountModel(dict: result!["result"].dictionaryObject!)
-            account.saveUserInfo()
-            finished(success: true, tip: "登录成功")
+            if result["status"] == "success" {
+                let account = JFAccountModel(dict: result["result"].dictionaryObject!)
+                account.saveUserInfo()
+                finished(success: true, tip: "登录成功")
+            } else {
+                finished(success: false, tip: result["message"].stringValue)
+            }
+            
+        }
+    }
+    
+    /**
+     第三方登录
+     
+     - parameter type:     类型 qq weibo
+     - parameter openid:   uid
+     - parameter token:    token
+     - parameter nickname: 昵称
+     - parameter avatar:   头像
+     - parameter sex:      性别 0:女 1:男
+     - parameter finished: 完成回调
+     */
+    class func thirdAccountLogin(type: String, openid: String, token: String, nickname: String, avatar: String, sex: Int, finished: (success: Bool, tip: String) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "identity_type" : type,
+            "identifier" : openid,
+            "token" : token,
+            "nickname" : nickname,
+            "avatar" : avatar,
+            "sex" : sex
+        ]
+        
+        JFNetworkTools.shareNetworkTool.post(LOGIN, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result else {
+                finished(success: false, tip: "您的网络不给力哦")
+                return
+            }
+            
+            if result["status"] == "success" {
+                let account = JFAccountModel(dict: result["result"].dictionaryObject!)
+                account.saveUserInfo()
+                finished(success: true, tip: "登录成功")
+            } else {
+                finished(success: false, tip: result["message"].stringValue)
+            }
+            
         }
     }
     
@@ -277,7 +391,7 @@ extension JFAccountModel {
         
         JFNetworkTools.shareNetworkTool.postWithToken(UPLOAD_USER_AVATAR, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 finished(success: false)
                 return
             }
@@ -305,7 +419,7 @@ extension JFAccountModel {
         
         JFNetworkTools.shareNetworkTool.postWithToken(UPDATE_USER_INFOMATION, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 finished(success: false)
                 return
             }
@@ -331,7 +445,7 @@ extension JFAccountModel {
         
         JFNetworkTools.shareNetworkTool.getWithToken(GET_SELF_USER_INFOMATION, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 finished(success: false)
                 return
             }
@@ -363,7 +477,7 @@ extension JFAccountModel {
         
         JFNetworkTools.shareNetworkTool.get(GET_OTHER_USER_INFOMATION, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where success == true && result["status"] == "success" else {
+            guard let result = result where result["status"] == "success" else {
                 finished(userInfo: nil)
                 return
             }

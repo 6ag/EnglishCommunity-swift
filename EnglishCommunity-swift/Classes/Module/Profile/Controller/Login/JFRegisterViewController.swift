@@ -52,7 +52,7 @@ class JFRegisterViewController: UIViewController {
     @IBAction func didChangeTextField(sender: UITextField) {
         if usernameField.text?.characters.count >= 5 && passwordField1.text?.characters.count > 5 && passwordField2.text?.characters.count > 5 {
             registerButton.enabled = true
-            registerButton.backgroundColor = UIColor(red: 32/255.0, green: 170/255.0, blue: 238/255.0, alpha: 1)
+            registerButton.backgroundColor = COLOR_NAV_BG
         } else {
             registerButton.enabled = false
             registerButton.backgroundColor = UIColor.grayColor()

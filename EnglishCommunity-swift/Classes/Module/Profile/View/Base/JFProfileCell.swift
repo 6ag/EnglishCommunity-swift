@@ -73,8 +73,10 @@ class JFProfileCell: UITableViewCell {
     
     private func prepareUI() {
         
+        selectionStyle = .None
         textLabel?.font = UIFont.systemFontOfSize(14)
         textLabel?.textColor = UIColor.colorWithHexString("444444")
+        textLabel?.backgroundColor = UIColor.clearColor()
         
         detailTextLabel?.font = UIFont.systemFontOfSize(11)
         detailTextLabel?.textColor = UIColor.blackColor()
@@ -116,6 +118,7 @@ class JFProfileCell: UITableViewCell {
     
     lazy var rightView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 180, height: 20))
+        view.backgroundColor = UIColor.clearColor()
         view.addSubview(self.settingArrowView)
         view.addSubview(self.settingRightLabel)
         self.settingArrowView.frame = CGRect(x: 170, y: 2.5, width: 15, height: 15)

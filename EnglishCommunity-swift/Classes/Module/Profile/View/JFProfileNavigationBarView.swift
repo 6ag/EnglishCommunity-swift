@@ -92,7 +92,7 @@ class JFProfileNavigationBarView: UIView {
     lazy var settingButton: UIButton = {
         let button = UIButton(type: .Custom)
         button.setImage(UIImage(named: "profile_setting_icon_normal"), forState: .Normal)
-//        button.setImage(UIImage(named: "profile_setting_icon_highlighted"), forState: .Highlighted)
+        button.setImage(UIImage(named: "profile_setting_icon_highlighted"), forState: .Highlighted)
         button.addTarget(self, action: #selector(didTappedSetting), forControlEvents: .TouchUpInside)
         return button
     }()

@@ -39,6 +39,7 @@ extension JFNetworkTools {
                 print(json)
                 finished(success: true, result: json, error: nil)
             } else {
+                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
                 finished(success: false, result: nil, error: response.result.error)
             }
         }
@@ -62,6 +63,7 @@ extension JFNetworkTools {
                 print(json)
                 finished(success: true, result: json, error: nil)
             } else {
+                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
                 finished(success: false, result: nil, error: response.result.error)
             }
         }
@@ -92,6 +94,7 @@ extension JFNetworkTools {
                 print(json)
                 finished(success: true, result: json, error: nil)
             } else {
+                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
                 finished(success: false, result: nil, error: response.result.error)
             }
         }
@@ -123,6 +126,7 @@ extension JFNetworkTools {
                 print(json)
                 finished(success: true, result: json, error: nil)
             } else {
+                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
                 finished(success: false, result: nil, error: response.result.error)
             }
         }

@@ -73,52 +73,78 @@ class JFLoginViewController: UIViewController {
         }
     }
     
+    /**
+     返回
+     */
     @IBAction func didTappedBackButton() {
         dismissViewControllerAnimated(true) {}
     }
     
+    /**
+     注册
+     */
     @IBAction func didTappedRegisterButton(sender: UIButton) {
         let registerVc = JFRegisterViewController(nibName: "JFRegisterViewController", bundle: nil)
         registerVc.delegate = self
         navigationController?.pushViewController(registerVc, animated: true)
     }
     
+    /**
+     忘记密码
+     */
     @IBAction func didTappedForgotButton(sender: UIButton) {
         let forgotVc = JFForgotViewController(nibName: "JFForgotViewController", bundle: nil)
         navigationController?.pushViewController(forgotVc, animated: true)
     }
     
+    /**
+     QQ登录
+     */
     @IBAction func didTappedQQLoginButton(sender: UIButton) {
-        //        ShareSDK.getUserInfo(SSDKPlatformType.TypeQQ, conditional: nil) { (state, user, error) in
-        //            if state == SSDKResponseState.Success {
-        //                self.SDKLoginHandle(user.nickname, avatar: user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"]! as! String : user.icon, uid: user.uid, type: 1)
-        //            } else {
-        //                self.didTappedBackButton()
-        //            }
-        //        }
-    }
-    
-    @IBAction func didTappedSinaLoginButton(sender: UIButton) {
-        //        ShareSDK.getUserInfo(SSDKPlatformType.TypeSinaWeibo, conditional: nil) { (state, user, error) in
-        //            if state == SSDKResponseState.Success {
-        //                self.SDKLoginHandle(user.nickname, avatar: user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"]! as! String : user.icon, uid: user.uid, type: 2)
-        //            } else {
-        //                self.didTappedBackButton()
-        //            }
-        //        }
+        ShareSDK.getUserInfo(SSDKPlatformType.TypeQQ, conditional: nil) { (state, user, error) in
+            self.SDKLoginHandle(state, user: user, type: "qq")
+        }
     }
     
     /**
-     第三方登录授权处理
-     
-     - parameter nickname: 昵称
-     - parameter avatar:   头像url
-     - parameter uid:      唯一标识
+     微博登录
      */
-    func SDKLoginHandle(nickname: String, avatar: String, uid: String, type: Int) {
-        
+    @IBAction func didTappedSinaLoginButton(sender: UIButton) {
+        ShareSDK.getUserInfo(SSDKPlatformType.TypeSinaWeibo, conditional: nil) { (state, user, error) in
+            self.SDKLoginHandle(state, user: user, type: "weibo")
+        }
     }
     
+    /**
+     第三方登录处理
+     
+     - parameter state: 授权状态
+     - parameter user:  授权用户信息
+     - parameter error: 错误对象
+     - parameter type:  0:qq 1:weibo
+     */
+    func SDKLoginHandle(state: SSDKResponseState, user: SSDKUser, type: String) {
+        
+        if state == SSDKResponseState.Success {
+            let uid = user.uid
+            let token = user.credential.token
+            let nickname = user.nickname
+            let avatar = type == "weibo" ? (user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"]! as! String : user.icon) : (user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"]! as! String : user.icon)
+            let sex = user.gender.rawValue == 0 ? 1 : 0
+            
+            JFAccountModel.thirdAccountLogin(type, openid: uid, token: token, nickname: nickname, avatar: avatar, sex: sex, finished: { (success, tip) in
+                if success {
+                    JFProgressHUD.dismiss()
+                    NSUserDefaults.standardUserDefaults().setObject(self.usernameField.text, forKey: "")
+                    NSUserDefaults.standardUserDefaults().setObject(self.passwordField.text, forKey: "")
+                    self.didTappedBackButton()
+                } else {
+                    JFProgressHUD.showInfoWithStatus(tip)
+                }
+            })
+        }
+        
+    }
 }
 
 // MARK: - JFRegisterViewControllerDelegate

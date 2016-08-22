@@ -38,9 +38,9 @@ class JFForgotViewController: UIViewController {
     }
     
     @IBAction func didChangeTextField(sender: UITextField) {
-        if usernameField.text?.characters.count > 5 && emailField.text?.characters.count > 5 {
+        if usernameField.text?.characters.count >= 5 && emailField.text?.characters.count >= 5 {
             retrieveButton.enabled = true
-            retrieveButton.backgroundColor = UIColor(red: 32/255.0, green: 170/255.0, blue: 238/255.0, alpha: 1)
+            retrieveButton.backgroundColor = COLOR_NAV_BG
         } else {
             retrieveButton.enabled = false
             retrieveButton.backgroundColor = UIColor.grayColor()
@@ -53,29 +53,17 @@ class JFForgotViewController: UIViewController {
     }
     
     @IBAction func didTappedRetrieveButton(sender: UIButton) {
-        
         view.endEditing(true)
         
-            
-//            let parameters = [
-//                "username" : self.usernameField.text!,
-//                "action" : "SendPassword",
-//                "email" : self.emailField.text!
-//            ]
-            
-//            // 发送登录请求
-//            JFNetworkTool.shareNetworkTool.post(MODIFY_ACCOUNT_INFO, parameters: parameters) { (success, result, error) in
-//                if result != nil {
-//                    if result!["data"]["info"].stringValue == "邮件已发送，请登录邮箱认证并取回密码" {
-//                        self.dismissViewControllerAnimated(true, completion: {})
-//                    }
-//                    JFProgressHUD.showInfoWithStatus(result!["data"]["info"].stringValue)
-//                } else {
-//                    JFProgressHUD.showInfoWithStatus("找回失败，请联系管理员！")
-//                }
-//                // 结束动画
-//                sender.endLoginAnimation()
-//            }
+        JFProgressHUD.showWithStatus("正在发送")
+        JFAccountModel.retrievePasswordEmail(self.usernameField.text!, email: self.emailField.text!) { (success, tip) in
+            if success {
+                JFProgressHUD.showSuccessWithStatus("发送成功，请查看邮箱")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                JFProgressHUD.showInfoWithStatus(tip)
+            }
+        }
         
     }
     
