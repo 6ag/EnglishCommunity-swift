@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol JFRegisterViewControllerDelegate {
+protocol JFRegisterViewControllerDelegate: NSObjectProtocol {
     func registerSuccess(username: String, password: String)
 }
 
@@ -27,7 +27,7 @@ class JFRegisterViewController: UIViewController {
     
     @IBOutlet weak var registerButton: UIButton!
     
-    var delegate: JFRegisterViewControllerDelegate?
+    weak var delegate: JFRegisterViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

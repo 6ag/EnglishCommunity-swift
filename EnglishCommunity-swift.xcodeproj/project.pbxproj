@@ -134,6 +134,7 @@
 		B2B771121D61A0790042AA5E /* JFTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710D1D61A0790042AA5E /* JFTextAttachment.swift */; };
 		B2B771131D61A0790042AA5E /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2B7710E1D61A0790042AA5E /* Emoticons.bundle */; };
 		B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */; };
+		B2BEBF031D6CBA1F00D4B13B /* JFSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */; };
 		B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9A6911D62B17B000B08C4 /* FFLabel.swift */; };
 		B2DA010F1D654DBB0095AB7D /* JFCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DA01071D654DBB0095AB7D /* JFCategoriesCell.swift */; };
 		B2DA01101D654DBB0095AB7D /* JFCategoriesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DA01081D654DBB0095AB7D /* JFCategoriesCellItem.swift */; };
@@ -306,6 +307,7 @@
 		B2B7710D1D61A0790042AA5E /* JFTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTextAttachment.swift; sourceTree = "<group>"; };
 		B2B7710E1D61A0790042AA5E /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
 		B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoticon.swift"; sourceTree = "<group>"; };
+		B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSearchViewController.swift; sourceTree = "<group>"; };
 		B2C9A6911D62B17B000B08C4 /* FFLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFLabel.swift; sourceTree = "<group>"; };
 		B2DA01071D654DBB0095AB7D /* JFCategoriesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCategoriesCell.swift; sourceTree = "<group>"; };
 		B2DA01081D654DBB0095AB7D /* JFCategoriesCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCategoriesCellItem.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				B21501DD1D536800005E4670 /* JFHomeViewController.swift */,
 				B213E3DD1D54BCF100589058 /* JFCategoryViewController.swift */,
 				B213E3F21D54D45B00589058 /* JFPlayerViewController.swift */,
+				B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1340,6 +1343,7 @@
 				B2FC66D61D5C16EA0032703D /* StringExtension.swift in Sources */,
 				B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */,
 				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,
+				B2BEBF031D6CBA1F00D4B13B /* JFSearchViewController.swift in Sources */,
 				B2FC66D71D5C16EA0032703D /* UIImageExtension.swift in Sources */,
 				B2155F391D68677C00D3FC65 /* JFSettingViewController.swift in Sources */,
 				B28D940E1D534AA700128D20 /* JFPlayerItem.swift in Sources */,

@@ -109,7 +109,7 @@ class JFHomeViewController: UIViewController {
      点击了搜索按钮
      */
     @objc private func didTappedSearchButton() {
-        
+        navigationController?.pushViewController(JFSearchViewController(), animated: true)
     }
     
     /**

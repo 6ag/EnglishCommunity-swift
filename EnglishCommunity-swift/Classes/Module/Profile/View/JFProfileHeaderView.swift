@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol JFProfileHeaderViewDelegate {
+protocol JFProfileHeaderViewDelegate: NSObjectProtocol {
     
     func didTappedAvatarButton()
     func didTappedFriendButton()
@@ -20,7 +20,7 @@ class JFProfileHeaderView: UIView {
 
     @IBOutlet weak var avatarButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
-    var delegate: JFProfileHeaderViewDelegate?
+    weak var delegate: JFProfileHeaderViewDelegate?
     
     @IBAction func didTappedAvatarButton() {
         delegate?.didTappedAvatarButton()
