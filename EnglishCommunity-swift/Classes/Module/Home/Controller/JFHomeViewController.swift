@@ -49,8 +49,27 @@ class JFHomeViewController: UIViewController {
         JPUSHService.resetBadge()
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
-        if let userInfo = notification.userInfo {
-            print(userInfo)
+        guard let userInfo = notification.userInfo as? [String : AnyObject] else {
+            return
+        }
+        guard let id = userInfo["id"] as? String else {
+            return
+        }
+        
+        let videoInfoId = Int(id)!
+        
+        if videoInfoId != -1 {
+            JFProgressHUD.showWithStatus("正在加载")
+            JFVideoInfo.loadVideoInfoDetail(videoInfoId, finished: { (videoInfo) in
+                JFProgressHUD.dismiss()
+                guard let videoInfo = videoInfo else {
+                    return
+                }
+                
+                let playerVc = JFPlayerViewController()
+                playerVc.videoInfo = videoInfo
+                self.navigationController?.pushViewController(playerVc, animated: true)
+            })
         }
     }
     

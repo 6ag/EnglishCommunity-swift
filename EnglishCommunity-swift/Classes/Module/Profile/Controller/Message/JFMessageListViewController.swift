@@ -119,9 +119,18 @@ extension JFMessageListViewController {
                 self.navigationController?.pushViewController(detailVc, animated: true)
             })
         } else {
-            let playerVc = JFPlayerViewController()
-            playerVc.videoInfo = JFVideoInfo(dict: ["id" : messageRecord.sourceId])
-            navigationController?.pushViewController(playerVc, animated: true)
+            JFProgressHUD.showWithStatus("正在加载")
+            JFVideoInfo.loadVideoInfoDetail(messageRecord.sourceId, finished: { (videoInfo) in
+                JFProgressHUD.dismiss()
+                guard let videoInfo = videoInfo else {
+                    return
+                }
+                
+                let playerVc = JFPlayerViewController()
+                playerVc.videoInfo = videoInfo
+                self.navigationController?.pushViewController(playerVc, animated: true)
+            })
+            
         }
         
     }
@@ -131,6 +140,12 @@ extension JFMessageListViewController {
 extension JFMessageListViewController: JFMessageRecordCellDelegate {
     
     func messageRecordCell(cell: JFMessageRecordCell, didTappedAvatarButton button: UIButton) {
+        guard let byUser = cell.messageRecord?.byUser else {
+            return
+        }
         
+        let otherUser = JFOtherUserViewController()
+        otherUser.userId = byUser.id
+        navigationController?.pushViewController(otherUser, animated: true)
     }
 }

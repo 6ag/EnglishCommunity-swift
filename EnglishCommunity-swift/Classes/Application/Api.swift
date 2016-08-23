@@ -32,6 +32,9 @@ let GET_ALL_CATEGORIES = "api/getAllCategories.api"
 /// 根据分类id查询视频信息列表
 let GET_VIDEO_INFOS_LIST = "api/getVideoInfosList.api"
 
+/// 获取视频信息
+let GET_VIDEO_INFO_DETAIL = "api/getVideoInfoDetail.api"
+
 /// 根据视频信息id查询视频播放列表
 let GET_VIDEO_LIST = "api/getVideoList.api"
 

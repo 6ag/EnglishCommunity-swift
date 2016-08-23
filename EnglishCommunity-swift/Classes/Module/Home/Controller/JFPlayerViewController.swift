@@ -34,8 +34,11 @@ class JFPlayerViewController: UIViewController {
     /// 视频信息
     var videoInfo: JFVideoInfo? {
         didSet {
+            
             // 封面
-            playerPlaceholderImageView.yy_imageURL = NSURL(string: videoInfo!.cover!)
+            if let cover = videoInfo?.cover {
+                playerPlaceholderImageView.yy_imageURL = NSURL(string: cover)
+            }
             
             // 加载视频播放列表
             loadVideoListData(videoInfo!.id)
@@ -529,15 +532,14 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      分享
      */
     func didTappedShareButton(button: UIButton) {
-        print("分享")
         
 //        SSUIShareActionSheetStyle.setShareActionSheetStyle(ShareActionSheetStyle.Simple)
         
         let shareParames = NSMutableDictionary()
-        shareParames.SSDKSetupShareParamsByText("分享的文字内容",
-                                                images : "http://ww.png",
-                                                url : NSURL(string: "http://"),
-                                                title : "分享的标题",
+        shareParames.SSDKSetupShareParamsByText("最棒的自学英语社区，海量免费英语视频，涵盖音标、单词、语法、口语、听力、阅读、作文等内容！你还等什么呢？马上一起学习吧！",
+                                                images : videoInfo!.cover!,
+                                                url : NSURL(string: "https://itunes.apple.com/cn/app/id1146271758"),
+                                                title : videoInfo!.title!,
                                                 type : SSDKContentType.Auto)
         let items = [
             SSDKPlatformType.TypeQQ.rawValue,
@@ -653,13 +655,13 @@ extension JFPlayerViewController: JFPlayerDelegate {
             print("缓冲完毕")
         case .FullScreen:
             UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-            player.snp_updateConstraints(closure: { (make) in
+            self.player.snp_updateConstraints(closure: { (make) in
                 make.top.equalTo(0)
             })
             print("全屏")
         case .CompactScreen:
             UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-            player.snp_updateConstraints(closure: { (make) in
+            self.player.snp_updateConstraints(closure: { (make) in
                 make.top.equalTo(64)
             })
             print("竖屏")

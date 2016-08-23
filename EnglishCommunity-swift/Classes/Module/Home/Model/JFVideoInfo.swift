@@ -89,6 +89,34 @@ class JFVideoInfo: NSObject {
     }
     
     /**
+     加载视频信息详情
+     
+     - parameter videoInfoId: 视频信息id
+     - parameter finished:    完成回调
+     */
+    class func loadVideoInfoDetail(videoInfoId: Int, finished: (videoInfo: JFVideoInfo?) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()?.id ?? 0,
+            "video_info_id" : videoInfoId,
+        ]
+        
+        JFNetworkTools.shareNetworkTool.get(GET_VIDEO_INFO_DETAIL, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where result["status"] == "success" else {
+                print(success, error, parameters)
+                finished(videoInfo: nil)
+                return
+            }
+            
+            let dict = result["result"].dictionaryObject!
+            finished(videoInfo: JFVideoInfo(dict: dict))
+            
+        }
+    }
+    
+    
+    /**
      加载收藏信息列表
      
      - parameter user_id:  当前用户id
