@@ -52,7 +52,7 @@ class JFCommentCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - 76
+        contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - MARGIN * 2
     }
     
     /**

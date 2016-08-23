@@ -10,22 +10,21 @@ import UIKit
 import MJRefresh
 
 class JFMessageListViewController: UITableViewController {
-
-    var articleList = [JFUserCommentModel]()
-    let identifier = "favaidentifier"
+    
+    var messageRecords = [JFMessageRecord]()
+    let messageRecordIdentifier = "messageRecordIdentifier"
     var pageIndex = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "消息中心"
-        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: identifier)
-        let headerRefresh = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(updateNewData))
-        headerRefresh.lastUpdatedTimeLabel.hidden = true
-        tableView.mj_header = headerRefresh
-        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreData))
-        
-//        tableView.mj_header.beginRefreshing()
+        tableView.backgroundColor = COLOR_ALL_BG
+        tableView.separatorStyle = .None
+        tableView.registerClass(JFMessageRecordCell.classForCoder(), forCellReuseIdentifier: messageRecordIdentifier)
+        tableView.mj_header = setupHeaderRefresh(self, action: #selector(updateNewData))
+        tableView.mj_footer = setupFooterRefresh(self, action: #selector(loadMoreData))
+        tableView.mj_header.beginRefreshing()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -56,6 +55,23 @@ class JFMessageListViewController: UITableViewController {
      */
     private func loadNews(pageIndex: Int, method: Int) {
         
+        JFMessageRecord.getMessageList(pageIndex) { (messageRecords) in
+            
+            self.tableView.mj_header.endRefreshing()
+            self.tableView.mj_footer.endRefreshing()
+            
+            guard let messageRecords = messageRecords else {
+                return
+            }
+            
+            if method == 0 {
+                self.messageRecords = messageRecords
+            } else {
+                self.messageRecords += messageRecords
+            }
+            
+            self.tableView.reloadData()
+        }
     }
     
     
@@ -64,25 +80,57 @@ class JFMessageListViewController: UITableViewController {
 // MARK: - Table view data source
 extension JFMessageListViewController {
     
-    // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messageRecords.count
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return articleList.count
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        let messageRecord = messageRecords[indexPath.row]
+        if Int(messageRecord.rowHeight) == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(messageRecordIdentifier) as! JFMessageRecordCell
+            let height = cell.getRowHeight(messageRecord)
+            messageRecord.rowHeight = height
+        }
+        return messageRecord.rowHeight
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
-        cell.textLabel?.text = articleList[indexPath.row].title
-        cell.textLabel?.font = UIFont.systemFontOfSize(15)
+        let cell = tableView.dequeueReusableCellWithIdentifier(messageRecordIdentifier) as! JFMessageRecordCell
+        cell.messageRecord = messageRecords[indexPath.row]
+        cell.delegate = self
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        let messageRecord = messageRecords[indexPath.row]
+        if messageRecord.type == "tweet" {
+            JFProgressHUD.showWithStatus("正在加载")
+            JFTweet.loadTrendsDetail(messageRecord.sourceId, finished: { (tweet) in
+                JFProgressHUD.dismiss()
+                guard let tweet = tweet else {
+                    return
+                }
+                
+                let detailVc = JFTweetDetailViewController()
+                detailVc.tweet = tweet
+                self.navigationController?.pushViewController(detailVc, animated: true)
+            })
+        } else {
+            let playerVc = JFPlayerViewController()
+            playerVc.videoInfo = JFVideoInfo(dict: ["id" : messageRecord.sourceId])
+            navigationController?.pushViewController(playerVc, animated: true)
+        }
+        
+    }
+}
+
+// MARK: - JFMessageRecordCellDelegate
+extension JFMessageListViewController: JFMessageRecordCellDelegate {
+    
+    func messageRecordCell(cell: JFMessageRecordCell, didTappedAvatarButton button: UIButton) {
         
     }
 }

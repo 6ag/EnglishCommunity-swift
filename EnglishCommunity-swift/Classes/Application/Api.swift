@@ -35,13 +35,13 @@ let GET_VIDEO_INFOS_LIST = "api/getVideoInfosList.api"
 /// 根据视频信息id查询视频播放列表
 let GET_VIDEO_LIST = "api/getVideoList.api"
 
-/// 播放视频
-let PLAY_VIDEO = "api/playVideo.api"
+/// 解析m3u8地址
+let PARSE_YOUKU_VIDEO = "api/playVideo.api"
 
 /// 获取动弹列表
 let GET_TWEETS_LIST = "api/getTweetsList.api"
 
-/// 获取动弹列表
+/// 获取动弹详情
 let GET_TWEETS_DETAIL = "api/getTweetsDetail.api"
 
 /// 发布动弹
@@ -86,4 +86,11 @@ let ADD_OR_CANCEL_FRIEND = "api/addOrCancelFriend.api"
 /// 提交反馈信息
 let POST_FEEDBACK = "api/postFeedback.api"
 
+/// 获取消息列表
+let GET_MESSAGE_LIST = "api/getMessageList.api"
 
+/// 获取未读消息数量
+let GET_UNLOOKED_MESSAGE_COUNT = "api/getUnlookedMessageCount.api"
+
+/// 清理未读消息数量
+let CLEAR_UNLOOKED_MESSAGE = "api/clearUnlookedMessage.api"

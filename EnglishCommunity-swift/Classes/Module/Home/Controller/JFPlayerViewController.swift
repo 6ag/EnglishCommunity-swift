@@ -25,22 +25,30 @@ class JFPlayerViewController: UIViewController {
     /// 即将回复的评论
     var revertComment: JFComment?
     
+    /// 评论重用标识
+    let commentCellIdentifier = "commentCellIdentifier"
+    
+    /// 视频列表评论标识
+    let videoCellIdentifier = "videoCellIdentifier"
+    
     /// 视频信息
     var videoInfo: JFVideoInfo? {
         didSet {
+            // 封面
+            playerPlaceholderImageView.yy_imageURL = NSURL(string: videoInfo!.cover!)
+            
+            // 加载视频播放列表
             loadVideoListData(videoInfo!.id)
+            
+            // 加载评论数据
             updateData("video_info", page: 1, method: 0, source_id: videoInfo!.id)
         }
     }
-    
-    let commentCellIdentifier = "commentCellIdentifier"
-    let videoCellIdentifier = "videoCellIdentifier"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         prepareUI()
-        commentTableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
         
         // 重置播放器
         resetPlayerManager()
@@ -48,7 +56,6 @@ class JFPlayerViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
@@ -65,7 +72,6 @@ class JFPlayerViewController: UIViewController {
     }
     
     deinit {
-        print("播放控制器销毁")
         player.prepareToDealloc()
     }
     
@@ -79,6 +85,7 @@ class JFPlayerViewController: UIViewController {
         videoTableView.tableHeaderView = videoHeaderView
         
         view.addSubview(navigationBarView)
+        view.addSubview(playerPlaceholderImageView)
         view.addSubview(topBarView)
         view.addSubview(contentScrollView)
         contentScrollView.addSubview(videoTableView)
@@ -100,20 +107,27 @@ class JFPlayerViewController: UIViewController {
             make.bottom.equalTo(0)
             make.size.equalTo(CGSize(width: 44, height: 44))
         }
-        
+
         // 标题
         titleLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(navigationBarView)
             make.centerY.equalTo(navigationBarView).offset(10)
         }
-        
+
+        // 播放器底部占位图
+        playerPlaceholderImageView.snp_makeConstraints { (make) in
+            make.top.equalTo(64)
+            make.left.right.equalTo(0)
+            make.height.equalTo(view.snp_width).multipliedBy(9.0 / 16.0)
+        }
+
         // 播放器
         player.snp_makeConstraints { (make) in
             make.top.equalTo(64)
             make.left.right.equalTo(0)
             make.height.equalTo(view.snp_width).multipliedBy(9.0 / 16.0)
         }
-        
+
         // 切换视频和评论的toolBar
         topBarView.snp_makeConstraints { (make) in
             make.left.right.equalTo(0)
@@ -131,16 +145,16 @@ class JFPlayerViewController: UIViewController {
         videoTableView.snp_makeConstraints { (make) in
             make.left.equalTo(0)
             make.top.equalTo(0)
-            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 110)
+            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 118)
             make.width.equalTo(SCREEN_WIDTH)
         }
-        
+
         // 评论列表
         commentTableView.snp_makeConstraints { (make) in
             make.top.equalTo(0)
             make.left.equalTo(SCREEN_WIDTH)
             make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 154)
+            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 150)
         }
         
         // 底部工具条
@@ -164,6 +178,23 @@ class JFPlayerViewController: UIViewController {
     }
     
     /**
+     解析并播放视频
+     
+     - parameter videoUrl: 优酷地址
+     - parameter title:    视频标题
+     */
+    private func playVideo(videoUrl: String, title: String) {
+        
+        JFVideo.parseVideoUrl(videoUrl) { (url) in
+            guard let url = url else {
+                JFProgressHUD.showInfoWithStatus("解析失败，请更新节点")
+                return
+            }
+            self.player.playWithURL(NSURL(string: url)!, title: title)
+        }
+    }
+    
+    /**
      加载播放列表
      
      - parameter videoInfo_id: 视频信息id
@@ -179,7 +210,7 @@ class JFPlayerViewController: UIViewController {
             self.videos = videos
             self.videoTableView.reloadData()
             self.videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: true, scrollPosition: .Top)
-            self.player.playWithURL(NSURL(string: "\(BASE_URL)\(PLAY_VIDEO)?url=\(videos[0].videoUrl!)")!, title: videos[0].title!)
+            self.playVideo(videos[0].videoUrl!, title: videos[0].title!)
         }
     }
     
@@ -224,6 +255,12 @@ class JFPlayerViewController: UIViewController {
     }
     
     // MARK: - 懒加载
+    /// 播放器位置占位图
+    lazy var playerPlaceholderImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "player_placeholder_bg"))
+        return imageView
+    }()
+    
     /// 自定义导航栏
     lazy var navigationBarView: UIView = {
         let view = UIView()
@@ -250,7 +287,7 @@ class JFPlayerViewController: UIViewController {
         return button
     }()
     
-    /// 播放器
+    // 播放器
     lazy var player: JFPlayer = {
         let player = JFPlayer()
         player.delegate = self
@@ -280,16 +317,16 @@ class JFPlayerViewController: UIViewController {
         contentScrollView.alwaysBounceHorizontal = true
         contentScrollView.showsHorizontalScrollIndicator = false
         contentScrollView.delegate = self
-        contentScrollView.backgroundColor = UIColor.whiteColor()
+        contentScrollView.backgroundColor = COLOR_ALL_BG
         return contentScrollView
     }()
-    
+
     /// 视频信息和播放列表
     lazy var videoTableView: UITableView = {
         let videoTableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Grouped)
         videoTableView.delegate = self
         videoTableView.dataSource = self
-        videoTableView.backgroundColor = UIColor.whiteColor()
+        videoTableView.backgroundColor = COLOR_ALL_BG
         videoTableView.separatorStyle = .None
         videoTableView.registerNib(UINib(nibName: "JFDetailVideoCell", bundle: nil), forCellReuseIdentifier: self.videoCellIdentifier)
         return videoTableView
@@ -301,12 +338,13 @@ class JFPlayerViewController: UIViewController {
         commentTableView.delegate = self
         commentTableView.dataSource = self
         commentTableView.showsVerticalScrollIndicator = false
-        commentTableView.backgroundColor = UIColor.whiteColor()
+        commentTableView.backgroundColor = COLOR_ALL_BG
         commentTableView.separatorStyle = .None
         commentTableView.registerNib(UINib(nibName: "JFCommentCell", bundle: nil), forCellReuseIdentifier: self.commentCellIdentifier)
+        commentTableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
         return commentTableView
     }()
-    
+
     /// 底部工具条
     lazy var bottomBarView: JFDetailBottomBarView = {
         let bottomBarView = NSBundle.mainBundle().loadNibNamed("JFDetailBottomBarView", owner: nil, options: nil).last as! JFDetailBottomBarView
@@ -385,7 +423,19 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
         
         if tableView == videoTableView {
             player.prepareToDealloc()
-            player.playWithURL(NSURL(string: "\(BASE_URL)\(PLAY_VIDEO)?url=\(videos[indexPath.row].videoUrl!)")!, title: videos[indexPath.row].title!)
+            
+            if JFAccountModel.isLogin() || indexPath.row == 0 {
+                self.playVideo(videos[indexPath.row].videoUrl!, title: videos[indexPath.row].title!)
+            } else {
+                let alertController = UIAlertController(title: "您未登录", message: "为了营造一个良好的学习社区,您需要登录后才能继续观看更多视频哦！", preferredStyle: UIAlertControllerStyle.Alert)
+                let confirm = UIAlertAction(title: "确定登录", style: UIAlertActionStyle.Destructive, handler: { (action) in
+                    isLogin(self)
+                })
+                let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in })
+                alertController.addAction(confirm)
+                alertController.addAction(cancel)
+                presentViewController(alertController, animated: true, completion: nil)
+            }
         } else {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             

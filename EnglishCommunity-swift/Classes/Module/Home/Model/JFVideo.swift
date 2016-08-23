@@ -62,4 +62,23 @@ class JFVideo: NSObject {
         }
     }
     
+    /**
+     解析优酷真实播放地址m3u8
+     
+     - parameter youKuUrl: 优酷网页地址
+     - parameter finished: 完成回调
+     */
+    class func parseVideoUrl(youKuUrl: String, finished: (url: String?) -> ()) {
+        
+        JFNetworkTools.shareNetworkTool.get(PARSE_YOUKU_VIDEO, parameters: ["url" : youKuUrl]) { (success, result, error) in
+            
+            guard let result = result where result["status"] == "success" else {
+                finished(url: nil)
+                return
+            }
+            finished(url: result["result"]["videoUrl"].stringValue)
+        }
+        
+    }
+    
 }

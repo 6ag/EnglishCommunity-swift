@@ -39,6 +39,7 @@ class JFDetailHeaderView: UIView {
      */
     private func prepareUI() {
         
+        backgroundColor = UIColor.whiteColor()
         addSubview(titleLabel)
         addSubview(teacherIconImageView)
         addSubview(teacherLabel)

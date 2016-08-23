@@ -88,7 +88,7 @@ class JFTweetViewController: UIViewController {
      */
     private func updateData(type: String, page: Int, method: Int) {
         
-        JFTweet.loadTrendsList(type, page: page, user_id: JFAccountModel.shareAccount()?.id ?? 0) { (tweets) in
+        JFTweet.loadTrendsList(type, page: page) { (tweets) in
             
             self.tableView.mj_header.endRefreshing()
             self.tableView.mj_footer.endRefreshing()

@@ -193,15 +193,14 @@ class JFTweet: NSObject {
      
      - parameter type:     加载类型
      - parameter page:     页码
-     - parameter user_id:  浏览者id
      - parameter finished: 完成回调
      */
-    class func loadTrendsList(type: String, page: Int, user_id: Int, finished: (tweets: [JFTweet]?) -> ()) {
+    class func loadTrendsList(type: String, page: Int, finished: (tweets: [JFTweet]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
             "type" : type,
             "page" : page,
-            "user_id" : user_id,
+            "user_id" : JFAccountModel.shareAccount()?.id ?? 0,
             "count" : 20,
             ]
         
@@ -222,6 +221,31 @@ class JFTweet: NSObject {
             }
             
             cacheWebImage(tweets, finished: finished)
+        }
+    }
+    
+    /**
+     加载动弹详情
+     
+     - parameter tweet_id: 动弹id
+     - parameter finished: 完成回调
+     */
+    class func loadTrendsDetail(tweet_id: Int, finished: (tweet: JFTweet?) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "tweet_id" : tweet_id,
+            "user_id" : JFAccountModel.shareAccount()?.id ?? 0
+            ]
+        
+        JFNetworkTools.shareNetworkTool.get(GET_TWEETS_DETAIL, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where result["status"] == "success" else {
+                finished(tweet: nil)
+                return
+            }
+            
+            let dict = result["result"].dictionaryObject!
+            finished(tweet: JFTweet(dict: dict))
         }
     }
     
