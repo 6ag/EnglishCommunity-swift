@@ -102,7 +102,9 @@ class JFLoginViewController: UIViewController {
      */
     @IBAction func didTappedQQLoginButton(sender: UIButton) {
         ShareSDK.getUserInfo(SSDKPlatformType.TypeQQ, conditional: nil) { (state, user, error) in
-            self.SDKLoginHandle(state, user: user, type: "qq")
+            if state == SSDKResponseState.Success {
+                self.SDKLoginHandle(state, user: user, type: "qq")
+            }
         }
     }
     
@@ -111,7 +113,9 @@ class JFLoginViewController: UIViewController {
      */
     @IBAction func didTappedSinaLoginButton(sender: UIButton) {
         ShareSDK.getUserInfo(SSDKPlatformType.TypeSinaWeibo, conditional: nil) { (state, user, error) in
-            self.SDKLoginHandle(state, user: user, type: "weibo")
+            if state == SSDKResponseState.Success {
+                self.SDKLoginHandle(state, user: user, type: "weibo")
+            }
         }
     }
     
@@ -125,25 +129,23 @@ class JFLoginViewController: UIViewController {
      */
     func SDKLoginHandle(state: SSDKResponseState, user: SSDKUser, type: String) {
         
-        if state == SSDKResponseState.Success {
-            let uid = user.uid
-            let token = user.credential.token
-            let nickname = user.nickname
-            let avatar = type == "weibo" ? (user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"]! as! String : user.icon) : (user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"]! as! String : user.icon)
-            let sex = user.gender.rawValue == 0 ? 1 : 0
-            
-            JFProgressHUD.showWithStatus("正在登录")
-            JFAccountModel.thirdAccountLogin(type, openid: uid, token: token, nickname: nickname, avatar: avatar, sex: sex, finished: { (success, tip) in
-                if success {
-                    JFProgressHUD.dismiss()
-                    NSUserDefaults.standardUserDefaults().setObject(self.usernameField.text, forKey: "")
-                    NSUserDefaults.standardUserDefaults().setObject(self.passwordField.text, forKey: "")
-                    self.didTappedBackButton()
-                } else {
-                    JFProgressHUD.showInfoWithStatus(tip)
-                }
-            })
-        }
+        let uid = user.uid
+        let token = user.credential.token
+        let nickname = user.nickname
+        let avatar = type == "weibo" ? (user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"]! as! String : user.icon) : (user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"]! as! String : user.icon)
+        let sex = user.gender.rawValue == 0 ? 1 : 0
+        
+        JFProgressHUD.showWithStatus("正在登录")
+        JFAccountModel.thirdAccountLogin(type, openid: uid, token: token, nickname: nickname, avatar: avatar, sex: sex, finished: { (success, tip) in
+            if success {
+                JFProgressHUD.dismiss()
+                NSUserDefaults.standardUserDefaults().setObject(self.usernameField.text, forKey: "")
+                NSUserDefaults.standardUserDefaults().setObject(self.passwordField.text, forKey: "")
+                self.didTappedBackButton()
+            } else {
+                JFProgressHUD.showInfoWithStatus(tip)
+            }
+        })
         
     }
 }
