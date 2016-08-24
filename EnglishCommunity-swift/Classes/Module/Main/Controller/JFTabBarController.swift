@@ -66,9 +66,15 @@ class JFTabBarController: UITabBarController {
         guard let topVc = nav.topViewController else {
             return false
         }
+        
         if topVc.isKindOfClass(JFPlayerViewController.classForCoder()) {
             return true
         }
+        
+        if topVc.isKindOfClass(JFWebPlayerViewController.classForCoder()) {
+            return true
+        }
+        
         return false
     }
     
@@ -84,8 +90,13 @@ class JFTabBarController: UITabBarController {
         }
         
         if topVc.isKindOfClass(JFPlayerViewController.classForCoder()) {
-            return UIInterfaceOrientationMask.All
+            return [UIInterfaceOrientationMask.Portrait, UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
         }
+        
+        if topVc.isKindOfClass(JFWebPlayerViewController.classForCoder()) {
+            return [UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
+        }
+        
         return UIInterfaceOrientationMask.Portrait
     }
     

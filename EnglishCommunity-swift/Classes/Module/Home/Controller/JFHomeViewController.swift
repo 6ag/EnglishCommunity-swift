@@ -90,7 +90,7 @@ class JFHomeViewController: UIViewController {
      */
     private func prepareScrollView() {
         
-        topScrollView = SDCycleScrollView(frame: CGRect(x:0, y:0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.25), delegate: self, placeholderImage: UIImage(named: "photoview_image_default_white"))
+        topScrollView = SDCycleScrollView(frame: CGRect(x:0, y:0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.3), delegate: self, placeholderImage: UIImage(named: "photoview_image_default_white"))
         topScrollView?.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter
         topScrollView?.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated
         

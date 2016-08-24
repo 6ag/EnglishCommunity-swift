@@ -84,6 +84,9 @@
 		B249AE371D607D41005C0A41 /* JFTweetDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE2D1D607D41005C0A41 /* JFTweetDetailHeaderView.swift */; };
 		B249AE391D607D41005C0A41 /* JFTweetListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE2F1D607D41005C0A41 /* JFTweetListCell.swift */; };
 		B249AE3E1D60AC79005C0A41 /* JFTweetPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE3D1D60AC79005C0A41 /* JFTweetPictureView.swift */; };
+		B24C11951D6DE32200AE0646 /* JFSelectNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24C11941D6DE32200AE0646 /* JFSelectNodeView.swift */; };
+		B24C11971D6DE32E00AE0646 /* JFSelectNodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24C11961D6DE32E00AE0646 /* JFSelectNodeView.xib */; };
+		B24C11991D6DF44000AE0646 /* JFWebPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24C11981D6DF44000AE0646 /* JFWebPlayerViewController.swift */; };
 		B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6A1D54394000476D0E /* JFVideoCategory.swift */; };
 		B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6C1D54396700476D0E /* JFVideoInfo.swift */; };
 		B2512A6F1D5439C800476D0E /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6E1D5439C800476D0E /* Api.swift */; };
@@ -271,6 +274,9 @@
 		B249AE2D1D607D41005C0A41 /* JFTweetDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetDetailHeaderView.swift; sourceTree = "<group>"; };
 		B249AE2F1D607D41005C0A41 /* JFTweetListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetListCell.swift; sourceTree = "<group>"; };
 		B249AE3D1D60AC79005C0A41 /* JFTweetPictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetPictureView.swift; sourceTree = "<group>"; };
+		B24C11941D6DE32200AE0646 /* JFSelectNodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSelectNodeView.swift; sourceTree = "<group>"; };
+		B24C11961D6DE32E00AE0646 /* JFSelectNodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFSelectNodeView.xib; sourceTree = "<group>"; };
+		B24C11981D6DF44000AE0646 /* JFWebPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFWebPlayerViewController.swift; sourceTree = "<group>"; };
 		B2512A6A1D54394000476D0E /* JFVideoCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoCategory.swift; sourceTree = "<group>"; };
 		B2512A6C1D54396700476D0E /* JFVideoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoInfo.swift; sourceTree = "<group>"; };
 		B2512A6E1D5439C800476D0E /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
@@ -483,6 +489,8 @@
 				B2224BF71D55A4FD005CEAE4 /* JFDetailVideoCell.xib */,
 				B2DA01231D6567000095AB7D /* JFDetailBottomBarView.swift */,
 				B2DA01251D6567080095AB7D /* JFDetailBottomBarView.xib */,
+				B24C11941D6DE32200AE0646 /* JFSelectNodeView.swift */,
+				B24C11961D6DE32E00AE0646 /* JFSelectNodeView.xib */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -500,10 +508,11 @@
 		B21501BE1D5364C9005E4670 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */,
 				B21501DD1D536800005E4670 /* JFHomeViewController.swift */,
 				B213E3DD1D54BCF100589058 /* JFCategoryViewController.swift */,
 				B213E3F21D54D45B00589058 /* JFPlayerViewController.swift */,
-				B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */,
+				B24C11981D6DF44000AE0646 /* JFWebPlayerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1271,6 +1280,7 @@
 				B214363B1D551BEB00F201AF /* JFTopBarView.xib in Resources */,
 				B28D93FF1D534AA700128D20 /* JFPlayer_pause@2x.png in Resources */,
 				B2DA01141D654DBB0095AB7D /* JFHomeCellItem.xib in Resources */,
+				B24C11971D6DE32E00AE0646 /* JFSelectNodeView.xib in Resources */,
 				B28D94061D534AA700128D20 /* JFPlayer_replay@3x.png in Resources */,
 				B28D94011D534AA700128D20 /* JFPlayer_play@2x.png in Resources */,
 				B2F1BA5F1D6A8F3A003DF045 /* ShareSDK.bundle in Resources */,
@@ -1392,6 +1402,7 @@
 				B2887D7E1D6D778D009CB44B /* JFDownloadManager.swift in Sources */,
 				B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */,
 				B2DA01191D654E0C0095AB7D /* JFCategoryListCell.swift in Sources */,
+				B24C11991D6DF44000AE0646 /* JFWebPlayerViewController.swift in Sources */,
 				B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */,
 				B2887D7C1D6D720F009CB44B /* JFSQLiteManager.swift in Sources */,
 				B2156C5D1D66ADF90033DBB6 /* JFMessageListViewController.swift in Sources */,
@@ -1402,6 +1413,7 @@
 				B238B40E1D5D991400E4307A /* JFGrammarViewController.swift in Sources */,
 				B2DA011E1D65583E0095AB7D /* JFDetailHeaderView.swift in Sources */,
 				B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */,
+				B24C11951D6DE32200AE0646 /* JFSelectNodeView.swift in Sources */,
 				B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */,
 				B21501D91D5366C2005E4670 /* JFNavigationController.swift in Sources */,
 				B2B770FA1D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift in Sources */,

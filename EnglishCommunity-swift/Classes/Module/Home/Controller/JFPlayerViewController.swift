@@ -31,6 +31,36 @@ class JFPlayerViewController: UIViewController {
     /// 视频列表评论标识
     let videoCellIdentifier = "videoCellIdentifier"
     
+    /// 视频播放节点
+    var nodeIndex = 0 {
+        didSet (oldValue) {
+            if nodeIndex != oldValue {
+                guard let index = videoTableView.indexPathForSelectedRow?.row else {
+                    return
+                }
+                
+                // 获取选中的cell的模型
+                let video = videos[index]
+                
+                if nodeIndex == 0 {
+                    
+                    // app节点，使用app播放器播放
+                    playVideo(video)
+                    
+                } else if nodeIndex == 1 {
+                    
+                    // web节点，使用web播放器播放
+                    player.prepareToDealloc()
+                    let webPlayerVc = JFWebPlayerViewController()
+                    webPlayerVc.video = video
+                    navigationController?.pushViewController(webPlayerVc, animated: true)
+                    
+                }
+                
+            }
+        }
+    }
+    
     /// 视频信息
     var videoInfo: JFVideoInfo? {
         didSet {
@@ -115,7 +145,7 @@ class JFPlayerViewController: UIViewController {
             make.centerX.equalTo(navigationBarView)
             make.centerY.equalTo(navigationBarView).offset(10)
         }
-
+        
         if iPhoneModel.getCurrentModel() == iPhoneModel.iPad {
             // 播放器底部占位图
             playerPlaceholderImageView.snp_makeConstraints { (make) in
@@ -230,34 +260,44 @@ class JFPlayerViewController: UIViewController {
      - parameter videoUrl: 优酷地址
      - parameter title:    视频标题
      */
-    private func playVideo(videoUrl: String, title: String) {
+    private func playVideo(video: JFVideo) {
         
-        // 没有设置成流量播放视频  或者 当前不是WiFi状态
-        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() > 1 {
+        if nodeIndex == 0 { // 节点0 使用m3u8方式播放
             
-            let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
-            let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
-                JFVideo.parseVideoUrl(videoUrl) { (url) in
+            if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() > 1 {
+                
+                let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
+                let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
+                    JFVideo.parseVideoUrl(video.videoUrl!) { (url) in
+                        guard let url = url else {
+                            JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
+                            return
+                        }
+                        self.player.playWithURL(NSURL(string: url)!, title: video.title!)
+                    }
+                })
+                let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
+                alertC.addAction(continuePlay)
+                alertC.addAction(cancel)
+                presentViewController(alertC, animated: true, completion: nil)
+            } else {
+                JFVideo.parseVideoUrl(video.videoUrl!) { (url) in
                     guard let url = url else {
-                        JFProgressHUD.showInfoWithStatus("解析失败，请更新节点")
+                        JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
                         return
                     }
-                    self.player.playWithURL(NSURL(string: url)!, title: title)
+                    self.player.playWithURL(NSURL(string: url)!, title: video.title!)
                 }
-            })
-            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
-            alertC.addAction(continuePlay)
-            alertC.addAction(cancel)
-            presentViewController(alertC, animated: true, completion: nil)
-        } else {
-            JFVideo.parseVideoUrl(videoUrl) { (url) in
-                guard let url = url else {
-                    JFProgressHUD.showInfoWithStatus("解析失败，请更新节点")
-                    return
-                }
-                self.player.playWithURL(NSURL(string: url)!, title: title)
             }
+            
+        } else if nodeIndex == 1 { // 节点1 使用网页播放
+            
+            // web节点，使用web播放器播放
+            player.prepareToDealloc()
+            let webPlayerVc = JFWebPlayerViewController()
+            webPlayerVc.video = video
+            navigationController?.pushViewController(webPlayerVc, animated: true)
         }
         
     }
@@ -278,7 +318,7 @@ class JFPlayerViewController: UIViewController {
             self.videos = videos
             self.videoTableView.reloadData()
             self.videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .None)
-            self.playVideo(videos[0].videoUrl!, title: videos[0].title!)
+            self.playVideo(videos[0])
         }
     }
     
@@ -388,7 +428,7 @@ class JFPlayerViewController: UIViewController {
         contentScrollView.backgroundColor = COLOR_ALL_BG
         return contentScrollView
     }()
-
+    
     /// 视频信息和播放列表
     lazy var videoTableView: UITableView = {
         let videoTableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Grouped)
@@ -412,7 +452,7 @@ class JFPlayerViewController: UIViewController {
         commentTableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
         return commentTableView
     }()
-
+    
     /// 底部工具条
     lazy var bottomBarView: JFDetailBottomBarView = {
         let bottomBarView = NSBundle.mainBundle().loadNibNamed("JFDetailBottomBarView", owner: nil, options: nil).last as! JFDetailBottomBarView
@@ -427,6 +467,13 @@ class JFPlayerViewController: UIViewController {
         textView.delegate = self
         textView.alpha = 0
         return textView
+    }()
+    
+    /// 选择节点视图
+    lazy var selectNodeView: JFSelectNodeView = {
+        let view = NSBundle.mainBundle().loadNibNamed("JFSelectNodeView", owner: nil, options: nil).last as! JFSelectNodeView
+        view.delegate = self
+        return view
     }()
     
 }
@@ -505,7 +552,7 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
             player.prepareToDealloc()
             
             if JFAccountModel.isLogin() || indexPath.row == 0 {
-                self.playVideo(videos[indexPath.row].videoUrl!, title: videos[indexPath.row].title!)
+                self.playVideo(videos[indexPath.row])
             } else {
                 let alertController = UIAlertController(title: "您未登录", message: "为了营造一个良好的学习社区,您需要登录后才能继续观看更多视频哦！", preferredStyle: UIAlertControllerStyle.Alert)
                 let confirm = UIAlertAction(title: "确定登录", style: UIAlertActionStyle.Destructive, handler: { (action) in
@@ -595,7 +642,7 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      切换线路
      */
     func didTappedChangeLineButton(button: UIButton) {
-        print("切换线路")
+        selectNodeView.show()
     }
     
     /**
@@ -631,7 +678,7 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      */
     func didTappedShareButton(button: UIButton) {
         
-//        SSUIShareActionSheetStyle.setShareActionSheetStyle(ShareActionSheetStyle.Simple)
+        //        SSUIShareActionSheetStyle.setShareActionSheetStyle(ShareActionSheetStyle.Simple)
         
         let shareParames = NSMutableDictionary()
         shareParames.SSDKSetupShareParamsByText("最棒的自学英语社区，海量免费英语视频，涵盖音标、单词、语法、口语、听力、阅读、作文等内容！你还等什么呢？马上一起学习吧！",
@@ -657,7 +704,7 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
                 break
             }
         }
-
+        
     }
     
     /**
@@ -704,6 +751,24 @@ extension JFPlayerViewController: JFMultiTextViewDelegate {
             })
         }
         
+    }
+}
+
+// MARK: - JFSelectNodeViewDelegate
+extension JFPlayerViewController: JFSelectNodeViewDelegate {
+    
+    /**
+     选择了app节点
+     */
+    func didTappedAppButton(button: UIButton) {
+        nodeIndex = 0
+    }
+    
+    /**
+     选择了web节点
+     */
+    func didTappedWebButton(button: UIButton) {
+        nodeIndex = 1
     }
 }
 
