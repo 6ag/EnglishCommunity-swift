@@ -34,7 +34,6 @@ class JFPlayerViewController: UIViewController {
     /// 视频信息
     var videoInfo: JFVideoInfo? {
         didSet {
-            
             // 封面
             if let cover = videoInfo?.cover {
                 playerPlaceholderImageView.yy_imageURL = NSURL(string: cover)
@@ -110,54 +109,99 @@ class JFPlayerViewController: UIViewController {
             make.bottom.equalTo(0)
             make.size.equalTo(CGSize(width: 44, height: 44))
         }
-
+        
         // 标题
         titleLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(navigationBarView)
             make.centerY.equalTo(navigationBarView).offset(10)
         }
 
-        // 播放器底部占位图
-        playerPlaceholderImageView.snp_makeConstraints { (make) in
-            make.top.equalTo(64)
-            make.left.right.equalTo(0)
-            make.height.equalTo(view.snp_width).multipliedBy(9.0 / 16.0)
-        }
-
-        // 播放器
-        player.snp_makeConstraints { (make) in
-            make.top.equalTo(64)
-            make.left.right.equalTo(0)
-            make.height.equalTo(view.snp_width).multipliedBy(9.0 / 16.0)
-        }
-
-        // 切换视频和评论的toolBar
-        topBarView.snp_makeConstraints { (make) in
-            make.left.right.equalTo(0)
-            make.top.equalTo(player.snp_bottom)
-            make.height.equalTo(40.5)
-        }
-        
-        // 视频列表和评论列表的载体
-        contentScrollView.snp_makeConstraints { (make) in
-            make.left.bottom.right.equalTo(0)
-            make.top.equalTo(topBarView.snp_bottom)
-        }
-        
-        // 视频播放列表
-        videoTableView.snp_makeConstraints { (make) in
-            make.left.equalTo(0)
-            make.top.equalTo(0)
-            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 118)
-            make.width.equalTo(SCREEN_WIDTH)
-        }
-
-        // 评论列表
-        commentTableView.snp_makeConstraints { (make) in
-            make.top.equalTo(0)
-            make.left.equalTo(SCREEN_WIDTH)
-            make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 150)
+        if iPhoneModel.getCurrentModel() == iPhoneModel.iPad {
+            // 播放器底部占位图
+            playerPlaceholderImageView.snp_makeConstraints { (make) in
+                make.top.equalTo(64)
+                make.left.right.equalTo(0)
+                make.height.equalTo(view.snp_width).multipliedBy(3.0 / 4.0)
+            }
+            
+            // 播放器
+            player.snp_makeConstraints { (make) in
+                make.top.equalTo(view.snp_top).offset(64)
+                make.left.right.equalTo(0)
+                make.height.equalTo(view.snp_width).multipliedBy(3.0 / 4.0)
+            }
+            
+            // 切换视频和评论的toolBar
+            topBarView.snp_makeConstraints { (make) in
+                make.left.right.equalTo(0)
+                make.top.equalTo(navigationBarView.snp_bottom).offset(SCREEN_WIDTH * (3.0 / 4.0))
+                make.height.equalTo(40.5)
+            }
+            
+            // 视频列表和评论列表的载体
+            contentScrollView.snp_makeConstraints { (make) in
+                make.left.bottom.right.equalTo(0)
+                make.top.equalTo(topBarView.snp_bottom)
+            }
+            
+            // 视频播放列表
+            videoTableView.snp_makeConstraints { (make) in
+                make.left.equalTo(0)
+                make.top.equalTo(0)
+                make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (3.0 / 4.0) - 118)
+                make.width.equalTo(SCREEN_WIDTH)
+            }
+            
+            // 评论列表
+            commentTableView.snp_makeConstraints { (make) in
+                make.top.equalTo(0)
+                make.left.equalTo(SCREEN_WIDTH)
+                make.width.equalTo(SCREEN_WIDTH)
+                make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (3.0 / 4.0) - 150)
+            }
+        } else {
+            // 播放器底部占位图
+            playerPlaceholderImageView.snp_makeConstraints { (make) in
+                make.top.equalTo(64)
+                make.left.right.equalTo(0)
+                make.height.equalTo(view.snp_width).multipliedBy(9.0 / 16.0)
+            }
+            
+            // 播放器
+            player.snp_makeConstraints { (make) in
+                make.top.equalTo(view.snp_top).offset(64)
+                make.left.right.equalTo(0)
+                make.height.equalTo(view.snp_width).multipliedBy(9.0 / 16.0)
+            }
+            
+            // 切换视频和评论的toolBar
+            topBarView.snp_makeConstraints { (make) in
+                make.left.right.equalTo(0)
+                make.top.equalTo(navigationBarView.snp_bottom).offset(SCREEN_WIDTH * (9.0 / 16.0))
+                make.height.equalTo(40.5)
+            }
+            
+            // 视频列表和评论列表的载体
+            contentScrollView.snp_makeConstraints { (make) in
+                make.left.bottom.right.equalTo(0)
+                make.top.equalTo(topBarView.snp_bottom)
+            }
+            
+            // 视频播放列表
+            videoTableView.snp_makeConstraints { (make) in
+                make.left.equalTo(0)
+                make.top.equalTo(0)
+                make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 118)
+                make.width.equalTo(SCREEN_WIDTH)
+            }
+            
+            // 评论列表
+            commentTableView.snp_makeConstraints { (make) in
+                make.top.equalTo(0)
+                make.left.equalTo(SCREEN_WIDTH)
+                make.width.equalTo(SCREEN_WIDTH)
+                make.height.equalTo(SCREEN_HEIGHT - SCREEN_WIDTH * (9.0 / 16.0) - 150)
+            }
         }
         
         // 底部工具条
@@ -390,6 +434,13 @@ class JFPlayerViewController: UIViewController {
 // MARK: - 屏幕旋转
 extension JFPlayerViewController  {
     
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        if toInterfaceOrientation == UIInterfaceOrientation.Portrait {
+            view.backgroundColor = UIColor.whiteColor()
+        } else if toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight {
+            view.backgroundColor = UIColor.blackColor()
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -703,13 +754,13 @@ extension JFPlayerViewController: JFPlayerDelegate {
         case .FullScreen:
             UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
             self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(0)
+                make.top.equalTo(view.snp_top).offset(0)
             })
             print("全屏")
         case .CompactScreen:
             UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
             self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(64)
+                make.top.equalTo(view.snp_top).offset(64)
             })
             print("竖屏")
         }

@@ -33,6 +33,9 @@ class JFTabBarController: UITabBarController {
         
         let profileVc = JFProfileViewController()
         configChildViewController(profileVc, title: "我的", imageName: "tab_profile_icon_normal", selectedImageName: "tab_profile_icon_selected")
+        
+        // 布局完立马选中，防止崩溃
+        selectedIndex = 0
     }
     
     /**
@@ -51,6 +54,39 @@ class JFTabBarController: UITabBarController {
         childViewController.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.imageWithRenderingMode(.AlwaysOriginal)
         let navigationC = JFNavigationController(rootViewController: childViewController)
         addChildViewController(navigationC)
+    }
+    
+    /**
+     哪些控制器可以进行旋转
+     */
+    override func shouldAutorotate() -> Bool {
+        guard let nav = self.viewControllers?[self.selectedIndex] as? JFNavigationController else {
+            return false
+        }
+        guard let topVc = nav.topViewController else {
+            return false
+        }
+        if topVc.isKindOfClass(JFPlayerViewController.classForCoder()) {
+            return true
+        }
+        return false
+    }
+    
+    /**
+     支持哪些方向的旋转
+     */
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        guard let nav = self.viewControllers?[self.selectedIndex] as? JFNavigationController else {
+            return UIInterfaceOrientationMask.Portrait
+        }
+        guard let topVc = nav.topViewController else {
+            return UIInterfaceOrientationMask.Portrait
+        }
+        
+        if topVc.isKindOfClass(JFPlayerViewController.classForCoder()) {
+            return UIInterfaceOrientationMask.All
+        }
+        return UIInterfaceOrientationMask.Portrait
     }
     
 }
