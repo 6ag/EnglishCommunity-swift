@@ -17,5 +17,6 @@ pod 'pop', '~> 1.0.9'
 pod 'NVActivityIndicatorView', '~> 2.6'
 pod 'SwipeBack', '~> 1.1'
 pod 'SDCycleScrollView','~> 1.64'
+pod 'FMDB'
 
 end

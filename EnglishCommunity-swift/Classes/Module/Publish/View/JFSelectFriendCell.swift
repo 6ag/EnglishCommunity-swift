@@ -22,8 +22,15 @@ class JFSelectFriendCell: UITableViewCell {
     
     var relationUser: JFRelationUser? {
         didSet {
-            avatarImageView.yy_imageURL = NSURL(string: relationUser!.relationAvatar!)
-            nicknameLabel.text = relationUser!.relationNickname!
+            guard let relationUser = relationUser else {
+                return
+            }
+            
+            avatarImageView.yy_imageURL = NSURL(string: relationUser.relationAvatar ?? "")
+            nicknameLabel.text = relationUser.relationNickname ?? ""
+            sexImageView.image = relationUser.relationSex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
+            
+            print(relationUser.relationSex)
         }
     }
     
@@ -34,6 +41,7 @@ class JFSelectFriendCell: UITableViewCell {
         contentView.addSubview(selectorButton)
         contentView.addSubview(avatarImageView)
         contentView.addSubview(nicknameLabel)
+        contentView.addSubview(sexImageView)
         contentView.addSubview(separatorView)
         
         selectorButton.snp_makeConstraints { (make) in
@@ -51,6 +59,12 @@ class JFSelectFriendCell: UITableViewCell {
         nicknameLabel.snp_makeConstraints { (make) in
             make.left.equalTo(avatarImageView.snp_right).offset(10)
             make.centerY.equalTo(selectorButton)
+        }
+        
+        sexImageView.snp_makeConstraints { (make) in
+            make.left.equalTo(nicknameLabel.snp_right).offset(10)
+            make.centerY.equalTo(nicknameLabel)
+            make.size.equalTo(CGSize(width: 12, height: 12))
         }
         
         separatorView.snp_makeConstraints { (make) in
@@ -77,7 +91,7 @@ class JFSelectFriendCell: UITableViewCell {
         if highlighted {
             contentView.backgroundColor = COLOR_ALL_CELL_HIGH
         } else {
-            contentView.backgroundColor = COLOR_ALL_BG
+            contentView.backgroundColor = COLOR_ALL_CELL_NORMAL
         }
     }
     
@@ -103,6 +117,12 @@ class JFSelectFriendCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFontOfSize(16)
         return label
+    }()
+    
+    /// 性别
+    private lazy var sexImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
     }()
     
     /// 分割线

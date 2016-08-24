@@ -65,7 +65,7 @@ class JFPlayerViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+        player.play()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -188,13 +188,34 @@ class JFPlayerViewController: UIViewController {
      */
     private func playVideo(videoUrl: String, title: String) {
         
-        JFVideo.parseVideoUrl(videoUrl) { (url) in
-            guard let url = url else {
-                JFProgressHUD.showInfoWithStatus("解析失败，请更新节点")
-                return
+        // 没有设置成流量播放视频  或者 当前不是WiFi状态
+        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() != 1 {
+            
+            let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
+            let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
+                JFVideo.parseVideoUrl(videoUrl) { (url) in
+                    guard let url = url else {
+                        JFProgressHUD.showInfoWithStatus("解析失败，请更新节点")
+                        return
+                    }
+                    self.player.playWithURL(NSURL(string: url)!, title: title)
+                }
+            })
+            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
+            alertC.addAction(continuePlay)
+            alertC.addAction(cancel)
+            presentViewController(alertC, animated: true, completion: nil)
+        } else {
+            JFVideo.parseVideoUrl(videoUrl) { (url) in
+                guard let url = url else {
+                    JFProgressHUD.showInfoWithStatus("解析失败，请更新节点")
+                    return
+                }
+                self.player.playWithURL(NSURL(string: url)!, title: title)
             }
-            self.player.playWithURL(NSURL(string: url)!, title: title)
         }
+        
     }
     
     /**
@@ -366,6 +387,11 @@ class JFPlayerViewController: UIViewController {
     
 }
 
+// MARK: - 屏幕旋转
+extension JFPlayerViewController  {
+    
+}
+
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -525,7 +551,28 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      下载视频
      */
     func didTappedDownloadButton(button: UIButton) {
-        print("下载")
+        
+        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_DOWNLOAD) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() != 1 {
+            
+            let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续下载会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
+            let continuePlay = UIAlertAction(title: "继续下载", style: UIAlertActionStyle.Destructive, handler: { (acion) in
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_DOWNLOAD)
+                let videoDownloadVc = JFVideoDownloadViewController()
+                videoDownloadVc.videos = self.videos
+                videoDownloadVc.videoInfo = self.videoInfo
+                self.presentViewController(videoDownloadVc, animated: true, completion: nil)
+            })
+            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
+            alertC.addAction(continuePlay)
+            alertC.addAction(cancel)
+            presentViewController(alertC, animated: true, completion: nil)
+        } else {
+            let videoDownloadVc = JFVideoDownloadViewController()
+            videoDownloadVc.videos = videos
+            videoDownloadVc.videoInfo = videoInfo
+            presentViewController(videoDownloadVc, animated: true, completion: nil)
+        }
+        
     }
     
     /**

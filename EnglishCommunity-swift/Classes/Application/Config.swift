@@ -38,7 +38,10 @@ let COLOR_NAV_BG = UIColor.colorWithHexString("41ca61")
 let COLOR_ALL_BG = UIColor.colorWithHexString("f7f7f7")
 
 /// cell按下的颜色
-let COLOR_ALL_CELL_HIGH = UIColor(red:0.93, green:0.93, blue:0.93, alpha:1.00)
+let COLOR_ALL_CELL_HIGH = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.00)
+
+/// cell默认颜色
+let COLOR_ALL_CELL_NORMAL = UIColor(red:0.99, green:0.99, blue:0.99, alpha:1.00)
 
 /// 分割线颜色
 let COLOR_ALL_CELL_SEPARATOR = RGB(0.3, g: 0.3, b: 0.3, alpha: 0.1)

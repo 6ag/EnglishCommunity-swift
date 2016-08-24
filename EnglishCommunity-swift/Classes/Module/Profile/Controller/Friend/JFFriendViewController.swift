@@ -22,10 +22,11 @@ class JFFriendViewController: UITableViewController {
         
         navigationItem.titleView = segmentedControl
         tableView.separatorStyle = .None
-        tableView.rowHeight = 50
+        tableView.rowHeight = 60
         tableView.backgroundColor = COLOR_ALL_BG
         tableView.registerClass(JFFriendCell.classForCoder(), forCellReuseIdentifier: friendCellIdentifier)
-        loadFriendList()
+        tableView.mj_header = setupHeaderRefresh(self, action: #selector(loadFriendList))
+        tableView.mj_header.beginRefreshing()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -36,11 +37,11 @@ class JFFriendViewController: UITableViewController {
     /**
      加载数据
      */
-    private func loadFriendList() {
+    @objc private func loadFriendList() {
         
-        JFProgressHUD.show()
         JFRelationUser.getFriendList(relation) { (relationUsers) in
             
+            self.tableView.mj_header.endRefreshing()
             guard let relationUsers = relationUsers else {
                 self.relationUsers.removeAll()
                 JFProgressHUD.showInfoWithStatus("暂时没有数据")
@@ -48,7 +49,6 @@ class JFFriendViewController: UITableViewController {
                 return
             }
             
-            JFProgressHUD.showInfoWithStatus("加载成功")
             self.relationUsers = relationUsers
             self.tableView.reloadData()
         }
@@ -59,7 +59,7 @@ class JFFriendViewController: UITableViewController {
      */
     @objc private func didChangedSelected(segmentedControl: UISegmentedControl) {
         relation = segmentedControl.selectedSegmentIndex == 0 ? 1 : 0
-        loadFriendList()
+        tableView.mj_header.beginRefreshing()
     }
     
     // MARK: - 懒加载

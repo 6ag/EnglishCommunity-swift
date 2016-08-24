@@ -31,7 +31,7 @@ class JFOtherUserViewController: UIViewController {
             sexImageView.image = userInfo.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             followingLabel.text = "关注 \(userInfo.followingCount)"
             followersLabel.text = "粉丝 \(userInfo.followersCount)"
-            sayLabel.text = "\"\(userInfo.say ?? "<楼主很懒，还没写呢!>")\""
+            sayLabel.text = "\"\(userInfo.say ?? "对方很懒，还没有心情哦！")\""
             followButton.setTitle(userInfo.followed == 0 ? "关注" : "取消关注", forState: .Normal)
             if userInfo.id == JFAccountModel.shareAccount()?.id {
                 followButton.hidden = true

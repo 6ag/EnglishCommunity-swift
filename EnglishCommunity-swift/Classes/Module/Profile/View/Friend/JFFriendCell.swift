@@ -29,7 +29,7 @@ class JFFriendCell: UITableViewCell {
             avatarImageView.yy_imageURL = NSURL(string: relationUser.relationAvatar!)
             nicknameLabel.text = relationUser.relationNickname!
             sexImageView.image = relationUser.relationSex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
-            sayLabel.text = relationUser.relationSay!
+            sayLabel.text = relationUser.relationSay ?? "对方很懒，还没有心情哦！"
         }
     }
     
@@ -81,7 +81,7 @@ class JFFriendCell: UITableViewCell {
         if highlighted {
             contentView.backgroundColor = COLOR_ALL_CELL_HIGH
         } else {
-            contentView.backgroundColor = COLOR_ALL_BG
+            contentView.backgroundColor = COLOR_ALL_CELL_NORMAL
         }
     }
     

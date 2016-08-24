@@ -9,9 +9,15 @@
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
 
-//腾讯SDK头文件
+// 腾讯SDK头文件
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <TencentOpenAPI/QQApiInterface.h>
 
-//微信SDK头文件
+// 微信SDK头文件
 #import "WXApi.h"
+
+// 检测磁盘容量
+#import "JFStoreInfoTool.h"
+
+// 检测网络状态
+#import "Reachability.h"

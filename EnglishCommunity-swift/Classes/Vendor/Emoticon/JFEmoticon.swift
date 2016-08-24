@@ -369,7 +369,6 @@ class JFEmoticon: NSObject {
             count -= 1
             // 从最后开始获取范围
             let result = results[count]
-            //            print("结果数量:\(result.numberOfRanges): result:\(result)")
             let range = result.rangeAtIndex(0)
             
             // 获取到对应的表情文本

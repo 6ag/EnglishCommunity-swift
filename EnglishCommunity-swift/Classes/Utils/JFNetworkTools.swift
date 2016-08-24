@@ -263,4 +263,14 @@ extension JFNetworkTools {
             return nil
         }
     }
+    
+    /**
+     获取当前网络状态
+     
+     - returns: 0未知 1WiFi 22G 33G 44G
+     */
+    func getCurrentNetworkState() -> Int {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        return appDelegate.networkState
+    }
 }

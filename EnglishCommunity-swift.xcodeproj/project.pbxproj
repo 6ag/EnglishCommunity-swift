@@ -97,6 +97,21 @@
 		B283D1B71D6A020100702A75 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1B61D6A020100702A75 /* Security.framework */; };
 		B283D1B91D6A021A00702A75 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1B81D6A021A00702A75 /* CFNetwork.framework */; };
 		B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B285F5071D5AFB69004F23A6 /* JFFPSLabel.swift */; };
+		B2887D621D6D4A6C009CB44B /* JFStoreInfoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B2887D611D6D4A6C009CB44B /* JFStoreInfoTool.m */; };
+		B2887D681D6D61E9009CB44B /* JFDownloadManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D671D6D61E9009CB44B /* JFDownloadManagerViewController.swift */; };
+		B2887D6A1D6D622E009CB44B /* JFVideoDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D691D6D622E009CB44B /* JFVideoDownloadViewController.swift */; };
+		B2887D711D6D6235009CB44B /* JFTopStoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D6C1D6D6235009CB44B /* JFTopStoreInfoView.swift */; };
+		B2887D721D6D6235009CB44B /* JFTopStoreInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2887D6D1D6D6235009CB44B /* JFTopStoreInfoView.xib */; };
+		B2887D731D6D6235009CB44B /* JFVideoDownloadBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D6E1D6D6235009CB44B /* JFVideoDownloadBottomView.swift */; };
+		B2887D741D6D6235009CB44B /* JFVideoDownloadBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2887D6F1D6D6235009CB44B /* JFVideoDownloadBottomView.xib */; };
+		B2887D751D6D6235009CB44B /* JFVideoDownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D701D6D6235009CB44B /* JFVideoDownloadCell.swift */; };
+		B2887D781D6D6965009CB44B /* JFDownloadDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D771D6D6965009CB44B /* JFDownloadDetailViewController.swift */; };
+		B2887D7B1D6D720F009CB44B /* JFDALManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D791D6D720F009CB44B /* JFDALManager.swift */; };
+		B2887D7C1D6D720F009CB44B /* JFSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */; };
+		B2887D7E1D6D778D009CB44B /* JFDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D7D1D6D778D009CB44B /* JFDownloadManager.swift */; };
+		B2887D801D6D7997009CB44B /* JFDownloadQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D7F1D6D7997009CB44B /* JFDownloadQueue.swift */; };
+		B2887D821D6D807C009CB44B /* JFVideoMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D811D6D807C009CB44B /* JFVideoMerge.swift */; };
+		B2887D851D6D8BD1009CB44B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B2887D841D6D8BD1009CB44B /* Reachability.m */; };
 		B28D93F81D534AA700128D20 /* IJKMediaFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B28D93DF1D534AA700128D20 /* IJKMediaFramework.framework */; };
 		B28D93F91D534AA700128D20 /* JFPlayer_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B28D93E11D534AA700128D20 /* JFPlayer_back@2x.png */; };
 		B28D93FA1D534AA700128D20 /* JFPlayer_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B28D93E21D534AA700128D20 /* JFPlayer_back@3x.png */; };
@@ -270,6 +285,23 @@
 		B283D1B61D6A020100702A75 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B283D1B81D6A021A00702A75 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		B285F5071D5AFB69004F23A6 /* JFFPSLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFFPSLabel.swift; sourceTree = "<group>"; };
+		B2887D601D6D4A6C009CB44B /* JFStoreInfoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFStoreInfoTool.h; sourceTree = "<group>"; };
+		B2887D611D6D4A6C009CB44B /* JFStoreInfoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFStoreInfoTool.m; sourceTree = "<group>"; };
+		B2887D671D6D61E9009CB44B /* JFDownloadManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadManagerViewController.swift; sourceTree = "<group>"; };
+		B2887D691D6D622E009CB44B /* JFVideoDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadViewController.swift; sourceTree = "<group>"; };
+		B2887D6C1D6D6235009CB44B /* JFTopStoreInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTopStoreInfoView.swift; sourceTree = "<group>"; };
+		B2887D6D1D6D6235009CB44B /* JFTopStoreInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFTopStoreInfoView.xib; sourceTree = "<group>"; };
+		B2887D6E1D6D6235009CB44B /* JFVideoDownloadBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadBottomView.swift; sourceTree = "<group>"; };
+		B2887D6F1D6D6235009CB44B /* JFVideoDownloadBottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFVideoDownloadBottomView.xib; sourceTree = "<group>"; };
+		B2887D701D6D6235009CB44B /* JFVideoDownloadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadCell.swift; sourceTree = "<group>"; };
+		B2887D771D6D6965009CB44B /* JFDownloadDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadDetailViewController.swift; sourceTree = "<group>"; };
+		B2887D791D6D720F009CB44B /* JFDALManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDALManager.swift; sourceTree = "<group>"; };
+		B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSQLiteManager.swift; sourceTree = "<group>"; };
+		B2887D7D1D6D778D009CB44B /* JFDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadManager.swift; sourceTree = "<group>"; };
+		B2887D7F1D6D7997009CB44B /* JFDownloadQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadQueue.swift; sourceTree = "<group>"; };
+		B2887D811D6D807C009CB44B /* JFVideoMerge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoMerge.swift; sourceTree = "<group>"; };
+		B2887D831D6D8BD1009CB44B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		B2887D841D6D8BD1009CB44B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		B28D93DF1D534AA700128D20 /* IJKMediaFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IJKMediaFramework.framework; sourceTree = "<group>"; };
 		B28D93E11D534AA700128D20 /* JFPlayer_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "JFPlayer_back@2x.png"; sourceTree = "<group>"; };
 		B28D93E21D534AA700128D20 /* JFPlayer_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "JFPlayer_back@3x.png"; sourceTree = "<group>"; };
@@ -754,6 +786,28 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		B2887D631D6D6148009CB44B /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				B2887D671D6D61E9009CB44B /* JFDownloadManagerViewController.swift */,
+				B2887D771D6D6965009CB44B /* JFDownloadDetailViewController.swift */,
+				B2887D691D6D622E009CB44B /* JFVideoDownloadViewController.swift */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
+		B2887D6B1D6D6235009CB44B /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				B2887D6C1D6D6235009CB44B /* JFTopStoreInfoView.swift */,
+				B2887D6D1D6D6235009CB44B /* JFTopStoreInfoView.xib */,
+				B2887D6E1D6D6235009CB44B /* JFVideoDownloadBottomView.swift */,
+				B2887D6F1D6D6235009CB44B /* JFVideoDownloadBottomView.xib */,
+				B2887D701D6D6235009CB44B /* JFVideoDownloadCell.swift */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
 		B28D93D31D534AA700128D20 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -851,8 +905,17 @@
 		B28D93DC1D534AA700128D20 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B2887D831D6D8BD1009CB44B /* Reachability.h */,
+				B2887D841D6D8BD1009CB44B /* Reachability.m */,
+				B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */,
+				B2887D791D6D720F009CB44B /* JFDALManager.swift */,
 				B21501D31D5366A4005E4670 /* JFNetworkTools.swift */,
 				B21501D41D5366A4005E4670 /* JFProgressHUD.swift */,
+				B2887D601D6D4A6C009CB44B /* JFStoreInfoTool.h */,
+				B2887D611D6D4A6C009CB44B /* JFStoreInfoTool.m */,
+				B2887D7D1D6D778D009CB44B /* JFDownloadManager.swift */,
+				B2887D7F1D6D7997009CB44B /* JFDownloadQueue.swift */,
+				B2887D811D6D807C009CB44B /* JFVideoMerge.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1094,6 +1157,7 @@
 		B2FC668A1D5C15DF0032703D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B2887D631D6D6148009CB44B /* Download */,
 				B2156C7C1D66AEF10033DBB6 /* Base */,
 				B2156C511D66ADF90033DBB6 /* Friend */,
 				B2156C571D66ADF90033DBB6 /* Message */,
@@ -1117,6 +1181,7 @@
 		B2FC66AC1D5C15DF0032703D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B2887D6B1D6D6235009CB44B /* Download */,
 				B2156C721D66AEDA0033DBB6 /* Base */,
 				B2156C771D66AEDA0033DBB6 /* Login */,
 				B2156C791D66AEDA0033DBB6 /* Setting */,
@@ -1212,6 +1277,7 @@
 				B2190B0B1D4F85C4007FC0E9 /* LaunchScreen.storyboard in Resources */,
 				B28D94091D534AA700128D20 /* JFPlayer_slider_thumb@2x.png in Resources */,
 				B28D94001D534AA700128D20 /* JFPlayer_pause@3x.png in Resources */,
+				B2887D721D6D6235009CB44B /* JFTopStoreInfoView.xib in Resources */,
 				B2190B081D4F85C4007FC0E9 /* Assets.xcassets in Resources */,
 				B2F1BA5B1D6A8F3A003DF045 /* WeiboSDK.bundle in Resources */,
 				B2156C661D66AE3A0033DBB6 /* JFForgotViewController.xib in Resources */,
@@ -1224,6 +1290,7 @@
 				B28D93FE1D534AA700128D20 /* JFPlayer_mask_image@3x.png in Resources */,
 				B2156C681D66AE3A0033DBB6 /* JFLoginViewController.xib in Resources */,
 				B2B771131D61A0790042AA5E /* Emoticons.bundle in Resources */,
+				B2887D741D6D6235009CB44B /* JFVideoDownloadBottomView.xib in Resources */,
 				B2DA01261D6567080095AB7D /* JFDetailBottomBarView.xib in Resources */,
 				B2F1BA591D6A8F3A003DF045 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				B28D94071D534AA700128D20 /* JFPlayer_seek_to_image@2x.png in Resources */,
@@ -1297,20 +1364,24 @@
 			files = (
 				B249AE351D607D41005C0A41 /* JFCommentCell.swift in Sources */,
 				B2512A731D54426B00476D0E /* JFVideo.swift in Sources */,
+				B2887D7B1D6D720F009CB44B /* JFDALManager.swift in Sources */,
 				B29E94E71D6AD2F20052F818 /* JFModifyPasswordViewController.swift in Sources */,
 				B21501D21D536697005E4670 /* UIViewExtension.swift in Sources */,
 				B2B771121D61A0790042AA5E /* JFTextAttachment.swift in Sources */,
 				B2156C711D66AE6A0033DBB6 /* JFFeedbackViewController.swift in Sources */,
+				B2887D801D6D7997009CB44B /* JFDownloadQueue.swift in Sources */,
 				B2DA01151D654DBB0095AB7D /* JFHomeSectionHeaderView.swift in Sources */,
 				B21501DC1D5366CB005E4670 /* JFTabBar.swift in Sources */,
 				B20FD0EF1D6C16C4008DEF0C /* JFMessageRecordCell.swift in Sources */,
 				B2156C891D66AF840033DBB6 /* JFSelectFriendViewController.swift in Sources */,
 				B2156C651D66AE3A0033DBB6 /* JFForgotViewController.swift in Sources */,
+				B2887D751D6D6235009CB44B /* JFVideoDownloadCell.swift in Sources */,
 				B2156C8C1D66AF840033DBB6 /* JFSelectFriendCell.swift in Sources */,
 				B2DA010F1D654DBB0095AB7D /* JFCategoriesCell.swift in Sources */,
 				B2B770FE1D61689E0042AA5E /* JFPhotoBrowserViewController.swift in Sources */,
 				B21501D11D536697005E4670 /* UIBarButtionItem.swift in Sources */,
 				B2FC66D11D5C15DF0032703D /* JFProfileTopButton.swift in Sources */,
+				B2887D781D6D6965009CB44B /* JFDownloadDetailViewController.swift in Sources */,
 				B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */,
 				B2156C5A1D66ADF90033DBB6 /* JFInfomationViewController.swift in Sources */,
 				B2156C671D66AE3A0033DBB6 /* JFLoginViewController.swift in Sources */,
@@ -1318,9 +1389,11 @@
 				B249AE341D607D41005C0A41 /* JFTweet.swift in Sources */,
 				B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */,
 				B21436391D551BE300F201AF /* JFTopBarView.swift in Sources */,
+				B2887D7E1D6D778D009CB44B /* JFDownloadManager.swift in Sources */,
 				B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */,
 				B2DA01191D654E0C0095AB7D /* JFCategoryListCell.swift in Sources */,
 				B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */,
+				B2887D7C1D6D720F009CB44B /* JFSQLiteManager.swift in Sources */,
 				B2156C5D1D66ADF90033DBB6 /* JFMessageListViewController.swift in Sources */,
 				B21501DA1D5366C2005E4670 /* JFTabBarController.swift in Sources */,
 				B2B770FB1D61689E0042AA5E /* JFImageView.swift in Sources */,
@@ -1343,6 +1416,7 @@
 				B2FC66D61D5C16EA0032703D /* StringExtension.swift in Sources */,
 				B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */,
 				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,
+				B2887D711D6D6235009CB44B /* JFTopStoreInfoView.swift in Sources */,
 				B2BEBF031D6CBA1F00D4B13B /* JFSearchViewController.swift in Sources */,
 				B2FC66D71D5C16EA0032703D /* UIImageExtension.swift in Sources */,
 				B2155F391D68677C00D3FC65 /* JFSettingViewController.swift in Sources */,
@@ -1369,6 +1443,7 @@
 				B2B770FD1D61689E0042AA5E /* JFPhotoBrowserModel.swift in Sources */,
 				B213E3F31D54D45B00589058 /* JFPlayerViewController.swift in Sources */,
 				B2DA01101D654DBB0095AB7D /* JFCategoriesCellItem.swift in Sources */,
+				B2887D621D6D4A6C009CB44B /* JFStoreInfoTool.m in Sources */,
 				B2156C8A1D66AF840033DBB6 /* JFRelationUser.swift in Sources */,
 				B2FC66CF1D5C15DF0032703D /* JFProfileHeaderView.swift in Sources */,
 				B2156C951D66B1EF0033DBB6 /* JFProfileCellLabelModel.swift in Sources */,
@@ -1379,16 +1454,21 @@
 				B21501CE1D53668B005E4670 /* Config.swift in Sources */,
 				B20FD0ED1D6BF67C008DEF0C /* JFMessageRecord.swift in Sources */,
 				B2DA01131D654DBB0095AB7D /* JFHomeCellItem.swift in Sources */,
+				B2887D821D6D807C009CB44B /* JFVideoMerge.swift in Sources */,
 				B238B4121D5D9B2700E4307A /* JFGrammar.swift in Sources */,
 				B213E3DE1D54BCF100589058 /* JFCategoryViewController.swift in Sources */,
 				B2DA01121D654DBB0095AB7D /* JFHomeCell.swift in Sources */,
 				B249AE391D607D41005C0A41 /* JFTweetListCell.swift in Sources */,
 				B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */,
+				B2887D681D6D61E9009CB44B /* JFDownloadManagerViewController.swift in Sources */,
 				B249AE331D607D41005C0A41 /* JFComment.swift in Sources */,
+				B2887D731D6D6235009CB44B /* JFVideoDownloadBottomView.swift in Sources */,
 				B21501DE1D536800005E4670 /* JFHomeViewController.swift in Sources */,
 				B2B771081D61A0670042AA5E /* JFPhotoSelectorViewController.swift in Sources */,
 				B28D940D1D534AA700128D20 /* JFPlayerControlView.swift in Sources */,
 				B2156C7A1D66AEDA0033DBB6 /* JFProfileCell.swift in Sources */,
+				B2887D6A1D6D622E009CB44B /* JFVideoDownloadViewController.swift in Sources */,
+				B2887D851D6D8BD1009CB44B /* Reachability.m in Sources */,
 				B28D940B1D534AA700128D20 /* JFPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

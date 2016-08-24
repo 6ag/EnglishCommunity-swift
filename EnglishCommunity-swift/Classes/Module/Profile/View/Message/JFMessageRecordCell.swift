@@ -145,7 +145,7 @@ class JFMessageRecordCell: UITableViewCell {
         if highlighted {
             contentView.backgroundColor = COLOR_ALL_CELL_HIGH
         } else {
-            contentView.backgroundColor = COLOR_ALL_BG
+            contentView.backgroundColor = COLOR_ALL_CELL_NORMAL
         }
     }
     

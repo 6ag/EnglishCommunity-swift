@@ -14,6 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    var hostReach: Reachability?
+    var networkState = 0
+    
     // 给注册推送时用 - 因为注册推送想在主界面加载出来才询问是否授权
     var launchOptions: [NSObject: AnyObject]?
     
@@ -23,8 +26,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupGlobalStyle()        // 配置全局样式
         setupGlobalData()         // 配置全局数据
         setupShareSDK()           // 配置shareSDK
+        setupReachability()       // 配置网络检测
+        
         self.launchOptions = launchOptions
         return true
+    }
+    
+    /**
+     配置网络检测
+     */
+    private func setupReachability() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reachabilityChanged(_:)), name: kReachabilityChangedNotification, object: nil)
+        hostReach = Reachability.reachabilityForInternetConnection()
+        hostReach?.startNotifier()
+    }
+    
+    /**
+     监听网络状态改变
+     */
+    @objc func reachabilityChanged(notification: NSNotification) {
+        
+        guard let curReach = notification.object as? Reachability else {
+            return
+        }
+        
+        switch curReach.currentReachabilityStatus() {
+        case NotReachable:
+            networkState = 0
+            print("无网络")
+        case ReachableViaWiFi:
+            networkState = 1
+            print("WiFi")
+        case kReachableVia2G:
+            networkState = 2
+            print("2G")
+        case kReachableVia3G:
+            networkState = 3
+            print("3G")
+        case kReachableVia4G:
+            networkState = 4
+            print("4G")
+        default:
+            print("未知")
+        }
+        
     }
     
     /**
@@ -107,7 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         JPUSHService.registerForRemoteNotificationTypes(UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Sound.rawValue, categories: nil)
         JPUSHService.setupWithOption(launchOptions, appKey: JPUSH_APP_KEY, channel: JPUSH_CHANNEL, apsForProduction: JPUSH_IS_PRODUCTION)
         JPUSHService.crashLogON()
-//        JPUSHService.setLogO()
+        JPUSHService.setLogOFF()
         
         // 延迟发送通知（app被杀死进程后收到通知，然后通过点击通知打开app在这个方法中发送通知）
         performSelector(#selector(sendNotification(_:)), withObject: launchOptions, afterDelay: 1)

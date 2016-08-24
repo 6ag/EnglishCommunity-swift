@@ -25,6 +25,9 @@ class JFVideo: NSObject {
     /// 视频序号 - 第几小节
     var order: Int = 0
     
+    /// 是否已经选中 - 下载列表会用到
+    var selected: Bool = false
+    
     init(dict: [String : AnyObject]) {
         super.init()
         setValuesForKeysWithDictionary(dict)
@@ -80,5 +83,32 @@ class JFVideo: NSObject {
         }
         
     }
+    
+    /**
+     获取优酷真实下载视频分段地址
+     
+     - parameter youKuUrl: 优酷网页地址
+     - parameter finished: 完成回调
+     */
+    class func getVideoDownloadList(youKuUrl: String, finished: (urls: [String]?) -> ()) {
+        
+        JFNetworkTools.shareNetworkTool.getWithToken(GET_VIDEO_DOWNLOAD_LIST, parameters: ["url" : youKuUrl]) { (success, result, error) in
+            
+            guard let result = result where result["status"] == "success" else {
+                finished(urls: nil)
+                return
+            }
+            
+            // 默认清晰度的视频片段地址列表
+            guard let normalData = result["result"]["normal"]["data"].arrayObject as? [String] else {
+                return
+            }
+            
+            finished(urls: normalData)
+        }
+        
+    }
+    
+    
     
 }

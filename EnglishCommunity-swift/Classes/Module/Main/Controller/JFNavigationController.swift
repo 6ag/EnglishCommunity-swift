@@ -57,4 +57,5 @@ class JFNavigationController: UINavigationController {
     @objc private func didTappedBackButton(button: UIBarButtonItem) {
         popViewControllerAnimated(true)
     }
+    
 }

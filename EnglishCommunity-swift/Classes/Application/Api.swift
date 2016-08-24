@@ -41,6 +41,9 @@ let GET_VIDEO_LIST = "api/getVideoList.api"
 /// 解析m3u8地址
 let PARSE_YOUKU_VIDEO = "api/playVideo.api"
 
+/// 获取单个视频的视频分段列表地址
+let GET_VIDEO_DOWNLOAD_LIST = "api/getVideoDownloadList.api"
+
 /// 获取动弹列表
 let GET_TWEETS_LIST = "api/getTweetsList.api"
 

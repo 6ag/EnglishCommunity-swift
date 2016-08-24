@@ -16,7 +16,7 @@ class JFProgressHUD: NSObject {
         SVProgressHUD.setForegroundColor(UIColor.whiteColor())
         SVProgressHUD.setBackgroundColor(UIColor(white: 0.0, alpha: 0.8))
         SVProgressHUD.setFont(UIFont.boldSystemFontOfSize(16))
-        SVProgressHUD.setMinimumDismissTimeInterval(2)
+        SVProgressHUD.setMinimumDismissTimeInterval(1.5)
     }
     
     class func show() {

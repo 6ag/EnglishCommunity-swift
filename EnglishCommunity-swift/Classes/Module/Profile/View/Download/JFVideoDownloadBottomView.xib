@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JFVideoDownloadBottomView" customModule="EnglishCommunity_swift" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="437" height="62"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fK-X0-1UB">
+                    <rect key="frame" x="0.0" y="0.0" width="219" height="62"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="全选">
+                        <color key="titleColor" red="0.61039663460000004" green="0.61039663460000004" blue="0.61039663460000004" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="selected" title="取消全选"/>
+                    <connections>
+                        <action selector="didTappedSelectButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="wTD-Ex-iW4"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBS-1b-res">
+                    <rect key="frame" x="219" y="0.0" width="218" height="62"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="确认下载">
+                        <color key="titleColor" red="0.61039663460000004" green="0.61039663460000004" blue="0.61039663460000004" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="didTappedConfirmButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="zBy-YR-GAq"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="nBS-1b-res" secondAttribute="trailing" id="0pK-qv-yGu"/>
+                <constraint firstItem="4fK-X0-1UB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6SN-Ca-W3m"/>
+                <constraint firstAttribute="bottom" secondItem="4fK-X0-1UB" secondAttribute="bottom" id="9v9-qQ-meX"/>
+                <constraint firstAttribute="bottom" secondItem="nBS-1b-res" secondAttribute="bottom" id="Cfk-K5-vwn"/>
+                <constraint firstItem="nBS-1b-res" firstAttribute="height" secondItem="4fK-X0-1UB" secondAttribute="height" id="HcL-M0-f5m"/>
+                <constraint firstItem="nBS-1b-res" firstAttribute="leading" secondItem="4fK-X0-1UB" secondAttribute="trailing" id="b8m-Gn-Mlu"/>
+                <constraint firstItem="nBS-1b-res" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eE6-IY-WYz"/>
+                <constraint firstItem="4fK-X0-1UB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iuH-yT-C6R"/>
+                <constraint firstItem="nBS-1b-res" firstAttribute="leading" secondItem="4fK-X0-1UB" secondAttribute="trailing" id="mWo-jk-Hax"/>
+                <constraint firstItem="nBS-1b-res" firstAttribute="width" secondItem="4fK-X0-1UB" secondAttribute="width" id="zfu-Xr-h22"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="544.5" y="363"/>
+        </view>
+    </objects>
+</document>
