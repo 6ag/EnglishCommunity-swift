@@ -52,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch curReach.currentReachabilityStatus() {
         case NotReachable:
-            networkState = 0
             print("无网络")
         case ReachableViaWiFi:
             networkState = 1

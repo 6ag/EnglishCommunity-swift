@@ -25,6 +25,9 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        </variation>
                     </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -39,7 +42,9 @@
             </constraints>
             <size key="customSize" width="118" height="103"/>
             <connections>
+                <outlet property="iconHeightConstraint" destination="n8k-LG-MKo" id="aWA-zv-TZJ"/>
                 <outlet property="iconView" destination="Vrm-LA-00O" id="5cb-z9-cLX"/>
+                <outlet property="iconWidthConstraint" destination="Lks-1h-68z" id="r8c-JE-79Z"/>
                 <outlet property="titleLabel" destination="wjb-aD-9N6" id="dQ3-S2-iCU"/>
             </connections>
             <point key="canvasLocation" x="142" y="265.5"/>

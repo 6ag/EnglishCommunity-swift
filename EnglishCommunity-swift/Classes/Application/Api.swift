@@ -29,6 +29,9 @@ let RETRIEVE_PASSWORD_EMAIL = "api/auth/retrievePasswordWithSendEmail.api"
 /// 获取所有分类信息
 let GET_ALL_CATEGORIES = "api/getAllCategories.api"
 
+/// 搜索视频信息列表
+let SEARCH_VIDEO_INFO_LIST = "api/searchVideoInfoList.api"
+
 /// 根据分类id查询视频信息列表
 let GET_VIDEO_INFOS_LIST = "api/getVideoInfosList.api"
 

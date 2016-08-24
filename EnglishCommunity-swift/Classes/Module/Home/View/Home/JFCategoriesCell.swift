@@ -65,10 +65,10 @@ class JFCategoriesCell: UITableViewCell {
         layout.minimumInteritemSpacing = 1.5
         layout.minimumLineSpacing = 1.5
         layout.scrollDirection = .Horizontal
-        layout.itemSize = CGSize(width: 77, height: 85)
+        layout.itemSize = CGSize(width: SCREEN_WIDTH * 0.21, height: SCREEN_WIDTH * 0.19)
         
         let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor(patternImage: UIImage(named: "fenlei")!)
+        collectionView.backgroundColor = UIColor.whiteColor()
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false

@@ -134,7 +134,7 @@ class JFSettingViewController: JFBaseTableViewController {
      */
     func didTappedLogoutButton(button: UIButton) -> Void {
         
-        let alertC = UIAlertController(title: "确定注销登录状态？", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alertC = UIAlertController(title: "确定注销登录状态？", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         let action1 = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (action) in
             JFAccountModel.logout()
             JFProgressHUD.showSuccessWithStatus("退出成功")

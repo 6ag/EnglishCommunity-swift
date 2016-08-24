@@ -31,12 +31,18 @@ class JFSearchViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     /**
      准备UI
      */
     private func prepareUI() {
         view.backgroundColor = COLOR_ALL_BG
         navigationItem.titleView = searchTextField
+        view.addSubview(tableView)
     }
     
     /**
@@ -57,10 +63,24 @@ class JFSearchViewController: UIViewController {
     /**
      加载搜索结果
      
-     - parameter keyboard:  关键词
+     - parameter keyword:  关键词
      - parameter pageIndex: 页码
      */
-    private func loadSearchResult(keyboard: String, pageIndex: Int) {
+    
+    private func loadSearchResult(keyword: String, pageIndex: Int) {
+        
+        JFVideoInfo.searchVideoInfoList(keyword, page: pageIndex) { (videoInfos) in
+            self.tableView.mj_footer.endRefreshing()
+            
+            guard let videoInfos = videoInfos else {
+                self.tableView.mj_footer.endRefreshingWithNoMoreData()
+                self.tableView.reloadData()
+                return
+            }
+            
+            self.videoInfos += videoInfos
+            self.tableView.reloadData()
+        }
         
     }
     
@@ -99,8 +119,8 @@ extension JFSearchViewController: UISearchBarDelegate {
     // 点击了搜索按钮
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchTextField.endEditing(true)
-        
-        print(searchBar.text)
+        self.videoInfos.removeAll()
+        loadMoreData()
     }
     
 }

@@ -14,6 +14,7 @@ class JFHomeCellItem: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var photoImageConstraint: NSLayoutConstraint!
     
     var videoInfo: JFVideoInfo? {
         didSet {
@@ -28,7 +29,7 @@ class JFHomeCellItem: UICollectionViewCell {
         contentView.backgroundColor = COLOR_ALL_BG
         bgView.layer.cornerRadius = 3
         bgView.layer.masksToBounds = true
-        
+        photoImageConstraint.constant = LIST_ITEM_HEIGHT - 40
     }
 
 }

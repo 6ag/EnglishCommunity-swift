@@ -98,10 +98,10 @@
                                 </mask>
                             </variation>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3CI-Go-PGc" userLabel="item2">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3CI-Go-PGc" userLabel="item2">
                             <rect key="frame" x="188" y="0.0" width="93" height="65"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-ZB-j0c" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-ZB-j0c" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="93" height="65"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="消息" image="profile_topbar_comment">
@@ -263,7 +263,7 @@
         <image name="default－portrait" width="36" height="36"/>
         <image name="profile_topbar_collection" width="19" height="19"/>
         <image name="profile_topbar_comment" width="18" height="18"/>
-        <image name="profile_topbar_download" width="27" height="20"/>
+        <image name="profile_topbar_download" width="20" height="20"/>
         <image name="profile_topbar_info" width="19" height="19"/>
     </resources>
 </document>

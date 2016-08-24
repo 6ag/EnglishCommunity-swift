@@ -19,10 +19,13 @@ class JFCategoriesCellItem: UICollectionViewCell {
     
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var iconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var iconHeightConstraint: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.backgroundColor = UIColor(patternImage: UIImage(named: "fenlei")!)
+        iconWidthConstraint.constant = SCREEN_WIDTH * 0.1
+        iconHeightConstraint.constant = SCREEN_WIDTH * 0.1
     }
 
 }

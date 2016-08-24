@@ -90,7 +90,7 @@ class JFHomeViewController: UIViewController {
      */
     private func prepareScrollView() {
         
-        topScrollView = SDCycleScrollView(frame: CGRect(x:0, y:0, width: SCREEN_WIDTH, height: 188), delegate: self, placeholderImage: UIImage(named: "photoview_image_default_white"))
+        topScrollView = SDCycleScrollView(frame: CGRect(x:0, y:0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.25), delegate: self, placeholderImage: UIImage(named: "photoview_image_default_white"))
         topScrollView?.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter
         topScrollView?.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated
         
@@ -195,7 +195,7 @@ extension JFHomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 87
+            return SCREEN_WIDTH * 0.2
         } else {
             return LIST_ITEM_HEIGHT * 2 + LIST_ITEM_PADDING
         }

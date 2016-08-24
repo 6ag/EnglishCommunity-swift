@@ -14,7 +14,6 @@ class JFCategoryListCell: UITableViewCell {
     var videoInfo: JFVideoInfo? {
         didSet {
             guard let videoInfo = videoInfo else {
-                print("videoInfo没有值")
                 return
             }
             

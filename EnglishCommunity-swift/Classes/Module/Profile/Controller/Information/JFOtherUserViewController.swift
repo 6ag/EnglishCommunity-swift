@@ -26,7 +26,7 @@ class JFOtherUserViewController: UIViewController {
                 return
             }
             
-            avatarImageView.yy_setImageWithURL(NSURL(string: userInfo.avatar!), options: YYWebImageOptions.Progressive)
+            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: userInfo.avatar!), forState: .Normal, options: YYWebImageOptions.Progressive)
             nicknameButton.setTitle(userInfo.nickname!, forState: .Normal)
             sexImageView.image = userInfo.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             followingLabel.text = "关注 \(userInfo.followingCount)"
@@ -61,7 +61,6 @@ class JFOtherUserViewController: UIViewController {
     private func prepareUI() {
         
         view.addSubview(headerView)
-        view.addSubview(avatarImageView)
         view.addSubview(nicknameButton)
         view.addSubview(sexImageView)
         view.addSubview(followingLabel)
@@ -69,13 +68,14 @@ class JFOtherUserViewController: UIViewController {
         view.addSubview(followersLabel)
         view.addSubview(sayLabel)
         view.addSubview(followButton)
+        view.addSubview(avatarButton)
         
         headerView.snp_makeConstraints { (make) in
             make.left.top.right.equalTo(0)
             make.height.equalTo(191)
         }
         
-        avatarImageView.snp_makeConstraints { (make) in
+        avatarButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.centerY.equalTo(headerView.snp_bottom)
             make.size.equalTo(CGSize(width: 83, height: 83))
@@ -83,7 +83,7 @@ class JFOtherUserViewController: UIViewController {
         
         nicknameButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-10)
-            make.top.equalTo(avatarImageView.snp_bottom).offset(15)
+            make.top.equalTo(avatarButton.snp_bottom).offset(15)
         }
         
         sexImageView.snp_makeConstraints { (make) in
@@ -164,6 +164,22 @@ class JFOtherUserViewController: UIViewController {
         })
     }
     
+    /**
+     点击了头像
+     */
+    @objc private func didTappedAvatarButton(button: UIButton) {
+        button.selected = !button.selected
+        if button.selected {
+            UIView.animateWithDuration(0.25, animations: { 
+                button.transform = CGAffineTransformMakeScale(SCREEN_WIDTH / button.width, SCREEN_WIDTH / button.width)
+            })
+        } else {
+            UIView.animateWithDuration(0.25, animations: {
+                button.transform = CGAffineTransformIdentity
+            })
+        }
+    }
+    
     // MARK: - 懒加载
     /// 头部视图
     private lazy var headerView: UIView = {
@@ -173,13 +189,15 @@ class JFOtherUserViewController: UIViewController {
     }()
     
     /// 头像
-    private lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.cornerRadius = 41.5
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderColor = COLOR_ALL_BG.CGColor
-        imageView.layer.borderWidth = 3
-        return imageView
+    private lazy var avatarButton: UIButton = {
+        let button = UIButton(type: .Custom)
+        button.layer.cornerRadius = 41.5
+        button.layer.borderColor = COLOR_ALL_BG.CGColor
+        button.layer.borderWidth = 3
+        button.layer.masksToBounds = true
+        button.adjustsImageWhenHighlighted = false
+        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), forControlEvents: .TouchUpInside)
+        return button
     }()
     
     /// 昵称

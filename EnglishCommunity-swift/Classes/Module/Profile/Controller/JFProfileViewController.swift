@@ -345,7 +345,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
     /**
      头像按钮点击
      */
-    func didTappedAvatarButton() {
+    func didTappedAvatarButton(button: UIButton) {
         if isLogin(self) {
             let alertC = UIAlertController()
             let takeAction = UIAlertAction(title: "拍照", style: UIAlertActionStyle.Default, handler: { (action) in
@@ -370,6 +370,11 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
             alertC.addAction(takeAction)
             alertC.addAction(photoLibraryAction)
             alertC.addAction(cancelAction)
+            if iPhoneModel.getCurrentModel() == .iPad {
+                let popover = alertC.popoverPresentationController
+                popover?.sourceView = button
+                popover?.sourceRect = button.bounds
+            }
             self.presentViewController(alertC, animated: true, completion: {})
         }
     }

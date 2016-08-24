@@ -219,6 +219,7 @@ class JFPublishViewController: UIViewController {
      话题 #话题#
      */
     func trend() {
+        textView.becomeFirstResponder()
         let selectStart = textView.selectedRange.location + 1
         textView.insertText("#请输入教程标题或话题#")
         textView.selectedRange = NSRange(location: selectStart, length: 10)

@@ -111,7 +111,7 @@ class JFAccountModel: NSObject, NSCoding {
         do {
             try NSFileManager.defaultManager().removeItemAtPath(JFAccountModel.accountPath)
         } catch {
-            print("退出异常")
+//            print("退出异常")
         }
     }
     
@@ -127,7 +127,6 @@ class JFAccountModel: NSObject, NSCoding {
             // 获取当前时间的时间戳
             let nowTime = NSDate().timeIntervalSince1970
             if nowTime > NSTimeInterval(expiryTime) {
-                print("账号登录过期", nowTime, expiryTime)
                 JFAccountModel.logout()
             }
         }

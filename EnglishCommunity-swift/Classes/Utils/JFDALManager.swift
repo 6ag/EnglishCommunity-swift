@@ -23,7 +23,6 @@ class JFDALManager: NSObject {
         
         // 计算过期时间
         let overDate = NSDate(timeIntervalSinceNow: -timeInterval)
-        print("时间低于 \(overDate) 的都清除")
         
         // 记录时间格式 2016-06-13 02:29:37
         let df = NSDateFormatter()
@@ -35,7 +34,7 @@ class JFDALManager: NSObject {
         
         JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) -> Void in
             if db.executeStatements(sql) {
-                print("清除缓存数据成功")
+//                print("清除缓存数据成功")
             }
         }
     }

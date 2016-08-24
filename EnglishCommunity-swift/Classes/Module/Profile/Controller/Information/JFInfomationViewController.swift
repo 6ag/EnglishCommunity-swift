@@ -61,8 +61,6 @@ class JFInfomationViewController: JFBaseTableViewController {
                     if success {
                         self.updateHeaderData()
                         self.navigationController?.popViewControllerAnimated(true)
-                    } else {
-                        print("更新头像失败")
                     }
                 })
             }
@@ -243,8 +241,6 @@ extension JFInfomationViewController: UINavigationControllerDelegate, UIImagePic
                 JFAccountModel.getSelfUserInfo({ (success) in
                     if success {
                         self.updateHeaderData()
-                    } else {
-                        print("更新头像失败")
                     }
                 })
             }

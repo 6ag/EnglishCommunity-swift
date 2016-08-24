@@ -36,7 +36,6 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
-//                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
@@ -60,7 +59,6 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
-//                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
@@ -79,7 +77,6 @@ extension JFNetworkTools {
     func getWithToken(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
         
         guard let token = JFAccountModel.shareAccount()?.token else {
-            print("没有登录")
             return
         }
         
@@ -91,7 +88,6 @@ extension JFNetworkTools {
                 if json["code"].intValue >= 4000 {
                     JFAccountModel.logout()
                 }
-//                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
@@ -111,7 +107,6 @@ extension JFNetworkTools {
     func postWithToken(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
         
         guard let token = JFAccountModel.shareAccount()?.token else {
-            print("没有登录")
             return
         }
         
@@ -123,7 +118,6 @@ extension JFNetworkTools {
                 if json["code"].intValue >= 4000 {
                     JFAccountModel.logout()
                 }
-//                print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")

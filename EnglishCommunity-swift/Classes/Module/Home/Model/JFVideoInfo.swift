@@ -51,6 +51,44 @@ class JFVideoInfo: NSObject {
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
     
     /**
+     搜索视频信息列表
+     
+     - parameter keyword:  搜索关键词
+     - parameter page:     页码
+     - parameter count:    每页数量
+     - parameter finished: 完成回调
+     */
+    class func searchVideoInfoList(keyword: String, page: Int, count: Int = 10, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
+        
+        let parameters: [String : AnyObject] = [
+            "keyword" : keyword,
+            "page" : page,
+            "count" : count
+        ]
+        
+        JFNetworkTools.shareNetworkTool.get(SEARCH_VIDEO_INFO_LIST, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result else {
+                finished(videoInfos: nil)
+                return
+            }
+            
+            if result["status"] == "success" {
+                let data = result["result"]["data"].arrayObject as! [[String : AnyObject]]
+                var videoInfos = [JFVideoInfo]()
+                for dict in data {
+                    videoInfos.append(JFVideoInfo(dict: dict))
+                }
+                finished(videoInfos: videoInfos)
+            } else {
+                JFProgressHUD.showInfoWithStatus(result["message"].stringValue)
+                finished(videoInfos: nil)
+            }
+            
+        }
+    }
+    
+    /**
      加载视频信息列表
      
      - parameter page:        当前页码

@@ -104,6 +104,7 @@ func setupFooterRefresh(target: AnyObject, action: Selector) -> MJRefreshFooter 
     let footerRefresh = MJRefreshBackNormalFooter(refreshingTarget: target, refreshingAction: action)
     footerRefresh.automaticallyHidden = true
     footerRefresh.setTitle("正在加载", forState: MJRefreshState.Refreshing)
+    footerRefresh.setTitle("可以松开了", forState: MJRefreshState.Pulling)
     footerRefresh.setTitle("上拉加载更多", forState: MJRefreshState.Idle)
     footerRefresh.setTitle("没有啦~~~", forState: MJRefreshState.NoMoreData)
     return footerRefresh

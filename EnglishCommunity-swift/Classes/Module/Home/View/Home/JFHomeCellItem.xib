@@ -57,6 +57,7 @@
             </variation>
             <connections>
                 <outlet property="bgView" destination="u8M-jm-pKd" id="8S7-Wc-GLv"/>
+                <outlet property="photoImageConstraint" destination="zzk-Xx-N0x" id="CLO-A5-cYq"/>
                 <outlet property="photoImageView" destination="Jyx-Jp-4Mt" id="Cdu-Zi-gxt"/>
                 <outlet property="titleLabel" destination="Tm0-qu-N0B" id="XMj-VR-cTj"/>
             </connections>

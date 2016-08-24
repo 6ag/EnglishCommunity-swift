@@ -233,7 +233,7 @@ class JFPlayerViewController: UIViewController {
     private func playVideo(videoUrl: String, title: String) {
         
         // 没有设置成流量播放视频  或者 当前不是WiFi状态
-        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() != 1 {
+        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() > 1 {
             
             let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
             let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
@@ -277,7 +277,7 @@ class JFPlayerViewController: UIViewController {
             
             self.videos = videos
             self.videoTableView.reloadData()
-            self.videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: true, scrollPosition: .Top)
+            self.videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .None)
             self.playVideo(videos[0].videoUrl!, title: videos[0].title!)
         }
     }
@@ -603,7 +603,7 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      */
     func didTappedDownloadButton(button: UIButton) {
         
-        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_DOWNLOAD) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() != 1 {
+        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_DOWNLOAD) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() > 1 {
             
             let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续下载会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
             let continuePlay = UIAlertAction(title: "继续下载", style: UIAlertActionStyle.Destructive, handler: { (acion) in

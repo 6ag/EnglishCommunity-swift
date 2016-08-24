@@ -10,7 +10,7 @@ import UIKit
 
 protocol JFProfileHeaderViewDelegate: NSObjectProtocol {
     
-    func didTappedAvatarButton()
+    func didTappedAvatarButton(button: UIButton)
     func didTappedDownloadButton()
     func didTappedFriendButton()
     func didTappedMessageButton()
@@ -24,7 +24,7 @@ class JFProfileHeaderView: UIView {
     weak var delegate: JFProfileHeaderViewDelegate?
     
     @IBAction func didTappedAvatarButton() {
-        delegate?.didTappedAvatarButton()
+        delegate?.didTappedAvatarButton(avatarButton)
     }
     
     @IBAction func didTappedDownloadButton() {
