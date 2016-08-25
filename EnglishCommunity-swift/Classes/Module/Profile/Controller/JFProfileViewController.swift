@@ -40,10 +40,14 @@ class JFProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
         
+        // 更新头部信息
+        updateHeaderData()
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         updateData()
     }
     
@@ -79,9 +83,6 @@ class JFProfileViewController: UIViewController {
      更新数据
      */
     private func updateData() {
-        
-        // 更新头部信息
-        updateHeaderData()
         
         // 更新收藏
         page = 1

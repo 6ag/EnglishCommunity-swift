@@ -109,6 +109,7 @@ extension JFTabBarController: JFTabBarDelegate {
      点击了发布按钮
      */
     func didTappedAddButton() {
+        
         let publishVc = JFNavigationController(rootViewController: JFPublishViewController())
         let loginVc = JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil))
         let vc = JFAccountModel.isLogin() ? publishVc : loginVc

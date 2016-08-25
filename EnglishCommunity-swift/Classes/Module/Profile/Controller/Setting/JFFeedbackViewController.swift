@@ -33,6 +33,7 @@ class JFFeedbackViewController: JFBaseTableViewController {
         headerView.addSubview(contactTextField)
         headerView.addSubview(commitButton)
         tableView.tableHeaderView = headerView
+        
     }
     
     /**

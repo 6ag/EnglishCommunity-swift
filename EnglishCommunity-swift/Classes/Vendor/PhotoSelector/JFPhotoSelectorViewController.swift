@@ -122,6 +122,7 @@ class JFPhotoSelectorViewController: UICollectionViewController, JFPhotoSelector
         photos.removeAtIndex(indexPath.item)
         collectionView?.reloadData()
     }
+    
 }
 
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate

@@ -36,7 +36,7 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
-                print(json)
+                // print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
@@ -60,7 +60,7 @@ extension JFNetworkTools {
             
             if let data = response.data {
                 let json = JSON(data: data)
-                print(json)
+                // print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
@@ -90,7 +90,7 @@ extension JFNetworkTools {
                 if json["code"].intValue >= 4000 {
                     JFAccountModel.logout()
                 }
-                print(json)
+                // print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
@@ -121,7 +121,7 @@ extension JFNetworkTools {
                 if json["code"].intValue >= 4000 {
                     JFAccountModel.logout()
                 }
-                print(json)
+                // print(json)
                 finished(success: true, result: json, error: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus("您的网络不给力哦")

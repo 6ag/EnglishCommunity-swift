@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class JFCategoryViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class JFCategoryViewController: UIViewController {
     var videoInfos = [JFVideoInfo]()
     
     let categoryIdentifier = "JFCategoryCell"
+    let adIdentifier = "adIdentifier"
     
     var category: JFVideoCategory? {
         didSet {
@@ -99,6 +101,7 @@ class JFCategoryViewController: UIViewController {
         tableView.rowHeight = 84
         tableView.backgroundColor = COLOR_ALL_BG
         tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.categoryIdentifier)
+        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: self.adIdentifier)
         return tableView
     }()
 }
@@ -111,16 +114,40 @@ extension JFCategoryViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(categoryIdentifier) as! JFCategoryListCell
-        cell.videoInfo = videoInfos[indexPath.row]
-        return cell
+        
+        // 每隔10个创建一个广告
+        if indexPath.row % 10 == 0 && indexPath.row != 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(adIdentifier)!
+            let nativeView = JFAdManager.shareDbManager().getNativeView(self)
+            nativeView.backgroundColor = COLOR_ALL_CELL_NORMAL
+            cell.contentView.addSubview(nativeView)
+            nativeView.snp_makeConstraints(closure: { (make) in
+                make.edges.equalTo(cell.contentView)
+            })
+            cell.contentView.backgroundColor = COLOR_ALL_CELL_NORMAL
+            return cell
+        } else {
+            let videoInfo = videoInfos[indexPath.row - indexPath.row / 10]
+            let cell = tableView.dequeueReusableCellWithIdentifier(categoryIdentifier) as! JFCategoryListCell
+            cell.videoInfo = videoInfo
+            return cell
+        }
+        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let playerVc = JFPlayerViewController()
-        playerVc.videoInfo = videoInfos[indexPath.item]
-        navigationController?.pushViewController(playerVc, animated: true)
+        
+        if indexPath.row % 10 == 0 && indexPath.row != 0 {
+            // 点击了广告
+        } else {
+            // 点击了视频信息cell
+            let videoInfo = videoInfos[indexPath.row - indexPath.row / 10]
+            let playerVc = JFPlayerViewController()
+            playerVc.videoInfo = videoInfo
+            navigationController?.pushViewController(playerVc, animated: true)
+        }
+        
     }
     
 }

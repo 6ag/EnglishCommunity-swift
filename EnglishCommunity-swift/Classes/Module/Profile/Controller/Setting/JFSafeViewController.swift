@@ -59,7 +59,7 @@ class JFSafeViewController: JFBaseTableViewController {
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 1 {
-            return 30
+            return 45
         } else {
             return 0.1
         }

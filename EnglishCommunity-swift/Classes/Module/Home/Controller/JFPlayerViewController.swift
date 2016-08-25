@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 import NVActivityIndicatorView
 import YYWebImage
+import Firebase
+import GoogleMobileAds
 
 class JFPlayerViewController: UIViewController {
     
@@ -31,32 +33,14 @@ class JFPlayerViewController: UIViewController {
     /// 视频列表评论标识
     let videoCellIdentifier = "videoCellIdentifier"
     
+    // 插页广告
+    var interstitial: GADInterstitial!
+    
     /// 视频播放节点
     var nodeIndex = 0 {
         didSet (oldValue) {
             if nodeIndex != oldValue {
-                guard let index = videoTableView.indexPathForSelectedRow?.row else {
-                    return
-                }
-                
-                // 获取选中的cell的模型
-                let video = videos[index]
-                
-                if nodeIndex == 0 {
-                    
-                    // app节点，使用app播放器播放
-                    playVideo(video)
-                    
-                } else if nodeIndex == 1 {
-                    
-                    // web节点，使用web播放器播放
-                    player.prepareToDealloc()
-                    let webPlayerVc = JFWebPlayerViewController()
-                    webPlayerVc.video = video
-                    navigationController?.pushViewController(webPlayerVc, animated: true)
-                    
-                }
-                
+                playVideoOfNodeIndex()
             }
         }
     }
@@ -84,6 +68,9 @@ class JFPlayerViewController: UIViewController {
         
         // 重置播放器
         resetPlayerManager()
+        
+        // 创建并加载插页广告
+        interstitial = createAndLoadInterstitial()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -262,10 +249,24 @@ class JFPlayerViewController: UIViewController {
      */
     private func playVideo(video: JFVideo) {
         
+        // 弹出插页广告
+        if interstitial.isReady {
+            interstitial.presentFromRootViewController(self)
+            return
+        }
+        
         if nodeIndex == 0 { // 节点0 使用m3u8方式播放
             
-            if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() > 1 {
+            if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
                 
+                JFVideo.parseVideoUrl(video.videoUrl!) { (url) in
+                    guard let url = url else {
+                        JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
+                        return
+                    }
+                    self.player.playWithURL(NSURL(string: url)!, title: video.title!)
+                }
+            } else {
                 let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
                 let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
                     NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
@@ -281,14 +282,6 @@ class JFPlayerViewController: UIViewController {
                 alertC.addAction(continuePlay)
                 alertC.addAction(cancel)
                 presentViewController(alertC, animated: true, completion: nil)
-            } else {
-                JFVideo.parseVideoUrl(video.videoUrl!) { (url) in
-                    guard let url = url else {
-                        JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
-                        return
-                    }
-                    self.player.playWithURL(NSURL(string: url)!, title: video.title!)
-                }
             }
             
         } else if nodeIndex == 1 { // 节点1 使用网页播放
@@ -353,6 +346,29 @@ class JFPlayerViewController: UIViewController {
             self.commentTableView.reloadData()
         }
         
+    }
+    
+    /**
+     根据节点和视频模型播放视频
+     */
+    private func playVideoOfNodeIndex() {
+        
+        guard let index = videoTableView.indexPathForSelectedRow?.row else {
+            return
+        }
+        
+        // 获取选中的cell的模型
+        let video = videos[index]
+        
+        if nodeIndex == 0 {
+            playVideo(video)
+        } else if nodeIndex == 1 {
+            // web节点，使用web播放器播放
+            player.prepareToDealloc()
+            let webPlayerVc = JFWebPlayerViewController()
+            webPlayerVc.video = video
+            navigationController?.pushViewController(webPlayerVc, animated: true)
+        }
     }
     
     /**
@@ -475,6 +491,31 @@ class JFPlayerViewController: UIViewController {
         view.delegate = self
         return view
     }()
+    
+}
+
+// MARK: - GADInterstitialDelegate 插页广告相关方法
+extension JFPlayerViewController: GADInterstitialDelegate {
+    
+    /**
+     当插页广告dismiss后初始化插页广告对象
+     */
+    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+        playVideoOfNodeIndex()
+        interstitial = createAndLoadInterstitial()
+    }
+    
+    /**
+     初始化插页广告
+     
+     - returns: 插页广告对象
+     */
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: INTERSTITIAL_UNIT_ID)
+        interstitial.delegate = self
+        interstitial.loadRequest(GADRequest())
+        return interstitial
+    }
     
 }
 
@@ -650,8 +691,12 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      */
     func didTappedDownloadButton(button: UIButton) {
         
-        if !NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_DOWNLOAD) && JFNetworkTools.shareNetworkTool.getCurrentNetworkState() > 1 {
-            
+        if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_DOWNLOAD) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
+            let videoDownloadVc = JFVideoDownloadViewController()
+            videoDownloadVc.videos = videos
+            videoDownloadVc.videoInfo = videoInfo
+            presentViewController(videoDownloadVc, animated: true, completion: nil)
+        } else {
             let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续下载会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
             let continuePlay = UIAlertAction(title: "继续下载", style: UIAlertActionStyle.Destructive, handler: { (acion) in
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_DOWNLOAD)
@@ -664,12 +709,8 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
             alertC.addAction(continuePlay)
             alertC.addAction(cancel)
             presentViewController(alertC, animated: true, completion: nil)
-        } else {
-            let videoDownloadVc = JFVideoDownloadViewController()
-            videoDownloadVc.videos = videos
-            videoDownloadVc.videoInfo = videoInfo
-            presentViewController(videoDownloadVc, animated: true, completion: nil)
         }
+        
         
     }
     
