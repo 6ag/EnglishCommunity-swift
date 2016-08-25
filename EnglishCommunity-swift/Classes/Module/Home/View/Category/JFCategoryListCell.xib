@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="84"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="83.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="83"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7CJ-we-xXc">
@@ -46,11 +46,17 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tl4-Zm-m2C" userLabel="lineView">
-                        <rect key="frame" x="0.0" y="82" width="375" height="1"/>
-                        <color key="backgroundColor" red="0.94509803921568625" green="0.95686274509803915" blue="0.97254901960784312" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="0.0" y="81" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="98J-wA-X7e"/>
+                            <constraint firstAttribute="height" constant="1" id="JwC-Pu-XA6"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="98J-wA-X7e"/>
+                            </mask>
+                        </variation>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="谢孟媛" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iar-8r-5cD">
                         <rect key="frame" x="139" y="37" width="36" height="15"/>
@@ -60,12 +66,15 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="tl4-Zm-m2C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="2Cy-1b-K4V"/>
                     <constraint firstItem="sru-zl-cu4" firstAttribute="leading" secondItem="7CJ-we-xXc" secondAttribute="trailing" constant="10" id="B8C-cd-FpA"/>
-                    <constraint firstAttribute="bottom" secondItem="tl4-Zm-m2C" secondAttribute="bottom" id="BWx-sv-LPb"/>
+                    <constraint firstAttribute="bottom" secondItem="tl4-Zm-m2C" secondAttribute="bottom" constant="1" id="BWx-sv-LPb"/>
+                    <constraint firstAttribute="bottom" secondItem="tl4-Zm-m2C" secondAttribute="bottom" constant="1" id="DYb-G1-1FC"/>
                     <constraint firstItem="sru-zl-cu4" firstAttribute="top" secondItem="7CJ-we-xXc" secondAttribute="top" id="Jl3-Oy-lu2"/>
                     <constraint firstAttribute="trailing" secondItem="tl4-Zm-m2C" secondAttribute="trailing" id="M8H-K7-qSQ"/>
                     <constraint firstItem="i2A-Y7-0l9" firstAttribute="bottom" secondItem="lQc-A6-Dvp" secondAttribute="bottom" id="PbP-KL-yL6"/>
                     <constraint firstAttribute="trailing" secondItem="i2A-Y7-0l9" secondAttribute="trailing" constant="12" id="SYa-Qw-z4z"/>
+                    <constraint firstAttribute="trailing" secondItem="tl4-Zm-m2C" secondAttribute="trailing" id="TIR-7D-Xk6"/>
                     <constraint firstItem="lQc-A6-Dvp" firstAttribute="bottom" secondItem="7CJ-we-xXc" secondAttribute="bottom" id="ViO-Un-UdH"/>
                     <constraint firstAttribute="bottom" secondItem="7CJ-we-xXc" secondAttribute="bottom" constant="10" id="Y8d-pT-J6X"/>
                     <constraint firstItem="tl4-Zm-m2C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aOV-Qp-LOZ"/>
@@ -80,6 +89,9 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="BWx-sv-LPb"/>
+                        <exclude reference="M8H-K7-qSQ"/>
+                        <exclude reference="aOV-Qp-LOZ"/>
                         <exclude reference="q09-8o-lod"/>
                     </mask>
                 </variation>
