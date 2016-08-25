@@ -9,7 +9,7 @@
 import Foundation
 
 /// 基URL
-let BASE_URL = "http://www.english.com/"
+let BASE_URL = "http://english.6ag.cn/"
 
 /// 发送手机验证码
 let SEND_CODE = "api/auth/seedCode.api"
