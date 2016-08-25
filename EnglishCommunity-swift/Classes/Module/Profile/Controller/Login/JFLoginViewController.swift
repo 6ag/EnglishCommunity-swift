@@ -18,12 +18,16 @@ class JFLoginViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
+    let buttonColorNormal = UIColor.colorWithHexString("00ac59")
+    let buttonColorDisabled = UIColor.colorWithHexString("6d8579")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
-        effectView.frame = SCREEN_BOUNDS
-        bgImageView.addSubview(effectView)
+        usernameView.layer.borderColor = UIColor.whiteColor().CGColor
+        usernameView.layer.borderWidth = 0.5
+        passwordView.layer.borderColor = UIColor.whiteColor().CGColor
+        passwordView.layer.borderWidth = 0.5
         
         // 设置保存的账号
         usernameField.text = NSUserDefaults.standardUserDefaults().objectForKey("username") as? String
@@ -66,10 +70,10 @@ class JFLoginViewController: UIViewController {
         
         if usernameField.text?.characters.count >= 5 && passwordField.text?.characters.count > 5 {
             loginButton.enabled = true
-            loginButton.backgroundColor = UIColor(red: 32/255.0, green: 170/255.0, blue: 238/255.0, alpha: 1)
+            loginButton.backgroundColor = buttonColorNormal
         } else {
             loginButton.enabled = false
-            loginButton.backgroundColor = UIColor.grayColor()
+            loginButton.backgroundColor = buttonColorDisabled
         }
     }
     

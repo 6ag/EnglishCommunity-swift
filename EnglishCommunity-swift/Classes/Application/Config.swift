@@ -153,7 +153,9 @@ func isLogin(controller: UIViewController) -> Bool {
 let JFDidReceiveRemoteNotificationOfJPush = "JFDidReceiveRemoteNotificationOfJPush"
 
 /// 应用id
-let APPLE_ID = "1146271758"
+//let APPLE_ID = "1146271758"
+
+let APPLE_ID = "1067787090"
 
 /// shareSDK
 let SHARESDK_APP_KEY = "1653cf104db38"
@@ -174,6 +176,6 @@ let WB_REDIRECT_URL = "https://blog.6ag.cn"
 
 /// 极光推送
 let JPUSH_APP_KEY = "1d918a27ec1db14f243a79cf"
-let JPUSH_MASTER_SECRET = "6be3a5f8d0ea165ab2a69632"
+let JPUSH_MASTER_SECRET = "9b9d4eda4d09b413e8159499"
 let JPUSH_CHANNEL = "Publish channel"
 let JPUSH_IS_PRODUCTION = true

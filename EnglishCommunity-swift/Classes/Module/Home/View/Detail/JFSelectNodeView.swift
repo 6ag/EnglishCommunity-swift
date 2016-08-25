@@ -17,6 +17,8 @@ class JFSelectNodeView: UIView {
     
     @IBOutlet weak var appButton: UIButton!
     @IBOutlet weak var webButton: UIButton!
+    let selfWidth = SCREEN_WIDTH * 0.6
+    let selfHeight = SCREEN_WIDTH * 0.11
     
     weak var delegate: JFSelectNodeViewDelegate?
     
@@ -61,12 +63,12 @@ class JFSelectNodeView: UIView {
     func show() {
         UIApplication.sharedApplication().keyWindow?.addSubview(bgView)
         bgView.alpha = 0
-        frame = CGRect(x: (SCREEN_WIDTH - SCREEN_WIDTH * 0.5) * 0.5, y: -40, width: SCREEN_WIDTH * 0.5, height: 40)
+        frame = CGRect(x: (SCREEN_WIDTH - selfWidth) * 0.5, y: -selfHeight, width: selfWidth, height: selfHeight)
         UIApplication.sharedApplication().keyWindow?.addSubview(self)
         
         UIView.animateWithDuration(0.4) {
             self.bgView.alpha = 1
-            self.frame = CGRect(x: (SCREEN_WIDTH - SCREEN_WIDTH * 0.5) * 0.5, y: (SCREEN_HEIGHT - 40) * 0.6, width: SCREEN_WIDTH * 0.5, height: 40)
+            self.frame = CGRect(x: (SCREEN_WIDTH - self.selfWidth) * 0.5, y: (SCREEN_HEIGHT - self.selfHeight) * 0.6, width: self.selfWidth, height: self.selfHeight)
         }
     }
     
@@ -77,7 +79,7 @@ class JFSelectNodeView: UIView {
         
         UIView.animateWithDuration(0.25, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: { 
             self.bgView.alpha = 0
-            self.frame = CGRect(x: (SCREEN_WIDTH - SCREEN_WIDTH * 0.5) * 0.5, y: SCREEN_HEIGHT, width: SCREEN_WIDTH * 0.5, height: 40)
+            self.frame = CGRect(x: (SCREEN_WIDTH - self.selfWidth) * 0.5, y: SCREEN_HEIGHT, width: self.selfWidth, height: self.selfHeight)
             }) { (_) in
                 self.bgView.removeFromSuperview()
                 self.removeFromSuperview()

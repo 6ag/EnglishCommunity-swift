@@ -87,6 +87,7 @@
 		B2190B0B1D4F85C4007FC0E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2190B091D4F85C4007FC0E9 /* LaunchScreen.storyboard */; };
 		B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2224BF61D55A4FD005CEAE4 /* JFDetailVideoCell.swift */; };
 		B2224BF91D55A4FD005CEAE4 /* JFDetailVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2224BF71D55A4FD005CEAE4 /* JFDetailVideoCell.xib */; };
+		B22AD8CE1D6F392100B0DC05 /* LBToAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B22AD8CD1D6F392100B0DC05 /* LBToAppStore.m */; };
 		B238B40E1D5D991400E4307A /* JFGrammarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B40B1D5D991400E4307A /* JFGrammarViewController.swift */; };
 		B238B4121D5D9B2700E4307A /* JFGrammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4111D5D9B2700E4307A /* JFGrammar.swift */; };
 		B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */; };
@@ -294,6 +295,8 @@
 		B2190B0C1D4F85C4007FC0E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2224BF61D55A4FD005CEAE4 /* JFDetailVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDetailVideoCell.swift; sourceTree = "<group>"; };
 		B2224BF71D55A4FD005CEAE4 /* JFDetailVideoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFDetailVideoCell.xib; sourceTree = "<group>"; };
+		B22AD8CC1D6F392100B0DC05 /* LBToAppStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBToAppStore.h; sourceTree = "<group>"; };
+		B22AD8CD1D6F392100B0DC05 /* LBToAppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBToAppStore.m; sourceTree = "<group>"; };
 		B238B40B1D5D991400E4307A /* JFGrammarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarViewController.swift; sourceTree = "<group>"; };
 		B238B4111D5D9B2700E4307A /* JFGrammar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammar.swift; sourceTree = "<group>"; };
 		B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarListCell.swift; sourceTree = "<group>"; };
@@ -1004,6 +1007,8 @@
 		B28D93DC1D534AA700128D20 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B22AD8CC1D6F392100B0DC05 /* LBToAppStore.h */,
+				B22AD8CD1D6F392100B0DC05 /* LBToAppStore.m */,
 				B2887D831D6D8BD1009CB44B /* Reachability.h */,
 				B2887D841D6D8BD1009CB44B /* Reachability.m */,
 				B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */,
@@ -1471,6 +1476,7 @@
 				B2024E5C1D6EBCF9006C1037 /* JFAdManager.swift in Sources */,
 				B2FC66CF1D5C15DF0032703D /* JFProfileHeaderView.swift in Sources */,
 				B2156C951D66B1EF0033DBB6 /* JFProfileCellLabelModel.swift in Sources */,
+				B22AD8CE1D6F392100B0DC05 /* LBToAppStore.m in Sources */,
 				B2DA01241D6567000095AB7D /* JFDetailBottomBarView.swift in Sources */,
 				B2F50AB51D646694006A91E6 /* UIColorExtension.swift in Sources */,
 				B2FC66E11D5C67510032703D /* NSDateExtension.swift in Sources */,

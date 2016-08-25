@@ -42,6 +42,34 @@ class JFHomeViewController: UIViewController {
         topScrollView?.adjustWhenControllerViewWillAppera()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        showAppstoreTip()
+    }
+    
+    /**
+     弹出提示让用户去评论
+     */
+    private func showAppstoreTip() {
+        
+        // 在当前时间往后的1天后提示
+        let tipTime = NSUserDefaults.standardUserDefaults().doubleForKey("tipToAppstore")
+        
+        // 设置第一次弹出提示的时间
+        if tipTime < 1 {
+            NSUserDefaults.standardUserDefaults().setDouble(NSDate().timeIntervalSince1970 + 86400, forKey: "tipToAppstore")
+        }
+        
+        // 当前时间超过了规定时间就弹出提示
+        let nowTime = NSDate().timeIntervalSince1970
+        if nowTime > NSTimeInterval(NSUserDefaults.standardUserDefaults().doubleForKey("tipToAppstore")) {
+            let appstore = LBToAppStore()
+            appstore.myAppID = APPLE_ID
+            appstore.showGotoAppStore(self)
+        }
+        
+    }
+    
     /**
      处理接收到的远程通知处理
      */

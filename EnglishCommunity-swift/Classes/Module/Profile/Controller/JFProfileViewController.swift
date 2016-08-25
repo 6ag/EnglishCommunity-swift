@@ -73,7 +73,7 @@ class JFProfileViewController: UIViewController {
         placeholderButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(tableView)
             make.centerY.equalTo(tableView).offset(40)
-            make.size.equalTo(CGSize(width: SCREEN_WIDTH - 100, height: 100))
+            make.size.equalTo(CGSize(width: SCREEN_WIDTH - 50, height: 150))
         }
         
         changePlaceholderButton()
@@ -140,7 +140,7 @@ class JFProfileViewController: UIViewController {
             headerView.nameLabel.text = JFAccountModel.shareAccount()!.nickname!
         } else {
             headerView.avatarButton.setBackgroundImage(UIImage(named: "default－portrait"), forState: UIControlState.Normal)
-            headerView.nameLabel.text = "登录后可以缓存视频哦"
+            headerView.nameLabel.text = "点击登录"
         }
     }
     

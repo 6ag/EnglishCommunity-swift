@@ -24,23 +24,15 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_background" translatesAutoresizingMaskIntoConstraints="NO" id="3c9-WF-cFh">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mni-0R-m28">
-                    <rect key="frame" x="30" y="376" width="540" height="44"/>
-                    <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nq-HZ-t5H">
+                    <rect key="frame" x="5" y="20" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="DCM-dw-Ohm"/>
+                        <constraint firstAttribute="width" constant="44" id="RXV-BB-NXh"/>
+                        <constraint firstAttribute="height" constant="44" id="iaz-Os-dNQ"/>
                     </constraints>
-                    <state key="normal" title="找回密码">
-                        <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="22"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                    </userDefinedRuntimeAttributes>
+                    <state key="normal" image="top_navigation_back_normal"/>
                     <connections>
-                        <action selector="didTappedRetrieveButton:" destination="-1" eventType="touchUpInside" id="Dir-qH-j7N"/>
+                        <action selector="didTappedBackButton" destination="-1" eventType="touchUpInside" id="p1x-OM-RgB"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ky-ZD-7Vw" userLabel="email">
@@ -48,6 +40,7 @@
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="邮箱" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Heo-Ga-JcZ">
                             <rect key="frame" x="20" y="0.0" width="500" height="44"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             <connections>
@@ -55,7 +48,7 @@
                             </connections>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Heo-Ga-JcZ" secondAttribute="trailing" constant="20" id="Fj0-D9-8xX"/>
                         <constraint firstAttribute="bottom" secondItem="Heo-Ga-JcZ" secondAttribute="bottom" id="dhh-rx-dmV"/>
@@ -69,22 +62,12 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nq-HZ-t5H">
-                    <rect key="frame" x="5" y="20" width="44" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="44" id="RXV-BB-NXh"/>
-                        <constraint firstAttribute="height" constant="44" id="iaz-Os-dNQ"/>
-                    </constraints>
-                    <state key="normal" image="top_navigation_back_normal"/>
-                    <connections>
-                        <action selector="didTappedBackButton" destination="-1" eventType="touchUpInside" id="p1x-OM-RgB"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3Z-ak-SdY" userLabel="username">
                     <rect key="frame" x="30" y="248" width="540" height="44"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vkY-to-v8I" userLabel="username">
                             <rect key="frame" x="20" y="0.0" width="500" height="44"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -92,7 +75,7 @@
                             </connections>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="vkY-to-v8I" secondAttribute="bottom" id="FWf-j0-Dua"/>
                         <constraint firstItem="vkY-to-v8I" firstAttribute="leading" secondItem="w3Z-ak-SdY" secondAttribute="leading" constant="20" id="ITu-Oz-tPZ"/>
@@ -106,6 +89,26 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mni-0R-m28">
+                    <rect key="frame" x="30" y="376" width="540" height="44"/>
+                    <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="DCM-dw-Ohm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="找回密码">
+                        <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="22"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didTappedRetrieveButton:" destination="-1" eventType="touchUpInside" id="Dir-qH-j7N"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -129,7 +132,7 @@
         </view>
     </objects>
     <resources>
-        <image name="login_background" width="284" height="505"/>
+        <image name="login_background" width="375" height="667"/>
         <image name="top_navigation_back_normal" width="9" height="16"/>
     </resources>
 </document>

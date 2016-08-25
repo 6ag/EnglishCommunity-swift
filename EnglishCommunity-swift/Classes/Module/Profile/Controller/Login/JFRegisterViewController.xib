@@ -32,6 +32,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="DCM-dw-Ohm"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="注册">
                         <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </state>
@@ -50,6 +51,7 @@
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vkY-to-v8I" userLabel="username">
                             <rect key="frame" x="20" y="0.0" width="500" height="44"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -57,7 +59,7 @@
                             </connections>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="vkY-to-v8I" firstAttribute="top" secondItem="w3Z-ak-SdY" secondAttribute="top" id="4Bs-ri-zXQ"/>
                         <constraint firstAttribute="bottom" secondItem="vkY-to-v8I" secondAttribute="bottom" id="Yzc-cL-JEe"/>
@@ -76,6 +78,7 @@
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="J1C-5O-bEL" userLabel="password">
                             <rect key="frame" x="20" y="0.0" width="500" height="44"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             <connections>
@@ -83,7 +86,7 @@
                             </connections>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="5nz-eW-iZs"/>
                         <constraint firstItem="J1C-5O-bEL" firstAttribute="top" secondItem="if3-Tf-GPB" secondAttribute="top" id="Kzt-h2-C5V"/>
@@ -102,6 +105,7 @@
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="再次输入密码" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sN2-kB-kBy" userLabel="password">
                             <rect key="frame" x="20" y="0.0" width="500" height="44"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             <connections>
@@ -109,7 +113,7 @@
                             </connections>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="sN2-kB-kBy" firstAttribute="leading" secondItem="3q3-fM-G63" secondAttribute="leading" constant="20" id="O6N-7n-EPt"/>
                         <constraint firstAttribute="height" constant="44" id="Qf9-ZW-tgU"/>
@@ -160,7 +164,7 @@
         </view>
     </objects>
     <resources>
-        <image name="login_background" width="284" height="505"/>
+        <image name="login_background" width="375" height="667"/>
         <image name="top_navigation_back_normal" width="9" height="16"/>
     </resources>
 </document>

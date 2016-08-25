@@ -12,29 +12,25 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jXF-qb-Ddq">
-                    <rect key="frame" x="0.0" y="0.0" width="163" height="59"/>
-                    <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="0.0" y="0.0" width="158" height="59"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                    <state key="normal" title="app"/>
-                    <state key="selected">
-                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
+                    <state key="normal" backgroundImage="node_app_normal"/>
+                    <state key="selected" backgroundImage="node_app_selected"/>
                     <connections>
                         <action selector="didTappedAppButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="7LH-nc-fEe"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4qH-pH-P0Y">
-                    <rect key="frame" x="183" y="0.0" width="163" height="59"/>
-                    <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="188" y="0.0" width="158" height="59"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="101" id="5Yw-ce-yYt"/>
                         <constraint firstAttribute="height" constant="30" id="kK8-Q4-xGD"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                    <state key="normal" title="web"/>
-                    <state key="selected">
-                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
+                    <state key="normal" backgroundImage="node_web_normal"/>
+                    <state key="selected" backgroundImage="node_web_selected"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="5Yw-ce-yYt"/>
@@ -48,7 +44,7 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="4qH-pH-P0Y" firstAttribute="leading" secondItem="jXF-qb-Ddq" secondAttribute="trailing" constant="20" id="1Av-hw-ePb"/>
+                <constraint firstItem="4qH-pH-P0Y" firstAttribute="leading" secondItem="jXF-qb-Ddq" secondAttribute="trailing" constant="30" id="1Av-hw-ePb"/>
                 <constraint firstAttribute="trailing" secondItem="4qH-pH-P0Y" secondAttribute="trailing" id="4OM-lz-3PG"/>
                 <constraint firstItem="4qH-pH-P0Y" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6mW-uK-VuU"/>
                 <constraint firstItem="jXF-qb-Ddq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Fev-bO-VZ8"/>
@@ -57,7 +53,7 @@
                 <constraint firstAttribute="bottom" secondItem="4qH-pH-P0Y" secondAttribute="bottom" id="YL0-bq-tfb"/>
                 <constraint firstAttribute="bottom" secondItem="jXF-qb-Ddq" secondAttribute="bottom" id="YjP-Td-P32"/>
                 <constraint firstItem="4qH-pH-P0Y" firstAttribute="width" secondItem="jXF-qb-Ddq" secondAttribute="width" id="fUo-QZ-U00"/>
-                <constraint firstItem="4qH-pH-P0Y" firstAttribute="leading" secondItem="jXF-qb-Ddq" secondAttribute="trailing" constant="20" id="t2e-lY-4uh"/>
+                <constraint firstItem="4qH-pH-P0Y" firstAttribute="leading" secondItem="jXF-qb-Ddq" secondAttribute="trailing" constant="30" id="t2e-lY-4uh"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -68,4 +64,10 @@
             <point key="canvasLocation" x="386" y="290.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="node_app_normal" width="83" height="31"/>
+        <image name="node_app_selected" width="83" height="31"/>
+        <image name="node_web_normal" width="83" height="31"/>
+        <image name="node_web_selected" width="83" height="31"/>
+    </resources>
 </document>

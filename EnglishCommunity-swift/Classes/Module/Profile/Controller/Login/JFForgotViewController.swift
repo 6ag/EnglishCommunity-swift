@@ -16,14 +16,16 @@ class JFForgotViewController: UIViewController {
     @IBOutlet weak var emailView: UIView!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var retrieveButton: UIButton!
+    let buttonColorNormal = UIColor.colorWithHexString("00ac59")
+    let buttonColorDisabled = UIColor.colorWithHexString("6d8579")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
-        effectView.frame = SCREEN_BOUNDS
-        bgImageView.addSubview(effectView)
-        
+        usernameView.layer.borderColor = UIColor.whiteColor().CGColor
+        usernameView.layer.borderWidth = 0.5
+        emailView.layer.borderColor = UIColor.whiteColor().CGColor
+        emailView.layer.borderWidth = 0.5
         didChangeTextField(usernameField)
     }
     
@@ -40,10 +42,10 @@ class JFForgotViewController: UIViewController {
     @IBAction func didChangeTextField(sender: UITextField) {
         if usernameField.text?.characters.count >= 5 && emailField.text?.characters.count >= 5 {
             retrieveButton.enabled = true
-            retrieveButton.backgroundColor = COLOR_NAV_BG
+            retrieveButton.backgroundColor = buttonColorNormal
         } else {
             retrieveButton.enabled = false
-            retrieveButton.backgroundColor = UIColor.grayColor()
+            retrieveButton.backgroundColor = buttonColorDisabled
         }
     }
     

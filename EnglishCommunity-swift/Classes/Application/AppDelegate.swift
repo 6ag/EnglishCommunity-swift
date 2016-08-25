@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupShareSDK()           // 配置shareSDK
         setupReachability()       // 配置网络检测
         setupKeyBoardManager()    // 配置键盘管理
-        
         self.launchOptions = launchOptions
+        
         return true
     }
     

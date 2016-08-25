@@ -24,30 +24,12 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_background" translatesAutoresizingMaskIntoConstraints="NO" id="qAE-0F-OrP">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n9Y-EZ-Crd">
-                    <rect key="frame" x="30" y="366" width="540" height="44"/>
-                    <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="KRa-Sa-RPH"/>
-                    </constraints>
-                    <state key="normal" title="登录">
-                        <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="22"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="didTappedLoginButton:" destination="-1" eventType="touchUpInside" id="uOp-5G-yyF"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HVF-gx-bLC" userLabel="username">
                     <rect key="frame" x="30" y="238" width="540" height="44"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名/邮箱/手机号码" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jLO-h7-d4o" userLabel="username">
                             <rect key="frame" x="20" y="0.0" width="500" height="44"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -55,7 +37,7 @@
                             </connections>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="jLO-h7-d4o" secondAttribute="bottom" id="0wY-I3-kfy"/>
                         <constraint firstAttribute="trailing" secondItem="jLO-h7-d4o" secondAttribute="trailing" constant="20" id="1S4-UH-cyx"/>
@@ -74,6 +56,7 @@
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ijr-E0-xRx" userLabel="password">
                             <rect key="frame" x="20" y="0.0" width="500" height="44"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             <connections>
@@ -81,7 +64,7 @@
                             </connections>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="ijr-E0-xRx" secondAttribute="trailing" constant="20" id="4eV-h1-TBB"/>
                         <constraint firstItem="ijr-E0-xRx" firstAttribute="top" secondItem="7WQ-Hc-7ZT" secondAttribute="top" id="7Nb-BR-Lbk"/>
@@ -95,6 +78,26 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n9Y-EZ-Crd">
+                    <rect key="frame" x="30" y="366" width="540" height="44"/>
+                    <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="KRa-Sa-RPH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="登录">
+                        <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="22"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didTappedLoginButton:" destination="-1" eventType="touchUpInside" id="uOp-5G-yyF"/>
+                    </connections>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0J-ra-iPo">
                     <rect key="frame" x="227" y="426" width="52" height="28"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -166,6 +169,13 @@
                         <action selector="didTappedQQLoginButton:" destination="-1" eventType="touchUpInside" id="mPY-zb-IK5"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome" translatesAutoresizingMaskIntoConstraints="NO" id="aXy-Ad-rDQ">
+                    <rect key="frame" x="209" y="163" width="182" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="182" id="8oe-67-2V1"/>
+                        <constraint firstAttribute="height" constant="35" id="EOR-53-0CG"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -177,8 +187,10 @@
                 <constraint firstItem="Ju7-aV-c86" firstAttribute="leading" secondItem="Z0J-ra-iPo" secondAttribute="trailing" constant="20" id="6YC-Ah-JDV"/>
                 <constraint firstItem="n9Y-EZ-Crd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="7sE-L2-Tr7"/>
                 <constraint firstItem="W6E-gI-7ba" firstAttribute="centerY" secondItem="Ju7-aV-c86" secondAttribute="centerY" id="9Bz-NR-WDa"/>
+                <constraint firstItem="HVF-gx-bLC" firstAttribute="top" secondItem="aXy-Ad-rDQ" secondAttribute="bottom" constant="40" id="A6N-Lb-KWB"/>
                 <constraint firstItem="Ju7-aV-c86" firstAttribute="top" secondItem="7WQ-Hc-7ZT" secondAttribute="bottom" constant="84" id="DU8-yR-TDC"/>
                 <constraint firstItem="7WQ-Hc-7ZT" firstAttribute="top" secondItem="HVF-gx-bLC" secondAttribute="bottom" constant="20" id="GEa-OW-K5a"/>
+                <constraint firstItem="aXy-Ad-rDQ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="HVx-xc-J58"/>
                 <constraint firstItem="Jvn-TP-HMe" firstAttribute="centerX" secondItem="Z0J-ra-iPo" secondAttribute="centerX" id="Ijg-ed-V3y"/>
                 <constraint firstItem="n9Y-EZ-Crd" firstAttribute="top" secondItem="7WQ-Hc-7ZT" secondAttribute="bottom" constant="20" id="PlU-BK-vYj"/>
                 <constraint firstItem="Z0J-ra-iPo" firstAttribute="centerY" secondItem="Ju7-aV-c86" secondAttribute="centerY" id="QeQ-b0-08J"/>
@@ -199,9 +211,10 @@
         </view>
     </objects>
     <resources>
+        <image name="Welcome" width="182" height="34"/>
         <image name="account_snslogin_icon_1" width="40" height="40"/>
         <image name="account_snslogin_icon_3" width="40" height="40"/>
-        <image name="login_background" width="284" height="505"/>
+        <image name="login_background" width="375" height="667"/>
         <image name="top_navigation_close" width="20" height="20"/>
     </resources>
 </document>

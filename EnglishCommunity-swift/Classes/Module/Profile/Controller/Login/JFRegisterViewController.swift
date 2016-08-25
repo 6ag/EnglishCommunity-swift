@@ -15,27 +15,27 @@ protocol JFRegisterViewControllerDelegate: NSObjectProtocol {
 class JFRegisterViewController: UIViewController {
     
     @IBOutlet weak var bgImageView: UIImageView!
-    
     @IBOutlet weak var usernameView: UIView!
     @IBOutlet weak var usernameField: UITextField!
-    
     @IBOutlet weak var passwordView1: UIView!
     @IBOutlet weak var passwordField1: UITextField!
-    
     @IBOutlet weak var passwordView2: UIView!
     @IBOutlet weak var passwordField2: UITextField!
-    
     @IBOutlet weak var registerButton: UIButton!
+    let buttonColorNormal = UIColor.colorWithHexString("00ac59")
+    let buttonColorDisabled = UIColor.colorWithHexString("6d8579")
     
     weak var delegate: JFRegisterViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
-        effectView.frame = SCREEN_BOUNDS
-        bgImageView.addSubview(effectView)
-        
+        usernameView.layer.borderColor = UIColor.whiteColor().CGColor
+        usernameView.layer.borderWidth = 0.5
+        passwordView1.layer.borderColor = UIColor.whiteColor().CGColor
+        passwordView1.layer.borderWidth = 0.5
+        passwordView2.layer.borderColor = UIColor.whiteColor().CGColor
+        passwordView2.layer.borderWidth = 0.5
         didChangeTextField(usernameField)
     }
     
@@ -52,10 +52,10 @@ class JFRegisterViewController: UIViewController {
     @IBAction func didChangeTextField(sender: UITextField) {
         if usernameField.text?.characters.count >= 5 && passwordField1.text?.characters.count > 5 && passwordField2.text?.characters.count > 5 {
             registerButton.enabled = true
-            registerButton.backgroundColor = COLOR_NAV_BG
+            registerButton.backgroundColor = buttonColorNormal
         } else {
             registerButton.enabled = false
-            registerButton.backgroundColor = UIColor.grayColor()
+            registerButton.backgroundColor = buttonColorDisabled
         }
     }
     

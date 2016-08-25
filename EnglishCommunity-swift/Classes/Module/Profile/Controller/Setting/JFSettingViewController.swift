@@ -8,6 +8,7 @@
 
 import UIKit
 import YYWebImage
+import StoreKit
 
 class JFSettingViewController: JFBaseTableViewController {
     
@@ -104,10 +105,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group3CellModel2 = JFProfileCellArrowModel(title: "关于作者", destinationVc: JFAboutMeViewController.classForCoder())
             let group3CellModel3 = JFProfileCellArrowModel(title: "应用评价")
             group3CellModel3.operation = { () -> Void in
-                let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1146271758")!
-                if UIApplication.sharedApplication().canOpenURL(url) {
-                    UIApplication.sharedApplication().openURL(url)
-                }
+                self.jumpToAppstoreCommentPage()
             }
             let group3CellModel4 = JFProfileCellLabelModel(title: "当前版本", text: NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String)
             let group3 = JFProfileCellGroupModel(cells: [group3CellModel1, group3CellModel2, group3CellModel3, group3CellModel4])
@@ -115,6 +113,21 @@ class JFSettingViewController: JFBaseTableViewController {
             groupModels = [group1, group2, group3]
         }
         
+    }
+    
+    /**
+     跳转到应用商店
+     */
+    func jumpToAppstoreCommentPage() {
+        let store = SKStoreProductViewController()
+        store.delegate = self
+        store.loadProductWithParameters([SKStoreProductParameterITunesItemIdentifier : APPLE_ID]) { (success, error) in
+            if success {
+                self.presentViewController(store, animated: true, completion: nil)
+            } else {
+                print(error)
+            }
+        }
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -161,4 +174,12 @@ class JFSettingViewController: JFBaseTableViewController {
         footerView.addSubview(logoutButton)
         return footerView
     }()
+}
+
+// MARK: - SKStoreProductViewControllerDelegate
+extension JFSettingViewController: SKStoreProductViewControllerDelegate {
+    
+    func productViewControllerDidFinish(viewController: SKStoreProductViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
