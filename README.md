@@ -1,8 +1,17 @@
 # 自学英语社区
 
-采用swift编写的一个英语学习社区app，后台采用 牛逼的PHP框架 `laravel 5.3` 开发。后台仓库地址: [EnglishCommunity-laravel](https://github.com/6ag/EnglishCommunity-laravel) ，API接口文档 [apidoc](http://english.6ag.cn/apidoc/) 。   
+使用 `swift2.3` 编写的一个英语学习社区app，后台采用 牛逼的PHP框架 `laravel 5.3` 开发。
 
-啥都憋说了，吻我！！！ 。。 是看图看代码
+## 相关连接
+
+- 后台仓库地址 [EnglishCommunity-laravel](https://github.com/6ag/EnglishCommunity-laravel) 
+- API接口文档 [apidoc](http://english.6ag.cn/apidoc/) 
+
+## 如何使用
+
+拷贝项目到本地，并在项目根目录执行 `pod install` 安装项目依赖库。由于 `ShareSDK` 和 `JPush` 实在是太大了，如果需要请自行下载并导入项目，否则请删除相关代码即可。 
+
+后台和app我花了快一个月的业余时间开发，目前还有些bug，求一起搞基一起改bug。
 
 ## 效果预览
 
