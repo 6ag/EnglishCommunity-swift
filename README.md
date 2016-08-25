@@ -9,9 +9,11 @@
 
 ## 如何使用
 
-拷贝项目到本地，并在项目根目录执行 `pod install` 安装项目依赖库。由于 `ShareSDK` 和 `JPush` 实在是太大了，如果需要请自行下载并导入项目，否则请删除相关代码即可。 
-
-后台和app我花了快一个月的业余时间开发，目前还有些bug，求一起搞基一起改bug。
+- 拷贝项目到本地，并在项目根目录执行 `pod install` 安装项目依赖库。
+- 由于 `ShareSDK` 和 `JPush` 实在是太大了，如果需要请自行下载并导入项目，否则请删除相关代码即可。 
+- 还由于项目使用了 `ijkplayer` 框架，这个框架也太大了，如果需要使用这个播放器请自行下载 `IJKMediaFramework.framework` 并引入项目中。
+- 框架仓库： [ijkplayer](https://github.com/Bilibili/ijkplayer)。已经打包好的 `frameword` 网盘下载地址: [百度网盘](https://pan.baidu.com/s/1jInVYke) 提取密码: `2uam`
+- 后台和app我花了快一个月的业余时间开发，目前还有些bug，求一起搞基一起改bug。
 
 ## 效果预览
 
