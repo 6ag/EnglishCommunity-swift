@@ -34,6 +34,7 @@ class JFMessageRecordCell: UITableViewCell {
                 return
             }
             
+            sourceContentLabel.hidden = false
             avatarButton.yy_setImageWithURL(NSURL(string: messageRecord.byUser!.avatar!), forState: .Normal, options: YYWebImageOptions(rawValue: 0))
             nicknameLabel.text = messageRecord.byUser!.nickname!
             sexImageView.image = messageRecord.byUser!.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
@@ -57,7 +58,7 @@ class JFMessageRecordCell: UITableViewCell {
                 prefix.addAttributes([NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : contentLabel.font], range: NSRange(location: 0, length: "在动态中提到了你: \n".characters.count))
                 prefix.appendAttributedString(JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.content!, font: contentLabel.font))
                 contentLabel.attributedText = prefix
-                sourceContentLabel.text = " "
+                sourceContentLabel.hidden = true
             }
             
             publishTimeLabel.text = messageRecord.publishTime!.timeStampToDate().dateToDescription()

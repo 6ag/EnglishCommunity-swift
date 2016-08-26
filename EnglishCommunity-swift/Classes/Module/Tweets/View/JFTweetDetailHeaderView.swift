@@ -139,7 +139,7 @@ class JFTweetDetailHeaderView: UIView {
     }
     
     /**
-     计算cell行高
+     计算cell行高 - 和列表公用一个高度
      */
     func getRowHeight(tweet: JFTweet) -> CGFloat {
         self.tweet = tweet

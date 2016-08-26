@@ -8,7 +8,6 @@
 
 import UIKit
 import SwipeBack
-import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,17 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupGlobalData()         // 配置全局数据
         setupShareSDK()           // 配置shareSDK
         setupReachability()       // 配置网络检测
-        setupKeyBoardManager()    // 配置键盘管理
         self.launchOptions = launchOptions
         
         return true
-    }
-    
-    /**
-     配置键盘管理者
-     */
-    private func setupKeyBoardManager() {
-        IQKeyboardManager.sharedManager().enable = true
     }
     
     /**
