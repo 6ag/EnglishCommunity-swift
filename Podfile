@@ -18,5 +18,6 @@ pod 'SwipeBack', '~> 1.1'
 pod 'SDCycleScrollView','~> 1.64'
 pod 'FMDB'
 pod 'Firebase/AdMob'
+pod 'HYLabel', '~> 1.0.1'
 
 end
