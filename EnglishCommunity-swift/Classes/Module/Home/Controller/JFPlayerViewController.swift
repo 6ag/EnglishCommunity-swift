@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 import YYWebImage
 import Firebase
 import GoogleMobileAds
+import BMPlayer
 
 class JFPlayerViewController: UIViewController {
     
@@ -64,13 +65,16 @@ class JFPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareUI()
-        
         // 重置播放器
         resetPlayerManager()
         
+        prepareUI()
+        
         // 创建并加载插页广告
         interstitial = createAndLoadInterstitial()
+        
+        // 屏幕旋转监听
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onOrientationChanged(_:)), name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -92,6 +96,34 @@ class JFPlayerViewController: UIViewController {
     
     deinit {
         player.prepareToDealloc()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
+    }
+    
+    /**
+     监听屏幕方向发生改变 - 屏幕旋转时自动切换
+     */
+    @objc private func onOrientationChanged(notification: NSNotification) {
+        
+        let orientation = UIApplication.sharedApplication().statusBarOrientation
+        
+        // 全屏
+        if orientation == .LandscapeRight || orientation == .LandscapeLeft {
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+            self.player.snp_updateConstraints(closure: { (make) in
+                make.top.equalTo(view.snp_top).offset(0)
+            })
+            
+        }
+        
+        // 竖屏
+        if orientation == .Portrait {
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+            self.player.snp_updateConstraints(closure: { (make) in
+                make.top.equalTo(view.snp_top).offset(64)
+            })
+            
+        }
+        
     }
     
     /**
@@ -233,12 +265,11 @@ class JFPlayerViewController: UIViewController {
      重置播放器
      */
     func resetPlayerManager() {
-        JFPlayerConf.allowLog = false
-        JFPlayerConf.shouldAutoPlay = true
-        JFPlayerConf.slowAndMirror = true
-        JFPlayerConf.tintColor = UIColor.whiteColor()
-        JFPlayerConf.topBarShowInCase = .Always
-        JFPlayerConf.loaderType = NVActivityIndicatorType.BallRotateChase
+        BMPlayerConf.allowLog = false
+        BMPlayerConf.shouldAutoPlay = true
+        BMPlayerConf.tintColor = UIColor.whiteColor()
+        BMPlayerConf.topBarShowInCase = .HorizantalOnly
+        BMPlayerConf.loaderType  = NVActivityIndicatorType.BallRotateChase
     }
     
     /**
@@ -412,9 +443,8 @@ class JFPlayerViewController: UIViewController {
     }()
     
     // 播放器
-    lazy var player: JFPlayer = {
-        let player = JFPlayer()
-        player.delegate = self
+    lazy var player: BMPlayer = {
+        let player = BMPlayer()
         return player
     }()
     
@@ -810,66 +840,5 @@ extension JFPlayerViewController: JFSelectNodeViewDelegate {
      */
     func didTappedWebButton(button: UIButton) {
         nodeIndex = 1
-    }
-}
-
-// MARK: - JFPlayerDelegate
-extension JFPlayerViewController: JFPlayerDelegate {
-    
-    /**
-     播放器状态改变监听
-     
-     - parameter player: 播放器
-     - parameter state:  状态
-     */
-    func player(player: JFPlayer, playerStateChanged state: JFPlayerState) {
-        switch state {
-        case .Unknown:
-            print("未知")
-        case .Playable:
-            print("可以播放")
-        case .PlaythroughOK:
-            print("从头到尾播放OK")
-        case .Stalled:
-            print("熄火")
-        case .PlaybackEnded:
-            print("播放正常结束")
-        case .PlaybackError:
-            print("播放错误")
-            JFProgressHUD.showInfoWithStatus("解码失败，请稍后重试")
-        case .UserExited:
-            print("用户退出")
-        case .Stopped:
-            print("停止")
-        case .Paused:
-            print("暂停")
-        case .Playing:
-            print("正在播放")
-        case .Interrupted:
-            print("中断")
-        case .SeekingForward:
-            print("快退")
-        case .SeekingBackward:
-            print("快进")
-        case .NotSetURL:
-            print("未设置URL")
-        case .Buffering:
-            print("缓冲中")
-        case .BufferFinished:
-            print("缓冲完毕")
-        case .FullScreen:
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-            self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(view.snp_top).offset(0)
-            })
-            print("全屏")
-        case .CompactScreen:
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-            self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(view.snp_top).offset(64)
-            })
-            print("竖屏")
-        }
-        
     }
 }

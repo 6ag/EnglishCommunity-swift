@@ -20,4 +20,13 @@ pod 'FMDB'
 pod 'Firebase/AdMob'
 pod 'HYLabel', '~> 1.0.1'
 
+pod 'ShareSDK3'
+pod 'MOBFoundation'
+pod 'ShareSDK3/ShareSDKUI'
+pod 'ShareSDK3/ShareSDKPlatforms/QQ'
+pod 'ShareSDK3/ShareSDKPlatforms/SinaWeibo'
+pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
+
+pod 'BMPlayer'
+
 end

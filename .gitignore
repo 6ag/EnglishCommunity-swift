@@ -46,9 +46,6 @@ playground.xcworkspace
 Pods/
 Podfile.lock
 EnglishCommunity-swift.xcworkspace
-EnglishCommunity-swift/Classes/Vendor/JFPlayer/IJKMediaFramework.framework
-EnglishCommunity-swift/Classes/Vendor/JPush
-EnglishCommunity-swift/Classes/Vendor/ShareSDK
 
 # GoogleService
 GoogleService-Info.plist

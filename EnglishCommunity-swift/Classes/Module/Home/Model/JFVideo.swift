@@ -75,6 +75,7 @@ class JFVideo: NSObject {
         
         JFNetworkTools.shareNetworkTool.get(PARSE_YOUKU_VIDEO, parameters: ["url" : youKuUrl]) { (success, result, error) in
             
+            print(result)
             guard let result = result where result["status"] == "success" else {
                 finished(url: nil)
                 return

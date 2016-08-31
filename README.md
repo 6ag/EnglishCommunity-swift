@@ -4,16 +4,20 @@
 
 ## 相关连接
 
-- 后台仓库地址 [EnglishCommunity-laravel](https://github.com/6ag/EnglishCommunity-laravel) 
+- APP仓库 [EnglishCommunity-swift](https://github.com/6ag/EnglishCommunity-swift)
+- 后台仓库 [EnglishCommunity-laravel](https://github.com/6ag/EnglishCommunity-laravel) 
 - API接口文档 [apidoc](http://english.6ag.cn/apidoc/) 
 
 ## 如何使用
 
-- 拷贝项目到本地，并在项目根目录执行 `pod install` 安装项目依赖库。
-- 由于 `ShareSDK` 和 `JPush` 实在是太大了，如果需要请自行下载并导入项目，否则请删除相关代码即可。 
-- 还由于项目使用了 `ijkplayer` 框架，这个框架也太大了，如果需要使用这个播放器请自行下载 `IJKMediaFramework.framework` 并引入项目中。
-- 框架仓库： [ijkplayer](https://github.com/Bilibili/ijkplayer)。已经打包好的 `framework` 网盘下载地址: [百度网盘](https://pan.baidu.com/s/1jInVYke) 提取密码: `2uam`
-- 后台和app我花了快一个月的业余时间开发，目前还有些bug，求一起搞基一起改bug。
+- 拷贝项目到本地，【翻墙后】在项目根目录执行 `pod install` 安装项目依赖库。
+
+## 提醒
+
+- 为什么要翻墙？`Podfile` 文件中 `pod 'Firebase/AdMob'` 这个依赖包是 `admob` 广告SDK，需要翻墙才能安装。如果没有翻墙工具，请移除这个包和相关代码（没几行的）。
+
+- 项目原先使用的 `ijkplayer` ，好多哥们说太大了，总是配置不好，我就换成 `BMPlayer` 了。我原先项目中封装的 `ijkplayer` 播放器控制视图也是参照这个来写的，所以可以改几行代码就能替换播放器。
+- 想继续使用或者需要使用 `ijkplayer` 的同学可以去网盘下载并导入项目，然后删除项目中的的 `JFPlayerViewController.swift` 文件即可无缝切换。框架仓库： [ijkplayer](https://github.com/Bilibili/ijkplayer)。百度网盘: [百度网盘](https://pan.baidu.com/s/1bFaMuU) 提取密码: `afb3`
 
 ## 效果预览
 
