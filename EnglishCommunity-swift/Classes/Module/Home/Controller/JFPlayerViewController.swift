@@ -112,7 +112,6 @@ class JFPlayerViewController: UIViewController {
             self.player.snp_updateConstraints(closure: { (make) in
                 make.top.equalTo(view.snp_top).offset(0)
             })
-            
         }
         
         // 竖屏
@@ -121,7 +120,6 @@ class JFPlayerViewController: UIViewController {
             self.player.snp_updateConstraints(closure: { (make) in
                 make.top.equalTo(view.snp_top).offset(64)
             })
-            
         }
         
     }

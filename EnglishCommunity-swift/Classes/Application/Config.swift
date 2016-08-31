@@ -153,9 +153,7 @@ func isLogin(controller: UIViewController) -> Bool {
 let JFDidReceiveRemoteNotificationOfJPush = "JFDidReceiveRemoteNotificationOfJPush"
 
 /// 应用id
-//let APPLE_ID = "1146271758"
-
-let APPLE_ID = "1067787090"
+let APPLE_ID = "1146271758"
 
 /// shareSDK
 let SHARESDK_APP_KEY = "1653cf104db38"
