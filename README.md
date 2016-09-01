@@ -8,6 +8,12 @@
 - 后台仓库 [EnglishCommunity-laravel](https://github.com/6ag/EnglishCommunity-laravel) 
 - API接口文档 [apidoc](http://english.6ag.cn/apidoc/) 
 
+## AppStore
+
+<a target='_blank' href='https://itunes.apple.com/app/id1146271758'>
+<img src='http://ww2.sinaimg.cn/large/0060lm7Tgw1f1hgrs1ebwj308102q0sp.jpg' width='144' height='49' />
+</a>
+
 ## 如何使用
 
 - 拷贝项目到本地，【翻墙后】在项目根目录执行 `pod install` 安装项目依赖库。
