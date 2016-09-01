@@ -14,6 +14,13 @@
 <img src='http://ww2.sinaimg.cn/large/0060lm7Tgw1f1hgrs1ebwj308102q0sp.jpg' width='144' height='49' />
 </a>
 
+## 开发环境
+
+- swift2.2
+- Xcode7.3.1
+- cocoapods 1.0.1
+- mac os 10.11.6
+
 ## 如何使用
 
 - 拷贝项目到本地，【翻墙后】在项目根目录执行 `pod install` 安装项目依赖库。
