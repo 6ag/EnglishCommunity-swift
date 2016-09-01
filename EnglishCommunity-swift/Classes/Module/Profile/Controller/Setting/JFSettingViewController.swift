@@ -40,7 +40,12 @@ class JFSettingViewController: JFBaseTableViewController {
         if JFAccountModel.isLogin() {
             // 第零组
             let group0CellModel1 = JFProfileCellArrowModel(title: "账号与安全", destinationVc: JFSafeViewController.classForCoder())
-            let group0 = JFProfileCellGroupModel(cells: [group0CellModel1])
+            let group0CellModel2 = JFProfileCellLabelModel(title: "去除广告", text: JFAccountModel.shareAccount()?.adDsabled == 0 ? "暂未购买" : "已经购买")
+            group0CellModel2.operation = { () -> Void in
+                self.didTappedBuyCell()
+            }
+            
+            let group0 = JFProfileCellGroupModel(cells: [group0CellModel1, group0CellModel2])
             
             // 第一组
             let group1CellModel1 = JFProfileCellLabelModel(title: "清除缓存", text: "\(String(format: "%.2f", CGFloat(YYImageCache.sharedCache().diskCache.totalCost()) / 1024 / 1024))M")
@@ -113,6 +118,42 @@ class JFSettingViewController: JFBaseTableViewController {
             groupModels = [group1, group2, group3]
         }
         
+    }
+    
+    /**
+     购买广告点击事件
+     */
+    func didTappedBuyCell() {
+        if JFAccountModel.shareAccount()?.adDsabled == 0 {
+            // 内购
+            // .......
+            
+            // 内购成功调用购买接口
+            buyDislodgeAD()
+            
+        } else {
+            JFProgressHUD.showInfoWithStatus("无需重复购买")
+        }
+    }
+    
+    /**
+     购买去除广告
+     */
+    func buyDislodgeAD() {
+        JFProgressHUD.showWithStatus("正在操作")
+        JFAccountModel.buyDislodgeAD({ (success) in
+            if success {
+                JFAccountModel.getSelfUserInfo({ (success) in
+                    if success {
+                        JFProgressHUD.showSuccessWithStatus("购买成功，感谢支持")
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+            } else {
+                JFProgressHUD.showInfoWithStatus("购买失败，请联系管理员")
+            }
+            
+        })
     }
     
     /**

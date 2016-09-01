@@ -56,13 +56,17 @@ class JFGrammarDetailViewController: UIViewController {
         view.layoutIfNeeded()
         contentScrollView.contentSize = CGSize(width: SCREEN_WIDTH, height: CGRectGetMaxY(contentLabel.frame) + MARGIN + 50)
         
-        // 底部悬浮广告
-        let bannerView = JFAdManager.shareDbManager().getBannerView(self)
-        view.addSubview(bannerView)
-        bannerView.snp_makeConstraints { (make) in
-            make.left.right.bottom.equalTo(0)
-            make.height.equalTo(50)
+        // 满足条件才显示广告
+        if JFAccountModel.shareAccount()?.adDsabled != 1 {
+            // 底部悬浮广告
+            let bannerView = JFAdManager.shareDbManager().getBannerView(self)
+            view.addSubview(bannerView)
+            bannerView.snp_makeConstraints { (make) in
+                make.left.right.bottom.equalTo(0)
+                make.height.equalTo(50)
+            }
         }
+        
     }
     
     // MARK: - 懒加载

@@ -89,6 +89,9 @@ let GET_OTHER_USER_INFOMATION = "api/getOtherUserInfomation.api"
 /// 更新用户信息
 let UPDATE_USER_INFOMATION = "api/updateUserInfomation.api"
 
+/// 购买去除广告接口
+let BUY_DISLODGE_AD = "api/buyDislodgeDdvertisement.api"
+
 /// 添加或删除朋友
 let ADD_OR_CANCEL_FRIEND = "api/addOrCancelFriend.api"
 

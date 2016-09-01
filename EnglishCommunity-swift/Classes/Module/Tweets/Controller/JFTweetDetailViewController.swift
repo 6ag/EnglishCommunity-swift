@@ -82,7 +82,7 @@ class JFTweetDetailViewController: UIViewController {
     /// 动弹内容区域
     lazy var headerView: JFTweetDetailHeaderView = {
         let tweetDetailHeaderView = JFTweetDetailHeaderView()
-        tweetDetailHeaderView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: self.tweet!.rowHeight)
+        tweetDetailHeaderView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: self.tweet?.rowHeight > 1 ? self.tweet!.rowHeight : tweetDetailHeaderView.getRowHeight(self.tweet!))
         tweetDetailHeaderView.tweet = self.tweet
         tweetDetailHeaderView.tweetDetailHeaderDelegate = self
         return tweetDetailHeaderView

@@ -93,6 +93,8 @@ public class FFLabel: UILabel {
         let attrStringM = NSMutableAttributedString(attributedString: attrString)
         
         var range = NSRange(location: 0, length: 0)
+        
+        // 崩溃代码
         var attributes = attrStringM.attributesAtIndex(0, effectiveRange: &range)
         var paragraphStyle = attributes[NSParagraphStyleAttributeName] as? NSMutableParagraphStyle
         

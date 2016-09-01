@@ -278,10 +278,13 @@ class JFPlayerViewController: UIViewController {
      */
     private func playVideo(video: JFVideo) {
         
-        // 弹出插页广告
-        if interstitial.isReady {
-            interstitial.presentFromRootViewController(self)
-            return
+        // 满足条件才显示广告
+        if JFAccountModel.shareAccount()?.adDsabled != 1 {
+            // 弹出插页广告
+            if interstitial.isReady {
+                interstitial.presentFromRootViewController(self)
+                return
+            }
         }
         
         if nodeIndex == 0 { // 节点0 使用m3u8方式播放

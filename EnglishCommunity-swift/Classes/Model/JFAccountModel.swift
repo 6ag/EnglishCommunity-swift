@@ -38,6 +38,9 @@ class JFAccountModel: NSObject, NSCoding {
     /// 性别
     var sex: Int = 0
     
+    /// 是否显示广告 0显示 1不显示
+    var adDsabled = 0
+    
     /// qq登录
     var qqBinding: Int = 0
     
@@ -167,6 +170,7 @@ class JFAccountModel: NSObject, NSCoding {
         aCoder.encodeObject(mobile, forKey: "mobile_key")
         aCoder.encodeObject(email, forKey: "email_key")
         aCoder.encodeInt(Int32(sex), forKey: "sex_key")
+        aCoder.encodeInt(Int32(adDsabled), forKey: "ad_dsabled_key")
         aCoder.encodeInt(Int32(qqBinding), forKey: "qq_binding_key")
         aCoder.encodeInt(Int32(weixinBinding), forKey: "weixin_binding_key")
         aCoder.encodeInt(Int32(weiboBinding), forKey: "weibo_binding_key")
@@ -188,6 +192,7 @@ class JFAccountModel: NSObject, NSCoding {
         mobile = aDecoder.decodeObjectForKey("mobile_key") as? String
         email = aDecoder.decodeObjectForKey("email_key") as? String
         sex = Int(aDecoder.decodeIntForKey("sex_key"))
+        adDsabled = Int(aDecoder.decodeIntForKey("ad_dsabled_key"))
         qqBinding = Int(aDecoder.decodeIntForKey("qq_binding_key"))
         weixinBinding = Int(aDecoder.decodeIntForKey("weixin_binding_key"))
         weiboBinding = Int(aDecoder.decodeIntForKey("weibo_binding_key"))
@@ -316,6 +321,7 @@ extension JFAccountModel {
         
         JFNetworkTools.shareNetworkTool.post(LOGIN, parameters: parameters) { (success, result, error) in
             
+            print(result)
             guard let result = result else {
                 finished(success: false, tip: "您的网络不给力哦")
                 return
@@ -484,5 +490,32 @@ extension JFAccountModel {
             let userInfo = JFAccountModel(dict: result["result"].dictionaryObject!)
             finished(userInfo: userInfo)
         }
+    }
+    
+    /**
+     购买去除广告服务
+     
+     - parameter finished: 完成回调
+     */
+    class func buyDislodgeAD(finished: (success: Bool) -> ()) {
+        
+        if !JFAccountModel.isLogin() {
+            return
+        }
+        
+        let parameters: [String : AnyObject] = [
+            "user_id" : JFAccountModel.shareAccount()!.id,
+        ]
+        
+        JFNetworkTools.shareNetworkTool.postWithToken(BUY_DISLODGE_AD, parameters: parameters) { (success, result, error) in
+            
+            guard let result = result where result["status"] == "success" else {
+                finished(success: false)
+                return
+            }
+            
+            finished(success: true)
+        }
+        
     }
 }
