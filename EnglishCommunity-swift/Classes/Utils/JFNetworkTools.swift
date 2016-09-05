@@ -246,6 +246,15 @@ extension JFNetworkTools {
         
         post(POST_FEEDBACK, parameters: parameters, finished: finished)
     }
+    
+    /**
+     获取播放节点
+     
+     - parameter finished: 完成回调
+     */
+    func getPlayNode(finished: NetworkFinished) {
+        get(GET_PALY_NODE, parameters: nil, finished: finished)
+    }
 }
 
 // MARK: - 辅助方法

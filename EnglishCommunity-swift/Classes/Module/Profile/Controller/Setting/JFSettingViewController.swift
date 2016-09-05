@@ -10,7 +10,218 @@ import UIKit
 import YYWebImage
 import StoreKit
 
+// MARK: - SKProductsRequestDelegate, SKPaymentTransactionObserver
+extension JFSettingViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
+    
+    // MARK: - 添加移除监听
+    /**
+     添加监听
+     */
+    func addTransactionObserver() {
+        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
+    }
+    
+    /**
+     移除监听
+     */
+    func removeTransactionObserver() {
+        SKPaymentQueue.defaultQueue().removeTransactionObserver(self)
+    }
+    
+    // MARK: - 发起内购请求
+    /**
+     向苹果服务器请求可销售商品,填写itunes connect中添加的商品id
+     */
+    func requestProducts(productID: String) {
+        
+        addTransactionObserver()
+        if SKPaymentQueue.canMakePayments() {
+            JFProgressHUD.showWithStatus("发起内购")
+            let request = SKProductsRequest(productIdentifiers: NSSet(array: [productID]) as! Set<String>)
+            request.delegate = self;
+            request.start()
+        } else {
+            removeTransactionObserver()
+        }
+        
+    }
+    
+    /**
+     恢复购买
+     */
+    func restoreProduct() {
+        
+        addTransactionObserver()
+        if SKPaymentQueue.canMakePayments() {
+            JFProgressHUD.showWithStatus("正在恢复内购项目")
+            SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
+        } else {
+            removeTransactionObserver()
+        }
+        
+    }
+    
+    /**
+     请求产品信息回调
+     */
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+        
+        for product in response.products  {
+            if product.productIdentifier == productID {
+                let payment = SKPayment(product: product)
+                SKPaymentQueue.defaultQueue().addPayment(payment)
+                return
+            }
+        }
+    }
+    
+    // MARK: - 付款队列
+    /**
+     更新交易
+     */
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        
+        JFProgressHUD.dismiss()
+        for transaction in transactions {
+            
+            switch transaction.transactionState {
+            case SKPaymentTransactionState.Purchased:
+                
+                // 购买完成
+                verifyPruchase()
+                buyDislodgeAD()
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+                
+            case SKPaymentTransactionState.Failed:
+                
+                // 购买失败
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+                
+            case SKPaymentTransactionState.Restored:
+                
+                // 恢复购买
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+                
+            case SKPaymentTransactionState.Purchasing:
+                
+                // 正在处理
+                print("商品购买正在处理")
+                
+            case SKPaymentTransactionState.Deferred:
+                
+                // 购买推迟
+                print("商品购买推迟")
+                
+            }
+            
+        }
+        
+    }
+    
+    /**
+     移除了交易
+     */
+    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+        print("移除了交易")
+    }
+    
+    /**
+     加载什么鬼
+     */
+    func paymentQueue(queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
+        print("下载什么鬼")
+    }
+    
+    // MARK: - 恢复购买
+    /**
+     商品恢复购买失败
+     */
+    func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
+        print("商品恢复购买失败")
+    }
+    
+    /**
+     商品恢复购买完成
+     */
+    func paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue) {
+        buyDislodgeAD()
+    }
+    
+    // MARK: - 验证交易凭据
+    /**
+     验证交易凭据，获取到苹果返回的交易凭据
+     */
+    func verifyPruchase() {
+        
+        // appStoreReceiptURL iOS7.0增加的，购买交易完成后，会将凭据存放在该地址
+        let receiptURL = NSBundle.mainBundle().appStoreReceiptURL
+        
+        // 从沙盒中获取到购买凭据
+        let receiptData = NSData(contentsOfURL: receiptURL!)
+        
+        // 发送网络POST请求，对购买凭据进行验证
+        let url = NSURL(string: APPSTORE_VERIFY)
+        
+        let request = NSMutableURLRequest(URL: url!, cachePolicy: NSURLRequestCachePolicy.UseProtocolCachePolicy, timeoutInterval: 10.0)
+        request.HTTPMethod = "POST"
+        
+        // 请求体
+        let encodeStr = receiptData?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithLineFeed)
+        let payload = NSString(string: "{\"receipt-data\" : \"" + encodeStr! + "\"}")
+        request.HTTPBody = payload.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let session = NSURLSession.sharedSession()
+        let semaphore = dispatch_semaphore_create(0)
+        
+        let dataTask = session.dataTaskWithRequest(request, completionHandler: {(data, response, error) -> Void in
+            
+            if error != nil {
+                print(error?.code)
+                print(error?.description)
+            } else {
+                let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                print(str)
+                // 官方验证结果为空
+                if data == nil {
+                    // 验证失败
+                    print("验证失败")
+                    return
+                }
+                do {
+                    let jsonResult: NSDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                    if jsonResult.count != 0 {
+                        // 比对字典中以下信息基本上可以保证数据安全
+                        // bundle_id&application_version&product_id&transaction_id
+                        // 凭证验证成功
+                        let receipt = jsonResult["receipt"] as! NSDictionary
+                        print(receipt["bundle_id"])
+                    }
+                } catch {
+                    print("验证凭证出错")
+                }
+            }
+            
+            dispatch_semaphore_signal(semaphore)
+        }) as NSURLSessionTask
+        
+        //使用resume方法启动任务
+        dataTask.resume()
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+    }
+    
+}
+
 class JFSettingViewController: JFBaseTableViewController {
+    
+    /// 商品ID
+    let productID = "dislodge_ad"
+    
+    /// 正式环境验证
+    private let APPSTORE_VERIFY  = "https://buy.itunes.apple.com/verifyReceipt"
+    
+    /// 沙盒验证
+    private let SANDBOX_VERIFY = "https://sandbox.itunes.apple.com/verifyReceipt"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +233,11 @@ class JFSettingViewController: JFBaseTableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeTransactionObserver()
     }
     
     /**
@@ -44,8 +260,11 @@ class JFSettingViewController: JFBaseTableViewController {
             group0CellModel2.operation = { () -> Void in
                 self.didTappedBuyCell()
             }
-            
-            let group0 = JFProfileCellGroupModel(cells: [group0CellModel1, group0CellModel2])
+            let group0CellModel3 = JFProfileCellLabelModel(title: "恢复购买", text: JFAccountModel.shareAccount()?.adDsabled == 0 ? "可以尝试恢复" : "已经生效，不用恢复")
+            group0CellModel3.operation = { () -> Void in
+                self.didTappedRestore()
+            }
+            let group0 = JFProfileCellGroupModel(cells: [group0CellModel1, group0CellModel2, group0CellModel3])
             
             // 第一组
             let group1CellModel1 = JFProfileCellLabelModel(title: "清除缓存", text: "\(String(format: "%.2f", CGFloat(YYImageCache.sharedCache().diskCache.totalCost()) / 1024 / 1024))M")
@@ -125,14 +344,20 @@ class JFSettingViewController: JFBaseTableViewController {
      */
     func didTappedBuyCell() {
         if JFAccountModel.shareAccount()?.adDsabled == 0 {
-            // 内购
-            // .......
-            
-            // 内购成功调用购买接口
-            buyDislodgeAD()
-            
+            requestProducts(productID)
         } else {
             JFProgressHUD.showInfoWithStatus("无需重复购买")
+        }
+    }
+    
+    /**
+     恢复购买
+     */
+    func didTappedRestore() {
+        if JFAccountModel.shareAccount()?.adDsabled == 0 {
+            restoreProduct()
+        } else {
+            JFProgressHUD.showInfoWithStatus("已经激活，无需恢复")
         }
     }
     
@@ -146,7 +371,9 @@ class JFSettingViewController: JFBaseTableViewController {
                 JFAccountModel.getSelfUserInfo({ (success) in
                     if success {
                         JFProgressHUD.showSuccessWithStatus("购买成功，感谢支持")
-                        self.navigationController?.popViewControllerAnimated(true)
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
                     }
                 })
             } else {

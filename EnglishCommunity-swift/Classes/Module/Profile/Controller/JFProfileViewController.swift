@@ -87,6 +87,9 @@ class JFProfileViewController: UIViewController {
         // 更新收藏
         page = 1
         loadCollectionVideoInfoList(page, count: 10, method: 0)
+        
+        // 更新消息状态
+        getUnlookedMessageCount()
     }
     
     /**
@@ -132,6 +135,37 @@ class JFProfileViewController: UIViewController {
     }
     
     /**
+     获取未读消息数量
+     */
+    private func getUnlookedMessageCount() {
+        
+        JFMessageRecord.getUnlookedMessageCount { (success, count) in
+            if success {
+                if count != 0 {
+                    self.headerView.redPointLabel.text = "\(count)"
+                    self.headerView.redPointLabel.hidden = false
+                } else {
+                    self.headerView.redPointLabel.text = "0"
+                    self.headerView.redPointLabel.hidden = true
+                }
+            }
+        }
+    }
+    
+    /**
+     清理未读消息数量
+     */
+    private func clearUnlookedMessage() {
+        
+        JFMessageRecord.clearUnlookedMessage { (success) in
+            if success {
+                self.headerView.redPointLabel.text = "0"
+                self.headerView.redPointLabel.hidden = true
+            }
+        }
+    }
+    
+    /**
      更新头部数据
      */
     private func updateHeaderData() {
@@ -141,6 +175,8 @@ class JFProfileViewController: UIViewController {
         } else {
             headerView.avatarButton.setBackgroundImage(UIImage(named: "default－portrait"), forState: UIControlState.Normal)
             headerView.nameLabel.text = "点击登录"
+            headerView.redPointLabel.text = "0"
+            headerView.redPointLabel.hidden = true
         }
     }
     
@@ -401,6 +437,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      */
     func didTappedMessageButton() {
         if isLogin(self) {
+            clearUnlookedMessage()
             navigationController?.pushViewController(JFMessageListViewController(style: UITableViewStyle.Plain), animated: true)
         }
     }

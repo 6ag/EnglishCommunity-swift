@@ -98,10 +98,10 @@
                                 </mask>
                             </variation>
                         </view>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3CI-Go-PGc" userLabel="item2">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3CI-Go-PGc" userLabel="item2">
                             <rect key="frame" x="188" y="0.0" width="93" height="65"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-ZB-j0c" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-ZB-j0c" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="93" height="65"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="消息" image="profile_topbar_comment">
@@ -111,6 +111,17 @@
                                         <action selector="didTappedMessageButton" destination="iN0-l3-epB" eventType="touchUpInside" id="a8E-xJ-b9T"/>
                                     </connections>
                                 </button>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lw8-LS-ZUR">
+                                    <rect key="frame" x="49" y="15" width="15" height="15"/>
+                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="6Qq-o9-koj"/>
+                                        <constraint firstAttribute="width" constant="15" id="Fwx-Ro-W6H"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -120,6 +131,8 @@
                                 <constraint firstAttribute="trailing" secondItem="wSh-ZB-j0c" secondAttribute="trailing" id="MjW-3g-gYg"/>
                                 <constraint firstAttribute="trailing" secondItem="wSh-ZB-j0c" secondAttribute="trailing" id="e5s-BX-uBG"/>
                                 <constraint firstItem="wSh-ZB-j0c" firstAttribute="top" secondItem="3CI-Go-PGc" secondAttribute="top" id="mxY-Oa-J5Z"/>
+                                <constraint firstItem="lw8-LS-ZUR" firstAttribute="centerX" secondItem="3CI-Go-PGc" secondAttribute="centerX" constant="10" id="o3x-58-3al"/>
+                                <constraint firstItem="lw8-LS-ZUR" firstAttribute="centerY" secondItem="3CI-Go-PGc" secondAttribute="centerY" constant="-10" id="w2a-b5-Y1f"/>
                                 <constraint firstItem="wSh-ZB-j0c" firstAttribute="leading" secondItem="3CI-Go-PGc" secondAttribute="leading" id="wRm-df-w1X"/>
                                 <constraint firstAttribute="bottom" secondItem="wSh-ZB-j0c" secondAttribute="bottom" id="z9X-dJ-bfJ"/>
                             </constraints>
@@ -255,6 +268,7 @@
             <connections>
                 <outlet property="avatarButton" destination="M4U-ni-wQF" id="XMv-Q6-Q6z"/>
                 <outlet property="nameLabel" destination="CZQ-BM-nPr" id="nLR-EU-8qG"/>
+                <outlet property="redPointLabel" destination="lw8-LS-ZUR" id="Ruu-Xp-0cI"/>
             </connections>
             <point key="canvasLocation" x="471.5" y="287"/>
         </view>

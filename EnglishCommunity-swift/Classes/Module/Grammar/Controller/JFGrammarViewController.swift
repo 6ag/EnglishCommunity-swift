@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import GoogleMobileAds
 
 class JFGrammarViewController: UIViewController {
 
@@ -19,6 +21,9 @@ class JFGrammarViewController: UIViewController {
     /// 动弹列表cell重用标识
     let grammarIdentifier = "grammarIdentifier"
     
+    // 插页广告
+    var interstitial: GADInterstitial!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +31,9 @@ class JFGrammarViewController: UIViewController {
         tableView.mj_header = setupHeaderRefresh(self, action: #selector(pullDownRefresh))
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
         tableView.mj_header.beginRefreshing()
+        
+        // 创建并加载插页广告
+        interstitial = createAndLoadInterstitial()
     }
     
     /**
@@ -93,6 +101,30 @@ class JFGrammarViewController: UIViewController {
     }()
 }
 
+// MARK: - GADInterstitialDelegate 插页广告相关方法
+extension JFGrammarViewController: GADInterstitialDelegate {
+    
+    /**
+     当插页广告dismiss后初始化插页广告对象
+     */
+    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+        interstitial = createAndLoadInterstitial()
+    }
+    
+    /**
+     初始化插页广告
+     
+     - returns: 插页广告对象
+     */
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: INTERSTITIAL_UNIT_ID)
+        interstitial.delegate = self
+        interstitial.loadRequest(GADRequest())
+        return interstitial
+    }
+    
+}
+
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFGrammarViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -108,6 +140,12 @@ extension JFGrammarViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        // 弹出插页广告
+        if interstitial.isReady {
+            interstitial.presentFromRootViewController(self)
+            return
+        }
         
         let detailVc = JFGrammarDetailViewController()
         detailVc.grammar = grammars[indexPath.row]

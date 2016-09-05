@@ -67,6 +67,9 @@ let INTERSTITIAL_UNIT_ID = "ca-app-pub-3941303619697740/5655470113"
 /// 横幅广告id
 let BANNER_UNIT_ID = "ca-app-pub-3941303619697740/4039136115"
 
+/// 播放节点，默认是app播放
+var PLAY_NODE = "app"
+
 /**
  手机型号枚举
  */

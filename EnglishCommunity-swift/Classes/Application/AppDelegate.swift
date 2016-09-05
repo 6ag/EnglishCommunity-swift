@@ -8,6 +8,7 @@
 
 import UIKit
 import SwipeBack
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.launchOptions = launchOptions
         
         return true
+    }
+    
+    /**
+     配置默认播放节点
+     */
+    private func setupPlayNode() {
+        
+        JFNetworkTools.shareNetworkTool.getPlayNode { (success, result, error) in
+            guard let result = result else {
+                return
+            }
+            
+            // 更新全局节点
+            let node = result["result"]["node"].stringValue
+            if node == "app" {
+                PLAY_NODE = "app"
+            } else {
+                PLAY_NODE = "web"
+            }
+            
+        }
     }
     
     /**
@@ -226,7 +248,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
-        
+        setupPlayNode()           // 配置默认播放节点
     }
     
     func applicationWillTerminate(application: UIApplication) {

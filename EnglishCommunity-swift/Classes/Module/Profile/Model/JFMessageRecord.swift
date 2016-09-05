@@ -173,7 +173,7 @@ class JFMessageRecord: NSObject {
             }
             
             if result["status"] == "success" {
-                finished(success: true, count: result["unlookedMessageCount"].intValue)
+                finished(success: true, count: result["result"]["unlookedMessageCount"].intValue)
             } else {
                 finished(success: false, count: 0)
             }

@@ -37,8 +37,8 @@ class JFPlayerViewController: UIViewController {
     // 插页广告
     var interstitial: GADInterstitial!
     
-    /// 视频播放节点
-    var nodeIndex = 0 {
+    /// 视频播放节点 默认播放节点从全局获取
+    var nodeIndex = (PLAY_NODE == "app" ? 0 : 1) {
         didSet (oldValue) {
             if nodeIndex != oldValue {
                 playVideoOfNodeIndex()
@@ -288,6 +288,7 @@ class JFPlayerViewController: UIViewController {
         }
         
         if nodeIndex == 0 { // 节点0 使用m3u8方式播放
+            player.userInteractionEnabled = true
             
             if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
                 
@@ -318,6 +319,7 @@ class JFPlayerViewController: UIViewController {
             
         } else if nodeIndex == 1 { // 节点1 使用网页播放
             
+            player.userInteractionEnabled = false
             // web节点，使用web播放器播放
             player.prepareToDealloc()
             let webPlayerVc = JFWebPlayerViewController()

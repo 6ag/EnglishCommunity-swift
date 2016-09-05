@@ -98,6 +98,9 @@ let ADD_OR_CANCEL_FRIEND = "api/addOrCancelFriend.api"
 /// 提交反馈信息
 let POST_FEEDBACK = "api/postFeedback.api"
 
+/// 获取播放节点
+let GET_PALY_NODE = "api/getPlayNode.api"
+
 /// 获取消息列表
 let GET_MESSAGE_LIST = "api/getMessageList.api"
 
@@ -106,3 +109,4 @@ let GET_UNLOOKED_MESSAGE_COUNT = "api/getUnlookedMessageCount.api"
 
 /// 清理未读消息数量
 let CLEAR_UNLOOKED_MESSAGE = "api/clearUnlookedMessage.api"
+
