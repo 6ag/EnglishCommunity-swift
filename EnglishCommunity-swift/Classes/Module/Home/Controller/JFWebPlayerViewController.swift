@@ -21,12 +21,8 @@ class JFWebPlayerViewController: UIViewController {
                 return
             }
             
-            // 获取视频id
-            var id = (videoUrl as NSString).stringByReplacingOccurrencesOfString("http://v.youku.com/v_show/id_", withString: "")
-            id = (id as NSString).stringByReplacingOccurrencesOfString(".html", withString: "")
-            
             // 通用播放代码
-            let playerHTML = "<iframe height=\(SCREEN_WIDTH - 44) width=\(SCREEN_HEIGHT - 20) src='http://player.youku.com/embed/\(id)' frameborder=0 'allowfullscreen'></iframe>"
+            let playerHTML = "<iframe height=\(SCREEN_WIDTH - 44) width=\(SCREEN_HEIGHT - 20) src='http://player.youku.com/embed/\(JFVideo.getVideoId(videoUrl))' frameborder=0 'allowfullscreen'></iframe>"
             
             JFProgressHUD.show()
             webView.loadHTMLString(playerHTML, baseURL: NSURL(string: videoUrl))

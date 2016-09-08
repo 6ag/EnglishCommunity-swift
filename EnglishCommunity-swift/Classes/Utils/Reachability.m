@@ -84,7 +84,6 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	return returnValue;
 }
 
-
 + (instancetype)reachabilityWithAddress:(const struct sockaddr_in *)hostAddress
 {
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)hostAddress);

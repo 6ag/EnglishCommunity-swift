@@ -106,7 +106,7 @@ extension JFVideoDownloadViewController: UITableViewDelegate, UITableViewDataSou
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! JFVideoDownloadCell
         cell.selectorButton.selected = !cell.selectorButton.selected
-        videos![indexPath.row].selected = cell.selectorButton.selected
+        videos![indexPath.row].downloadListSelected = cell.selectorButton.selected
     }
 
 }
@@ -134,12 +134,12 @@ extension JFVideoDownloadViewController: JFVideoDownloadBottomViewDelegate {
         if button.selected {
             // 全选
             for video in videos! {
-                video.selected = true
+                video.downloadListSelected = true
             }
         } else {
             // 取消全选
             for video in videos! {
-                video.selected = false
+                video.downloadListSelected = false
             }
         }
         
@@ -151,24 +151,24 @@ extension JFVideoDownloadViewController: JFVideoDownloadBottomViewDelegate {
      */
     func didTappedConfirmButton(button: UIButton) {
         
-        var needVideos = [JFVideo]()
-        for video in videos! {
-            if video.selected {
-                needVideos.append(video)
-                video.selected = false
+        var needVideos = [[String : AnyObject]]()
+        for (index, video) in videos!.enumerate() {
+            if video.downloadListSelected {
+                
+                let info: [String : AnyObject] = [
+                    "index" : index,
+                    "video" : video
+                ]
+                needVideos.append(info)
+                
+                video.downloadListSelected = false
             }
         }
         
-        dismissViewControllerAnimated(true) { 
-            JFProgressHUD.showInfoWithStatus("暂未开放")
-        }
-        
         // 开始下载视频
-//        JFDownloadManager.shareManager.startDownloadVideo(videoInfo!, videos: videos!)
-//        
-//        dismissViewControllerAnimated(true) { 
-//            JFProgressHUD.showInfoWithStatus("已经加入下载队列")
-//        }
+        JFDownloadManager.shareManager.startDownload(needVideos)
+        
+        dismissViewControllerAnimated(true) {}
         
     }
 }

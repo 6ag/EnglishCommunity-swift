@@ -53,7 +53,7 @@ extension UITextView {
         }
         
         // 添加图片表情
-        if let pngPath = emoticon.pngPath {
+        if let _ = emoticon.pngPath {
 //            // 创建附件
 //            let attachment = JFTextAttachment()
 //            

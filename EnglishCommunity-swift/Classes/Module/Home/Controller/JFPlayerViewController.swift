@@ -75,6 +75,8 @@ class JFPlayerViewController: UIViewController {
         
         // 屏幕旋转监听
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onOrientationChanged(_:)), name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
+        
+        JFDownloadManager.shareManager.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -95,6 +97,7 @@ class JFPlayerViewController: UIViewController {
     }
     
     deinit {
+        JFDownloadManager.shareManager.delegate = nil
         player.prepareToDealloc()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
@@ -601,6 +604,7 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if tableView == videoTableView {
             let cell = tableView.dequeueReusableCellWithIdentifier(videoCellIdentifier) as! JFDetailVideoCell
+            cell.delegate = self
             cell.model = videos[indexPath.row]
             return cell
         } else {
@@ -614,6 +618,13 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if tableView == videoTableView {
+            
+            // 选中
+            for video in videos {
+                video.videoListSelected = false
+            }
+            videos[indexPath.row].videoListSelected = true
+            
             player.prepareToDealloc()
             
             if JFAccountModel.isLogin() || indexPath.row == 0 {
@@ -735,7 +746,6 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
             presentViewController(alertC, animated: true, completion: nil)
         }
         
-        
     }
     
     /**
@@ -834,5 +844,117 @@ extension JFPlayerViewController: JFSelectNodeViewDelegate {
      */
     func didTappedWebButton(button: UIButton) {
         nodeIndex = 1
+    }
+}
+
+// MARK: - JFDownloadManagerDelegate
+extension JFPlayerViewController: JFDownloadManagerDelegate {
+    
+    /**
+     下载视频失败
+     */
+    func M3U8VideoDownloadFailWithVideoId(videoId: String, index: Int) {
+        videoStateChange(0, index: index, state: VideoState.NoDownload)
+    }
+    
+    /**
+     解析视频视频 - 不是有效的m3u8地址
+     */
+    func M3U8VideoDownloadParseFailWithVideoId(videoId: String, index: Int) {
+        videoStateChange(0, index: index, state: VideoState.NoDownload)
+    }
+    
+    /**
+     下载视频完成
+     */
+    func M3U8VideoDownloadFinishWithVideoId(videoId: String, localPath path: String, index: Int) {
+        videoStateChange(0, index: index, state: VideoState.AlreadyDownload)
+    }
+    
+    /**
+     正在下载 更新进度
+     */
+    func M3U8VideoDownloadProgress(progress: CGFloat, withVideoId videoId: String, index: Int) {
+        videoStateChange(progress, index: index, state: VideoState.Downloading)
+    }
+    
+    /**
+     下载状态发生改变
+     
+     - parameter progress: 进度
+     - parameter index:    下标
+     - parameter state:    视频状态
+     */
+    func videoStateChange(progress: CGFloat, index: Int, state: VideoState) {
+        if index <= videos.count - 1 {
+            let video = videos[index]
+            video.state = state
+            video.progress = progress
+            videoTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
+        }
+        
+    }
+}
+
+// MARK: - JFDetailVideoCellDelegate
+extension JFPlayerViewController: JFDetailVideoCellDelegate {
+    
+    /**
+     点击了下载按钮
+     
+     - parameter cell:   所在的cell
+     - parameter button: 被点击的按钮
+     */
+    func didTappedDownloadButton(cell: JFDetailVideoCell, button: UIButton) {
+        
+        let indexPath = videoTableView.indexPathForCell(cell)!
+        let video = videos[indexPath.row]
+        
+        // 改变状态
+        switch video.state {
+        case VideoState.NoDownload:
+            
+            video.state = VideoState.Downloading
+            
+            // 开始下载视频
+            JFDownloadManager.shareManager.startDownloadVideo(indexPath.row, videoUrl: video.videoUrl!)
+            
+        case VideoState.AlreadyDownload:
+            
+            let alertC = UIAlertController(title: "确认要删除这节视频吗", message: "删除本地缓存后，可以节省手机磁盘空间，但重新缓存又得WiFi哦", preferredStyle: UIAlertControllerStyle.Alert)
+            let confirm = UIAlertAction(title: "确定删除", style: UIAlertActionStyle.Destructive, handler: { (action) in
+                video.state = VideoState.NoDownload
+                let videoVid = JFVideo.getVideoId(video.videoUrl!)
+                
+                // 删除数据库
+                JFDALManager.shareManager.removeVideo(videoVid)
+                
+                // 从本地文件移除
+                let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/DownloadVideos/\(videoVid)"
+                let fileManager = NSFileManager.defaultManager()
+                if fileManager.fileExistsAtPath(path) {
+                    do {
+                        try fileManager.removeItemAtPath(path)
+                        print("删除成功")
+                        self.videoStateChange(0, index: indexPath.row, state: VideoState.NoDownload)
+                    } catch {
+                        print("删除失败")
+                    }
+                }
+            })
+            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in })
+            alertC.addAction(confirm)
+            alertC.addAction(cancel)
+            presentViewController(alertC, animated: true, completion: { 
+                
+            })
+            
+        case VideoState.Downloading:
+            
+            video.state = VideoState.NoDownload
+            JFDownloadManager.shareManager.cancelDownloadVideo(video.videoUrl!)
+            
+        }
+        
     }
 }

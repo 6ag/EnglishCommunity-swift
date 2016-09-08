@@ -27,7 +27,7 @@ class JFVideoDownloadCell: UITableViewCell {
                 return
             }
             
-            selectorButton.selected = video.selected
+            selectorButton.selected = video.downloadListSelected
             videoTitleLabel.text = video.title ?? ""
         }
     }
@@ -71,6 +71,7 @@ class JFVideoDownloadCell: UITableViewCell {
         let button = UIButton(type: .Custom)
         button.setBackgroundImage(UIImage(named: "publish_select_normal"), forState: .Normal)
         button.setBackgroundImage(UIImage(named: "publish_select_selected"), forState: .Selected)
+        button.userInteractionEnabled = false
         return button
     }()
     

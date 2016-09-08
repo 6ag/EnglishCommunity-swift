@@ -30,12 +30,76 @@ class JFDALManager: NSObject {
         let overString = df.stringFromDate(overDate)
         
         // 生成sql语句
-        let sql = "DELETE FROM \(VIDEO_INFOS_TABLE) WHERE createTime < '\(overString)';"
+        let sql = "DELETE FROM \(VIDEOS_TABLE) WHERE createTime < '\(overString)';"
         
         JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) -> Void in
             if db.executeStatements(sql) {
-//                print("清除缓存数据成功")
+                //                print("清除缓存数据成功")
             }
         }
     }
+    
+    /**
+     插入视频
+     
+     - parameter videoVid: 视频vid
+     */
+    func insertVideo(videoVid: String) {
+        
+        getVideo(videoVid) { (have) in
+            if have {
+                print(videoVid, "已经存在")
+                return
+            }
+        }
+        
+        let sql = "INSERT INTO \(VIDEOS_TABLE) (video_vid) VALUES (\"\(videoVid)\");"
+        JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
+            if db.executeStatements(sql) {
+                print("插入成功")
+            }
+        }
+        
+    }
+    
+    /**
+     插入视频
+     
+     - parameter videoVid: 视频vid
+     */
+    func removeVideo(videoVid: String) {
+        
+        let sql = "DELETE FROM \(VIDEOS_TABLE) WHERE video_vid = \"\(videoVid)\";"
+        
+        JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
+            if db.executeStatements(sql) {
+                print("移除成功")
+            }
+        }
+        
+    }
+    
+    /**
+     获取视频
+     
+     - parameter videoVid: 视频vid
+     - parameter finished: 返回回调
+     */
+    func getVideo(videoVid: String, finished: (have: Bool) -> ()) {
+        
+        let sql = "SELECT * FROM \(VIDEOS_TABLE) WHERE video_vid=\"\(videoVid)\" LIMIT 1;"
+        
+        JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
+            
+            let result = try! db.executeQuery(sql, values: nil)
+            while result.next() {
+                finished(have: true)
+                result.close()
+                return
+            }
+            
+            finished(have: false)
+        }
+    }
+    
 }

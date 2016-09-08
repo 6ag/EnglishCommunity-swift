@@ -8,6 +8,19 @@
 
 import UIKit
 
+/**
+ 视频的状态
+ 
+ - AlreadyDownload: 已经下载
+ - NoDownload:      没有下载
+ - Downloading:     正在下载
+ */
+enum VideoState {
+    case AlreadyDownload
+    case NoDownload
+    case Downloading
+}
+
 class JFVideo: NSObject {
     
     /// 视频小节id
@@ -25,8 +38,17 @@ class JFVideo: NSObject {
     /// 视频序号 - 第几小节
     var order: Int = 0
     
-    /// 是否已经选中 - 下载列表会用到
-    var selected: Bool = false
+    /// 下载列表是否已经选中 - 下载列表会用到
+    var downloadListSelected: Bool = false
+    
+    /// 视频列表是否选中状态
+    var videoListSelected: Bool = false
+    
+    /// 下载进度
+    var progress: CGFloat = 0.0
+    
+    /// 视频的状态
+    var state = VideoState.NoDownload
     
     init(dict: [String : AnyObject]) {
         super.init()
@@ -58,9 +80,15 @@ class JFVideo: NSObject {
             var videos = [JFVideo]()
             
             for dict in data {
-                videos.append(JFVideo(dict: dict))
+                let video = JFVideo(dict: dict)
+                JFDALManager.shareManager.getVideo(JFVideo.getVideoId(video.videoUrl!), finished: { (have) in
+                    video.state = have ? VideoState.AlreadyDownload : VideoState.NoDownload
+                })
+                videos.append(video)
             }
             
+            // 默认选中第一个
+            videos[0].videoListSelected = true
             finished(videos: videos)
         }
     }
@@ -82,6 +110,20 @@ class JFVideo: NSObject {
             finished(url: result["result"]["videoUrl"].stringValue)
         }
         
+    }
+    
+    /**
+     获取视频的id
+     
+     - parameter videoUrl: 视频网址
+     
+     - returns: id
+     */
+    class func getVideoId(videoUrl: String) -> String {
+        // 获取视频id
+        var id = (videoUrl as NSString).stringByReplacingOccurrencesOfString("http://v.youku.com/v_show/id_", withString: "")
+        id = (id as NSString).stringByReplacingOccurrencesOfString(".html", withString: "")
+        return id
     }
     
     /**
