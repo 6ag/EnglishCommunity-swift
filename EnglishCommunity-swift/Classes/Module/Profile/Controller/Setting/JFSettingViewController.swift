@@ -138,6 +138,7 @@ extension JFSettingViewController: SKProductsRequestDelegate, SKPaymentTransacti
      */
     func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
         print("商品恢复购买失败")
+        JFProgressHUD.showInfoWithStatus("恢复失败")
     }
     
     /**

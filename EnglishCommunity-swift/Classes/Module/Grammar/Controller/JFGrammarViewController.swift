@@ -141,10 +141,13 @@ extension JFGrammarViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        // 弹出插页广告
-        if interstitial.isReady {
-            interstitial.presentFromRootViewController(self)
-            return
+        // 满足条件才显示广告
+        if JFAccountModel.shareAccount()?.adDsabled != 1 {
+            // 弹出插页广告
+            if interstitial.isReady {
+                interstitial.presentFromRootViewController(self)
+                return
+            }
         }
         
         let detailVc = JFGrammarDetailViewController()

@@ -393,16 +393,7 @@ class JFPlayerViewController: UIViewController {
         
         // 获取选中的cell的模型
         let video = videos[index]
-        
-        if nodeIndex == 0 {
-            playVideo(video)
-        } else if nodeIndex == 1 {
-            // web节点，使用web播放器播放
-            player.prepareToDealloc()
-            let webPlayerVc = JFWebPlayerViewController()
-            webPlayerVc.video = video
-            navigationController?.pushViewController(webPlayerVc, animated: true)
-        }
+        playVideo(video)
     }
     
     /**
