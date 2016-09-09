@@ -70,6 +70,9 @@ let BANNER_UNIT_ID = "ca-app-pub-3941303619697740/4039136115"
 /// 播放节点，默认是app播放
 var PLAY_NODE = "app"
 
+/// m3u8存放根目录
+let DOWNLOAD_PATH = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/DownloadVideos/"
+
 /**
  手机型号枚举
  */

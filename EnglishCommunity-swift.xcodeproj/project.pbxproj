@@ -101,6 +101,9 @@
 		B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6C1D54396700476D0E /* JFVideoInfo.swift */; };
 		B2512A6F1D5439C800476D0E /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6E1D5439C800476D0E /* Api.swift */; };
 		B2512A731D54426B00476D0E /* JFVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A721D54426B00476D0E /* JFVideo.swift */; };
+		B25278FB1D824A8D0069052A /* JFVideoDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */; };
+		B25279631D8269CC0069052A /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = B252795F1D8269CC0069052A /* mongoose.c */; };
+		B25279641D8269CC0069052A /* MongooseDaemon.m in Sources */ = {isa = PBXBuildFile; fileRef = B25279621D8269CC0069052A /* MongooseDaemon.m */; };
 		B283D1AB1D6A01A900702A75 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AA1D6A01A900702A75 /* libicucore.tbd */; };
 		B283D1AD1D6A01BD00702A75 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AC1D6A01BD00702A75 /* JavaScriptCore.framework */; };
 		B283D1AF1D6A01C800702A75 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AE1D6A01C800702A75 /* ImageIO.framework */; };
@@ -111,18 +114,14 @@
 		B283D1B91D6A021A00702A75 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1B81D6A021A00702A75 /* CFNetwork.framework */; };
 		B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B285F5071D5AFB69004F23A6 /* JFFPSLabel.swift */; };
 		B2887D621D6D4A6C009CB44B /* JFStoreInfoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B2887D611D6D4A6C009CB44B /* JFStoreInfoTool.m */; };
-		B2887D681D6D61E9009CB44B /* JFDownloadManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D671D6D61E9009CB44B /* JFDownloadManagerViewController.swift */; };
-		B2887D6A1D6D622E009CB44B /* JFVideoDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D691D6D622E009CB44B /* JFVideoDownloadViewController.swift */; };
 		B2887D711D6D6235009CB44B /* JFTopStoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D6C1D6D6235009CB44B /* JFTopStoreInfoView.swift */; };
 		B2887D721D6D6235009CB44B /* JFTopStoreInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2887D6D1D6D6235009CB44B /* JFTopStoreInfoView.xib */; };
 		B2887D731D6D6235009CB44B /* JFVideoDownloadBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D6E1D6D6235009CB44B /* JFVideoDownloadBottomView.swift */; };
 		B2887D741D6D6235009CB44B /* JFVideoDownloadBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2887D6F1D6D6235009CB44B /* JFVideoDownloadBottomView.xib */; };
 		B2887D751D6D6235009CB44B /* JFVideoDownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D701D6D6235009CB44B /* JFVideoDownloadCell.swift */; };
-		B2887D781D6D6965009CB44B /* JFDownloadDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D771D6D6965009CB44B /* JFDownloadDetailViewController.swift */; };
 		B2887D7B1D6D720F009CB44B /* JFDALManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D791D6D720F009CB44B /* JFDALManager.swift */; };
 		B2887D7C1D6D720F009CB44B /* JFSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */; };
 		B2887D7E1D6D778D009CB44B /* JFDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D7D1D6D778D009CB44B /* JFDownloadManager.swift */; };
-		B2887D851D6D8BD1009CB44B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B2887D841D6D8BD1009CB44B /* Reachability.m */; };
 		B29B5B2D1D6B4FE80050C8A1 /* JFFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29B5B2C1D6B4FE80050C8A1 /* JFFriendCell.swift */; };
 		B29E94E71D6AD2F20052F818 /* JFModifyPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E94E61D6AD2F20052F818 /* JFModifyPasswordViewController.swift */; };
 		B2B770F91D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F31D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift */; };
@@ -270,6 +269,11 @@
 		B2512A6C1D54396700476D0E /* JFVideoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoInfo.swift; sourceTree = "<group>"; };
 		B2512A6E1D5439C800476D0E /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		B2512A721D54426B00476D0E /* JFVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideo.swift; sourceTree = "<group>"; };
+		B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadViewController.swift; sourceTree = "<group>"; };
+		B252795F1D8269CC0069052A /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mongoose.c; sourceTree = "<group>"; };
+		B25279601D8269CC0069052A /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mongoose.h; sourceTree = "<group>"; };
+		B25279611D8269CC0069052A /* MongooseDaemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MongooseDaemon.h; sourceTree = "<group>"; };
+		B25279621D8269CC0069052A /* MongooseDaemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MongooseDaemon.m; sourceTree = "<group>"; };
 		B283D1A91D69FED500702A75 /* EnglishCommunity-swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EnglishCommunity-swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		B283D1AA1D6A01A900702A75 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		B283D1AC1D6A01BD00702A75 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -282,19 +286,14 @@
 		B285F5071D5AFB69004F23A6 /* JFFPSLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFFPSLabel.swift; sourceTree = "<group>"; };
 		B2887D601D6D4A6C009CB44B /* JFStoreInfoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFStoreInfoTool.h; sourceTree = "<group>"; };
 		B2887D611D6D4A6C009CB44B /* JFStoreInfoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFStoreInfoTool.m; sourceTree = "<group>"; };
-		B2887D671D6D61E9009CB44B /* JFDownloadManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadManagerViewController.swift; sourceTree = "<group>"; };
-		B2887D691D6D622E009CB44B /* JFVideoDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadViewController.swift; sourceTree = "<group>"; };
 		B2887D6C1D6D6235009CB44B /* JFTopStoreInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTopStoreInfoView.swift; sourceTree = "<group>"; };
 		B2887D6D1D6D6235009CB44B /* JFTopStoreInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFTopStoreInfoView.xib; sourceTree = "<group>"; };
 		B2887D6E1D6D6235009CB44B /* JFVideoDownloadBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadBottomView.swift; sourceTree = "<group>"; };
 		B2887D6F1D6D6235009CB44B /* JFVideoDownloadBottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFVideoDownloadBottomView.xib; sourceTree = "<group>"; };
 		B2887D701D6D6235009CB44B /* JFVideoDownloadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadCell.swift; sourceTree = "<group>"; };
-		B2887D771D6D6965009CB44B /* JFDownloadDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadDetailViewController.swift; sourceTree = "<group>"; };
 		B2887D791D6D720F009CB44B /* JFDALManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDALManager.swift; sourceTree = "<group>"; };
 		B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSQLiteManager.swift; sourceTree = "<group>"; };
 		B2887D7D1D6D778D009CB44B /* JFDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadManager.swift; sourceTree = "<group>"; };
-		B2887D831D6D8BD1009CB44B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		B2887D841D6D8BD1009CB44B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		B29B5B2C1D6B4FE80050C8A1 /* JFFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFFriendCell.swift; sourceTree = "<group>"; };
 		B29E94E61D6AD2F20052F818 /* JFModifyPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFModifyPasswordViewController.swift; sourceTree = "<group>"; };
 		B2B770F31D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserDismissAnimation.swift; sourceTree = "<group>"; };
@@ -441,6 +440,7 @@
 				B213E3DD1D54BCF100589058 /* JFCategoryViewController.swift */,
 				B213E3F21D54D45B00589058 /* JFPlayerViewController.swift */,
 				B24C11981D6DF44000AE0646 /* JFWebPlayerViewController.swift */,
+				B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -744,14 +744,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		B2887D631D6D6148009CB44B /* Download */ = {
+		B252795E1D8269CC0069052A /* mongoose */ = {
 			isa = PBXGroup;
 			children = (
-				B2887D671D6D61E9009CB44B /* JFDownloadManagerViewController.swift */,
-				B2887D771D6D6965009CB44B /* JFDownloadDetailViewController.swift */,
-				B2887D691D6D622E009CB44B /* JFVideoDownloadViewController.swift */,
+				B252795F1D8269CC0069052A /* mongoose.c */,
+				B25279601D8269CC0069052A /* mongoose.h */,
+				B25279611D8269CC0069052A /* MongooseDaemon.h */,
+				B25279621D8269CC0069052A /* MongooseDaemon.m */,
 			);
-			path = Download;
+			path = mongoose;
 			sourceTree = "<group>";
 		};
 		B2887D6B1D6D6235009CB44B /* Download */ = {
@@ -867,8 +868,6 @@
 				B23DC5FD1D813DB2006953CC /* M3U8 */,
 				B22AD8CC1D6F392100B0DC05 /* LBToAppStore.h */,
 				B22AD8CD1D6F392100B0DC05 /* LBToAppStore.m */,
-				B2887D831D6D8BD1009CB44B /* Reachability.h */,
-				B2887D841D6D8BD1009CB44B /* Reachability.m */,
 				B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */,
 				B2887D791D6D720F009CB44B /* JFDALManager.swift */,
 				B21501D31D5366A4005E4670 /* JFNetworkTools.swift */,
@@ -883,6 +882,7 @@
 		B28D93DD1D534AA700128D20 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B252795E1D8269CC0069052A /* mongoose */,
 				B2F1BA2D1D6A8F3A003DF045 /* JPush */,
 				B2B7710A1D61A0790042AA5E /* Emoticon */,
 				B2B771051D61A0670042AA5E /* PhotoSelector */,
@@ -986,7 +986,6 @@
 		B2FC668A1D5C15DF0032703D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B2887D631D6D6148009CB44B /* Download */,
 				B2156C7C1D66AEF10033DBB6 /* Base */,
 				B2156C511D66ADF90033DBB6 /* Friend */,
 				B2156C571D66ADF90033DBB6 /* Message */,
@@ -1180,6 +1179,7 @@
 				B2DA01151D654DBB0095AB7D /* JFHomeSectionHeaderView.swift in Sources */,
 				B228FF601D7D0341009F999B /* JFSelectNodeView.swift in Sources */,
 				B21501DC1D5366CB005E4670 /* JFTabBar.swift in Sources */,
+				B25279641D8269CC0069052A /* MongooseDaemon.m in Sources */,
 				B20FD0EF1D6C16C4008DEF0C /* JFMessageRecordCell.swift in Sources */,
 				B2156C891D66AF840033DBB6 /* JFSelectFriendViewController.swift in Sources */,
 				B2156C651D66AE3A0033DBB6 /* JFForgotViewController.swift in Sources */,
@@ -1189,7 +1189,6 @@
 				B2B770FE1D61689E0042AA5E /* JFPhotoBrowserViewController.swift in Sources */,
 				B21501D11D536697005E4670 /* UIBarButtionItem.swift in Sources */,
 				B2FC66D11D5C15DF0032703D /* JFProfileTopButton.swift in Sources */,
-				B2887D781D6D6965009CB44B /* JFDownloadDetailViewController.swift in Sources */,
 				B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */,
 				B23DC60C1D813DB2006953CC /* SCM3U8SegmentInfo.m in Sources */,
 				B2156C5A1D66ADF90033DBB6 /* JFInfomationViewController.swift in Sources */,
@@ -1223,6 +1222,7 @@
 				B2156C9D1D6709CE0033DBB6 /* JFEmoticonView.swift in Sources */,
 				B2155F3F1D68A36400D3FC65 /* JFSafeViewController.swift in Sources */,
 				B29B5B2D1D6B4FE80050C8A1 /* JFFriendCell.swift in Sources */,
+				B25279631D8269CC0069052A /* mongoose.c in Sources */,
 				B2FC66D61D5C16EA0032703D /* StringExtension.swift in Sources */,
 				B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */,
 				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,
@@ -1263,6 +1263,7 @@
 				B22AD8CE1D6F392100B0DC05 /* LBToAppStore.m in Sources */,
 				B2DA01241D6567000095AB7D /* JFDetailBottomBarView.swift in Sources */,
 				B2F50AB51D646694006A91E6 /* UIColorExtension.swift in Sources */,
+				B25278FB1D824A8D0069052A /* JFVideoDownloadViewController.swift in Sources */,
 				B2FC66E11D5C67510032703D /* NSDateExtension.swift in Sources */,
 				B20EA11B1D677EFC009EB7B8 /* JFProfileNavigationBarView.swift in Sources */,
 				B218AE361D816D8F00FFD470 /* JFProgressView.swift in Sources */,
@@ -1274,14 +1275,11 @@
 				B2DA01121D654DBB0095AB7D /* JFHomeCell.swift in Sources */,
 				B249AE391D607D41005C0A41 /* JFTweetListCell.swift in Sources */,
 				B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */,
-				B2887D681D6D61E9009CB44B /* JFDownloadManagerViewController.swift in Sources */,
 				B249AE331D607D41005C0A41 /* JFComment.swift in Sources */,
 				B2887D731D6D6235009CB44B /* JFVideoDownloadBottomView.swift in Sources */,
 				B21501DE1D536800005E4670 /* JFHomeViewController.swift in Sources */,
 				B2B771081D61A0670042AA5E /* JFPhotoSelectorViewController.swift in Sources */,
 				B2156C7A1D66AEDA0033DBB6 /* JFProfileCell.swift in Sources */,
-				B2887D6A1D6D622E009CB44B /* JFVideoDownloadViewController.swift in Sources */,
-				B2887D851D6D8BD1009CB44B /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

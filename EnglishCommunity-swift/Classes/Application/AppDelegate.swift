@@ -9,12 +9,13 @@
 import UIKit
 import SwipeBack
 import SwiftyJSON
+import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
+    var webServer = MongooseDaemon()
     var hostReach: Reachability?
     var networkState = 0
     
@@ -28,9 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupGlobalData()         // 配置全局数据
         setupShareSDK()           // 配置shareSDK
         setupReachability()       // 配置网络检测
+        setupWebServer()          // 配置web服务器
         self.launchOptions = launchOptions
         
         return true
+    }
+    
+    /**
+     配置web服务器
+     */
+    private func setupWebServer() {
+        webServer.startMongooseDaemon("8080")
     }
     
     /**
@@ -73,22 +82,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         switch curReach.currentReachabilityStatus() {
-        case NotReachable:
+        case NetworkStatus.NotReachable:
             print("无网络")
-        case ReachableViaWiFi:
+        case NetworkStatus.ReachableViaWiFi:
             networkState = 1
             print("WiFi")
-        case kReachableVia2G:
+        case NetworkStatus.ReachableViaWWAN:
             networkState = 2
-            print("2G")
-        case kReachableVia3G:
-            networkState = 3
-            print("3G")
-        case kReachableVia4G:
-            networkState = 4
-            print("4G")
-        default:
-            print("未知")
+            print("WAN")
         }
         
     }

@@ -29,5 +29,4 @@ pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
 
 pod 'BMPlayer'
 pod 'ASIHTTPRequest', '~> 1.8.2'
-
 end

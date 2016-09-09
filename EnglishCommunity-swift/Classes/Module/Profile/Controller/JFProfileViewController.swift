@@ -417,13 +417,6 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
     }
     
     /**
-     下载管理
-     */
-    func didTappedDownloadButton() {
-        JFProgressHUD.showInfoWithStatus("暂未开放")
-    }
-    
-    /**
      朋友列表
      */
     func didTappedFriendButton() {

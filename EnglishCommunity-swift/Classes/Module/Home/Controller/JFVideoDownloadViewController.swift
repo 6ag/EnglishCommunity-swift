@@ -153,7 +153,7 @@ extension JFVideoDownloadViewController: JFVideoDownloadBottomViewDelegate {
         
         var needVideos = [[String : AnyObject]]()
         for (index, video) in videos!.enumerate() {
-            if video.downloadListSelected {
+            if video.downloadListSelected && video.state == VideoState.NoDownload {
                 
                 let info: [String : AnyObject] = [
                     "index" : index,

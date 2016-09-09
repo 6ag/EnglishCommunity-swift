@@ -67,13 +67,16 @@ class JFDALManager: NSObject {
      
      - parameter videoVid: 视频vid
      */
-    func removeVideo(videoVid: String) {
+    func removeVideo(videoVid: String, finished: (success: Bool) -> ()) {
         
         let sql = "DELETE FROM \(VIDEOS_TABLE) WHERE video_vid = \"\(videoVid)\";"
         
         JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
             if db.executeStatements(sql) {
+                finished(success: true)
                 print("移除成功")
+            } else {
+                finished(success: false)
             }
         }
         

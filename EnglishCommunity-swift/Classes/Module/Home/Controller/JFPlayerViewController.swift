@@ -97,6 +97,7 @@ class JFPlayerViewController: UIViewController {
     }
     
     deinit {
+        print("播放控制器销毁")
         JFDownloadManager.shareManager.delegate = nil
         player.prepareToDealloc()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
@@ -300,7 +301,16 @@ class JFPlayerViewController: UIViewController {
                         JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
                         return
                     }
-                    self.player.playWithURL(NSURL(string: url)!, title: video.title!)
+                    
+                    if video.state == VideoState.AlreadyDownload {
+                        let videoVid = JFVideo.getVideoId(video.videoUrl!)
+                        let url = NSURL(string: "http://127.0.0.1:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8")!
+                        self.player.playWithURL(url, title: video.title!)
+                        print(url)
+                    } else {
+                        self.player.playWithURL(NSURL(string: url)!, title: video.title!)
+                    }
+                    
                 }
             } else {
                 let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
@@ -890,7 +900,9 @@ extension JFPlayerViewController: JFDownloadManagerDelegate {
             let video = videos[index]
             video.state = state
             video.progress = progress
-            videoTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
+            
+            let cell = videoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! JFDetailVideoCell
+            cell.model = video
         }
         
     }
@@ -910,48 +922,51 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
         let indexPath = videoTableView.indexPathForCell(cell)!
         let video = videos[indexPath.row]
         
-        // 改变状态
         switch video.state {
         case VideoState.NoDownload:
             
             video.state = VideoState.Downloading
-            
-            // 开始下载视频
             JFDownloadManager.shareManager.startDownloadVideo(indexPath.row, videoUrl: video.videoUrl!)
             
         case VideoState.AlreadyDownload:
+            
+            if video.videoListSelected {
+                JFProgressHUD.showInfoWithStatus("您正在播放这个视频哦")
+                return
+            }
             
             let alertC = UIAlertController(title: "确认要删除这节视频吗", message: "删除本地缓存后，可以节省手机磁盘空间，但重新缓存又得WiFi哦", preferredStyle: UIAlertControllerStyle.Alert)
             let confirm = UIAlertAction(title: "确定删除", style: UIAlertActionStyle.Destructive, handler: { (action) in
                 video.state = VideoState.NoDownload
                 let videoVid = JFVideo.getVideoId(video.videoUrl!)
                 
-                // 删除数据库
-                JFDALManager.shareManager.removeVideo(videoVid)
-                
-                // 从本地文件移除
-                let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/DownloadVideos/\(videoVid)"
-                let fileManager = NSFileManager.defaultManager()
-                if fileManager.fileExistsAtPath(path) {
-                    do {
-                        try fileManager.removeItemAtPath(path)
-                        print("删除成功")
-                        self.videoStateChange(0, index: indexPath.row, state: VideoState.NoDownload)
-                    } catch {
-                        print("删除失败")
+                // 从数据库移除
+                JFDALManager.shareManager.removeVideo(videoVid, finished: { (success) in
+                    if success {
+                        // 从本地文件移除
+                        let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/DownloadVideos/\(videoVid)"
+                        let fileManager = NSFileManager.defaultManager()
+                        if fileManager.fileExistsAtPath(path) {
+                            do {
+                                try fileManager.removeItemAtPath(path)
+                                print("删除成功")
+                                self.videoStateChange(0, index: indexPath.row, state: VideoState.NoDownload)
+                            } catch {
+                                print("删除失败")
+                            }
+                        }
                     }
-                }
+                })
             })
             let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in })
             alertC.addAction(confirm)
             alertC.addAction(cancel)
-            presentViewController(alertC, animated: true, completion: { 
-                
-            })
+            presentViewController(alertC, animated: true, completion: { })
             
         case VideoState.Downloading:
             
             video.state = VideoState.NoDownload
+            videoStateChange(0, index: indexPath.row, state: VideoState.NoDownload)
             JFDownloadManager.shareManager.cancelDownloadVideo(video.videoUrl!)
             
         }

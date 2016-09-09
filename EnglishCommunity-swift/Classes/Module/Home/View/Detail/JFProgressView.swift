@@ -38,13 +38,12 @@ class JFProgressView: UIView {
         trackPath.stroke()
         
         // 进度
-        let endAngle = CGFloat(M_PI * 2) * progress
+        let endAngle = CGFloat(M_PI * 2) * progress - CGFloat(M_PI_2)
         let progressPath = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius), radius: radius - lineWidth, startAngle: CGFloat(-M_PI_2), endAngle: endAngle, clockwise: true)
         progressPath.lineWidth = lineWidth
         progressPath.lineCapStyle = CGLineCap.Round
         progressColor.setStroke()
         progressPath.stroke()
-        print(progress)
     }
     
 }

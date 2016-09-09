@@ -23,8 +23,6 @@ class JFDetailVideoCell: UITableViewCell {
                 return
             }
             
-            setSelected(model.videoListSelected, animated: true)
-            
             videoTitleLabel.text = model.title
             
             // 改变状态
@@ -74,6 +72,7 @@ class JFDetailVideoCell: UITableViewCell {
     /// 进度圈
     lazy var progressView: JFProgressView = {
         let progressView = JFProgressView(frame: CGRect(x: 12, y: 12, width: 20, height: 20))
+        progressView.userInteractionEnabled = false
         progressView.backgroundColor = UIColor.whiteColor()
         self.downloadButton.addSubview(progressView)
         return progressView

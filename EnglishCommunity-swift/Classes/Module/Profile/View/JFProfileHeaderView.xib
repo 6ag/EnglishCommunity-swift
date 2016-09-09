@@ -14,53 +14,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rsS-JR-Dap" userLabel="menu">
                     <rect key="frame" x="0.0" y="173" width="375" height="65"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="awN-g1-n8P" userLabel="item0">
-                            <rect key="frame" x="0.0" y="0.0" width="94" height="65"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nua-aX-M53" userLabel="下载" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="65"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <state key="normal" title="下载" image="profile_topbar_download">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="didTappedDownloadButton" destination="iN0-l3-epB" eventType="touchUpInside" id="D1W-DR-OtD"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="nua-aX-M53" firstAttribute="top" secondItem="awN-g1-n8P" secondAttribute="top" id="5sv-vJ-UAk"/>
-                                <constraint firstItem="nua-aX-M53" firstAttribute="top" secondItem="awN-g1-n8P" secondAttribute="top" id="6K0-BG-oN3"/>
-                                <constraint firstAttribute="trailing" secondItem="nua-aX-M53" secondAttribute="trailing" id="RjU-aI-OsP"/>
-                                <constraint firstAttribute="bottom" secondItem="nua-aX-M53" secondAttribute="bottom" id="UmK-xu-4Ii"/>
-                                <constraint firstAttribute="trailing" secondItem="nua-aX-M53" secondAttribute="trailing" id="Ybk-0E-Zjd"/>
-                                <constraint firstItem="nua-aX-M53" firstAttribute="leading" secondItem="awN-g1-n8P" secondAttribute="leading" id="euL-hz-w4T"/>
-                                <constraint firstAttribute="bottom" secondItem="nua-aX-M53" secondAttribute="bottom" id="jf7-nL-AnO"/>
-                                <constraint firstItem="nua-aX-M53" firstAttribute="leading" secondItem="awN-g1-n8P" secondAttribute="leading" id="nXq-XG-1Bb"/>
-                            </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="6K0-BG-oN3"/>
-                                    <exclude reference="UmK-xu-4Ii"/>
-                                    <exclude reference="Ybk-0E-Zjd"/>
-                                    <exclude reference="nXq-XG-1Bb"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=compact">
-                                <mask key="constraints">
-                                    <include reference="6K0-BG-oN3"/>
-                                    <include reference="UmK-xu-4Ii"/>
-                                    <include reference="Ybk-0E-Zjd"/>
-                                    <include reference="nXq-XG-1Bb"/>
-                                </mask>
-                            </variation>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvA-R7-jJE" userLabel="item1">
-                            <rect key="frame" x="94" y="0.0" width="94" height="65"/>
+                            <rect key="frame" x="0.0" y="0.0" width="125" height="65"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qgd-fn-ej1" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="65"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="125" height="65"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="好友" image="profile_topbar_collection">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -99,10 +57,10 @@
                             </variation>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3CI-Go-PGc" userLabel="item2">
-                            <rect key="frame" x="188" y="0.0" width="93" height="65"/>
+                            <rect key="frame" x="125" y="0.0" width="125" height="65"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSh-ZB-j0c" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="93" height="65"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="125" height="65"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="消息" image="profile_topbar_comment">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -112,7 +70,7 @@
                                     </connections>
                                 </button>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lw8-LS-ZUR">
-                                    <rect key="frame" x="49" y="15" width="15" height="15"/>
+                                    <rect key="frame" x="65" y="15" width="15" height="15"/>
                                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="15" id="6Qq-o9-koj"/>
@@ -154,10 +112,10 @@
                             </variation>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zFW-9a-cew" userLabel="item3">
-                            <rect key="frame" x="281" y="0.0" width="94" height="65"/>
+                            <rect key="frame" x="250" y="0.0" width="125" height="65"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="788-jF-aZR" customClass="JFProfileTopButton" customModule="EnglishCommunity_swift" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="65"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="125" height="65"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="资料" image="profile_topbar_info">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -198,29 +156,21 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="3CI-Go-PGc" firstAttribute="height" secondItem="awN-g1-n8P" secondAttribute="height" id="1vW-M0-Sgb"/>
+                        <constraint firstItem="3CI-Go-PGc" firstAttribute="width" secondItem="PvA-R7-jJE" secondAttribute="width" id="8XO-4J-ibM"/>
                         <constraint firstItem="zFW-9a-cew" firstAttribute="top" secondItem="rsS-JR-Dap" secondAttribute="top" id="9UD-ZX-guu"/>
                         <constraint firstItem="zFW-9a-cew" firstAttribute="leading" secondItem="3CI-Go-PGc" secondAttribute="trailing" id="9th-ux-EFY"/>
-                        <constraint firstItem="3CI-Go-PGc" firstAttribute="width" secondItem="awN-g1-n8P" secondAttribute="width" id="AtQ-JE-C85"/>
                         <constraint firstAttribute="bottom" secondItem="zFW-9a-cew" secondAttribute="bottom" id="CwF-75-96Q"/>
                         <constraint firstItem="PvA-R7-jJE" firstAttribute="top" secondItem="rsS-JR-Dap" secondAttribute="top" id="Cyc-yQ-9WQ"/>
                         <constraint firstAttribute="trailing" secondItem="zFW-9a-cew" secondAttribute="trailing" id="EaM-4L-TAr"/>
                         <constraint firstAttribute="bottom" secondItem="3CI-Go-PGc" secondAttribute="bottom" id="MkC-FC-CDC"/>
                         <constraint firstItem="3CI-Go-PGc" firstAttribute="leading" secondItem="PvA-R7-jJE" secondAttribute="trailing" id="Mra-qy-Tt7"/>
                         <constraint firstAttribute="height" constant="65" id="O1M-gg-cN9"/>
-                        <constraint firstItem="zFW-9a-cew" firstAttribute="height" secondItem="awN-g1-n8P" secondAttribute="height" id="XIQ-Lo-WSS"/>
-                        <constraint firstAttribute="bottom" secondItem="awN-g1-n8P" secondAttribute="bottom" id="aDI-7f-1Y3"/>
                         <constraint firstAttribute="bottom" secondItem="PvA-R7-jJE" secondAttribute="bottom" id="eA1-Nd-nyn"/>
-                        <constraint firstItem="PvA-R7-jJE" firstAttribute="leading" secondItem="awN-g1-n8P" secondAttribute="trailing" id="gyM-2x-f9e"/>
-                        <constraint firstItem="zFW-9a-cew" firstAttribute="width" secondItem="awN-g1-n8P" secondAttribute="width" id="jrv-OY-1tb"/>
-                        <constraint firstItem="PvA-R7-jJE" firstAttribute="leading" secondItem="awN-g1-n8P" secondAttribute="trailing" id="lHx-eM-rOi"/>
+                        <constraint firstItem="PvA-R7-jJE" firstAttribute="leading" secondItem="rsS-JR-Dap" secondAttribute="leading" id="gav-Gv-EyG"/>
                         <constraint firstItem="3CI-Go-PGc" firstAttribute="top" secondItem="rsS-JR-Dap" secondAttribute="top" id="nQP-m1-mH7"/>
+                        <constraint firstItem="zFW-9a-cew" firstAttribute="width" secondItem="PvA-R7-jJE" secondAttribute="width" id="oat-Ux-wVv"/>
                         <constraint firstItem="PvA-R7-jJE" firstAttribute="leading" secondItem="rsS-JR-Dap" secondAttribute="leading" id="sPt-3D-A1Z"/>
-                        <constraint firstItem="awN-g1-n8P" firstAttribute="leading" secondItem="rsS-JR-Dap" secondAttribute="leading" id="sl5-pv-hwP"/>
-                        <constraint firstItem="PvA-R7-jJE" firstAttribute="width" secondItem="awN-g1-n8P" secondAttribute="width" id="uHZ-e1-lkB"/>
                         <constraint firstItem="3CI-Go-PGc" firstAttribute="leading" secondItem="PvA-R7-jJE" secondAttribute="trailing" id="v3E-xO-yqD"/>
-                        <constraint firstItem="PvA-R7-jJE" firstAttribute="height" secondItem="awN-g1-n8P" secondAttribute="height" id="vo1-sY-WQc"/>
-                        <constraint firstItem="awN-g1-n8P" firstAttribute="top" secondItem="rsS-JR-Dap" secondAttribute="top" id="xEg-d4-d0d"/>
                         <constraint firstItem="zFW-9a-cew" firstAttribute="leading" secondItem="3CI-Go-PGc" secondAttribute="trailing" id="yrv-hJ-rwd"/>
                     </constraints>
                     <variation key="default">
@@ -277,7 +227,6 @@
         <image name="default－portrait" width="36" height="36"/>
         <image name="profile_topbar_collection" width="19" height="19"/>
         <image name="profile_topbar_comment" width="18" height="18"/>
-        <image name="profile_topbar_download" width="20" height="20"/>
         <image name="profile_topbar_info" width="19" height="19"/>
     </resources>
 </document>
