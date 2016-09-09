@@ -29,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupGlobalData()         // 配置全局数据
         setupShareSDK()           // 配置shareSDK
         setupReachability()       // 配置网络检测
-        setupWebServer()          // 配置web服务器
         self.launchOptions = launchOptions
         
         return true
@@ -38,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /**
      配置web服务器
      */
-    private func setupWebServer() {
+    func setupWebServer() {
         webServer.startMongooseDaemon("8080")
     }
     
@@ -250,6 +249,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         setupPlayNode()           // 配置默认播放节点
+        setupWebServer()          // 配置web服务器
     }
     
     func applicationWillTerminate(application: UIApplication) {

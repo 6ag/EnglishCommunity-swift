@@ -10,7 +10,6 @@ import UIKit
 import YYWebImage
 
 protocol JFTweetListCellDelegate: NSObjectProtocol {
-    
     func tweetListCell(cell: JFTweetListCell, didTappedAvatarButton button: UIButton)
     func tweetListCell(cell: JFTweetListCell, didTappedLikeButton button: UIButton)
     func tweetListCell(cell: JFTweetListCell, didTappedSuperLink url: String)

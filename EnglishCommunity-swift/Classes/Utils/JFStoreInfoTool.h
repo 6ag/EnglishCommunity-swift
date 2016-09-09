@@ -6,7 +6,7 @@
 //  Copyright © 2016年 zhoujianfeng. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface JFStoreInfoTool : NSObject
 
@@ -30,5 +30,14 @@
  *  @return 容量字符串
  */
 + (NSString *)getAvailableDiskSize;
+
+/**
+ *  计算文件夹下文件的总大小
+ *
+ *  @param path 目录路径
+ *
+ *  @return 返回大小
+ */
++ (float )folderSizeAtPath:(NSString*)folderPath;
 
 @end

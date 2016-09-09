@@ -63,7 +63,7 @@ class JFDALManager: NSObject {
     }
     
     /**
-     插入视频
+     移除单个视频
      
      - parameter videoVid: 视频vid
      */
@@ -80,6 +80,26 @@ class JFDALManager: NSObject {
             }
         }
         
+    }
+    
+    /**
+     清除所有视频缓存
+     */
+    func removeAllVideo(finished: (success: Bool) -> ()) {
+        
+        let sql = "DROP TABLE IF EXISTS \(VIDEOS_TABLE);"
+        
+        JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
+            if db.executeStatements(sql) {
+                finished(success: true)
+                print("清除视频缓存数据成功")
+            } else {
+                finished(success: false)
+            }
+        }
+        
+        // 重新创建表
+        JFSQLiteManager.shareManager.createVideoInfosTable(VIDEOS_TABLE)
     }
     
     /**

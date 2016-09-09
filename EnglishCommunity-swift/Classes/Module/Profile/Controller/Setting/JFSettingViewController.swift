@@ -279,9 +279,9 @@ class JFSettingViewController: JFBaseTableViewController {
                     })
                 })
             }
-            let group1CellModel2 = JFProfileCellLabelModel(title: "清除离线下载内容", text: "0.0M")
+            let group1CellModel2 = JFProfileCellLabelModel(title: "清除离线下载内容", text: "\(String(format: "%.2f", arguments: [JFStoreInfoTool.folderSizeAtPath(DOWNLOAD_PATH)]))M")
             group1CellModel2.operation = { () -> Void in
-                print("清除下载内容")
+                self.removeCacheVideoData(group1CellModel2)
             }
             let group1 = JFProfileCellGroupModel(cells: [group1CellModel1, group1CellModel2])
             
@@ -295,10 +295,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group3CellModel2 = JFProfileCellArrowModel(title: "关于作者", destinationVc: JFAboutMeViewController.classForCoder())
             let group3CellModel3 = JFProfileCellArrowModel(title: "应用评价")
             group3CellModel3.operation = { () -> Void in
-                let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1146271758")!
-                if UIApplication.sharedApplication().canOpenURL(url) {
-                    UIApplication.sharedApplication().openURL(url)
-                }
+                self.jumpToAppstoreCommentPage()
             }
             let group3CellModel4 = JFProfileCellLabelModel(title: "当前版本", text: NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String)
             let group3 = JFProfileCellGroupModel(cells: [group3CellModel1, group3CellModel2, group3CellModel3, group3CellModel4])
@@ -337,6 +334,47 @@ class JFSettingViewController: JFBaseTableViewController {
             
             groupModels = [group1, group2, group3]
         }
+        
+    }
+    
+    /**
+     清除下载视频数据
+     
+     - parameter model: cell对应模型
+     */
+    func removeCacheVideoData(model: JFProfileCellLabelModel) {
+        
+        let alertC = UIAlertController(title: "确认要删除所有缓存的视频吗", message: "删除缓存后，可以节省手机磁盘空间，但重新缓存又得WiFi哦", preferredStyle: UIAlertControllerStyle.Alert)
+        let confirm = UIAlertAction(title: "确定删除", style: UIAlertActionStyle.Destructive, handler: { (action) in
+            JFProgressHUD.showWithStatus("正在清理")
+            // 从数据库移除
+            JFDALManager.shareManager.removeAllVideo({ (success) in
+                if success {
+                    // 从本地文件移除
+                    let fileManager = NSFileManager.defaultManager()
+                    if fileManager.fileExistsAtPath(DOWNLOAD_PATH) {
+                        do {
+                            try fileManager.removeItemAtPath(DOWNLOAD_PATH)
+                            JFProgressHUD.showSuccessWithStatus("清理成功")
+                            model.text = "0.00M"
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.tableView.reloadData()
+                            })
+                        } catch {
+                            JFProgressHUD.showSuccessWithStatus("清理失败")
+                        }
+                    } else {
+                        JFProgressHUD.showSuccessWithStatus("清理成功")
+                    }
+                } else {
+                    JFProgressHUD.showSuccessWithStatus("清理失败")
+                }
+            })
+        })
+        let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in })
+        alertC.addAction(confirm)
+        alertC.addAction(cancel)
+        presentViewController(alertC, animated: true, completion: { })
         
     }
     

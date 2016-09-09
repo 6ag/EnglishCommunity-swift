@@ -18,7 +18,6 @@ pod 'SwipeBack', '~> 1.1'
 pod 'SDCycleScrollView','~> 1.64'
 pod 'FMDB'
 pod 'Firebase/AdMob'
-pod 'HYLabel', '~> 1.0.1'
 
 pod 'ShareSDK3'
 pod 'MOBFoundation'
@@ -29,4 +28,5 @@ pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
 
 pod 'BMPlayer'
 pod 'ASIHTTPRequest', '~> 1.8.2'
+
 end

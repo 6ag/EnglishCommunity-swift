@@ -26,7 +26,6 @@ class JFSQLiteManager: NSObject {
         let dbPath = "\(documentPath)/\(dbName)"
         print(dbPath)
         
-        // 根据路径创建并打开数据库，开启一个串行队列
         dbQueue = FMDatabaseQueue(path: dbPath)
         super.init()
         
@@ -38,11 +37,11 @@ class JFSQLiteManager: NSObject {
      
      - parameter tbname: 表名
      */
-    private func createVideoInfosTable(tbname: String) {
+    func createVideoInfosTable(tbname: String) {
         
         let sql = "CREATE TABLE IF NOT EXISTS \(tbname) ( \n" +
             "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n" +
-            "video_vid VARCHAR, \n" +
+            "video_vid VARCHAR \n" +
             "createTime VARCHAR(30) DEFAULT (datetime('now', 'localtime')) \n" +
         ");"
         

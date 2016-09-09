@@ -72,6 +72,12 @@
 		B218AE361D816D8F00FFD470 /* JFProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218AE351D816D8F00FFD470 /* JFProgressView.swift */; };
 		B2190B081D4F85C4007FC0E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2190B071D4F85C4007FC0E9 /* Assets.xcassets */; };
 		B2190B0B1D4F85C4007FC0E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2190B091D4F85C4007FC0E9 /* LaunchScreen.storyboard */; };
+		B220F0121D82DEE400AE4CB2 /* SCM3U8Analyse.m in Sources */ = {isa = PBXBuildFile; fileRef = B220F0071D82DEE400AE4CB2 /* SCM3U8Analyse.m */; };
+		B220F0131D82DEE400AE4CB2 /* SCM3U8SegmentDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = B220F0091D82DEE400AE4CB2 /* SCM3U8SegmentDownload.m */; };
+		B220F0141D82DEE400AE4CB2 /* SCM3U8SegmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B220F00B1D82DEE400AE4CB2 /* SCM3U8SegmentInfo.m */; };
+		B220F0151D82DEE400AE4CB2 /* SCM3U8SegmentList.m in Sources */ = {isa = PBXBuildFile; fileRef = B220F00D1D82DEE400AE4CB2 /* SCM3U8SegmentList.m */; };
+		B220F0161D82DEE400AE4CB2 /* SCM3U8SegmentListDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = B220F00F1D82DEE400AE4CB2 /* SCM3U8SegmentListDownload.m */; };
+		B220F0171D82DEE400AE4CB2 /* SCM3U8VideoDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = B220F0111D82DEE400AE4CB2 /* SCM3U8VideoDownload.m */; };
 		B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2224BF61D55A4FD005CEAE4 /* JFDetailVideoCell.swift */; };
 		B2224BF91D55A4FD005CEAE4 /* JFDetailVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2224BF71D55A4FD005CEAE4 /* JFDetailVideoCell.xib */; };
 		B228FF601D7D0341009F999B /* JFSelectNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B228FF5E1D7D0341009F999B /* JFSelectNodeView.swift */; };
@@ -81,12 +87,6 @@
 		B238B4121D5D9B2700E4307A /* JFGrammar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4111D5D9B2700E4307A /* JFGrammar.swift */; };
 		B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */; };
 		B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */; };
-		B23DC60A1D813DB2006953CC /* SCM3U8Analyse.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DC5FF1D813DB2006953CC /* SCM3U8Analyse.m */; };
-		B23DC60B1D813DB2006953CC /* SCM3U8SegmentDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DC6011D813DB2006953CC /* SCM3U8SegmentDownload.m */; };
-		B23DC60C1D813DB2006953CC /* SCM3U8SegmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DC6031D813DB2006953CC /* SCM3U8SegmentInfo.m */; };
-		B23DC60D1D813DB2006953CC /* SCM3U8SegmentList.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DC6051D813DB2006953CC /* SCM3U8SegmentList.m */; };
-		B23DC60E1D813DB2006953CC /* SCM3U8SegmentListDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DC6071D813DB2006953CC /* SCM3U8SegmentListDownload.m */; };
-		B23DC60F1D813DB2006953CC /* SCM3U8VideoDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DC6091D813DB2006953CC /* SCM3U8VideoDownload.m */; };
 		B249AE311D607D41005C0A41 /* JFTweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE251D607D41005C0A41 /* JFTweetDetailViewController.swift */; };
 		B249AE321D607D41005C0A41 /* JFTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE261D607D41005C0A41 /* JFTweetViewController.swift */; };
 		B249AE331D607D41005C0A41 /* JFComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE281D607D41005C0A41 /* JFComment.swift */; };
@@ -232,6 +232,19 @@
 		B2190B071D4F85C4007FC0E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2190B0A1D4F85C4007FC0E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2190B0C1D4F85C4007FC0E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B220F0051D82DEE400AE4CB2 /* JFCommonOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFCommonOC.h; sourceTree = "<group>"; };
+		B220F0061D82DEE400AE4CB2 /* SCM3U8Analyse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8Analyse.h; sourceTree = "<group>"; };
+		B220F0071D82DEE400AE4CB2 /* SCM3U8Analyse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8Analyse.m; sourceTree = "<group>"; };
+		B220F0081D82DEE400AE4CB2 /* SCM3U8SegmentDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentDownload.h; sourceTree = "<group>"; };
+		B220F0091D82DEE400AE4CB2 /* SCM3U8SegmentDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentDownload.m; sourceTree = "<group>"; };
+		B220F00A1D82DEE400AE4CB2 /* SCM3U8SegmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentInfo.h; sourceTree = "<group>"; };
+		B220F00B1D82DEE400AE4CB2 /* SCM3U8SegmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentInfo.m; sourceTree = "<group>"; };
+		B220F00C1D82DEE400AE4CB2 /* SCM3U8SegmentList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentList.h; sourceTree = "<group>"; };
+		B220F00D1D82DEE400AE4CB2 /* SCM3U8SegmentList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentList.m; sourceTree = "<group>"; };
+		B220F00E1D82DEE400AE4CB2 /* SCM3U8SegmentListDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentListDownload.h; sourceTree = "<group>"; };
+		B220F00F1D82DEE400AE4CB2 /* SCM3U8SegmentListDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentListDownload.m; sourceTree = "<group>"; };
+		B220F0101D82DEE400AE4CB2 /* SCM3U8VideoDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8VideoDownload.h; sourceTree = "<group>"; };
+		B220F0111D82DEE400AE4CB2 /* SCM3U8VideoDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8VideoDownload.m; sourceTree = "<group>"; };
 		B2224BF61D55A4FD005CEAE4 /* JFDetailVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDetailVideoCell.swift; sourceTree = "<group>"; };
 		B2224BF71D55A4FD005CEAE4 /* JFDetailVideoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFDetailVideoCell.xib; sourceTree = "<group>"; };
 		B228FF5E1D7D0341009F999B /* JFSelectNodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSelectNodeView.swift; sourceTree = "<group>"; };
@@ -242,19 +255,6 @@
 		B238B4111D5D9B2700E4307A /* JFGrammar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammar.swift; sourceTree = "<group>"; };
 		B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarListCell.swift; sourceTree = "<group>"; };
 		B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarDetailViewController.swift; sourceTree = "<group>"; };
-		B23DC5FE1D813DB2006953CC /* SCM3U8Analyse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8Analyse.h; sourceTree = "<group>"; };
-		B23DC5FF1D813DB2006953CC /* SCM3U8Analyse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8Analyse.m; sourceTree = "<group>"; };
-		B23DC6001D813DB2006953CC /* SCM3U8SegmentDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentDownload.h; sourceTree = "<group>"; };
-		B23DC6011D813DB2006953CC /* SCM3U8SegmentDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentDownload.m; sourceTree = "<group>"; };
-		B23DC6021D813DB2006953CC /* SCM3U8SegmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentInfo.h; sourceTree = "<group>"; };
-		B23DC6031D813DB2006953CC /* SCM3U8SegmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentInfo.m; sourceTree = "<group>"; };
-		B23DC6041D813DB2006953CC /* SCM3U8SegmentList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentList.h; sourceTree = "<group>"; };
-		B23DC6051D813DB2006953CC /* SCM3U8SegmentList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentList.m; sourceTree = "<group>"; };
-		B23DC6061D813DB2006953CC /* SCM3U8SegmentListDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8SegmentListDownload.h; sourceTree = "<group>"; };
-		B23DC6071D813DB2006953CC /* SCM3U8SegmentListDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8SegmentListDownload.m; sourceTree = "<group>"; };
-		B23DC6081D813DB2006953CC /* SCM3U8VideoDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCM3U8VideoDownload.h; sourceTree = "<group>"; };
-		B23DC6091D813DB2006953CC /* SCM3U8VideoDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCM3U8VideoDownload.m; sourceTree = "<group>"; };
-		B23DC6101D814427006953CC /* JFCommonOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFCommonOC.h; sourceTree = "<group>"; };
 		B249AE251D607D41005C0A41 /* JFTweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetDetailViewController.swift; sourceTree = "<group>"; };
 		B249AE261D607D41005C0A41 /* JFTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetViewController.swift; sourceTree = "<group>"; };
 		B249AE281D607D41005C0A41 /* JFComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFComment.swift; sourceTree = "<group>"; };
@@ -648,6 +648,26 @@
 			path = "EnglishCommunity-swift";
 			sourceTree = "<group>";
 		};
+		B220F0041D82DEE400AE4CB2 /* M3U8 */ = {
+			isa = PBXGroup;
+			children = (
+				B220F0051D82DEE400AE4CB2 /* JFCommonOC.h */,
+				B220F0061D82DEE400AE4CB2 /* SCM3U8Analyse.h */,
+				B220F0071D82DEE400AE4CB2 /* SCM3U8Analyse.m */,
+				B220F0081D82DEE400AE4CB2 /* SCM3U8SegmentDownload.h */,
+				B220F0091D82DEE400AE4CB2 /* SCM3U8SegmentDownload.m */,
+				B220F00A1D82DEE400AE4CB2 /* SCM3U8SegmentInfo.h */,
+				B220F00B1D82DEE400AE4CB2 /* SCM3U8SegmentInfo.m */,
+				B220F00C1D82DEE400AE4CB2 /* SCM3U8SegmentList.h */,
+				B220F00D1D82DEE400AE4CB2 /* SCM3U8SegmentList.m */,
+				B220F00E1D82DEE400AE4CB2 /* SCM3U8SegmentListDownload.h */,
+				B220F00F1D82DEE400AE4CB2 /* SCM3U8SegmentListDownload.m */,
+				B220F0101D82DEE400AE4CB2 /* SCM3U8VideoDownload.h */,
+				B220F0111D82DEE400AE4CB2 /* SCM3U8VideoDownload.m */,
+			);
+			path = M3U8;
+			sourceTree = "<group>";
+		};
 		B238B4091D5D991400E4307A /* Grammar */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,26 +701,6 @@
 				B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		B23DC5FD1D813DB2006953CC /* M3U8 */ = {
-			isa = PBXGroup;
-			children = (
-				B23DC6101D814427006953CC /* JFCommonOC.h */,
-				B23DC5FE1D813DB2006953CC /* SCM3U8Analyse.h */,
-				B23DC5FF1D813DB2006953CC /* SCM3U8Analyse.m */,
-				B23DC6001D813DB2006953CC /* SCM3U8SegmentDownload.h */,
-				B23DC6011D813DB2006953CC /* SCM3U8SegmentDownload.m */,
-				B23DC6021D813DB2006953CC /* SCM3U8SegmentInfo.h */,
-				B23DC6031D813DB2006953CC /* SCM3U8SegmentInfo.m */,
-				B23DC6041D813DB2006953CC /* SCM3U8SegmentList.h */,
-				B23DC6051D813DB2006953CC /* SCM3U8SegmentList.m */,
-				B23DC6061D813DB2006953CC /* SCM3U8SegmentListDownload.h */,
-				B23DC6071D813DB2006953CC /* SCM3U8SegmentListDownload.m */,
-				B23DC6081D813DB2006953CC /* SCM3U8VideoDownload.h */,
-				B23DC6091D813DB2006953CC /* SCM3U8VideoDownload.m */,
-			);
-			path = M3U8;
 			sourceTree = "<group>";
 		};
 		B249AE231D607D41005C0A41 /* Tweets */ = {
@@ -865,7 +865,6 @@
 		B28D93DC1D534AA700128D20 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				B23DC5FD1D813DB2006953CC /* M3U8 */,
 				B22AD8CC1D6F392100B0DC05 /* LBToAppStore.h */,
 				B22AD8CD1D6F392100B0DC05 /* LBToAppStore.m */,
 				B2887D7A1D6D720F009CB44B /* JFSQLiteManager.swift */,
@@ -882,6 +881,7 @@
 		B28D93DD1D534AA700128D20 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B220F0041D82DEE400AE4CB2 /* M3U8 */,
 				B252795E1D8269CC0069052A /* mongoose */,
 				B2F1BA2D1D6A8F3A003DF045 /* JPush */,
 				B2B7710A1D61A0790042AA5E /* Emoticon */,
@@ -1173,6 +1173,7 @@
 				B2512A731D54426B00476D0E /* JFVideo.swift in Sources */,
 				B2887D7B1D6D720F009CB44B /* JFDALManager.swift in Sources */,
 				B29E94E71D6AD2F20052F818 /* JFModifyPasswordViewController.swift in Sources */,
+				B220F0161D82DEE400AE4CB2 /* SCM3U8SegmentListDownload.m in Sources */,
 				B21501D21D536697005E4670 /* UIViewExtension.swift in Sources */,
 				B2B771121D61A0790042AA5E /* JFTextAttachment.swift in Sources */,
 				B2156C711D66AE6A0033DBB6 /* JFFeedbackViewController.swift in Sources */,
@@ -1185,12 +1186,12 @@
 				B2156C651D66AE3A0033DBB6 /* JFForgotViewController.swift in Sources */,
 				B2887D751D6D6235009CB44B /* JFVideoDownloadCell.swift in Sources */,
 				B2156C8C1D66AF840033DBB6 /* JFSelectFriendCell.swift in Sources */,
+				B220F0131D82DEE400AE4CB2 /* SCM3U8SegmentDownload.m in Sources */,
 				B2DA010F1D654DBB0095AB7D /* JFCategoriesCell.swift in Sources */,
 				B2B770FE1D61689E0042AA5E /* JFPhotoBrowserViewController.swift in Sources */,
 				B21501D11D536697005E4670 /* UIBarButtionItem.swift in Sources */,
 				B2FC66D11D5C15DF0032703D /* JFProfileTopButton.swift in Sources */,
 				B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */,
-				B23DC60C1D813DB2006953CC /* SCM3U8SegmentInfo.m in Sources */,
 				B2156C5A1D66ADF90033DBB6 /* JFInfomationViewController.swift in Sources */,
 				B2156C671D66AE3A0033DBB6 /* JFLoginViewController.swift in Sources */,
 				B2B770FC1D61689E0042AA5E /* JFPhotoBrowserCell.swift in Sources */,
@@ -1211,11 +1212,12 @@
 				B2DA011E1D65583E0095AB7D /* JFDetailHeaderView.swift in Sources */,
 				B2224BF81D55A4FD005CEAE4 /* JFDetailVideoCell.swift in Sources */,
 				B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */,
+				B220F0121D82DEE400AE4CB2 /* SCM3U8Analyse.m in Sources */,
 				B21501D91D5366C2005E4670 /* JFNavigationController.swift in Sources */,
 				B2B770FA1D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift in Sources */,
 				B249AE371D607D41005C0A41 /* JFTweetDetailHeaderView.swift in Sources */,
 				B21501D51D5366A4005E4670 /* JFNetworkTools.swift in Sources */,
-				B23DC60F1D813DB2006953CC /* SCM3U8VideoDownload.m in Sources */,
+				B220F0171D82DEE400AE4CB2 /* SCM3U8VideoDownload.m in Sources */,
 				B2156C8B1D66AF840033DBB6 /* JFPlaceholderTextView.swift in Sources */,
 				B2156C591D66ADF90033DBB6 /* JFFriendViewController.swift in Sources */,
 				B2156C7E1D66AEF10033DBB6 /* JFBaseTableViewController.swift in Sources */,
@@ -1238,6 +1240,7 @@
 				B2156C691D66AE3A0033DBB6 /* JFRegisterViewController.swift in Sources */,
 				B2156C9B1D66C3DE0033DBB6 /* JFMultiTextView.swift in Sources */,
 				B2156C941D66B1EF0033DBB6 /* JFProfileCellGroupModel.swift in Sources */,
+				B220F0151D82DEE400AE4CB2 /* SCM3U8SegmentList.m in Sources */,
 				B2156C701D66AE6A0033DBB6 /* JFAboutMeViewController.swift in Sources */,
 				B21501D61D5366A4005E4670 /* JFProgressHUD.swift in Sources */,
 				B2156C931D66B1EF0033DBB6 /* JFProfileCellArrowModel.swift in Sources */,
@@ -1245,14 +1248,11 @@
 				B2B770F91D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift in Sources */,
 				B2156C971D66B1EF0033DBB6 /* JFProfileCellSwitchModel.swift in Sources */,
 				B2155F3C1D687BD800D3FC65 /* JFInfoHeaderView.swift in Sources */,
-				B23DC60B1D813DB2006953CC /* SCM3U8SegmentDownload.m in Sources */,
-				B23DC60D1D813DB2006953CC /* SCM3U8SegmentList.m in Sources */,
-				B23DC60A1D813DB2006953CC /* SCM3U8Analyse.m in Sources */,
 				B2156C961D66B1EF0033DBB6 /* JFProfileCellModel.swift in Sources */,
 				B211DEDE1D6976CF0053180B /* JFOtherUserViewController.swift in Sources */,
-				B23DC60E1D813DB2006953CC /* SCM3U8SegmentListDownload.m in Sources */,
 				B2512A6F1D5439C800476D0E /* Api.swift in Sources */,
 				B2B770FD1D61689E0042AA5E /* JFPhotoBrowserModel.swift in Sources */,
+				B220F0141D82DEE400AE4CB2 /* SCM3U8SegmentInfo.m in Sources */,
 				B213E3F31D54D45B00589058 /* JFPlayerViewController.swift in Sources */,
 				B2DA01101D654DBB0095AB7D /* JFCategoriesCellItem.swift in Sources */,
 				B2887D621D6D4A6C009CB44B /* JFStoreInfoTool.m in Sources */,

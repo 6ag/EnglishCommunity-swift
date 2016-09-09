@@ -93,7 +93,7 @@ class JFPlayerViewController: UIViewController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        player.pause(allowAutoPlay:true)
+        player.pause(allowAutoPlay: true)
     }
     
     deinit {
@@ -296,32 +296,32 @@ class JFPlayerViewController: UIViewController {
             
             if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
                 
-                JFVideo.parseVideoUrl(video.videoUrl!) { (url) in
-                    guard let url = url else {
-                        JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
-                        return
-                    }
-                    
-                    if video.state == VideoState.AlreadyDownload {
-                        let videoVid = JFVideo.getVideoId(video.videoUrl!)
-                        let url = NSURL(string: "http://127.0.0.1:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8")!
+                // 判断播放本地还是网络
+                if video.state == VideoState.AlreadyDownload {
+                    let videoVid = JFVideo.getVideoId(video.videoUrl ?? "")
+                    if let url = NSURL(string: "http://localhost:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8") {
                         self.player.playWithURL(url, title: video.title!)
                         print(url)
-                    } else {
-                        self.player.playWithURL(NSURL(string: url)!, title: video.title!)
                     }
-                    
+                } else {
+                    JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
+                        guard let url = url else {
+                            JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
+                            return
+                        }
+                        self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
+                    }
                 }
             } else {
                 let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
                 let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
                     NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
-                    JFVideo.parseVideoUrl(video.videoUrl!) { (url) in
+                    JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
                         guard let url = url else {
                             JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
                             return
                         }
-                        self.player.playWithURL(NSURL(string: url)!, title: video.title!)
+                        self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
                     }
                 })
                 let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
@@ -767,8 +767,8 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
         
         let shareParames = NSMutableDictionary()
         shareParames.SSDKSetupShareParamsByText("最棒的自学英语社区，海量免费英语视频，涵盖音标、单词、语法、口语、听力、阅读、作文等内容！你还等什么呢？马上一起学习吧！",
-                                                images : videoInfo!.cover!,
-                                                url : NSURL(string: "https://itunes.apple.com/cn/app/id1146271758"),
+                                                images : UIImage(named: "share"),
+                                                url : NSURL(string: "https://itunes.apple.com/cn/app/id\(APPLE_ID)"),
                                                 title : videoInfo!.title!,
                                                 type : SSDKContentType.Auto)
         let items = [
@@ -901,10 +901,11 @@ extension JFPlayerViewController: JFDownloadManagerDelegate {
             video.state = state
             video.progress = progress
             
-            let cell = videoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! JFDetailVideoCell
-            cell.model = video
+            // 防止cell还没有缓存
+            if let cell = videoTableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? JFDetailVideoCell  {
+                cell.model = video
+            }
         }
-        
     }
 }
 
@@ -918,6 +919,18 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
      - parameter button: 被点击的按钮
      */
     func didTappedDownloadButton(cell: JFDetailVideoCell, button: UIButton) {
+        
+        if !JFAccountModel.isLogin() {
+            let alertC = UIAlertController(title: "只有注册用户才能操作哦", message: "登录后可以无限制观看和下载视频教程哦", preferredStyle: UIAlertControllerStyle.Alert)
+            let confirm = UIAlertAction(title: "登录", style: UIAlertActionStyle.Destructive, handler: { (action) in
+                isLogin(self)
+            })
+            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in })
+            alertC.addAction(confirm)
+            alertC.addAction(cancel)
+            presentViewController(alertC, animated: true, completion: { })
+            return
+        }
         
         let indexPath = videoTableView.indexPathForCell(cell)!
         let video = videos[indexPath.row]
@@ -935,7 +948,7 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
                 return
             }
             
-            let alertC = UIAlertController(title: "确认要删除这节视频吗", message: "删除本地缓存后，可以节省手机磁盘空间，但重新缓存又得WiFi哦", preferredStyle: UIAlertControllerStyle.Alert)
+            let alertC = UIAlertController(title: "确认要删除这节视频吗", message: "删除缓存后，可以节省手机磁盘空间，但重新缓存又得WiFi哦", preferredStyle: UIAlertControllerStyle.Alert)
             let confirm = UIAlertAction(title: "确定删除", style: UIAlertActionStyle.Destructive, handler: { (action) in
                 video.state = VideoState.NoDownload
                 let videoVid = JFVideo.getVideoId(video.videoUrl!)
@@ -944,7 +957,7 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
                 JFDALManager.shareManager.removeVideo(videoVid, finished: { (success) in
                     if success {
                         // 从本地文件移除
-                        let path = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/DownloadVideos/\(videoVid)"
+                        let path = "\(DOWNLOAD_PATH)\(videoVid)"
                         let fileManager = NSFileManager.defaultManager()
                         if fileManager.fileExistsAtPath(path) {
                             do {
