@@ -58,11 +58,11 @@
 
 ![image](https://github.com/6ag/EnglishCommunity-swift/blob/master/Show/category.PNG)
 
-### 播放列表，封装B站开源框架ijkplayer
+### 播放列表，支持本地缓存，离线学习
 
 ![image](https://github.com/6ag/EnglishCommunity-swift/blob/master/Show/playlist.PNG)
 
-### 视频下载 目前还没实现，视频不是我的。。
+### 视频下载
 
 ![image](https://github.com/6ag/EnglishCommunity-swift/blob/master/Show/download.PNG)
 
