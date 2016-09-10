@@ -22,10 +22,11 @@
 
 @implementation SCM3U8VideoDownload
 
-- (instancetype)initWithVideoId:(NSString *)vid VideoUrl:(NSString *)videoUrl index:(NSInteger)index
+- (instancetype)initWithVideoId:(NSString *)vid VideoUrl:(NSString *)videoUrl videoInfoId:(NSInteger)videoInfoId index:(NSInteger)index
 {
     if(self = [super init]){
         self.index = index;
+        self.videoInfoId = videoInfoId;
         self.vid = vid;
         self.videoUrl = videoUrl;
         self.downloadState = DownloadVideoStateWating;
@@ -140,8 +141,8 @@
 {
     NSLog(@"error.code is %ld",error.code);
     self.downloadState = DownloadVideoStateFail;
-    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadParseFailWithVideoId:index:)]){
-        [self.delegate M3U8VideoDownloadParseFailWithVideoId:self.vid index:self.index];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadParseFailWithVideoId:videoInfoId:index:)]){
+        [self.delegate M3U8VideoDownloadParseFailWithVideoId:self.vid videoInfoId:self.videoInfoId index:self.index];
     }
 }
 
@@ -157,8 +158,8 @@
     NSString *fullPath = [saveTo stringByAppendingPathComponent:@"movie.m3u8"];
     
     self.downloadState = DownloadVideoStateFinish;
-    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadFinishWithVideoId:localPath:index:)]){
-        [self.delegate M3U8VideoDownloadFinishWithVideoId:self.vid localPath:fullPath index:self.index];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadFinishWithVideoId:localPath:videoInfoId:index:)]){
+        [self.delegate M3U8VideoDownloadFinishWithVideoId:self.vid localPath:fullPath videoInfoId:self.videoInfoId index:self.index];
     }
 }
 
@@ -168,8 +169,8 @@
 - (void)M3U8SegmentListDownloadFailed
 {
     self.downloadState = DownloadVideoStateFail;
-    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadFailWithVideoId:index:)]){
-        [self.delegate M3U8VideoDownloadFailWithVideoId:self.vid index:self.index];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadFailWithVideoId:videoInfoId:index:)]){
+        [self.delegate M3U8VideoDownloadFailWithVideoId:self.vid videoInfoId:self.videoInfoId index:self.index];
     }
 }
 
@@ -180,8 +181,8 @@
  */
 - (void)M3U8SegmentListDownloadProgress:(CGFloat)progress
 {
-    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadProgress:withVideoId:index:)]){
-        [self.delegate M3U8VideoDownloadProgress:progress withVideoId:self.vid index:self.index];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(M3U8VideoDownloadProgress:withVideoId:videoInfoId:index:)]){
+        [self.delegate M3U8VideoDownloadProgress:progress withVideoId:self.vid videoInfoId:self.videoInfoId index:self.index];
     }
 }
 

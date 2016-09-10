@@ -862,41 +862,60 @@ extension JFPlayerViewController: JFDownloadManagerDelegate {
     
     /**
      下载视频失败
+     
+     - parameter videoVid:    视频的vid
+     - parameter videoInfoId: 视频所属的视频信息id
+     - parameter index:       视频模型数组下标
      */
-    func M3U8VideoDownloadFailWithVideoId(videoId: String, index: Int) {
-        videoStateChange(0, index: index, state: VideoState.NoDownload)
+    func M3U8VideoDownloadFailWithVideoId(videoVid: String, videoInfoId: Int, index: Int) {
+        videoStateChange(0, videoInfoId: videoInfoId, index: index, state: VideoState.NoDownload)
     }
     
     /**
      解析视频视频 - 不是有效的m3u8地址
+     
+     - parameter videoVid:    视频的vid
+     - parameter videoInfoId: 视频所属的视频信息id
+     - parameter index:       视频模型数组下标
      */
-    func M3U8VideoDownloadParseFailWithVideoId(videoId: String, index: Int) {
-        videoStateChange(0, index: index, state: VideoState.NoDownload)
+    func M3U8VideoDownloadParseFailWithVideoId(videoVid: String, videoInfoId: Int, index: Int) {
+        videoStateChange(0, videoInfoId: videoInfoId, index: index, state: VideoState.NoDownload)
     }
     
     /**
      下载视频完成
+     
+     - parameter videoVid:    视频的vid
+     - parameter path:        视频下载完成后的本地路径
+     - parameter videoInfoId: 视频所属的视频信息id
+     - parameter index:       视频模型数组下标
      */
-    func M3U8VideoDownloadFinishWithVideoId(videoId: String, localPath path: String, index: Int) {
-        videoStateChange(0, index: index, state: VideoState.AlreadyDownload)
+    func M3U8VideoDownloadFinishWithVideoId(videoVid: String, localPath path: String, videoInfoId: Int, index: Int) {
+        videoStateChange(1.0, videoInfoId: videoInfoId, index: index, state: VideoState.AlreadyDownload)
     }
     
     /**
      正在下载 更新进度
+     
+     - parameter progress:    下载进度 0.0 - 1.0
+     - parameter videoVid:    视频的vid
+     - parameter videoInfoId: 视频所属的视频信息id
+     - parameter index:       视频模型数组下标
      */
-    func M3U8VideoDownloadProgress(progress: CGFloat, withVideoId videoId: String, index: Int) {
-        videoStateChange(progress, index: index, state: VideoState.Downloading)
+    func M3U8VideoDownloadProgress(progress: CGFloat, withVideoVid videoVid: String, videoInfoId: Int, index: Int) {
+        videoStateChange(progress, videoInfoId: videoInfoId, index: index, state: VideoState.Downloading)
     }
     
     /**
      下载状态发生改变
      
-     - parameter progress: 进度
-     - parameter index:    下标
-     - parameter state:    视频状态
+     - parameter progress:    下载进度 0.0 - 1.0
+     - parameter videoInfoId: 视频所属的视频信息id
+     - parameter index:       视频模型数组下标
+     - parameter state:       视频当前的状态
      */
-    func videoStateChange(progress: CGFloat, index: Int, state: VideoState) {
-        if index <= videos.count - 1 {
+    func videoStateChange(progress: CGFloat, videoInfoId: Int, index: Int, state: VideoState) {
+        if videoInfoId == videoInfo?.id ?? 0 && index <= videos.count - 1 {
             let video = videos[index]
             video.state = state
             video.progress = progress
@@ -939,7 +958,7 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
         case VideoState.NoDownload:
             
             video.state = VideoState.Downloading
-            JFDownloadManager.shareManager.startDownloadVideo(indexPath.row, videoUrl: video.videoUrl!)
+            JFDownloadManager.shareManager.startDownloadVideo(videoInfo?.id ?? 0, index: indexPath.row, videoUrl: video.videoUrl ?? "")
             
         case VideoState.AlreadyDownload:
             
@@ -963,7 +982,7 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
                             do {
                                 try fileManager.removeItemAtPath(path)
                                 print("删除成功")
-                                self.videoStateChange(0, index: indexPath.row, state: VideoState.NoDownload)
+                                self.videoStateChange(0, videoInfoId: self.videoInfo?.id ?? 0, index: indexPath.row, state: VideoState.NoDownload)
                             } catch {
                                 print("删除失败")
                             }
@@ -979,7 +998,7 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
         case VideoState.Downloading:
             
             video.state = VideoState.NoDownload
-            videoStateChange(0, index: indexPath.row, state: VideoState.NoDownload)
+            videoStateChange(0, videoInfoId: videoInfo?.id ?? 0, index: indexPath.row, state: VideoState.NoDownload)
             JFDownloadManager.shareManager.cancelDownloadVideo(video.videoUrl!)
             
         }

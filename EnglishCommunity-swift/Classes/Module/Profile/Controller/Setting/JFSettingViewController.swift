@@ -279,7 +279,13 @@ class JFSettingViewController: JFBaseTableViewController {
                     })
                 })
             }
-            let group1CellModel2 = JFProfileCellLabelModel(title: "清除离线下载内容", text: "\(String(format: "%.2f", arguments: [JFStoreInfoTool.folderSizeAtPath(DOWNLOAD_PATH)]))M")
+            let group1CellModel2 = JFProfileCellLabelModel(title: "清除离线下载内容", text: "正在计算...")
+            dispatch_async(dispatch_get_global_queue(0, 0)) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    group1CellModel2.text = "\(String(format: "%.2f", arguments: [JFStoreInfoTool.folderSizeAtPath(DOWNLOAD_PATH)]))M"
+                    self.tableView.reloadData()
+                })
+            }
             group1CellModel2.operation = { () -> Void in
                 self.removeCacheVideoData(group1CellModel2)
             }
@@ -335,6 +341,7 @@ class JFSettingViewController: JFBaseTableViewController {
             groupModels = [group1, group2, group3]
         }
         
+        tableView.reloadData()
     }
     
     /**

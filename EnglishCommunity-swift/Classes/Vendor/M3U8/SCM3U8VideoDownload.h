@@ -18,10 +18,10 @@
 
 @protocol SCM3U8VideoDownloadDelegate <NSObject>
 
-- (void)M3U8VideoDownloadParseFailWithVideoId:(NSString *)videoId index:(NSInteger)index;
-- (void)M3U8VideoDownloadFinishWithVideoId:(NSString *)videoId localPath:(NSString *)path index:(NSInteger)index;
-- (void)M3U8VideoDownloadFailWithVideoId:(NSString *)videoId index:(NSInteger)index;
-- (void)M3U8VideoDownloadProgress:(CGFloat)progress withVideoId:(NSString *)videoId index:(NSInteger)index;
+- (void)M3U8VideoDownloadParseFailWithVideoId:(NSString *)videoId videoInfoId:(NSInteger)videoInfoId index:(NSInteger)index;
+- (void)M3U8VideoDownloadFinishWithVideoId:(NSString *)videoId localPath:(NSString *)path videoInfoId:(NSInteger)videoInfoId index:(NSInteger)index;
+- (void)M3U8VideoDownloadFailWithVideoId:(NSString *)videoId videoInfoId:(NSInteger)videoInfoId index:(NSInteger)index;
+- (void)M3U8VideoDownloadProgress:(CGFloat)progress withVideoId:(NSString *)videoId videoInfoId:(NSInteger)videoInfoId index:(NSInteger)index;
 
 @end
 
@@ -31,8 +31,9 @@
 @property (assign, nonatomic) DownloadVideoState downloadState;
 @property (copy, nonatomic) NSString *vid;
 @property (nonatomic, assign) NSInteger index;
+@property (nonatomic, assign) NSInteger videoInfoId;
 
-- (instancetype)initWithVideoId:(NSString *)vid VideoUrl:(NSString *)videoUrl index:(NSInteger)index;
+- (instancetype)initWithVideoId:(NSString *)vid VideoUrl:(NSString *)videoUrl videoInfoId:(NSInteger)videoInfoId index:(NSInteger)index;
 
 - (void)changeDownloadVideoState;
 

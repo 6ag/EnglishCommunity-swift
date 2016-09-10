@@ -10,10 +10,10 @@ import UIKit
 import Alamofire
 
 protocol JFDownloadManagerDelegate: NSObjectProtocol {
-    func M3U8VideoDownloadFailWithVideoId(videoId: String, index: Int)
-    func M3U8VideoDownloadParseFailWithVideoId(videoId: String, index: Int)
-    func M3U8VideoDownloadFinishWithVideoId(videoId: String, localPath path: String, index: Int)
-    func M3U8VideoDownloadProgress(progress: CGFloat, withVideoId videoId: String, index: Int)
+    func M3U8VideoDownloadFailWithVideoId(videoVid: String, videoInfoId: Int, index: Int)
+    func M3U8VideoDownloadParseFailWithVideoId(videoVid: String, videoInfoId: Int, index: Int)
+    func M3U8VideoDownloadFinishWithVideoId(videoVid: String, localPath path: String, videoInfoId: Int, index: Int)
+    func M3U8VideoDownloadProgress(progress: CGFloat, withVideoVid videoVid: String, videoInfoId: Int, index: Int)
 }
 
 class JFDownloadManager: NSObject {
@@ -27,16 +27,15 @@ class JFDownloadManager: NSObject {
     /**
      开始下载视频
      
-     - parameter videoInfo: 视频信息模型
-     - parameter videos:    视频模型数组
+     - parameter videoInfoId: 视频信息id
+     - parameter videos:      视频模型数组
      */
-    func startDownload(needVideos: [[String : AnyObject]]) {
+    func startDownload(videoInfoId: Int, needVideos: [[String : AnyObject]]) {
         
         for needVideo in needVideos {
-            
             let index = needVideo["index"] as! Int
             let video = needVideo["video"] as! JFVideo
-            startDownloadVideo(index, videoUrl: video.videoUrl!)
+            startDownloadVideo(videoInfoId, index: index, videoUrl: video.videoUrl!)
         }
     }
     
@@ -45,14 +44,14 @@ class JFDownloadManager: NSObject {
      
      - parameter videoUrl: 单个优酷视频的网页地址
      */
-    func startDownloadVideo(index: Int, videoUrl: String) {
+    func startDownloadVideo(videoInfoId: Int, index: Int, videoUrl: String) {
         
         JFVideo.parseVideoUrl(videoUrl) { (url) in
             guard let m3u8Url = url else {
                 return
             }
             
-            let videoDownload = SCM3U8VideoDownload(videoId: JFVideo.getVideoId(videoUrl), videoUrl: m3u8Url, index: index)
+            let videoDownload = SCM3U8VideoDownload(videoId: JFVideo.getVideoId(videoUrl), videoUrl: m3u8Url, videoInfoId: videoInfoId, index: index)
             videoDownload.delegate = self
             videoDownload.changeDownloadVideoState()
             self.videoDownloadQueue.append(videoDownload)
@@ -88,27 +87,27 @@ class JFDownloadManager: NSObject {
 // MARK: - SCM3U8VideoDownloadDelegate
 extension JFDownloadManager: SCM3U8VideoDownloadDelegate {
     
-    func M3U8VideoDownloadFailWithVideoId(videoId: String!, index: Int) {
+    func M3U8VideoDownloadFailWithVideoId(videoId: String!, videoInfoId: Int, index: Int) {
         print("下载失败 \(videoId)")
         removeDownloadManager(videoId)
-        delegate?.M3U8VideoDownloadFailWithVideoId(videoId, index: index)
+        delegate?.M3U8VideoDownloadFailWithVideoId(videoId, videoInfoId: videoInfoId, index: index)
     }
     
-    func M3U8VideoDownloadParseFailWithVideoId(videoId: String!, index: Int) {
+    func M3U8VideoDownloadParseFailWithVideoId(videoId: String!, videoInfoId: Int, index: Int) {
         print("解析视频失败 \(videoId)")
         removeDownloadManager(videoId)
-        delegate?.M3U8VideoDownloadParseFailWithVideoId(videoId, index: index)
+        delegate?.M3U8VideoDownloadParseFailWithVideoId(videoId, videoInfoId: videoInfoId, index: index)
     }
     
-    func M3U8VideoDownloadFinishWithVideoId(videoId: String!, localPath path: String!, index: Int) {
+    func M3U8VideoDownloadFinishWithVideoId(videoId: String!, localPath path: String!, videoInfoId: Int, index: Int) {
         print("下载完成 \(videoId) \(path)")
         JFDALManager.shareManager.insertVideo(videoId)
         removeDownloadManager(videoId)
-        delegate?.M3U8VideoDownloadFinishWithVideoId(videoId, localPath: path, index: index)
+        delegate?.M3U8VideoDownloadFinishWithVideoId(videoId, localPath: path, videoInfoId: videoInfoId, index: index)
     }
     
-    func M3U8VideoDownloadProgress(progress: CGFloat, withVideoId videoId: String!, index: Int) {
-        delegate?.M3U8VideoDownloadProgress(progress, withVideoId: videoId, index: index)
+    func M3U8VideoDownloadProgress(progress: CGFloat, withVideoId videoId: String!, videoInfoId: Int, index: Int) {
+        delegate?.M3U8VideoDownloadProgress(progress, withVideoVid: videoId, videoInfoId: videoInfoId, index: index)
     }
     
     /**

@@ -166,7 +166,7 @@ extension JFVideoDownloadViewController: JFVideoDownloadBottomViewDelegate {
         }
         
         // 开始下载视频
-        JFDownloadManager.shareManager.startDownload(needVideos)
+        JFDownloadManager.shareManager.startDownload(videoInfo!.id, needVideos: needVideos)
         
         dismissViewControllerAnimated(true) {}
         
