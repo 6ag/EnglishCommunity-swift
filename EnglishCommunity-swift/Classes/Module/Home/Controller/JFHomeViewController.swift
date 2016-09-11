@@ -28,7 +28,8 @@ class JFHomeViewController: UIViewController {
         
         prepareUI()
         tableView.mj_header = setupHeaderRefresh(self, action: #selector(updateHomeData))
-        tableView.mj_header.beginRefreshing()
+        loadTopData()
+        loadCategoriesData()
         
         // 配置JPUSH
         (UIApplication.sharedApplication().delegate as! AppDelegate).setupJPush()
@@ -130,7 +131,6 @@ class JFHomeViewController: UIViewController {
         topScrollView?.imageURLStringsGroup = images
         topScrollView?.autoScrollTimeInterval = 5
         tableView.tableHeaderView = topScrollView
-        
     }
     
     /**
@@ -144,6 +144,13 @@ class JFHomeViewController: UIViewController {
      刷新首页数据
      */
     @objc private func updateHomeData() {
+        
+        // 有网络的情况下清理掉缓存
+        if JFNetworkTools.shareNetworkTool.getCurrentNetworkState() != 0 {
+            removeJson(BANNER_JSON_PATH)
+            removeJson(CATEGORIES_JSON_PATH)
+        }
+        
         loadTopData()
         loadCategoriesData()
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class JFVideoCategory: NSObject {
 
@@ -49,13 +50,26 @@ class JFVideoCategory: NSObject {
     }
     
     /**
-     查询所有分类信息
+     查询所有分类信息 - 首页
      
      - parameter have_data: 是否让返回结果带分类下的视频信息数据
      - parameter count:     返回结果带分类下的视频信息数据条数 默认4条
      - parameter finished:  数据回调
      */
     class func loadAllCategories(have_data: Int, count: Int, finished: (videoCategories: [JFVideoCategory]?) -> ()) {
+        
+        // 先去缓存中获取
+        if let json = getJson(CATEGORIES_JSON_PATH) {
+            let data = json["result"].arrayObject as! [[String : AnyObject]]
+            var videoCategories = [JFVideoCategory]()
+            
+            for dict in data {
+                videoCategories.append(JFVideoCategory(dict: dict))
+            }
+            
+            finished(videoCategories: videoCategories)
+            return
+        }
         
         let parameters: [String : AnyObject] = [
             "have_data" : 1,
@@ -70,6 +84,9 @@ class JFVideoCategory: NSObject {
                 return
             }
             
+            // 新数据要先缓存再返回
+            saveJson(result, jsonPath: CATEGORIES_JSON_PATH)
+            
             let data = result["result"].arrayObject as! [[String : AnyObject]]
             var videoCategories = [JFVideoCategory]()
             
@@ -80,5 +97,7 @@ class JFVideoCategory: NSObject {
             finished(videoCategories: videoCategories)
         }
     }
+    
+    
     
 }

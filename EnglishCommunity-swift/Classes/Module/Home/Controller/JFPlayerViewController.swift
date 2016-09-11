@@ -271,7 +271,7 @@ class JFPlayerViewController: UIViewController {
         BMPlayerConf.shouldAutoPlay = true
         BMPlayerConf.tintColor = UIColor.whiteColor()
         BMPlayerConf.topBarShowInCase = .HorizantalOnly
-        BMPlayerConf.loaderType  = NVActivityIndicatorType.BallRotateChase
+        BMPlayerConf.loaderType = NVActivityIndicatorType.BallRotateChase
     }
     
     /**
@@ -762,8 +762,6 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      分享
      */
     func didTappedShareButton(button: UIButton) {
-        
-        //        SSUIShareActionSheetStyle.setShareActionSheetStyle(ShareActionSheetStyle.Simple)
         
         let shareParames = NSMutableDictionary()
         shareParames.SSDKSetupShareParamsByText("最棒的自学英语社区，海量免费英语视频，涵盖音标、单词、语法、口语、听力、阅读、作文等内容！你还等什么呢？马上一起学习吧！",

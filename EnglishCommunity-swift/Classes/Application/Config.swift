@@ -8,6 +8,8 @@
 
 import UIKit
 import MJRefresh
+import pop
+import SwiftyJSON
 
 let SCREEN_BOUNDS = UIScreen.mainScreen().bounds
 let SCREEN_WIDTH = SCREEN_BOUNDS.width
@@ -73,6 +75,12 @@ var PLAY_NODE = "app"
 /// m3u8存放根目录
 let DOWNLOAD_PATH = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/DownloadVideos/"
 
+/// 首页分类json缓存文件路径
+let CATEGORIES_JSON_PATH = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/categories.json"
+
+/// 首页banner json缓存文件路径
+let BANNER_JSON_PATH = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/banner.json"
+
 /**
  手机型号枚举
  */
@@ -110,6 +118,18 @@ enum iPhoneModel {
  */
 func RGB(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
     return UIColor(red: r / 255.0, green: g/255.0, blue: b/255.0, alpha: alpha)
+}
+
+/**
+ 给控件添加弹簧动画
+ */
+func setupButtonSpringAnimation(view: UIView) {
+    let sprintAnimation = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
+    sprintAnimation.fromValue = NSValue(CGPoint: CGPoint(x: 0.8, y: 0.8))
+    sprintAnimation.toValue = NSValue(CGPoint: CGPoint(x: 1, y: 1))
+    sprintAnimation.velocity = NSValue(CGPoint: CGPoint(x: 30, y: 30))
+    sprintAnimation.springBounciness = 20
+    view.pop_addAnimation(sprintAnimation, forKey: "springAnimation")
 }
 
 /**
@@ -153,6 +173,57 @@ func isLogin(controller: UIViewController) -> Bool {
         })
         return false
     }
+}
+
+/**
+ 缓存json数据为指定json文件
+ 
+ - parameter json:     JSON对象
+ - parameter jsonPath: json文件路径
+ */
+func saveJson(json: JSON, jsonPath: String) {
+    do {
+        if let json = json.rawString() {
+            try json.writeToFile(jsonPath, atomically: true, encoding: NSUTF8StringEncoding)
+            print("缓存数据成功", jsonPath)
+        }
+    } catch {
+        print("缓存数据失败", jsonPath)
+    }
+}
+
+/**
+ 删除指定文件
+ 
+ - parameter jsonPath: 要删除的json文件路径
+ */
+func removeJson(jsonPath: String) {
+    let fileManager = NSFileManager.defaultManager()
+    if fileManager.fileExistsAtPath(jsonPath) {
+        do {
+            try fileManager.removeItemAtPath(jsonPath)
+            print("删除成功", jsonPath)
+        } catch {
+            print("删除失败", jsonPath)
+        }
+    }
+}
+
+/**
+ 获取缓存的json数据
+ 
+ - parameter jsonPath: json文件路径
+ 
+ - returns: JSON对象
+ */
+func getJson(jsonPath: String) -> JSON? {
+    if let data = NSData(contentsOfFile: jsonPath) {
+        print("获取缓存数据成功", jsonPath)
+        let json = JSON(data: data)
+        return json
+    }
+    print("获取缓存数据失败", jsonPath)
+    return nil
 }
 
 /// 远程推送通知的处理通知

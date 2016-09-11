@@ -8,6 +8,7 @@
 
 import UIKit
 import YYWebImage
+import AudioToolbox
 
 class JFTweetViewController: UIViewController {
 
@@ -100,6 +101,16 @@ class JFTweetViewController: UIViewController {
             
             if method == 0 {
                 self.tweets = tweets
+                
+                // 异步播放刷新音效
+                let when = dispatch_time(DISPATCH_TIME_NOW, Int64(0.75 * Double(NSEC_PER_SEC)))
+                dispatch_after(when, dispatch_get_global_queue(0, 0)) {
+                    var soundID: SystemSoundID = 0
+                    let path = NSBundle.mainBundle().pathForResource("refresh", ofType: "wav")!
+                    let baseURL = NSURL(fileURLWithPath: path)
+                    AudioServicesCreateSystemSoundID(baseURL, &soundID)
+                    AudioServicesPlaySystemSound(soundID)
+                }
             } else {
                 self.tweets += tweets
             }

@@ -159,6 +159,7 @@ class JFTweetListCell: UITableViewCell {
      点击赞按钮
      */
     @objc private func didTappedLikeButton(button: UIButton) {
+        setupButtonSpringAnimation(button)
         tweetListCellDelegate?.tweetListCell(self, didTappedLikeButton: button)
     }
     

@@ -99,6 +99,21 @@ class JFVideoInfo: NSObject {
      */
     class func loadVideoInfoList(page: Int, count: Int, category_id: Int, recommend: Int, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
         
+        // 先去本地获取推荐数据
+        if recommend == 1 {
+            if let json = getJson(BANNER_JSON_PATH) {
+                let data = json["result"]["data"].arrayObject as! [[String : AnyObject]]
+                var videoInfos = [JFVideoInfo]()
+                
+                for dict in data {
+                    videoInfos.append(JFVideoInfo(dict: dict))
+                }
+                
+                finished(videoInfos: videoInfos)
+                return
+            }
+        }
+        
         let parameters: [String : AnyObject] = [
             "category_id" : category_id,
             "page" : page,
@@ -112,6 +127,11 @@ class JFVideoInfo: NSObject {
                 print(success, error, parameters)
                 finished(videoInfos: nil)
                 return
+            }
+            
+            // 缓存本地数据
+            if recommend == 1 {
+                saveJson(result, jsonPath: BANNER_JSON_PATH)
             }
             
             let data = result["result"]["data"].arrayObject as! [[String : AnyObject]]

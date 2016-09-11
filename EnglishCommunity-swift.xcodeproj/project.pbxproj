@@ -137,6 +137,7 @@
 		B2B771141D61A0790042AA5E /* UITextView+Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */; };
 		B2BEBF031D6CBA1F00D4B13B /* JFSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */; };
 		B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C9A6911D62B17B000B08C4 /* FFLabel.swift */; };
+		B2D14B9B1D8553480086F97B /* refresh.wav in Resources */ = {isa = PBXBuildFile; fileRef = B2D14B9A1D8553480086F97B /* refresh.wav */; };
 		B2DA010F1D654DBB0095AB7D /* JFCategoriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DA01071D654DBB0095AB7D /* JFCategoriesCell.swift */; };
 		B2DA01101D654DBB0095AB7D /* JFCategoriesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DA01081D654DBB0095AB7D /* JFCategoriesCellItem.swift */; };
 		B2DA01111D654DBB0095AB7D /* JFCategoriesCellItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2DA01091D654DBB0095AB7D /* JFCategoriesCellItem.xib */; };
@@ -309,6 +310,7 @@
 		B2B7710F1D61A0790042AA5E /* UITextView+Emoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoticon.swift"; sourceTree = "<group>"; };
 		B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFSearchViewController.swift; sourceTree = "<group>"; };
 		B2C9A6911D62B17B000B08C4 /* FFLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFLabel.swift; sourceTree = "<group>"; };
+		B2D14B9A1D8553480086F97B /* refresh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = refresh.wav; sourceTree = "<group>"; };
 		B2DA01071D654DBB0095AB7D /* JFCategoriesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCategoriesCell.swift; sourceTree = "<group>"; };
 		B2DA01081D654DBB0095AB7D /* JFCategoriesCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCategoriesCellItem.swift; sourceTree = "<group>"; };
 		B2DA01091D654DBB0095AB7D /* JFCategoriesCellItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFCategoriesCellItem.xib; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 				B2190B091D4F85C4007FC0E9 /* LaunchScreen.storyboard */,
 				B2190B0C1D4F85C4007FC0E9 /* Info.plist */,
 				B2024E591D6EBAD3006C1037 /* GoogleService-Info.plist */,
+				B2D14B9A1D8553480086F97B /* refresh.wav */,
 				B28D93D31D534AA700128D20 /* Classes */,
 			);
 			path = "EnglishCommunity-swift";
@@ -1110,6 +1113,7 @@
 				B2DA01161D654DBB0095AB7D /* JFHomeSectionHeaderView.xib in Resources */,
 				B2DA01111D654DBB0095AB7D /* JFCategoriesCellItem.xib in Resources */,
 				B2FC66D01D5C15DF0032703D /* JFProfileHeaderView.xib in Resources */,
+				B2D14B9B1D8553480086F97B /* refresh.wav in Resources */,
 				B2224BF91D55A4FD005CEAE4 /* JFDetailVideoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

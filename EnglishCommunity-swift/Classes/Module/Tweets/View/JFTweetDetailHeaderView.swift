@@ -159,6 +159,7 @@ class JFTweetDetailHeaderView: UIView {
      点击赞按钮
      */
     @objc private func didTappedLikeButton(button: UIButton) {
+        setupButtonSpringAnimation(button)
         tweetDetailHeaderDelegate?.tweetDetailHeaderView(self, didTappedLikeButton: button)
     }
     
