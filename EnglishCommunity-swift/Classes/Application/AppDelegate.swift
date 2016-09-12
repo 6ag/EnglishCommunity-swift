@@ -148,22 +148,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupRootViewController() {
         
         window = UIWindow(frame: SCREEN_BOUNDS)
+        window?.backgroundColor = COLOR_NAV_BG
         window?.rootViewController = JFTabBarController()
         window?.makeKeyAndVisible()
         
-        // 启动图动画 - 预加载数据
-//        let launchVc = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()!
-//        launchVc.view.frame = SCREEN_BOUNDS
-//        window?.addSubview(launchVc.view)
-//        
-//        UIView.animateWithDuration(0.6, delay: 2, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
-//            launchVc.view.alpha = 0
-//        }) { (_) in
-//            UIApplication.sharedApplication().statusBarHidden = false
-//            launchVc.view.removeFromSuperview()
-//        }
-        
-        //        window?.addSubview(JFFPSLabel(frame: CGRect(x: SCREEN_WIDTH - 60, y: 26, width: 50, height: 30)))
+        // 测试FPS
+//        window?.addSubview(JFFPSLabel(frame: CGRect(x: SCREEN_WIDTH - 60, y: 26, width: 50, height: 30)))
     }
     
     /**

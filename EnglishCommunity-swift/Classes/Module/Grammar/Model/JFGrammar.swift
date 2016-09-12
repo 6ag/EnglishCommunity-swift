@@ -33,7 +33,7 @@ class JFGrammar: NSObject {
         
         let parameters: [String : AnyObject] = [
             "page" : page,
-            "count" : 20,
+            "count" : 30,
         ]
         
         JFNetworkTools.shareNetworkTool.get(GET_GRAMMAR_MANUAL, parameters: parameters) { (success, result, error) in

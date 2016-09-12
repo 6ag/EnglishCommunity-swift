@@ -313,6 +313,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group1CellModel1 = JFProfileCellLabelModel(title: "清除缓存", text: "\(String(format: "%.2f", CGFloat(YYImageCache.sharedCache().diskCache.totalCost()) / 1024 / 1024))M")
             group1CellModel1.operation = { () -> Void in
                 JFProgressHUD.showWithStatus("正在清理")
+                YYImageCache.sharedCache().memoryCache.removeAllObjects()
                 YYImageCache.sharedCache().diskCache.removeAllObjectsWithBlock({
                     JFProgressHUD.showSuccessWithStatus("清理成功")
                     group1CellModel1.text = "0.00M"
@@ -459,7 +460,7 @@ class JFSettingViewController: JFBaseTableViewController {
     /**
      退出登录点击
      */
-    func didTappedLogoutButton(button: UIButton) -> Void {
+    func didTappedLogoutButton(button: UIButton) {
         
         let alertC = UIAlertController(title: "确定注销登录状态？", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         let action1 = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default) { (action) in

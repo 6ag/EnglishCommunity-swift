@@ -27,16 +27,49 @@ class JFForgotViewController: UIViewController {
         emailView.layer.borderColor = UIColor.whiteColor().CGColor
         emailView.layer.borderWidth = 0.5
         didChangeTextField(usernameField)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        view.endEditing(true)
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    /**
+     键盘即将显示
+     */
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        
+        let beginHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue().size.height
+        let endHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().size.height
+        
+        if beginHeight > 0 && endHeight > 0 {
+            UIView.animateWithDuration(0.25) {
+                self.view.transform = CGAffineTransformMakeTranslation(0, -endHeight + (SCREEN_HEIGHT - CGRectGetMaxY(self.retrieveButton.frame)) - 10)
+            }
+        }
+    }
+    
+    /**
+     键盘即将隐藏
+     */
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        UIView.animateWithDuration(0.25) {
+            self.view.transform = CGAffineTransformIdentity
+        }
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        view.endEditing(true)
     }
     
     @IBAction func didChangeTextField(sender: UITextField) {

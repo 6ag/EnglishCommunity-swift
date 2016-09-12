@@ -104,31 +104,6 @@ class JFPlayerViewController: UIViewController {
     }
     
     /**
-     监听屏幕方向发生改变 - 屏幕旋转时自动切换
-     */
-    @objc private func onOrientationChanged(notification: NSNotification) {
-        
-        let orientation = UIApplication.sharedApplication().statusBarOrientation
-        
-        // 全屏
-        if orientation == .LandscapeRight || orientation == .LandscapeLeft {
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-            self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(view.snp_top).offset(0)
-            })
-        }
-        
-        // 竖屏
-        if orientation == .Portrait {
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-            self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(view.snp_top).offset(64)
-            })
-        }
-        
-    }
-    
-    /**
      准备UI
      */
     private func prepareUI() {
@@ -179,7 +154,7 @@ class JFPlayerViewController: UIViewController {
             player.snp_makeConstraints { (make) in
                 make.top.equalTo(view.snp_top).offset(64)
                 make.left.right.equalTo(0)
-                make.height.equalTo(view.snp_width).multipliedBy(3.0 / 4.0)
+                make.height.equalTo(player.snp_width).multipliedBy(3.0 / 4.0)
             }
             
             // 切换视频和评论的toolBar
@@ -222,7 +197,7 @@ class JFPlayerViewController: UIViewController {
             player.snp_makeConstraints { (make) in
                 make.top.equalTo(view.snp_top).offset(64)
                 make.left.right.equalTo(0)
-                make.height.equalTo(view.snp_width).multipliedBy(9.0 / 16.0)
+                make.height.equalTo(player.snp_width).multipliedBy(9.0 / 16.0)
             }
             
             // 切换视频和评论的toolBar
@@ -559,11 +534,34 @@ extension JFPlayerViewController: GADInterstitialDelegate {
 // MARK: - 屏幕旋转
 extension JFPlayerViewController  {
     
+    /**
+     监听屏幕方向发生改变 - 屏幕旋转时自动切换
+     */
+    @objc private func onOrientationChanged(notification: NSNotification) {
+        
+        let orientation = UIApplication.sharedApplication().statusBarOrientation
+        
+        // 全屏
+        if orientation == .LandscapeRight || orientation == .LandscapeLeft {
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+            self.player.snp_updateConstraints(closure: { (make) in
+                make.top.equalTo(view.snp_top).offset(0)
+            })
+        }
+        
+        // 竖屏
+        if orientation == .Portrait || orientation == .PortraitUpsideDown {
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+            self.player.snp_updateConstraints(closure: { (make) in
+                make.top.equalTo(view.snp_top).offset(64)
+            })
+        }
+        
+    }
+    
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        if toInterfaceOrientation == UIInterfaceOrientation.Portrait {
-            view.backgroundColor = UIColor.whiteColor()
-        } else if toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight {
-            view.backgroundColor = UIColor.blackColor()
+        if toInterfaceOrientation == UIInterfaceOrientation.Portrait || toInterfaceOrientation == UIInterfaceOrientation.PortraitUpsideDown {
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
         }
     }
 }

@@ -125,7 +125,7 @@ class JFTweetViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
-        tableView.backgroundColor = COLOR_ALL_BG
+        tableView.backgroundColor = COLOR_ALL_CELL_NORMAL
         tableView.registerClass(JFTweetListCell.classForCoder(), forCellReuseIdentifier: self.tweetIdentifier)
         return tableView
     }()
