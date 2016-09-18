@@ -1,0 +1,14 @@
+@font-face {
+    font-family: '汉仪旗黑';
+    src: url('../HYQiHei-50J.ttf');
+}
+
+* {
+    padding:0px;
+    margin:0px;
+}
+
+p {
+    margin: 10px;
+    text-indent: 2em;
+}

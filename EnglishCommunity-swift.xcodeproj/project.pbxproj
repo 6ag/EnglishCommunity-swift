@@ -101,6 +101,9 @@
 		B2512A6D1D54396700476D0E /* JFVideoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6C1D54396700476D0E /* JFVideoInfo.swift */; };
 		B2512A6F1D5439C800476D0E /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A6E1D5439C800476D0E /* Api.swift */; };
 		B2512A731D54426B00476D0E /* JFVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2512A721D54426B00476D0E /* JFVideo.swift */; };
+		B251F8931D8E2B95007018BB /* JFMusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B251F8921D8E2B95007018BB /* JFMusicPlayerView.swift */; };
+		B251F8951D8E2B9E007018BB /* JFMusicPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B251F8941D8E2B9E007018BB /* JFMusicPlayerView.xib */; };
+		B251F8971D8E3650007018BB /* www in Resources */ = {isa = PBXBuildFile; fileRef = B251F8961D8E3650007018BB /* www */; };
 		B25278FB1D824A8D0069052A /* JFVideoDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */; };
 		B25279631D8269CC0069052A /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = B252795F1D8269CC0069052A /* mongoose.c */; };
 		B25279641D8269CC0069052A /* MongooseDaemon.m in Sources */ = {isa = PBXBuildFile; fileRef = B25279621D8269CC0069052A /* MongooseDaemon.m */; };
@@ -270,6 +273,9 @@
 		B2512A6C1D54396700476D0E /* JFVideoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoInfo.swift; sourceTree = "<group>"; };
 		B2512A6E1D5439C800476D0E /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		B2512A721D54426B00476D0E /* JFVideo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideo.swift; sourceTree = "<group>"; };
+		B251F8921D8E2B95007018BB /* JFMusicPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFMusicPlayerView.swift; sourceTree = "<group>"; };
+		B251F8941D8E2B9E007018BB /* JFMusicPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFMusicPlayerView.xib; sourceTree = "<group>"; };
+		B251F8961D8E3650007018BB /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFVideoDownloadViewController.swift; sourceTree = "<group>"; };
 		B252795F1D8269CC0069052A /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mongoose.c; sourceTree = "<group>"; };
 		B25279601D8269CC0069052A /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mongoose.h; sourceTree = "<group>"; };
@@ -646,6 +652,7 @@
 				B2190B0C1D4F85C4007FC0E9 /* Info.plist */,
 				B2024E591D6EBAD3006C1037 /* GoogleService-Info.plist */,
 				B2D14B9A1D8553480086F97B /* refresh.wav */,
+				B251F8961D8E3650007018BB /* www */,
 				B28D93D31D534AA700128D20 /* Classes */,
 			);
 			path = "EnglishCommunity-swift";
@@ -702,6 +709,8 @@
 			isa = PBXGroup;
 			children = (
 				B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */,
+				B251F8921D8E2B95007018BB /* JFMusicPlayerView.swift */,
+				B251F8941D8E2B9E007018BB /* JFMusicPlayerView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1094,7 +1103,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B251F8971D8E3650007018BB /* www in Resources */,
 				B249AE361D607D41005C0A41 /* JFCommentCell.xib in Resources */,
+				B251F8951D8E2B9E007018BB /* JFMusicPlayerView.xib in Resources */,
 				B214363B1D551BEB00F201AF /* JFTopBarView.xib in Resources */,
 				B2DA01141D654DBB0095AB7D /* JFHomeCellItem.xib in Resources */,
 				B2024E5A1D6EBAD3006C1037 /* GoogleService-Info.plist in Resources */,
@@ -1248,6 +1259,7 @@
 				B2156C701D66AE6A0033DBB6 /* JFAboutMeViewController.swift in Sources */,
 				B21501D61D5366A4005E4670 /* JFProgressHUD.swift in Sources */,
 				B2156C931D66B1EF0033DBB6 /* JFProfileCellArrowModel.swift in Sources */,
+				B251F8931D8E2B95007018BB /* JFMusicPlayerView.swift in Sources */,
 				B2FC66C01D5C15DF0032703D /* JFProfileViewController.swift in Sources */,
 				B2B770F91D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift in Sources */,
 				B2156C971D66B1EF0033DBB6 /* JFProfileCellSwitchModel.swift in Sources */,

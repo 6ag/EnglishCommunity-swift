@@ -8,6 +8,7 @@
 
 import UIKit
 import YYWebImage
+import SDWebImage
 import StoreKit
 
 // MARK: - SKProductsRequestDelegate, SKPaymentTransactionObserver
@@ -267,10 +268,13 @@ class JFSettingViewController: JFBaseTableViewController {
             }
             let group0 = JFProfileCellGroupModel(cells: [group0CellModel1, group0CellModel2, group0CellModel3])
             
+            
             // 第一组
             let group1CellModel1 = JFProfileCellLabelModel(title: "清除缓存", text: "\(String(format: "%.2f", CGFloat(YYImageCache.sharedCache().diskCache.totalCost()) / 1024 / 1024))M")
             group1CellModel1.operation = { () -> Void in
                 JFProgressHUD.showWithStatus("正在清理")
+                SDImageCache.sharedImageCache().cleanDisk()
+                YYImageCache.sharedCache().memoryCache.removeAllObjects()
                 YYImageCache.sharedCache().diskCache.removeAllObjectsWithBlock({
                     JFProgressHUD.showSuccessWithStatus("清理成功")
                     group1CellModel1.text = "0.00M"
@@ -313,6 +317,7 @@ class JFSettingViewController: JFBaseTableViewController {
             let group1CellModel1 = JFProfileCellLabelModel(title: "清除缓存", text: "\(String(format: "%.2f", CGFloat(YYImageCache.sharedCache().diskCache.totalCost()) / 1024 / 1024))M")
             group1CellModel1.operation = { () -> Void in
                 JFProgressHUD.showWithStatus("正在清理")
+                SDImageCache.sharedImageCache().cleanDisk()
                 YYImageCache.sharedCache().memoryCache.removeAllObjects()
                 YYImageCache.sharedCache().diskCache.removeAllObjectsWithBlock({
                     JFProgressHUD.showSuccessWithStatus("清理成功")

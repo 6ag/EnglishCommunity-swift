@@ -12,9 +12,14 @@ class JFGrammar: NSObject {
     
     var id = 0
     
+    /// 标题
     var title: String?
     
+    /// 内容
     var content: String?
+    
+    /// 音频
+    var mp3: String?
     
     init(dict: [String : AnyObject]) {
         super.init()

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JFMusicPlayerView" customModule="EnglishCommunity_swift" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="397" height="61"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYF-WX-rsk">
+                    <rect key="frame" x="6" y="20" width="46" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3L-kS-lKc">
+                    <rect key="frame" x="291" y="20" width="46" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cN-Dj-Ebx">
+                    <rect key="frame" x="62" y="30" width="223" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="jMg-Z5-2uV"/>
+                    </constraints>
+                    <color key="progressTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="trackTintColor" white="0.66666666666666663" alpha="0.5" colorSpace="calibratedWhite"/>
+                </progressView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekf-qT-Czc">
+                    <rect key="frame" x="347" y="11" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="8aW-gI-mOw"/>
+                        <constraint firstAttribute="height" constant="40" id="C4N-rx-ity"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="grammar_play"/>
+                    <state key="selected" backgroundImage="grammar_pause"/>
+                    <connections>
+                        <action selector="didTappedPlayButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="mAz-AQ-UTH"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.25490196079999999" green="0.79215686269999996" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="1cN-Dj-Ebx" firstAttribute="leading" secondItem="YYF-WX-rsk" secondAttribute="trailing" constant="10" id="0K8-vr-rRO"/>
+                <constraint firstItem="1cN-Dj-Ebx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="1B3-NF-m8L"/>
+                <constraint firstItem="YYF-WX-rsk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="1g9-aD-C4m"/>
+                <constraint firstItem="Ekf-qT-Czc" firstAttribute="leading" secondItem="t3L-kS-lKc" secondAttribute="trailing" constant="10" id="8xr-WD-UDr"/>
+                <constraint firstItem="Ekf-qT-Czc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="CEd-FM-uuL"/>
+                <constraint firstItem="1cN-Dj-Ebx" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HLa-iO-8Ba"/>
+                <constraint firstItem="t3L-kS-lKc" firstAttribute="leading" secondItem="1cN-Dj-Ebx" secondAttribute="trailing" constant="10" id="cqN-qu-AZ5"/>
+                <constraint firstAttribute="trailing" secondItem="1cN-Dj-Ebx" secondAttribute="trailing" constant="10" id="sYl-Vd-gjm"/>
+                <constraint firstItem="YYF-WX-rsk" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tHb-bF-5mW"/>
+                <constraint firstItem="t3L-kS-lKc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tPn-gJ-dPt"/>
+                <constraint firstAttribute="trailing" secondItem="Ekf-qT-Czc" secondAttribute="trailing" constant="10" id="yJy-YP-hDh"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="1B3-NF-m8L"/>
+                    <exclude reference="sYl-Vd-gjm"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="currentTimeLabel" destination="YYF-WX-rsk" id="i8P-pA-M7U"/>
+                <outlet property="playButton" destination="Ekf-qT-Czc" id="2ps-eN-ML9"/>
+                <outlet property="progressView" destination="1cN-Dj-Ebx" id="auI-pq-Hv7"/>
+                <outlet property="totalTimeLabel" destination="t3L-kS-lKc" id="twx-wP-SMA"/>
+            </connections>
+            <point key="canvasLocation" x="485.5" y="374.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="grammar_pause" width="30" height="30"/>
+        <image name="grammar_play" width="30" height="30"/>
+    </resources>
+</document>
