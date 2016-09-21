@@ -24,13 +24,13 @@
 ## 如何使用
 
 - 拷贝项目到本地，【翻墙后】在项目根目录执行 `pod install` 安装项目依赖库。
-
+- 下载百度网盘的播放类库进行替换，本app使用  `ijkplayer` 封装的 `JFPlayer` 和 `BMPlayer`。
+- （默认是这个）如果要使用 `JFPlayer` ，则需要导入 `JFPlayer` 目录到项目中，并替换 `JFPlayerViewController.swift` 文件。
+- 如果使用 `BMPlayer` 则无需导入 `JFPlayer` ，只需要把下载下来的 `BMPlayer` 文件夹里的文件导入项目即可。
+- 框架仓库： [ijkplayer](https://github.com/Bilibili/ijkplayer)。百度网盘: [百度网盘](https://pan.baidu.com/s/1o84Klz8) 提取密码: `svcf` 。
 ## 提醒
 
 - 为什么要翻墙？`Podfile` 文件中 `pod 'Firebase/AdMob'` 这个依赖包是 `admob` 广告SDK，需要翻墙才能安装。如果没有翻墙工具，请移除这个包和相关代码（没几行的）。
-
-- 项目原先使用的 `ijkplayer` ，好多哥们说太大了，总是配置不好，我就换成 `BMPlayer` 了。我原先项目中封装的 `ijkplayer` 播放器控制视图也是参照这个来写的，所以可以改几行代码就能替换播放器。
-- 想继续使用或者需要使用 `ijkplayer` 的同学可以去网盘下载并导入项目，然后删除项目中的的 `JFPlayerViewController.swift` 文件即可无缝切换。框架仓库： [ijkplayer](https://github.com/Bilibili/ijkplayer)。百度网盘: [百度网盘](https://pan.baidu.com/s/1bFaMuU) 提取密码: `afb3`
 
 ## 效果预览
 

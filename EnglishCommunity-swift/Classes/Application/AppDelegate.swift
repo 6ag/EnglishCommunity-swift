@@ -160,7 +160,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      配置极光推送
      */
     func setupJPush() {
-        JPUSHService.registerForRemoteNotificationTypes(UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Sound.rawValue, categories: nil)
+        
+        if #available(iOS 10.0, *) {
+            let entity = JPUSHRegisterEntity()
+            entity.types = Int(UIUserNotificationType.Badge.rawValue) | Int(UIUserNotificationType.Alert.rawValue) | Int(UIUserNotificationType.Sound.rawValue)
+            JPUSHService.registerForRemoteNotificationConfig(entity, delegate: nil)
+        } else {
+            JPUSHService.registerForRemoteNotificationTypes(UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Sound.rawValue, categories: nil)
+        }
+        
         JPUSHService.setupWithOption(launchOptions, appKey: JPUSH_APP_KEY, channel: JPUSH_CHANNEL, apsForProduction: JPUSH_IS_PRODUCTION)
         JPUSHService.crashLogON()
         JPUSHService.setLogOFF()

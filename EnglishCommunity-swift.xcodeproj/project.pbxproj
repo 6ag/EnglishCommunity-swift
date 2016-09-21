@@ -131,6 +131,7 @@
 		B25278FB1D824A8D0069052A /* JFVideoDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */; };
 		B25279631D8269CC0069052A /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = B252795F1D8269CC0069052A /* mongoose.c */; };
 		B25279641D8269CC0069052A /* MongooseDaemon.m in Sources */ = {isa = PBXBuildFile; fileRef = B25279621D8269CC0069052A /* MongooseDaemon.m */; };
+		B27B98D81D9253E1007B1626 /* jpush-ios-2.1.9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27B98D71D9253E1007B1626 /* jpush-ios-2.1.9.a */; };
 		B283D1AB1D6A01A900702A75 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AA1D6A01A900702A75 /* libicucore.tbd */; };
 		B283D1AD1D6A01BD00702A75 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AC1D6A01BD00702A75 /* JavaScriptCore.framework */; };
 		B283D1AF1D6A01C800702A75 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AE1D6A01C800702A75 /* ImageIO.framework */; };
@@ -178,7 +179,6 @@
 		B2DA011E1D65583E0095AB7D /* JFDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DA011D1D65583E0095AB7D /* JFDetailHeaderView.swift */; };
 		B2DA01241D6567000095AB7D /* JFDetailBottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DA01231D6567000095AB7D /* JFDetailBottomBarView.swift */; };
 		B2DA01261D6567080095AB7D /* JFDetailBottomBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2DA01251D6567080095AB7D /* JFDetailBottomBarView.xib */; };
-		B2F1BA531D6A8F3A003DF045 /* jpush-ios-2.1.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1BA2E1D6A8F3A003DF045 /* jpush-ios-2.1.6.a */; };
 		B2F50AB51D646694006A91E6 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F50AB41D646694006A91E6 /* UIColorExtension.swift */; };
 		B2FC66C01D5C15DF0032703D /* JFProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC669B1D5C15DF0032703D /* JFProfileViewController.swift */; };
 		B2FC66CF1D5C15DF0032703D /* JFProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC66B11D5C15DF0032703D /* JFProfileHeaderView.swift */; };
@@ -329,6 +329,8 @@
 		B25279601D8269CC0069052A /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mongoose.h; sourceTree = "<group>"; };
 		B25279611D8269CC0069052A /* MongooseDaemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MongooseDaemon.h; sourceTree = "<group>"; };
 		B25279621D8269CC0069052A /* MongooseDaemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MongooseDaemon.m; sourceTree = "<group>"; };
+		B27B98D61D9253E1007B1626 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		B27B98D71D9253E1007B1626 /* jpush-ios-2.1.9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.9.a"; sourceTree = "<group>"; };
 		B283D1A91D69FED500702A75 /* EnglishCommunity-swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EnglishCommunity-swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		B283D1AA1D6A01A900702A75 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		B283D1AC1D6A01BD00702A75 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -378,8 +380,6 @@
 		B2DA011D1D65583E0095AB7D /* JFDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDetailHeaderView.swift; sourceTree = "<group>"; };
 		B2DA01231D6567000095AB7D /* JFDetailBottomBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDetailBottomBarView.swift; sourceTree = "<group>"; };
 		B2DA01251D6567080095AB7D /* JFDetailBottomBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFDetailBottomBarView.xib; sourceTree = "<group>"; };
-		B2F1BA2E1D6A8F3A003DF045 /* jpush-ios-2.1.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.6.a"; sourceTree = "<group>"; };
-		B2F1BA2F1D6A8F3A003DF045 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		B2F50AB41D646694006A91E6 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B2FC669B1D5C15DF0032703D /* JFProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileViewController.swift; sourceTree = "<group>"; };
 		B2FC66B11D5C15DF0032703D /* JFProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -399,7 +399,6 @@
 				B283D1B91D6A021A00702A75 /* CFNetwork.framework in Frameworks */,
 				B283D1B71D6A020100702A75 /* Security.framework in Frameworks */,
 				B22F2C101D9235AB008C66B6 /* IJKMediaFramework.framework in Frameworks */,
-				B2F1BA531D6A8F3A003DF045 /* jpush-ios-2.1.6.a in Frameworks */,
 				B283D1B51D6A01F100702A75 /* libsqlite3.tbd in Frameworks */,
 				B283D1B31D6A01E200702A75 /* libiconv.tbd in Frameworks */,
 				B283D1B11D6A01D400702A75 /* libstdc++.tbd in Frameworks */,
@@ -414,6 +413,7 @@
 				B20007C71D4F9249006DA9B0 /* CoreGraphics.framework in Frameworks */,
 				B20007C51D4F9240006DA9B0 /* CoreMedia.framework in Frameworks */,
 				B20007C31D4F9239006DA9B0 /* CoreVideo.framework in Frameworks */,
+				B27B98D81D9253E1007B1626 /* jpush-ios-2.1.9.a in Frameworks */,
 				B20007C11D4F9233006DA9B0 /* MediaPlayer.framework in Frameworks */,
 				B20007BF1D4F9226006DA9B0 /* MobileCoreServices.framework in Frameworks */,
 				B20007BD1D4F921D006DA9B0 /* OpenGLES.framework in Frameworks */,
@@ -1068,8 +1068,8 @@
 		B2F1BA2D1D6A8F3A003DF045 /* JPush */ = {
 			isa = PBXGroup;
 			children = (
-				B2F1BA2E1D6A8F3A003DF045 /* jpush-ios-2.1.6.a */,
-				B2F1BA2F1D6A8F3A003DF045 /* JPUSHService.h */,
+				B27B98D61D9253E1007B1626 /* JPUSHService.h */,
+				B27B98D71D9253E1007B1626 /* jpush-ios-2.1.9.a */,
 			);
 			path = JPush;
 			sourceTree = "<group>";
@@ -1526,7 +1526,10 @@
 				INFOPLIST_FILE = "EnglishCommunity-swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EnglishCommunity-swift/Classes/Vendor/JPush",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.6ag.EnglishCommunity-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnglishCommunity-swift/Classes/Application/EnglishCommunity-swift-Bridging-Header.h";
@@ -1550,7 +1553,10 @@
 				INFOPLIST_FILE = "EnglishCommunity-swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EnglishCommunity-swift/Classes/Vendor/JPush",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.6ag.EnglishCommunity-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnglishCommunity-swift/Classes/Application/EnglishCommunity-swift-Bridging-Header.h";

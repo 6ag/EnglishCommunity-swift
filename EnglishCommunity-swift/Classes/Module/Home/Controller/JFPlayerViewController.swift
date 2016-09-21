@@ -265,55 +265,53 @@ class JFPlayerViewController: UIViewController {
             }
         }
         
-        if nodeIndex == 0 { // 节点0 使用m3u8方式播放
-            player.userInteractionEnabled = true
-            
-            if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
+        // 如果是已经缓存的，就直接播放
+        if video.state == VideoState.AlreadyDownload {
+            let videoVid = JFVideo.getVideoId(video.videoUrl ?? "")
+            if let url = NSURL(string: "http://localhost:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8") {
+                self.player.playWithURL(url, title: video.title!)
+            }
+        } else {
+            if nodeIndex == 0 { // 节点0 使用m3u8方式播放
+                player.userInteractionEnabled = true
                 
-                // 判断播放本地还是网络
-                if video.state == VideoState.AlreadyDownload {
-                    let videoVid = JFVideo.getVideoId(video.videoUrl ?? "")
-                    if let url = NSURL(string: "http://localhost:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8") {
-                        self.player.playWithURL(url, title: video.title!)
-                        print(url)
+                if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
+                    JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
+                        guard let url = url else {
+                            JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
+                            return
+                        }
+                        self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
                     }
                 } else {
-                    JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
-                        guard let url = url else {
-                            JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
-                            return
+                    let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
+                    let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
+                        JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
+                            guard let url = url else {
+                                JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
+                                return
+                            }
+                            self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
                         }
-                        self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
-                    }
+                    })
+                    let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
+                    alertC.addAction(continuePlay)
+                    alertC.addAction(cancel)
+                    presentViewController(alertC, animated: true, completion: nil)
                 }
-            } else {
-                let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
-                let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
-                    JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
-                        guard let url = url else {
-                            JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
-                            return
-                        }
-                        self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
-                    }
-                })
-                let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
-                alertC.addAction(continuePlay)
-                alertC.addAction(cancel)
-                presentViewController(alertC, animated: true, completion: nil)
+                
+            } else if nodeIndex == 1 { // 节点1 使用网页播放
+                
+                player.userInteractionEnabled = false
+                // web节点，使用web播放器播放
+                player.prepareToDealloc()
+                let webPlayerVc = JFWebPlayerViewController()
+                webPlayerVc.video = video
+                navigationController?.pushViewController(webPlayerVc, animated: true)
             }
             
-        } else if nodeIndex == 1 { // 节点1 使用网页播放
-            
-            player.userInteractionEnabled = false
-            // web节点，使用web播放器播放
-            player.prepareToDealloc()
-            let webPlayerVc = JFWebPlayerViewController()
-            webPlayerVc.video = video
-            navigationController?.pushViewController(webPlayerVc, animated: true)
         }
-        
     }
     
     /**
