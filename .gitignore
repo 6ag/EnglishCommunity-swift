@@ -46,7 +46,7 @@ playground.xcworkspace
 Pods/
 Podfile.lock
 EnglishCommunity-swift.xcworkspace
-
+EnglishCommunity-swift/Classes/Vendor/JFPlayer/IJKMediaFramework.framework
 # GoogleService
 
 # Carthage
