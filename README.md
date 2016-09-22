@@ -24,13 +24,13 @@
 ## 如何使用
 
 - 拷贝项目到本地，【翻墙后】在项目根目录执行 `pod install` 安装项目依赖库。
-- 下载百度网盘的播放类库进行替换，本app使用  `ijkplayer` 封装的 `JFPlayer` 和 `BMPlayer`。
-- （默认是这个）如果要使用 `JFPlayer` ，则需要导入 `JFPlayer` 目录到项目中，并替换 `JFPlayerViewController.swift` 文件。
-- 如果使用 `BMPlayer` 则无需导入 `JFPlayer` ，只需要把下载下来的 `BMPlayer` 文件夹里的文件导入项目即可。
-- 框架仓库： [ijkplayer](https://github.com/Bilibili/ijkplayer)。百度网盘: [百度网盘](https://pan.baidu.com/s/1o84Klz8) 提取密码: `svcf` 。
+- 本app使用  `ijkplayer` 封装的 `JFPlayer` 或 `BMPlayer`。
+-  （默认是这个）如果使用 `BMPlayer` 则无需导入 `JFPlayer` ，只需要把下载下来的 `BMPlayer` 文件夹里的文件导入项目即可。
+- 如果要使用 `JFPlayer` ，则需要导入 `JFPlayer` 目录到项目中，并替换 `JFPlayerViewController.swift` 文件。百度网盘: [百度网盘](https://pan.baidu.com/s/1o84Klz8) 提取密码: `svcf` 。
 ## 提醒
 
 - 为什么要翻墙？`Podfile` 文件中 `pod 'Firebase/AdMob'` 这个依赖包是 `admob` 广告SDK，需要翻墙才能安装。如果没有翻墙工具，请移除这个包和相关代码（没几行的）。
+- `ijkplayer` 播放本地 `m3u8` 流媒体视频会出现缓冲计算不精确的bug，应该是本地服务器的问题，系统自带的 `AVPlayer` 则不存在这个问题。
 
 ## 效果预览
 

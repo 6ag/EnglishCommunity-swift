@@ -27,7 +27,6 @@
 		B20FD0EF1D6C16C4008DEF0C /* JFMessageRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20FD0EE1D6C16C4008DEF0C /* JFMessageRecordCell.swift */; };
 		B211DEDE1D6976CF0053180B /* JFOtherUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211DEDD1D6976CF0053180B /* JFOtherUserViewController.swift */; };
 		B213E3DE1D54BCF100589058 /* JFCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B213E3DD1D54BCF100589058 /* JFCategoryViewController.swift */; };
-		B213E3F31D54D45B00589058 /* JFPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B213E3F21D54D45B00589058 /* JFPlayerViewController.swift */; };
 		B21436391D551BE300F201AF /* JFTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21436381D551BE300F201AF /* JFTopBarView.swift */; };
 		B214363B1D551BEB00F201AF /* JFTopBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B214363A1D551BEB00F201AF /* JFTopBarView.xib */; };
 		B21501BC1D53616A005E4670 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21501BB1D53616A005E4670 /* AppDelegate.swift */; };
@@ -152,6 +151,7 @@
 		B2887D7E1D6D778D009CB44B /* JFDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2887D7D1D6D778D009CB44B /* JFDownloadManager.swift */; };
 		B29B5B2D1D6B4FE80050C8A1 /* JFFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29B5B2C1D6B4FE80050C8A1 /* JFFriendCell.swift */; };
 		B29E94E71D6AD2F20052F818 /* JFModifyPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E94E61D6AD2F20052F818 /* JFModifyPasswordViewController.swift */; };
+		B29F60E31D936397005034C6 /* JFPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29F60E21D936397005034C6 /* JFPlayerViewController.swift */; };
 		B2B770F91D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F31D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift */; };
 		B2B770FA1D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F41D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift */; };
 		B2B770FB1D61689E0042AA5E /* JFImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B770F51D61689E0042AA5E /* JFImageView.swift */; };
@@ -213,7 +213,6 @@
 		B20FD0EE1D6C16C4008DEF0C /* JFMessageRecordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFMessageRecordCell.swift; sourceTree = "<group>"; };
 		B211DEDD1D6976CF0053180B /* JFOtherUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFOtherUserViewController.swift; sourceTree = "<group>"; };
 		B213E3DD1D54BCF100589058 /* JFCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCategoryViewController.swift; sourceTree = "<group>"; };
-		B213E3F21D54D45B00589058 /* JFPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPlayerViewController.swift; sourceTree = "<group>"; };
 		B21436381D551BE300F201AF /* JFTopBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTopBarView.swift; sourceTree = "<group>"; };
 		B214363A1D551BEB00F201AF /* JFTopBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JFTopBarView.xib; sourceTree = "<group>"; };
 		B21501BB1D53616A005E4670 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -353,6 +352,7 @@
 		B2887D7D1D6D778D009CB44B /* JFDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDownloadManager.swift; sourceTree = "<group>"; };
 		B29B5B2C1D6B4FE80050C8A1 /* JFFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFFriendCell.swift; sourceTree = "<group>"; };
 		B29E94E61D6AD2F20052F818 /* JFModifyPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFModifyPasswordViewController.swift; sourceTree = "<group>"; };
+		B29F60E21D936397005034C6 /* JFPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPlayerViewController.swift; sourceTree = "<group>"; };
 		B2B770F31D61689E0042AA5E /* JFPhotoBrowserDismissAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserDismissAnimation.swift; sourceTree = "<group>"; };
 		B2B770F41D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserModalAnimation.swift; sourceTree = "<group>"; };
 		B2B770F51D61689E0042AA5E /* JFImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFImageView.swift; sourceTree = "<group>"; };
@@ -495,7 +495,7 @@
 				B2BEBF021D6CBA1F00D4B13B /* JFSearchViewController.swift */,
 				B21501DD1D536800005E4670 /* JFHomeViewController.swift */,
 				B213E3DD1D54BCF100589058 /* JFCategoryViewController.swift */,
-				B213E3F21D54D45B00589058 /* JFPlayerViewController.swift */,
+				B29F60E21D936397005034C6 /* JFPlayerViewController.swift */,
 				B24C11981D6DF44000AE0646 /* JFWebPlayerViewController.swift */,
 				B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */,
 			);
@@ -1161,9 +1161,13 @@
 				TargetAttributes = {
 					B2190AFC1D4F85C4007FC0E9 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 35PE24U644;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 						};
 					};
@@ -1291,6 +1295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29F60E31D936397005034C6 /* JFPlayerViewController.swift in Sources */,
 				B22F2C241D9235AB008C66B6 /* JFPlayerClearityChooseButton.swift in Sources */,
 				B249AE351D607D41005C0A41 /* JFCommentCell.swift in Sources */,
 				B2512A731D54426B00476D0E /* JFVideo.swift in Sources */,
@@ -1381,7 +1386,6 @@
 				B2512A6F1D5439C800476D0E /* Api.swift in Sources */,
 				B2B770FD1D61689E0042AA5E /* JFPhotoBrowserModel.swift in Sources */,
 				B220F0141D82DEE400AE4CB2 /* SCM3U8SegmentInfo.m in Sources */,
-				B213E3F31D54D45B00589058 /* JFPlayerViewController.swift in Sources */,
 				B2DA01101D654DBB0095AB7D /* JFCategoriesCellItem.swift in Sources */,
 				B2887D621D6D4A6C009CB44B /* JFStoreInfoTool.m in Sources */,
 				B2156C8A1D66AF840033DBB6 /* JFRelationUser.swift in Sources */,
@@ -1516,6 +1520,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1532,6 +1537,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.6ag.EnglishCommunity-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnglishCommunity-swift/Classes/Application/EnglishCommunity-swift-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1543,6 +1549,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1559,6 +1566,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.6ag.EnglishCommunity-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnglishCommunity-swift/Classes/Application/EnglishCommunity-swift-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -12,14 +12,12 @@ import NVActivityIndicatorView
 import YYWebImage
 import Firebase
 import GoogleMobileAds
+import BMPlayer
 
 class JFPlayerViewController: UIViewController {
     
     /// 当前页码
     var page: Int = 1
-    
-    /// 当前播放的下标
-    var currentIndex = 0
     
     /// 准备列表
     var comments = [JFComment]()
@@ -75,6 +73,9 @@ class JFPlayerViewController: UIViewController {
         // 创建并加载插页广告
         interstitial = createAndLoadInterstitial()
         
+        // 屏幕旋转监听
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onOrientationChanged(_:)), name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
+        
         JFDownloadManager.shareManager.delegate = self
     }
     
@@ -86,19 +87,20 @@ class JFPlayerViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-        player.play()
+        player.autoPlay()
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        player.pause()
+        player.pause(allowAutoPlay: true)
     }
     
     deinit {
         print("播放控制器销毁")
         JFDownloadManager.shareManager.delegate = nil
         player.prepareToDealloc()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
     
     /**
@@ -240,12 +242,11 @@ class JFPlayerViewController: UIViewController {
      重置播放器
      */
     func resetPlayerManager() {
-        JFPlayerConf.allowLog = false
-        JFPlayerConf.shouldAutoPlay = true
-        JFPlayerConf.slowAndMirror = true
-        JFPlayerConf.tintColor = UIColor.whiteColor()
-        JFPlayerConf.topBarShowInCase = .Always
-        JFPlayerConf.loaderType = NVActivityIndicatorType.BallRotateChase
+        BMPlayerConf.allowLog = false
+        BMPlayerConf.shouldAutoPlay = true
+        BMPlayerConf.tintColor = UIColor.whiteColor()
+        BMPlayerConf.topBarShowInCase = .HorizantalOnly
+        BMPlayerConf.loaderType = NVActivityIndicatorType.BallRotateChase
     }
     
     /**
@@ -265,17 +266,19 @@ class JFPlayerViewController: UIViewController {
             }
         }
         
-        // 如果是已经缓存的，就直接播放
-        if video.state == VideoState.AlreadyDownload {
-            let videoVid = JFVideo.getVideoId(video.videoUrl ?? "")
-            if let url = NSURL(string: "http://localhost:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8") {
-                self.player.playWithURL(url, title: video.title!)
-            }
-        } else {
-            if nodeIndex == 0 { // 节点0 使用m3u8方式播放
-                player.userInteractionEnabled = true
+        if nodeIndex == 0 { // 节点0 使用m3u8方式播放
+            player.userInteractionEnabled = true
+            
+            if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
                 
-                if NSUserDefaults.standardUserDefaults().boolForKey(KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
+                // 判断播放本地还是网络
+                if video.state == VideoState.AlreadyDownload {
+                    let videoVid = JFVideo.getVideoId(video.videoUrl ?? "")
+                    if let url = NSURL(string: "http://localhost:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8") {
+                        self.player.playWithURL(url, title: video.title!)
+                        print(url)
+                    }
+                } else {
                     JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
                         guard let url = url else {
                             JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
@@ -283,35 +286,35 @@ class JFPlayerViewController: UIViewController {
                         }
                         self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
                     }
-                } else {
-                    let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
-                    let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
-                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
-                        JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
-                            guard let url = url else {
-                                JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
-                                return
-                            }
-                            self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
-                        }
-                    })
-                    let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
-                    alertC.addAction(continuePlay)
-                    alertC.addAction(cancel)
-                    presentViewController(alertC, animated: true, completion: nil)
                 }
-                
-            } else if nodeIndex == 1 { // 节点1 使用网页播放
-                
-                player.userInteractionEnabled = false
-                // web节点，使用web播放器播放
-                player.prepareToDealloc()
-                let webPlayerVc = JFWebPlayerViewController()
-                webPlayerVc.video = video
-                navigationController?.pushViewController(webPlayerVc, animated: true)
+            } else {
+                let alertC = UIAlertController(title: "温馨提示", message: "当前无可用WiFi，继续播放将会扣流量哦", preferredStyle: UIAlertControllerStyle.Alert)
+                let continuePlay = UIAlertAction(title: "继续播放", style: UIAlertActionStyle.Destructive, handler: { (acion) in
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: KEY_ALLOW_CELLULAR_PLAY)
+                    JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
+                        guard let url = url else {
+                            JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
+                            return
+                        }
+                        self.player.playWithURL(NSURL(string: url)!, title: video.title ?? "")
+                    }
+                })
+                let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (acion) in })
+                alertC.addAction(continuePlay)
+                alertC.addAction(cancel)
+                presentViewController(alertC, animated: true, completion: nil)
             }
             
+        } else if nodeIndex == 1 { // 节点1 使用网页播放
+            
+            player.userInteractionEnabled = false
+            // web节点，使用web播放器播放
+            player.prepareToDealloc()
+            let webPlayerVc = JFWebPlayerViewController()
+            webPlayerVc.video = video
+            navigationController?.pushViewController(webPlayerVc, animated: true)
         }
+        
     }
     
     /**
@@ -422,9 +425,9 @@ class JFPlayerViewController: UIViewController {
     }()
     
     // 播放器
-    lazy var player: JFPlayer = {
-        let player = JFPlayer()
-        player.delegate = self
+    lazy var player: BMPlayer = {
+        let player = BMPlayer()
+        player.videoGravity = "AVLayerVideoGravityResizeAspectFill"
         return player
     }()
     
@@ -504,73 +507,6 @@ class JFPlayerViewController: UIViewController {
     
 }
 
-// MARK: - JFPlayerDelegate
-extension JFPlayerViewController: JFPlayerDelegate {
-    
-    /**
-     播放器状态改变监听
-     
-     - parameter player: 播放器
-     - parameter state:  状态
-     */
-    func player(player: JFPlayer, playerStateChanged state: JFPlayerState) {
-        switch state {
-        case .Unknown:
-            print("未知")
-        case .Playable:
-            print("可以播放")
-        case .PlaythroughOK:
-            print("从头到尾播放OK")
-        case .Stalled:
-            print("熄火")
-        case .PlaybackEnded:
-            print("播放正常结束")
-            // 自动播放下一节
-            if currentIndex < videos.count - 1 {
-                currentIndex += 1
-                videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
-                tableView(videoTableView, didSelectRowAtIndexPath: NSIndexPath(forRow: currentIndex, inSection: 0))
-            }
-        case .PlaybackError:
-            print("播放错误")
-            JFProgressHUD.showInfoWithStatus("解码失败，请稍后重试")
-        case .UserExited:
-            print("用户退出")
-        case .Stopped:
-            print("停止")
-        case .Paused:
-            print("暂停")
-        case .Playing:
-            print("正在播放")
-        case .Interrupted:
-            print("中断")
-        case .SeekingForward:
-            print("快退")
-        case .SeekingBackward:
-            print("快进")
-        case .NotSetURL:
-            print("未设置URL")
-        case .Buffering:
-            print("缓冲中")
-        case .BufferFinished:
-            print("缓冲完毕")
-        case .FullScreen:
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-            self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(view.snp_top).offset(0)
-            })
-            print("全屏")
-        case .CompactScreen:
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-            self.player.snp_updateConstraints(closure: { (make) in
-                make.top.equalTo(view.snp_top).offset(64)
-            })
-            print("竖屏")
-        }
-        
-    }
-}
-
 // MARK: - GADInterstitialDelegate 插页广告相关方法
 extension JFPlayerViewController: GADInterstitialDelegate {
     
@@ -598,6 +534,31 @@ extension JFPlayerViewController: GADInterstitialDelegate {
 
 // MARK: - 屏幕旋转
 extension JFPlayerViewController  {
+    
+    /**
+     监听屏幕方向发生改变 - 屏幕旋转时自动切换
+     */
+    @objc private func onOrientationChanged(notification: NSNotification) {
+        
+        let orientation = UIApplication.sharedApplication().statusBarOrientation
+        
+        // 全屏
+        if orientation == .LandscapeRight || orientation == .LandscapeLeft {
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+            self.player.snp_updateConstraints(closure: { (make) in
+                make.top.equalTo(view.snp_top).offset(0)
+            })
+        }
+        
+        // 竖屏
+        if orientation == .Portrait || orientation == .PortraitUpsideDown {
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+            self.player.snp_updateConstraints(closure: { (make) in
+                make.top.equalTo(view.snp_top).offset(64)
+            })
+        }
+        
+    }
     
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         if toInterfaceOrientation == UIInterfaceOrientation.Portrait || toInterfaceOrientation == UIInterfaceOrientation.PortraitUpsideDown {
@@ -666,9 +627,6 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if tableView == videoTableView {
-            
-            // 当前播放的下标
-            currentIndex = indexPath.row
             
             // 选中
             for video in videos {

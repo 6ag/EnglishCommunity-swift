@@ -208,7 +208,6 @@ extension JFSettingViewController: SKProductsRequestDelegate, SKPaymentTransacti
         
         //使用resume方法启动任务
         dataTask.resume()
-        
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
     }
     

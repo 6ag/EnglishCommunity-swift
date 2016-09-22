@@ -230,7 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      接收到本地通知
      */
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        JPUSHService.showLocalNotificationAtFront(notification, identifierKey: nil)
+        
     }
     
     func applicationWillResignActive(application: UIApplication) {
