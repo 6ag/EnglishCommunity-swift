@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwipeBack
 import SwiftyJSON
 import Reachability
 

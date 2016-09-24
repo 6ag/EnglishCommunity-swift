@@ -330,6 +330,7 @@
 		B25279621D8269CC0069052A /* MongooseDaemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MongooseDaemon.m; sourceTree = "<group>"; };
 		B27B98D61D9253E1007B1626 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
 		B27B98D71D9253E1007B1626 /* jpush-ios-2.1.9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.9.a"; sourceTree = "<group>"; };
+		B28367FA1D96B45A0067C88E /* EnglishCommunity-swift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "EnglishCommunity-swift.entitlements"; sourceTree = "<group>"; };
 		B283D1A91D69FED500702A75 /* EnglishCommunity-swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EnglishCommunity-swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		B283D1AA1D6A01A900702A75 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		B283D1AC1D6A01BD00702A75 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -696,6 +697,7 @@
 		B2190AFF1D4F85C4007FC0E9 /* EnglishCommunity-swift */ = {
 			isa = PBXGroup;
 			children = (
+				B28367FA1D96B45A0067C88E /* EnglishCommunity-swift.entitlements */,
 				B2190B071D4F85C4007FC0E9 /* Assets.xcassets */,
 				B2190B091D4F85C4007FC0E9 /* LaunchScreen.storyboard */,
 				B2190B0C1D4F85C4007FC0E9 /* Info.plist */,
@@ -1167,7 +1169,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1270,7 +1272,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E90F44C248F220C2B619B9A9 /* [CP] Embed Pods Frameworks */ = {
@@ -1519,8 +1521,10 @@
 			baseConfigurationReference = 99A939157BA8A50076C427E7 /* Pods-EnglishCommunity-swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "EnglishCommunity-swift/EnglishCommunity-swift.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 35PE24U644;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1548,8 +1552,10 @@
 			baseConfigurationReference = 516DACE58489A1F72B519807 /* Pods-EnglishCommunity-swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "EnglishCommunity-swift/EnglishCommunity-swift.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 35PE24U644;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
