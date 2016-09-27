@@ -12,7 +12,6 @@ import NVActivityIndicatorView
 import YYWebImage
 import Firebase
 import GoogleMobileAds
-import BMPlayer
 
 class JFPlayerViewController: UIViewController {
     
