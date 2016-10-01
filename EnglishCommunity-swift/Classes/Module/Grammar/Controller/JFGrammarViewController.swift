@@ -41,6 +41,7 @@ class JFGrammarViewController: UIViewController {
      */
     private func prepareUI() {
         
+        navigationItem.title = "有声语法大全"
         view.backgroundColor = COLOR_ALL_BG
         view.addSubview(tableView)
     }

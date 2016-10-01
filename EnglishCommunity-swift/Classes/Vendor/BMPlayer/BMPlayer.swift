@@ -36,8 +36,13 @@ public enum BMPlayerAspectRatio : Int {
     case FOUR2THREE     //4：3
 }
 
+protocol BMPlayerDelegate: NSObjectProtocol {
+    func playerStatusChanged(status: BMPlayerState)
+}
 
 public class BMPlayer: UIView {
+    
+    weak var delegate: BMPlayerDelegate?
 
     public var backBlock:(() -> Void)?
     
@@ -120,6 +125,7 @@ public class BMPlayer: UIView {
         } else {
             controlView.hideLoader()
         }
+        
     }
     
     /**
@@ -578,23 +584,28 @@ extension BMPlayer: BMPlayerLayerViewDelegate {
         BMPlayerManager.shared.log("playerStateDidChange - \(state)")
         switch state {
         case BMPlayerState.ReadyToPlay:
+            delegate?.playerStatusChanged(.ReadyToPlay)
             if shouldSeekTo != 0 {
                 playerLayer?.seekToTime(shouldSeekTo, completionHandler: {
                 
                 })
                 shouldSeekTo = 0
             }
+            playStateDidChanged()
         case BMPlayerState.Buffering:
+            delegate?.playerStatusChanged(.Buffering)
             cancelAutoFadeOutControlBar()
             controlView.showLoader()
             playStateDidChanged()
         case BMPlayerState.BufferFinished:
+            delegate?.playerStatusChanged(.BufferFinished)
             controlView.hideLoader()
             playStateDidChanged()
             autoPlay()
         case BMPlayerState.PlayedToTheEnd:
+            delegate?.playerStatusChanged(.PlayedToTheEnd)
             self.pause()
-            controlView.showPlayToTheEndView()
+//            controlView.showPlayToTheEndView()
         default:
             break
         }

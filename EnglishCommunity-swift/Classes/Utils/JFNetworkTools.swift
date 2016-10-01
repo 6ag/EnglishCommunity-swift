@@ -149,7 +149,11 @@ extension JFNetworkTools {
         var parameters = [String : AnyObject]()
         parameters["user_id"] = JFAccountModel.shareAccount()!.id;
         parameters["content"] = text;
-        
+//        let data = "🏷sdfsf".dataUsingEncoding(NSUTF8StringEncoding)!
+//        print(data)
+//        
+//        let string = String(data: data, encoding: NSUTF8StringEncoding)!
+//        print(string)
         // 图片
         if let images = images where images.count > 0 {
             var imageBase64s = [String]()

@@ -52,7 +52,7 @@ public class BMPlayerLayerView: UIView {
     }()
     
     
-    public var isPlaying     = false {
+    public var isPlaying     = true {
         didSet {
             delegate?.bmPlayer(player: self, playerIsPlaying: isPlaying)
         }
@@ -106,7 +106,7 @@ public class BMPlayerLayerView: UIView {
     
     public func pause() {
         player?.pause()
-        isPlaying  = false
+        isPlaying = false
         timer?.fireDate = NSDate.distantFuture()
     }
     
@@ -269,6 +269,7 @@ public class BMPlayerLayerView: UIView {
                     if player?.status == AVPlayerStatus.ReadyToPlay {
                         self.state = .ReadyToPlay
                         player?.play()
+                        isPlaying = true
                     } else if player?.status == AVPlayerStatus.Failed {
                         self.state = .Error
                     }

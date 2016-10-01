@@ -24,6 +24,9 @@ class JFPlayerViewController: UIViewController {
     /// 视频列表模型数组
     var videos = [JFVideo]()
     
+    /// 当前播放的下标
+    var currentIndex = 0
+    
     /// 即将回复的评论
     var revertComment: JFComment?
     
@@ -429,6 +432,7 @@ class JFPlayerViewController: UIViewController {
     lazy var player: BMPlayer = {
         let player = BMPlayer()
         player.videoGravity = "AVLayerVideoGravityResizeAspectFill"
+        player.delegate = self
         return player
     }()
     
@@ -506,6 +510,23 @@ class JFPlayerViewController: UIViewController {
         return view
     }()
     
+}
+
+// MARK: - BMPlayerDelegate
+extension JFPlayerViewController: BMPlayerDelegate {
+    
+    func playerStatusChanged(status: BMPlayerState) {
+        
+        if status == .PlayedToTheEnd {
+            // 自动播放下一节
+            if currentIndex < videos.count - 1 {
+                currentIndex += 1
+                videoTableView.selectRowAtIndexPath(NSIndexPath(forRow: currentIndex, inSection: 0), animated: false, scrollPosition: .None)
+                tableView(videoTableView, didSelectRowAtIndexPath: NSIndexPath(forRow: currentIndex, inSection: 0))
+            }
+        }
+        
+    }
 }
 
 // MARK: - GADInterstitialDelegate 插页广告相关方法
@@ -626,6 +647,9 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // 当前播放的下标
+        currentIndex = indexPath.row
         
         if tableView == videoTableView {
             
