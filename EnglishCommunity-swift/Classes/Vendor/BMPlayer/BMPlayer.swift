@@ -584,27 +584,26 @@ extension BMPlayer: BMPlayerLayerViewDelegate {
         BMPlayerManager.shared.log("playerStateDidChange - \(state)")
         switch state {
         case BMPlayerState.ReadyToPlay:
-            delegate?.playerStatusChanged(.ReadyToPlay)
             if shouldSeekTo != 0 {
                 playerLayer?.seekToTime(shouldSeekTo, completionHandler: {
                 
                 })
                 shouldSeekTo = 0
             }
-            playStateDidChanged()
+            delegate?.playerStatusChanged(.ReadyToPlay)
         case BMPlayerState.Buffering:
-            delegate?.playerStatusChanged(.Buffering)
             cancelAutoFadeOutControlBar()
             controlView.showLoader()
             playStateDidChanged()
+            delegate?.playerStatusChanged(.Buffering)
         case BMPlayerState.BufferFinished:
             delegate?.playerStatusChanged(.BufferFinished)
             controlView.hideLoader()
             playStateDidChanged()
             autoPlay()
         case BMPlayerState.PlayedToTheEnd:
-            delegate?.playerStatusChanged(.PlayedToTheEnd)
             self.pause()
+            delegate?.playerStatusChanged(.PlayedToTheEnd)
 //            controlView.showPlayToTheEndView()
         default:
             break

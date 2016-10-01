@@ -273,7 +273,7 @@ public class BMPlayerLayerView: UIView {
                     } else if player?.status == AVPlayerStatus.Failed {
                         self.state = .Error
                     }
-                    
+
                 case "loadedTimeRanges":
                     // 计算缓冲进度
                     if let timeInterVarl    = self.availableDuration() {
