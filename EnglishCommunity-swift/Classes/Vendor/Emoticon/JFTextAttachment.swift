@@ -12,4 +12,5 @@ class JFTextAttachment: NSTextAttachment {
 
     /// 记录表情图片的名称
     var name: String?
+    
 }

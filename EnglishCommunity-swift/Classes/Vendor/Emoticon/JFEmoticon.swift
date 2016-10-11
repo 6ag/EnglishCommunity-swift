@@ -94,7 +94,7 @@ class JFEmoticonPackage: NSObject {
     func loadEmoticon() {
         // 获取表情包文件夹里面的info.plist
         // info.plist = bundle + 表情包文件夹名称 + info.plist
-        let infoPath = JFEmoticonPackage.bundlePath + "/" + id! + "/info.plist"
+        let infoPath = JFEmoticonPackage.bundlePath + "/" + id! + "/emotioninfo.plist"
         
         // 加载info.plist
         let infoDict = NSDictionary(contentsOfFile: infoPath)!
