@@ -41,7 +41,7 @@ class JFSQLiteManager: NSObject {
         
         let sql = "CREATE TABLE IF NOT EXISTS \(tbname) ( \n" +
             "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n" +
-            "video_vid VARCHAR \n" +
+            "video_vid VARCHAR, \n" +
             "createTime VARCHAR(30) DEFAULT (datetime('now', 'localtime')) \n" +
         ");"
         
