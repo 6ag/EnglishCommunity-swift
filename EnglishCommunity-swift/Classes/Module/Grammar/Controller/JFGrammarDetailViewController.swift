@@ -27,17 +27,17 @@ class JFGrammarDetailViewController: UIViewController {
             var html = grammar.content!
             
             // 从本地加载网页模板，替换新闻主页
-            let templatePath = NSBundle.mainBundle().pathForResource("www/html/article.html", ofType: nil)!
-            let template = (try! String(contentsOfFile: templatePath, encoding: NSUTF8StringEncoding)) as NSString
-            html = template.stringByReplacingOccurrencesOfString("<p>mainnews</p>", withString: html, options: NSStringCompareOptions.CaseInsensitiveSearch, range: template.rangeOfString("<p>mainnews</p>"))
-            let baseURL = NSURL(fileURLWithPath: templatePath)
+            let templatePath = Bundle.main.path(forResource: "www/html/article.html", ofType: nil)!
+            let template = (try! String(contentsOfFile: templatePath, encoding: String.Encoding.utf8)) as NSString
+            html = template.replacingOccurrences(of: "<p>mainnews</p>", with: html, options: NSString.CompareOptions.caseInsensitive, range: template.range(of: "<p>mainnews</p>"))
+            let baseURL = URL(fileURLWithPath: templatePath)
             webView.loadHTMLString(html, baseURL: baseURL)
             
-            playerItem = AVPlayerItem(URL: NSURL(string: grammar.mp3!)!)
-            playerItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
+            playerItem = AVPlayerItem(url: URL(string: grammar.mp3!)!)
+            playerItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.new, context: nil)
             player = AVPlayer(playerItem: playerItem!)
             
-            timeObserve = player?.addPeriodicTimeObserverForInterval(CMTime(value: 1, timescale: 1), queue: dispatch_get_main_queue(), usingBlock: { (time) in
+            timeObserve = player?.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1), queue: DispatchQueue.main, using: { (time) in
                 let current = CMTimeGetSeconds(time)
                 let total = CMTimeGetSeconds(self.playerItem!.duration)
                 if current != 0 {
@@ -46,7 +46,7 @@ class JFGrammarDetailViewController: UIViewController {
                     self.bottomView.progressView.progress = Float(current / total)
                     
                 }
-            })
+            }) as AnyObject?
             
             // 开始播放
             didTappedPlayButton(bottomView.playButton)
@@ -59,7 +59,7 @@ class JFGrammarDetailViewController: UIViewController {
         prepareUI()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         if let timeObserve = timeObserve {
@@ -69,7 +69,7 @@ class JFGrammarDetailViewController: UIViewController {
         if let playerItem = playerItem {
             playerItem.removeObserver(self, forKeyPath: "status")
         }
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     deinit {
@@ -79,19 +79,19 @@ class JFGrammarDetailViewController: UIViewController {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         title = "详情"
         view.backgroundColor = COLOR_ALL_BG
         view.addSubview(webView)
         view.addSubview(bottomView)
         
-        webView.snp_makeConstraints { (make) in
+        webView.snp.makeConstraints { (make) in
             make.left.top.right.equalTo(0)
             make.height.equalTo(SCREEN_HEIGHT - 64 - 50)
         }
         
-        bottomView.snp_makeConstraints { (make) in
+        bottomView.snp.makeConstraints { (make) in
             make.left.bottom.right.equalTo(0)
             make.height.equalTo(50)
         }
@@ -104,21 +104,21 @@ class JFGrammarDetailViewController: UIViewController {
      
      - returns: 返回格式化后的字符串
      */
-    func formatTime(second: Float64) -> String {
+    func formatTime(_ second: Float64) -> String {
         let min = Int(second / 60)
-        let sec = Int(second % 60)
+        let sec = Int(second.truncatingRemainder(dividingBy: 60))
         return String(format: "%02d:%02d", min, sec)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if keyPath == "status" {
             switch player!.status {
-            case AVPlayerStatus.Unknown:
+            case AVPlayerStatus.unknown:
                 print("未知状态")
-            case AVPlayerStatus.Failed:
+            case AVPlayerStatus.failed:
                 print("加载失败")
-            case AVPlayerStatus.ReadyToPlay:
+            case AVPlayerStatus.readyToPlay:
                 print("可以播放")
             }
         }
@@ -126,15 +126,15 @@ class JFGrammarDetailViewController: UIViewController {
     
     // MARK: - 懒加载
     /// 内容视图
-    private lazy var webView: UIWebView = {
+    fileprivate lazy var webView: UIWebView = {
         let webView = UIWebView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 100))
-        webView.backgroundColor = UIColor.whiteColor()
+        webView.backgroundColor = UIColor.white
         return webView
     }()
     
     /// 底部播放视图
-    private lazy var bottomView: JFMusicPlayerView = {
-        let view = NSBundle.mainBundle().loadNibNamed("JFMusicPlayerView", owner: nil, options: nil).last as! JFMusicPlayerView
+    fileprivate lazy var bottomView: JFMusicPlayerView = {
+        let view = Bundle.main.loadNibNamed("JFMusicPlayerView", owner: nil, options: nil)?.last as! JFMusicPlayerView
         view.delegate = self
         return view
     }()
@@ -147,10 +147,10 @@ extension JFGrammarDetailViewController: JFMusicPlayerViewDelegate {
     /**
      点击了播放按钮
      */
-    func didTappedPlayButton(button: UIButton) {
-        button.selected = !button.selected
+    func didTappedPlayButton(_ button: UIButton) {
+        button.isSelected = !button.isSelected
         
-        if button.selected {
+        if button.isSelected {
             player?.play()
         } else {
             player?.pause()

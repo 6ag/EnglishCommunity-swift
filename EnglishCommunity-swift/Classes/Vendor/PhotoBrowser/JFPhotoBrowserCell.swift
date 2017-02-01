@@ -27,7 +27,7 @@ class JFPhotoBrowserCell: UICollectionViewCell {
             resetProperties()
             
             indicator.startAnimating()
-            imageView.yy_setImageWithURL(imageURL, placeholder: nil, options: YYWebImageOptions.AllowBackgroundTask) { (image, url, _, _, error) in
+            imageView.yy_setImage(with: imageURL as URL, placeholder: nil, options: YYWebImageOptions.allowBackgroundTask) { (image, url, _, _, error) in
                 self.indicator.stopAnimating()
                 
                 if let image = image {
@@ -40,16 +40,16 @@ class JFPhotoBrowserCell: UICollectionViewCell {
     }
     
     /// 清除属性,防止cell复用
-    private func resetProperties() {
-        imageView.transform = CGAffineTransformIdentity
+    fileprivate func resetProperties() {
+        imageView.transform = CGAffineTransform.identity
         
-        scrollView.contentInset = UIEdgeInsetsZero
-        scrollView.contentOffset = CGPointZero
-        scrollView.contentSize = CGSizeZero
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.contentOffset = CGPoint.zero
+        scrollView.contentSize = CGSize.zero
     }
     
     /// 根据长短图,重新布局imageView
-    private func layoutImageView(image: UIImage) {
+    fileprivate func layoutImageView(_ image: UIImage) {
         // 获取等比例缩放后的图片大小
         let size = image.equalScaleWithWidth(SCREEN_WIDTH)
         
@@ -66,7 +66,7 @@ class JFPhotoBrowserCell: UICollectionViewCell {
             scrollView.contentInset = UIEdgeInsets(top: offestY, left: 0, bottom: offestY, right: 0)
         } else {
             // 长图, 顶部显示
-            imageView.frame = CGRect(origin: CGPointZero, size: size)
+            imageView.frame = CGRect(origin: CGPoint.zero, size: size)
             
             // 设置滚动
             scrollView.contentSize = size
@@ -87,7 +87,7 @@ class JFPhotoBrowserCell: UICollectionViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         // 添加单击双击事件
         let oneTap = UITapGestureRecognizer(target: self, action: #selector(didOneTappedPhotoDetailView(_:)))
@@ -98,7 +98,7 @@ class JFPhotoBrowserCell: UICollectionViewCell {
         addGestureRecognizer(doubleTap)
         
         // 如果监听到双击事件，单击事件则不触发
-        oneTap.requireGestureRecognizerToFail(doubleTap)
+        oneTap.require(toFail: doubleTap)
         
         contentView.addSubview(scrollView)
         scrollView.addSubview(imageView)
@@ -109,11 +109,11 @@ class JFPhotoBrowserCell: UICollectionViewCell {
         scrollView.minimumZoomScale = 0.5
         scrollView.delegate = self
         
-        scrollView.snp_makeConstraints { (make) in
+        scrollView.snp.makeConstraints { (make) in
             make.edges.equalTo(contentView)
         }
         
-        indicator.snp_makeConstraints { (make) in
+        indicator.snp.makeConstraints { (make) in
             make.center.equalTo(contentView)
         }
         
@@ -123,27 +123,27 @@ class JFPhotoBrowserCell: UICollectionViewCell {
     /**
      图秀详情界面单击事件，隐藏除去图片外的所有UI
      */
-    func didOneTappedPhotoDetailView(tap: UITapGestureRecognizer) {
+    func didOneTappedPhotoDetailView(_ tap: UITapGestureRecognizer) {
         cellDelegate?.didOneTappedPhotoDetailView(scrollView)
     }
     
     /**
      图秀详情界面双击事件，缩放
      */
-    func didDoubleTappedPhotoDetailView(tap: UITapGestureRecognizer) {
-        let touchPoint = tap.locationInView(self)
+    func didDoubleTappedPhotoDetailView(_ tap: UITapGestureRecognizer) {
+        let touchPoint = tap.location(in: self)
         cellDelegate?.didDoubleTappedPhotoDetailView(scrollView, touchPoint: touchPoint)
     }
     
     // MARK: - 懒加载
     /// scrollView
-    private lazy var scrollView = UIScrollView()
+    fileprivate lazy var scrollView = UIScrollView()
     
     /// imageView
     lazy var imageView: JFImageView = JFImageView()
     
     /// 下载图片提示
-    private lazy var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+    fileprivate lazy var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
 }
 
 protocol JFPhotoBrowserCellDelegate: NSObjectProtocol {
@@ -155,17 +155,17 @@ protocol JFPhotoBrowserCellDelegate: NSObjectProtocol {
     func cellDismiss()
     
     // 单击事件
-    func didOneTappedPhotoDetailView(scrollView: UIScrollView)
+    func didOneTappedPhotoDetailView(_ scrollView: UIScrollView)
     
     // 双击事件
-    func didDoubleTappedPhotoDetailView(scrollView: UIScrollView, touchPoint: CGPoint)
+    func didDoubleTappedPhotoDetailView(_ scrollView: UIScrollView, touchPoint: CGPoint)
 }
 
 // MARK: - UIScrollViewDelegate
 extension JFPhotoBrowserCell: UIScrollViewDelegate {
     
     /// 返回需要缩放的view,设置imageView.transform
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
     
@@ -173,7 +173,7 @@ extension JFPhotoBrowserCell: UIScrollViewDelegate {
      缩放后frame会改变.bounds不会改变
      */
     /// scrollView缩放完毕调用
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
         
         // 往中间移动
         // Y偏移
@@ -199,9 +199,9 @@ extension JFPhotoBrowserCell: UIScrollViewDelegate {
             let thumbImage = photoModel!.imageView!
             
             // 计算缩放后的位置
-            let rect = thumbImage.superview!.convertRect(thumbImage.frame, toCoordinateSpace: self)
+            let rect = thumbImage.superview!.convert(thumbImage.frame, to: self)
             
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
                 
                 // 设置 imageView的bounds
                 self.imageView.frame = CGRect(x: 0, y: 0, width: rect.width, height: rect.height)
@@ -217,17 +217,17 @@ extension JFPhotoBrowserCell: UIScrollViewDelegate {
             
         } else {
             // 移到中间去
-            UIView.animateWithDuration(0.25) { () -> Void in
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
                 // 当缩放比例小于设置的最小缩放比例时,会动画到左上角,在调用 scrollViewDidEndZooming,不让系统缩放到比指定最小缩放比例还小的值
                 // 设置scrollView的contentInset来居中图片
                 scrollView.contentInset = UIEdgeInsets(top: offestY, left: offestX, bottom: offestY, right: offestX)
-            }
+            }) 
         }
         
     }
     
     /// scrollView缩放时调用
-    func scrollViewDidZoom(scrollView: UIScrollView) {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
         
         // 修改控制器的背景
         // 通过代理获取需要设置alpha的view

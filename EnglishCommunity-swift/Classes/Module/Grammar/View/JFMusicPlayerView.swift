@@ -9,7 +9,7 @@
 import UIKit
 
 protocol JFMusicPlayerViewDelegate: NSObjectProtocol {
-    func didTappedPlayButton(button: UIButton)
+    func didTappedPlayButton(_ button: UIButton)
 }
 
 class JFMusicPlayerView: UIView {
@@ -24,7 +24,7 @@ class JFMusicPlayerView: UIView {
     /**
      点击了播放按钮
      */
-    @IBAction func didTappedPlayButton(sender: UIButton) {
+    @IBAction func didTappedPlayButton(_ sender: UIButton) {
         delegate?.didTappedPlayButton(sender)
     }
 }

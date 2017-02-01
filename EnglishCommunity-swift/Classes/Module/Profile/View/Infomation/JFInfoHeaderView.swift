@@ -24,7 +24,7 @@ class JFInfoHeaderView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        avatarButton.layer.borderColor = UIColor.colorWithHexString("58D475").CGColor
+        avatarButton.layer.borderColor = UIColor.colorWithHexString("58D475").cgColor
         avatarButton.layer.borderWidth = 4
     }
     

@@ -26,8 +26,8 @@ class JFFriendCell: UITableViewCell {
                 return
             }
             
-            avatarImageView.yy_imageURL = NSURL(string: relationUser.relationAvatar!)
-            nicknameLabel.text = relationUser.relationNickname!
+            avatarImageView.setAvatarImage(urlString: relationUser.relationAvatar, placeholderImage: UIImage(named: "default－portrait"))
+            nicknameLabel.text = relationUser.relationNickname
             sexImageView.image = relationUser.relationSex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             sayLabel.text = relationUser.relationSay ?? "对方很懒，还没有心情哦！"
         }
@@ -36,36 +36,36 @@ class JFFriendCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         contentView.addSubview(avatarImageView)
         contentView.addSubview(nicknameLabel)
         contentView.addSubview(sexImageView)
         contentView.addSubview(sayLabel)
         contentView.addSubview(separatorView)
         
-        avatarImageView.snp_makeConstraints { (make) in
+        avatarImageView.snp.makeConstraints { (make) in
             make.left.equalTo(MARGIN)
             make.centerY.equalTo(contentView)
             make.size.equalTo(CGSize(width: 40, height: 40))
         }
         
-        nicknameLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(avatarImageView.snp_right).offset(MARGIN)
-            make.top.equalTo(avatarImageView.snp_top)
+        nicknameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(avatarImageView.snp.right).offset(MARGIN)
+            make.top.equalTo(avatarImageView.snp.top)
         }
         
-        sexImageView.snp_makeConstraints { (make) in
-            make.left.equalTo(nicknameLabel.snp_right).offset(MARGIN * 0.5)
+        sexImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(nicknameLabel.snp.right).offset(MARGIN * 0.5)
             make.centerY.equalTo(nicknameLabel)
             make.size.equalTo(CGSize(width: 12, height: 12))
         }
         
-        sayLabel.snp_makeConstraints { (make) in
+        sayLabel.snp.makeConstraints { (make) in
             make.left.equalTo(nicknameLabel)
-            make.bottom.equalTo(avatarImageView.snp_bottom)
+            make.bottom.equalTo(avatarImageView.snp.bottom)
         }
         
-        separatorView.snp_makeConstraints { (make) in
+        separatorView.snp.makeConstraints { (make) in
             make.left.right.equalTo(0)
             make.bottom.equalTo(-0.5)
             make.height.equalTo(0.5)
@@ -75,7 +75,7 @@ class JFFriendCell: UITableViewCell {
     /**
      修改cell点击后高亮颜色
      */
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
@@ -89,30 +89,28 @@ class JFFriendCell: UITableViewCell {
     /// 头像
     lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 20
-        imageView.layer.masksToBounds = true
         return imageView
     }()
     
     /// 昵称
     lazy var nicknameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(16)
+        label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     
     /// 性别
-    private lazy var sexImageView: UIImageView = {
+    fileprivate lazy var sexImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
     
     /// 个性签名
-    private lazy var sayLabel: UILabel = {
+    fileprivate lazy var sayLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = UIColor.colorWithHexString("444444")
-        label.font = UIFont.systemFontOfSize(14)
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     

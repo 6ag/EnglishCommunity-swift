@@ -12,6 +12,16 @@ import GoogleMobileAds
 
 class JFAdManager: NSObject {
     
+    /**
+     广告管理单利
+     */
+    static let shared: JFAdManager = {
+        let manager = JFAdManager()
+        GADMobileAds.sharedInstance().applicationVolume = 0
+        manager.createAndLoadInterstitial()
+        return manager
+    }()
+    
     /// 插页广告id
     let interstitialUnitId = "ca-app-pub-3941303619697740/5655470113"
     
@@ -20,22 +30,6 @@ class JFAdManager: NSObject {
     
     /// 已经准备好的广告
     var interstitial: GADInterstitial?
-    
-    /**
-     广告管理单利
-     */
-    static func shareDbManager() -> JFAdManager {
-        struct Singleton {
-            static var onceToken : dispatch_once_t = 0
-            static var single:JFAdManager?
-        }
-        dispatch_once(&Singleton.onceToken, {
-            Singleton.single = JFAdManager()
-            Singleton.single?.createAndLoadInterstitial()
-            }
-        )
-        return Singleton.single!
-    }
     
     // MARK: - 获取广告
     /**
@@ -60,7 +54,7 @@ class JFAdManager: NSObject {
      
      - returns: 悬浮广告视图
      */
-    func getBannerView(rootViewController: UIViewController) -> GADBannerView {
+    func getBannerView(_ rootViewController: UIViewController) -> GADBannerView {
         return createBannerView(rootViewController)
     }
     
@@ -71,7 +65,7 @@ class JFAdManager: NSObject {
      
      - returns: 悬浮广告视图
      */
-    func getNativeView(rootViewController: UIViewController) -> GADNativeExpressAdView {
+    func getNativeView(_ rootViewController: UIViewController) -> GADNativeExpressAdView {
         return createNativeExpressView(rootViewController)
     }
     
@@ -80,32 +74,32 @@ class JFAdManager: NSObject {
     /**
      创建插页广告
      */
-    private func createAndLoadInterstitial() {
+    fileprivate func createAndLoadInterstitial() {
         interstitial = GADInterstitial(adUnitID: interstitialUnitId)
         if let interstitial = interstitial {
-            interstitial.loadRequest(GADRequest())
+            interstitial.load(GADRequest())
         }
     }
     
     /**
      创建悬浮广告
      */
-    private func createBannerView(rootViewController: UIViewController) -> GADBannerView {
+    fileprivate func createBannerView(_ rootViewController: UIViewController) -> GADBannerView {
         let bannerView = GADBannerView()
         bannerView.rootViewController = rootViewController
         bannerView.adUnitID = bannerUnitId
-        bannerView.loadRequest(GADRequest())
+        bannerView.load(GADRequest())
         return bannerView
     }
     
     /**
      创建原生广告 - 分类cell
      */
-    private func createNativeExpressView(rootViewController: UIViewController) -> GADNativeExpressAdView {
+    fileprivate func createNativeExpressView(_ rootViewController: UIViewController) -> GADNativeExpressAdView {
         let nativeExpressView = GADNativeExpressAdView()
         nativeExpressView.adUnitID = NATIVE_UNIT_ID
         nativeExpressView.rootViewController = rootViewController
-        nativeExpressView.loadRequest(GADRequest())
+        nativeExpressView.load(GADRequest())
         return nativeExpressView
     }
     

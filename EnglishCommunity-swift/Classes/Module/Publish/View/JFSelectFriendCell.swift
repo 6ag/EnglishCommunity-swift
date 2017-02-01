@@ -26,7 +26,7 @@ class JFSelectFriendCell: UITableViewCell {
                 return
             }
             
-            avatarImageView.yy_imageURL = NSURL(string: relationUser.relationAvatar ?? "")
+            avatarImageView.yy_imageURL = URL(string: relationUser.relationAvatar ?? "")
             nicknameLabel.text = relationUser.relationNickname ?? ""
             sexImageView.image = relationUser.relationSex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             
@@ -37,37 +37,37 @@ class JFSelectFriendCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         contentView.addSubview(selectorButton)
         contentView.addSubview(avatarImageView)
         contentView.addSubview(nicknameLabel)
         contentView.addSubview(sexImageView)
         contentView.addSubview(separatorView)
         
-        selectorButton.snp_makeConstraints { (make) in
+        selectorButton.snp.makeConstraints { (make) in
             make.left.equalTo(15)
             make.centerY.equalTo(contentView)
             make.size.equalTo(CGSize(width: 20, height: 20))
         }
         
-        avatarImageView.snp_makeConstraints { (make) in
-            make.left.equalTo(selectorButton.snp_right).offset(10)
+        avatarImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(selectorButton.snp.right).offset(10)
             make.centerY.equalTo(selectorButton)
             make.size.equalTo(CGSize(width: 40, height: 40))
         }
         
-        nicknameLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(avatarImageView.snp_right).offset(10)
+        nicknameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(avatarImageView.snp.right).offset(10)
             make.centerY.equalTo(selectorButton)
         }
         
-        sexImageView.snp_makeConstraints { (make) in
-            make.left.equalTo(nicknameLabel.snp_right).offset(10)
+        sexImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(nicknameLabel.snp.right).offset(10)
             make.centerY.equalTo(nicknameLabel)
             make.size.equalTo(CGSize(width: 12, height: 12))
         }
         
-        separatorView.snp_makeConstraints { (make) in
+        separatorView.snp.makeConstraints { (make) in
             make.left.right.equalTo(0)
             make.bottom.equalTo(-0.5)
             make.height.equalTo(0.5)
@@ -85,7 +85,7 @@ class JFSelectFriendCell: UITableViewCell {
     /**
      修改cell点击后高亮颜色
      */
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
@@ -98,9 +98,9 @@ class JFSelectFriendCell: UITableViewCell {
     // MARK: - 懒加载
     /// 选择图标
     lazy var selectorButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setBackgroundImage(UIImage(named: "publish_select_normal"), forState: .Normal)
-        button.setBackgroundImage(UIImage(named: "publish_select_selected"), forState: .Selected)
+        let button = UIButton(type: .custom)
+        button.setBackgroundImage(UIImage(named: "publish_select_normal"), for: UIControlState())
+        button.setBackgroundImage(UIImage(named: "publish_select_selected"), for: .selected)
         return button
     }()
     
@@ -115,12 +115,12 @@ class JFSelectFriendCell: UITableViewCell {
     /// 昵称
     lazy var nicknameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(16)
+        label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     
     /// 性别
-    private lazy var sexImageView: UIImageView = {
+    fileprivate lazy var sexImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()

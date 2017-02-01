@@ -1,3 +1,4 @@
+
 //
 //  JFVideoInfo.swift
 //  EnglishCommunity-swift
@@ -43,12 +44,12 @@ class JFVideoInfo: NSObject {
     /// 是否已经收藏 0未收藏 1收藏
     var collected = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
     /**
      搜索视频信息列表
@@ -58,18 +59,18 @@ class JFVideoInfo: NSObject {
      - parameter count:    每页数量
      - parameter finished: 完成回调
      */
-    class func searchVideoInfoList(keyword: String, page: Int, count: Int = 10, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
+    class func searchVideoInfoList(_ keyword: String, page: Int, count: Int = 10, finished: @escaping (_ videoInfos: [JFVideoInfo]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "keyword" : keyword,
-            "page" : page,
-            "count" : count
+            "keyword" : keyword as AnyObject,
+            "page" : page as AnyObject,
+            "count" : count as AnyObject
         ]
         
         JFNetworkTools.shareNetworkTool.get(SEARCH_VIDEO_INFO_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result else {
-                finished(videoInfos: nil)
+                finished(nil)
                 return
             }
             
@@ -79,10 +80,10 @@ class JFVideoInfo: NSObject {
                 for dict in data {
                     videoInfos.append(JFVideoInfo(dict: dict))
                 }
-                finished(videoInfos: videoInfos)
+                finished(videoInfos)
             } else {
                 JFProgressHUD.showInfoWithStatus(result["message"].stringValue)
-                finished(videoInfos: nil)
+                finished(nil)
             }
             
         }
@@ -97,7 +98,7 @@ class JFVideoInfo: NSObject {
      - parameter recommend:   是否是推荐
      - parameter finished:    数据回调
      */
-    class func loadVideoInfoList(page: Int, count: Int, category_id: Int, recommend: Int, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
+    class func loadVideoInfoList(_ page: Int, count: Int, category_id: Int, recommend: Int, finished: @escaping (_ videoInfos: [JFVideoInfo]?) -> ()) {
         
         // 先去本地获取推荐数据
         if recommend == 1 {
@@ -109,23 +110,23 @@ class JFVideoInfo: NSObject {
                     videoInfos.append(JFVideoInfo(dict: dict))
                 }
                 
-                finished(videoInfos: videoInfos)
+                finished(videoInfos)
                 return
             }
         }
         
         let parameters: [String : AnyObject] = [
-            "category_id" : category_id,
-            "page" : page,
-            "count" : count,
-            "recommend" : recommend
+            "category_id" : category_id as AnyObject,
+            "page" : page as AnyObject,
+            "count" : count as AnyObject,
+            "recommend" : recommend as AnyObject
         ]
         
         JFNetworkTools.shareNetworkTool.get(GET_VIDEO_INFOS_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error, parameters)
-                finished(videoInfos: nil)
+                finished(nil)
                 return
             }
             
@@ -141,7 +142,7 @@ class JFVideoInfo: NSObject {
                 videoInfos.append(JFVideoInfo(dict: dict))
             }
             
-            finished(videoInfos: videoInfos)
+            finished(videoInfos)
             
         }
     }
@@ -152,23 +153,23 @@ class JFVideoInfo: NSObject {
      - parameter videoInfoId: 视频信息id
      - parameter finished:    完成回调
      */
-    class func loadVideoInfoDetail(videoInfoId: Int, finished: (videoInfo: JFVideoInfo?) -> ()) {
+    class func loadVideoInfoDetail(_ videoInfoId: Int, finished: @escaping (_ videoInfo: JFVideoInfo?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()?.id ?? 0,
-            "video_info_id" : videoInfoId,
+            "user_id" : JFAccountModel.shareAccount()?.id as AnyObject? ?? 0 as AnyObject,
+            "video_info_id" : videoInfoId as AnyObject,
         ]
         
         JFNetworkTools.shareNetworkTool.get(GET_VIDEO_INFO_DETAIL, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error, parameters)
-                finished(videoInfo: nil)
+                finished(nil)
                 return
             }
             
             let dict = result["result"].dictionaryObject!
-            finished(videoInfo: JFVideoInfo(dict: dict))
+            finished(JFVideoInfo(dict: dict))
             
         }
     }
@@ -182,19 +183,19 @@ class JFVideoInfo: NSObject {
      - parameter count:    每页数量
      - parameter finished: 数据回调
      */
-    class func loadCollectionVideoInfoList(page: Int, count: Int, finished: (videoInfos: [JFVideoInfo]?) -> ()) {
+    class func loadCollectionVideoInfoList(_ page: Int, count: Int, finished: @escaping (_ videoInfos: [JFVideoInfo]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "page" : page,
-            "count" : count
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
+            "page" : page as AnyObject,
+            "count" : count as AnyObject
         ]
         
         JFNetworkTools.shareNetworkTool.getWithToken(GET_COLLECTION_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error, parameters)
-                finished(videoInfos: nil)
+                finished(nil)
                 return
             }
             
@@ -205,7 +206,7 @@ class JFVideoInfo: NSObject {
                 videoInfos.append(JFVideoInfo(dict: dict))
             }
             
-            finished(videoInfos: videoInfos)
+            finished(videoInfos)
             
         }
     }

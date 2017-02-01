@@ -10,31 +10,30 @@ import UIKit
 import YYWebImage
 
 class JFCategoryListCell: UITableViewCell {
-
+    
+    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var teacherLabel: UILabel!
+    @IBOutlet weak var joinCountLabel: UILabel!
+    @IBOutlet weak var videoCountLabel: UILabel!
+    
     var videoInfo: JFVideoInfo? {
         didSet {
             guard let videoInfo = videoInfo else {
                 return
             }
-            
-            coverImageView.yy_imageURL = NSURL(string: videoInfo.cover!)
-            titleLabel.text = videoInfo.title!
-            teacherLabel.text = videoInfo.teacherName!
+            coverImageView.setImage(urlString: videoInfo.cover, placeholderImage: nil)
+            titleLabel.text = videoInfo.title
+            teacherLabel.text = videoInfo.teacherName
             joinCountLabel.text = "\(videoInfo.view) 人学过"
             videoCountLabel.text = "共\(videoInfo.videoCount)节"
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        coverImageView.layer.cornerRadius = 3
-        coverImageView.layer.masksToBounds = true
-    }
-
     /**
      修改cell点击后高亮颜色
      */
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
@@ -44,10 +43,17 @@ class JFCategoryListCell: UITableViewCell {
         }
     }
     
-    @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var teacherLabel: UILabel!
-    @IBOutlet weak var joinCountLabel: UILabel!
-    @IBOutlet weak var videoCountLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        // 离屏渲染 - 异步绘制
+        layer.drawsAsynchronously = true
+        
+        // 栅格化 - 异步绘制之后，会生成一张独立的图像，cell在屏幕上滚动的时候，本质滚动的是这张图片
+        layer.shouldRasterize = true
+        
+        // 使用栅格化，需要指定分辨率
+        layer.rasterizationScale = UIScreen.main.scale
+    }
     
 }

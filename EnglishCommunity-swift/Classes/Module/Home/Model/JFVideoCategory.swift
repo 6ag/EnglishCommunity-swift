@@ -26,14 +26,14 @@ class JFVideoCategory: NSObject {
     /// 分类下的视频信息数据
     var videoInfos: [JFVideoInfo]?
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
-    override func setValue(value: AnyObject?, forKey key: String) {
+    override func setValue(_ value: Any?, forKey key: String) {
         
         if key == "videoInfoList" {
             if let data = value as? [[String : AnyObject]] {
@@ -56,7 +56,7 @@ class JFVideoCategory: NSObject {
      - parameter count:     返回结果带分类下的视频信息数据条数 默认4条
      - parameter finished:  数据回调
      */
-    class func loadAllCategories(have_data: Int, count: Int, finished: (videoCategories: [JFVideoCategory]?) -> ()) {
+    class func loadAllCategories(_ have_data: Int, count: Int, finished: @escaping (_ videoCategories: [JFVideoCategory]?) -> ()) {
         
         // 先去缓存中获取
         if let json = getJson(CATEGORIES_JSON_PATH) {
@@ -67,20 +67,20 @@ class JFVideoCategory: NSObject {
                 videoCategories.append(JFVideoCategory(dict: dict))
             }
             
-            finished(videoCategories: videoCategories)
+            finished(videoCategories)
             return
         }
         
         let parameters: [String : AnyObject] = [
-            "have_data" : 1,
-            "count" : 4
+            "have_data" : 1 as AnyObject,
+            "count" : 4 as AnyObject
         ]
         
         JFNetworkTools.shareNetworkTool.get(GET_ALL_CATEGORIES, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error, parameters)
-                finished(videoCategories: nil)
+                finished(nil)
                 return
             }
             
@@ -94,7 +94,7 @@ class JFVideoCategory: NSObject {
                 videoCategories.append(JFVideoCategory(dict: dict))
             }
             
-            finished(videoCategories: videoCategories)
+            finished(videoCategories)
         }
     }
     

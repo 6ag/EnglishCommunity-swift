@@ -39,7 +39,7 @@ class JFAboutMeViewController: UIViewController {
         "</html>"
         
         let webView = (view as! UIWebView)
-        webView.dataDetectorTypes = .None
+        webView.dataDetectorTypes = UIDataDetectorTypes()
         webView.loadHTMLString(html, baseURL: nil)
     }
 }

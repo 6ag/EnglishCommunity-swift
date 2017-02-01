@@ -4,6 +4,11 @@
 
 #import "JPUSHService.h"
 
+// iOS10注册APNs所需头文件
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+#endif
+
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDKUI.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
@@ -15,6 +20,9 @@
 
 // 微信SDK头文件
 #import "WXApi.h"
+
+//新浪微博SDK头文件
+#import "WeiboSDK.h"
 
 // 检测磁盘容量
 #import "JFStoreInfoTool.h"

@@ -23,12 +23,12 @@ class JFByUser: NSObject {
     /// 性别
     var sex = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
 }
 
 /// 消息接受者用户
@@ -46,12 +46,12 @@ class JFToUser: NSObject {
     /// 性别
     var sex = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
 }
 
 class JFMessageRecord: NSObject {
@@ -89,14 +89,14 @@ class JFMessageRecord: NSObject {
     /// 消息时间
     var publishTime: String?
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
-    override func setValue(value: AnyObject?, forKey key: String) {
+    override func setValue(_ value: Any?, forKey key: String) {
         
         if key == "byUser" {
             let data = value as! [String : AnyObject]
@@ -117,22 +117,22 @@ class JFMessageRecord: NSObject {
      - parameter page:     页码
      - parameter finished: 消息列表
      */
-    class func getMessageList(page: Int, finished: (messageRecords: [JFMessageRecord]?) ->() ) {
+    class func getMessageList(_ page: Int, finished: @escaping (_ messageRecords: [JFMessageRecord]?) ->() ) {
         
         if !JFAccountModel.isLogin() {
             return
         }
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "page" : page,
-            "count" : 20
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
+            "page" : page as AnyObject,
+            "count" : 20 as AnyObject
         ]
         
         JFNetworkTools.shareNetworkTool.getWithToken(GET_MESSAGE_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result else {
-                finished(messageRecords: nil)
+                finished(nil)
                 return
             }
             
@@ -143,9 +143,9 @@ class JFMessageRecord: NSObject {
                     let messageRecord = JFMessageRecord(dict: dict)
                     messageRecords.append(messageRecord)
                 }
-                finished(messageRecords: messageRecords)
+                finished(messageRecords)
             } else {
-                finished(messageRecords: nil)
+                finished(nil)
             }
         }
     }
@@ -155,27 +155,27 @@ class JFMessageRecord: NSObject {
      
      - parameter finished: 完成回调
      */
-    class func getUnlookedMessageCount(finished: (success: Bool, count: Int) -> ()) {
+    class func getUnlookedMessageCount(_ finished: @escaping (_ success: Bool, _ count: Int) -> ()) {
         
         if !JFAccountModel.isLogin() {
             return
         }
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
             ]
         
         JFNetworkTools.shareNetworkTool.getWithToken(GET_UNLOOKED_MESSAGE_COUNT, parameters: parameters) { (success, result, error) in
             
             guard let result = result else {
-                finished(success: false, count: 0)
+                finished(false, 0)
                 return
             }
             
             if result["status"] == "success" {
-                finished(success: true, count: result["result"]["unlookedMessageCount"].intValue)
+                finished(true, result["result"]["unlookedMessageCount"].intValue)
             } else {
-                finished(success: false, count: 0)
+                finished(false, 0)
             }
         }
     }
@@ -185,27 +185,27 @@ class JFMessageRecord: NSObject {
      
      - parameter finished: 完成回调
      */
-    class func clearUnlookedMessage(finished: (success: Bool) -> ()) {
+    class func clearUnlookedMessage(_ finished: @escaping (_ success: Bool) -> ()) {
         
         if !JFAccountModel.isLogin() {
             return
         }
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
             ]
         
         JFNetworkTools.shareNetworkTool.postWithToken(CLEAR_UNLOOKED_MESSAGE, parameters: parameters) { (success, result, error) in
             
             guard let result = result else {
-                finished(success: false)
+                finished(false)
                 return
             }
             
             if result["status"] == "success" {
-                finished(success: true)
+                finished(true)
             } else {
-                finished(success: false)
+                finished(false)
             }
         }
     }

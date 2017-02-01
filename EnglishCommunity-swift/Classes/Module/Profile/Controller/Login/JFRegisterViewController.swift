@@ -7,9 +7,44 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 protocol JFRegisterViewControllerDelegate: NSObjectProtocol {
-    func registerSuccess(username: String, password: String)
+    func registerSuccess(_ username: String, password: String)
 }
 
 class JFRegisterViewController: UIViewController {
@@ -30,74 +65,74 @@ class JFRegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        usernameView.layer.borderColor = UIColor.whiteColor().CGColor
+        usernameView.layer.borderColor = UIColor.white.cgColor
         usernameView.layer.borderWidth = 0.5
-        passwordView1.layer.borderColor = UIColor.whiteColor().CGColor
+        passwordView1.layer.borderColor = UIColor.white.cgColor
         passwordView1.layer.borderWidth = 0.5
-        passwordView2.layer.borderColor = UIColor.whiteColor().CGColor
+        passwordView2.layer.borderColor = UIColor.white.cgColor
         passwordView2.layer.borderWidth = 0.5
         didChangeTextField(usernameField)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     /**
      键盘即将显示
      */
-    @objc private func keyboardWillShow(notification: NSNotification) {
+    @objc fileprivate func keyboardWillShow(_ notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let beginHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue().size.height
-        let endHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().size.height
+        let beginHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue.size.height
+        let endHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size.height
         
         if beginHeight > 0 && endHeight > 0 {
-            UIView.animateWithDuration(0.25) {
-                self.view.transform = CGAffineTransformMakeTranslation(0, -endHeight + (SCREEN_HEIGHT - CGRectGetMaxY(self.registerButton.frame)) - 10)
-            }
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.transform = CGAffineTransform(translationX: 0, y: -endHeight + (SCREEN_HEIGHT - self.registerButton.frame.maxY) - 10)
+            }) 
         }
     }
     
     /**
      键盘即将隐藏
      */
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        UIView.animateWithDuration(0.25) {
-            self.view.transform = CGAffineTransformIdentity
-        }
+    @objc fileprivate func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.view.transform = CGAffineTransform.identity
+        }) 
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
-    @IBAction func didChangeTextField(sender: UITextField) {
+    @IBAction func didChangeTextField(_ sender: UITextField) {
         if usernameField.text?.characters.count >= 5 && passwordField1.text?.characters.count > 5 && passwordField2.text?.characters.count > 5 {
-            registerButton.enabled = true
+            registerButton.isEnabled = true
             registerButton.backgroundColor = buttonColorNormal
         } else {
-            registerButton.enabled = false
+            registerButton.isEnabled = false
             registerButton.backgroundColor = buttonColorDisabled
         }
     }
     
     @IBAction func didTappedBackButton() {
         view.endEditing(true)
-        navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func didTappedLoginButton(sender: UIButton) {
+    @IBAction func didTappedLoginButton(_ sender: UIButton) {
         
         view.endEditing(true)
         

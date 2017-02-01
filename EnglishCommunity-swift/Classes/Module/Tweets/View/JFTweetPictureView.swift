@@ -15,10 +15,10 @@ let JFPictureViewCellSelectedPictureIndexKey = "JFPictureViewCellSelectedPicture
 
 class JFTweetPictureView: UICollectionView {
     
-    private let tweetPictureViewIdentifier = "tweetPictureViewIdentifier"
+    fileprivate let tweetPictureViewIdentifier = "tweetPictureViewIdentifier"
     
     /// 布局
-    private var layout = UICollectionViewFlowLayout()
+    fileprivate var layout = UICollectionViewFlowLayout()
     
     // MARK: - 构造函数
     required init?(coder aDecoder: NSCoder) {
@@ -26,15 +26,15 @@ class JFTweetPictureView: UICollectionView {
     }
     
     init() {
-        super.init(frame: CGRectZero, collectionViewLayout: layout)
+        super.init(frame: CGRect.zero, collectionViewLayout: layout)
         
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         dataSource = self
         delegate = self
-        scrollEnabled = false
+        isScrollEnabled = false
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-        registerClass(JFTweetPictureViewCell.self, forCellWithReuseIdentifier: tweetPictureViewIdentifier)
+        register(JFTweetPictureViewCell.self, forCellWithReuseIdentifier: tweetPictureViewIdentifier)
     }
     
     /// 微博模型
@@ -53,7 +53,7 @@ class JFTweetPictureView: UICollectionView {
      
      - returns: 配图区域尺寸
      */
-    func calculateViewSize(itemWidth: CGFloat, itemHeight: CGFloat, margin: CGFloat) -> CGSize {
+    func calculateViewSize(_ itemWidth: CGFloat, itemHeight: CGFloat, margin: CGFloat) -> CGSize {
         
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.minimumInteritemSpacing = 0
@@ -67,13 +67,13 @@ class JFTweetPictureView: UICollectionView {
         
         // 无图
         if count == 0 {
-            return CGSizeZero
+            return CGSize.zero
         }
         
         // 单图
         if count == 1 {
             let urlString = images![0].thumb!
-            let cacheImage = YYImageCache.sharedCache().getImageForKey(urlString)
+            let cacheImage = YYImageCache.shared().getImageForKey(urlString)
             
             var size = CGSize(width: 150, height: 120)
             if let image = cacheImage {
@@ -117,25 +117,25 @@ class JFTweetPictureView: UICollectionView {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension JFTweetPictureView: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images?.count ?? 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(tweetPictureViewIdentifier, forIndexPath: indexPath) as! JFTweetPictureViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tweetPictureViewIdentifier, for: indexPath) as! JFTweetPictureViewCell
         cell.image = images![indexPath.item]
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         var models = [JFPhotoBrowserModel]()
         let count = images?.count ?? 0
         for i in 0..<count {
             let model = JFPhotoBrowserModel()
             
-            let url = NSURL(string: (images?[i].href)!)
-            let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as! JFTweetPictureViewCell
+            let url = URL(string: (images?[i].href)!)
+            let cell = collectionView.cellForItem(at: IndexPath(item: i, section: 0)) as! JFTweetPictureViewCell
             
             model.url = url
             model.imageView = cell.iconView
@@ -143,12 +143,12 @@ extension JFTweetPictureView: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         let userInfo: [String: AnyObject] = [
-            JFPictureViewCellSelectedPictureModelKey : models,
-            JFPictureViewCellSelectedPictureIndexKey : indexPath.item
+            JFPictureViewCellSelectedPictureModelKey : models as AnyObject,
+            JFPictureViewCellSelectedPictureIndexKey : indexPath.item as AnyObject
         ]
         
         // 点击图片发出通知
-        NSNotificationCenter.defaultCenter().postNotificationName(JFPictureViewCellSelectedPictureNotification, object: self, userInfo: userInfo)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: JFPictureViewCellSelectedPictureNotification), object: self, userInfo: userInfo)
         
     }
     
@@ -160,7 +160,8 @@ class JFTweetPictureViewCell: UICollectionViewCell {
     // MARK: - 属性
     var image: JFTweetImage? {
         didSet {
-            iconView.yy_setImageWithURL(NSURL(string: image!.thumb!), options: YYWebImageOptions.AllowBackgroundTask)
+            iconView.yy_setImage(with: URL(string: image!.thumb!), options: YYWebImageOptions.allowBackgroundTask)
+//            iconView.setImage(urlString: image?.thumb, placeholderImage: nil)
         }
     }
     
@@ -176,10 +177,10 @@ class JFTweetPictureViewCell: UICollectionViewCell {
     }
     
     // MARK: - 准备UI
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         contentView.addSubview(iconView)
-        iconView.snp_makeConstraints { (make) in
+        iconView.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
         
@@ -190,8 +191,8 @@ class JFTweetPictureViewCell: UICollectionViewCell {
     /// 图片
     lazy var iconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        imageView.clipsToBounds = true
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.layer.masksToBounds = true
         return imageView
     }()
 }

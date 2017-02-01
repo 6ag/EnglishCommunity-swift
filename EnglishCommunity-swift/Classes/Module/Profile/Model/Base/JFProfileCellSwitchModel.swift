@@ -16,10 +16,10 @@ class JFProfileCellSwitchModel: JFProfileCellModel {
     /// 状态
     var on: Bool {
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(key!)
+            return UserDefaults.standard.bool(forKey: key!)
         }
         set(on) {
-            NSUserDefaults.standardUserDefaults().setBool(on, forKey: key!)
+            UserDefaults.standard.set(on, forKey: key!)
         }
     }
     

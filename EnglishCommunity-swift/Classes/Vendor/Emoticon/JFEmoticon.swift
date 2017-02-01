@@ -13,7 +13,7 @@ import UIKit
 class JFEmoticonPackage: NSObject {
     
     // MARK: - 属性
-    private static let bundlePath = NSBundle.mainBundle().pathForResource("Emoticons", ofType: "bundle")!
+    fileprivate static let bundlePath = Bundle.main.path(forResource: "Emoticons", ofType: "bundle")!
     
     /// 表示文件夹名称
     var id: String?
@@ -41,7 +41,7 @@ class JFEmoticonPackage: NSObject {
     static let packages: [JFEmoticonPackage] = JFEmoticonPackage.loadPackages()
     
     /// 加载所有表情包
-    private class func loadPackages() -> [JFEmoticonPackage] {
+    fileprivate class func loadPackages() -> [JFEmoticonPackage] {
         //        print("加载所有的表情包")
         // 获取Emoticons.bundle的路径
         
@@ -133,7 +133,7 @@ class JFEmoticonPackage: NSObject {
     /**
      追加空白表情和删除按钮
      */
-    private func appendEmptyEmoticon() {
+    fileprivate func appendEmptyEmoticon() {
         // 判断最后一页,表情是否满21个
         let count = emoticons!.count % 21
         
@@ -158,7 +158,7 @@ class JFEmoticonPackage: NSObject {
      添加表情到最近表情包
      - parameter emoticon: 要添加的表情
      */
-    class func addFavorate(emoticon: JFEmoticon) {
+    class func addFavorate(_ emoticon: JFEmoticon) {
         if emoticon.removeEmoticon {
             return
         }
@@ -181,7 +181,7 @@ class JFEmoticonPackage: NSObject {
         }
         
         // 根据使用次数排序,次数多得放在前面
-        recentEmoticons = recentEmoticons?.sort({ (e1, e2) -> Bool in
+        recentEmoticons = recentEmoticons?.sorted(by: { (e1, e2) -> Bool in
             // 根据 times 降序排序, 数组中,times大的排在前面,
             return e1.times > e2.times
         })
@@ -235,15 +235,15 @@ class JFEmoticon: NSObject {
             }
             
             // 将code转成emoji表情
-            let scanner = NSScanner(string: co)
+            let scanner = Scanner(string: co)
             
             // 存储扫描结果
             // UnsafeMutablePointer<UInt32>: UInt32类型的可变指针
             var value: UInt32 = 0
             
-            scanner.scanHexInt(&value)
+            scanner.scanHexInt32(&value)
             
-            let c = Character(UnicodeScalar(value))
+            let c = Character(UnicodeScalar(value)!)
             
             emoji = String(c)
         }
@@ -270,11 +270,11 @@ class JFEmoticon: NSObject {
         super.init()
         
         // KVC 赋值
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
     /// 字典的key在模型里面没有对应的属性
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
     /// 打印方法
     override var description: String {
@@ -283,7 +283,7 @@ class JFEmoticon: NSObject {
     
     // MARK: - 将表情模型转成带表情图片的属性文本
     /// 将表情模型转成带表情图片的属性文本
-    func emoticonToAttrString(font: UIFont) -> NSAttributedString {
+    func emoticonToAttrString(_ font: UIFont) -> NSAttributedString {
         guard let pngP = pngPath else {
             //            print("没有图片")
             return NSAttributedString(string: "")
@@ -317,7 +317,7 @@ class JFEmoticon: NSObject {
     }
     
     /// 根据表情文本找到对应的表情模型
-    class func emoticonStringToEmoticon(emoticonString: String) -> JFEmoticon? {
+    class func emoticonStringToEmoticon(_ emoticonString: String) -> JFEmoticon? {
         // 接收查找的结果
         var emoticon: JFEmoticon?
         
@@ -346,7 +346,7 @@ class JFEmoticon: NSObject {
      - parameter string: 表情字符串
      - returns: 带表情图片的属性文本
      */
-    class func emoticonStringToEmoticonAttrString(string: String, font: UIFont) -> NSAttributedString {
+    class func emoticonStringToEmoticonAttrString(_ string: String, font: UIFont) -> NSAttributedString {
         // 1.解析字符串中表情文本
         // 2.根据表情文本找到对应的表情模型(表情模型里面有表情图片的完整路径) *
         // 3.将表情模型转成带表情图片的属性文本 *
@@ -354,10 +354,10 @@ class JFEmoticon: NSObject {
         
         // 解析字符串中表情文本 使用正则表达式
         let pattern = "\\[.*?\\]"
-        let regular = try! NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.DotMatchesLineSeparators)
+        let regular = try! NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.dotMatchesLineSeparators)
         
         // 查找 string中的表情字符串
-        let results = regular.matchesInString(string, options: NSMatchingOptions(rawValue: 0), range: NSRange(location: 0, length: string.characters.count))
+        let results = regular.matches(in: string, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: string.characters.count))
         
         // 将传进来的文本转成属性文本
         let attrText = NSMutableAttributedString(string: string)
@@ -369,17 +369,17 @@ class JFEmoticon: NSObject {
             count -= 1
             // 从最后开始获取范围
             let result = results[count]
-            let range = result.rangeAtIndex(0)
+            let range = result.rangeAt(0)
             
             // 获取到对应的表情文本
-            let emoticonString = (string as NSString).substringWithRange(range)
+            let emoticonString = (string as NSString).substring(with: range)
             
             // 根据表情文本找到对应的表情模型
             if let emoticon = JFEmoticon.emoticonStringToEmoticon(emoticonString) {
                 // 将表情模型转成带表情图片的属性文本
                 let attrString = emoticon.emoticonToAttrString(font)
                 // 将 表情文本 替换成 表情图片的属性文本
-                attrText.replaceCharactersInRange(range, withAttributedString: attrString)
+                attrText.replaceCharacters(in: range, with: attrString)
             }
         }
         

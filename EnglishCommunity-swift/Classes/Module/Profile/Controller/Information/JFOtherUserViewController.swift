@@ -26,17 +26,17 @@ class JFOtherUserViewController: UIViewController {
                 return
             }
             
-            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: userInfo.avatar!), forState: .Normal, options: YYWebImageOptions.Progressive)
-            nicknameButton.setTitle(userInfo.nickname!, forState: .Normal)
+            avatarButton.yy_setBackgroundImage(with: URL(string: userInfo.avatar!), for: UIControlState(), options: YYWebImageOptions.progressive)
+            nicknameButton.setTitle(userInfo.nickname!, for: UIControlState())
             sexImageView.image = userInfo.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             followingLabel.text = "关注 \(userInfo.followingCount)"
             followersLabel.text = "粉丝 \(userInfo.followersCount)"
             sayLabel.text = "\"\(userInfo.say ?? "对方很懒，还没有心情哦！")\""
-            followButton.setTitle(userInfo.followed == 0 ? "关注" : "取消关注", forState: .Normal)
+            followButton.setTitle(userInfo.followed == 0 ? "关注" : "取消关注", for: UIControlState())
             if userInfo.id == JFAccountModel.shareAccount()?.id {
-                followButton.hidden = true
+                followButton.isHidden = true
             } else {
-                followButton.hidden = false
+                followButton.isHidden = false
             }
         }
     }
@@ -49,16 +49,16 @@ class JFOtherUserViewController: UIViewController {
         prepareUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         view.addSubview(headerView)
         view.addSubview(nicknameButton)
@@ -70,51 +70,51 @@ class JFOtherUserViewController: UIViewController {
         view.addSubview(followButton)
         view.addSubview(avatarButton)
         
-        headerView.snp_makeConstraints { (make) in
+        headerView.snp.makeConstraints { (make) in
             make.left.top.right.equalTo(0)
             make.height.equalTo(191)
         }
         
-        avatarButton.snp_makeConstraints { (make) in
+        avatarButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.centerY.equalTo(headerView.snp_bottom)
+            make.centerY.equalTo(headerView.snp.bottom)
             make.size.equalTo(CGSize(width: 83, height: 83))
         }
         
-        nicknameButton.snp_makeConstraints { (make) in
+        nicknameButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-10)
-            make.top.equalTo(avatarButton.snp_bottom).offset(15)
+            make.top.equalTo(avatarButton.snp.bottom).offset(15)
         }
         
-        sexImageView.snp_makeConstraints { (make) in
-            make.left.equalTo(nicknameButton.snp_right).offset(5)
+        sexImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(nicknameButton.snp.right).offset(5)
             make.centerY.equalTo(nicknameButton)
             make.size.equalTo(CGSize(width: 15, height: 15))
         }
         
-        followingLabel.snp_makeConstraints { (make) in
+        followingLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view).offset(-40)
-            make.top.equalTo(nicknameButton.snp_bottom).offset(15)
+            make.top.equalTo(nicknameButton.snp.bottom).offset(15)
         }
         
-        lineView.snp_makeConstraints { (make) in
+        lineView.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.centerY.equalTo(followingLabel)
             make.size.equalTo(CGSize(width: 0.5, height: 10))
         }
         
-        followersLabel.snp_makeConstraints { (make) in
+        followersLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view).offset(40)
-            make.top.equalTo(nicknameButton.snp_bottom).offset(15)
+            make.top.equalTo(nicknameButton.snp.bottom).offset(15)
         }
         
-        sayLabel.snp_makeConstraints { (make) in
+        sayLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
-            make.top.equalTo(followingLabel.snp_bottom).offset(27)
+            make.top.equalTo(followingLabel.snp.bottom).offset(27)
             make.width.equalTo(SCREEN_WIDTH - 100)
         }
         
-        followButton.snp_makeConstraints { (make) in
+        followButton.snp.makeConstraints { (make) in
             make.left.bottom.right.equalTo(0)
             make.height.equalTo(49)
         }
@@ -126,7 +126,7 @@ class JFOtherUserViewController: UIViewController {
      
      - parameter userId: 用户id
      */
-    private func loadUserInfo(userId: Int) {
+    fileprivate func loadUserInfo(_ userId: Int) {
         
         JFProgressHUD.show()
         JFAccountModel.getOtherUserInfo(userId) { (userInfo) in
@@ -142,20 +142,20 @@ class JFOtherUserViewController: UIViewController {
     /**
      点击了关注按钮
      */
-    @objc private func didTappedFollowButton() {
+    @objc fileprivate func didTappedFollowButton() {
         
         JFProgressHUD.show()
         JFNetworkTools.shareNetworkTool.addOrCancelFriend(userId, finished: { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 JFProgressHUD.dismiss()
                 return
             }
             
             if result["result"]["type"].stringValue == "add" {
-                self.followButton.setTitle("取消关注", forState: .Normal)
+                self.followButton.setTitle("取消关注", for: UIControlState())
             } else {
-                self.followButton.setTitle("关注", forState: .Normal)
+                self.followButton.setTitle("关注", for: UIControlState())
             }
             
             JFAccountModel.getSelfUserInfo({ (success) in
@@ -167,93 +167,93 @@ class JFOtherUserViewController: UIViewController {
     /**
      点击了头像
      */
-    @objc private func didTappedAvatarButton(button: UIButton) {
-        button.selected = !button.selected
-        if button.selected {
-            UIView.animateWithDuration(0.25, animations: { 
-                button.transform = CGAffineTransformMakeScale(SCREEN_WIDTH / button.width, SCREEN_WIDTH / button.width)
+    @objc fileprivate func didTappedAvatarButton(_ button: UIButton) {
+        button.isSelected = !button.isSelected
+        if button.isSelected {
+            UIView.animate(withDuration: 0.25, animations: { 
+                button.transform = CGAffineTransform(scaleX: SCREEN_WIDTH / button.width, y: SCREEN_WIDTH / button.width)
             })
         } else {
-            UIView.animateWithDuration(0.25, animations: {
-                button.transform = CGAffineTransformIdentity
+            UIView.animate(withDuration: 0.25, animations: {
+                button.transform = CGAffineTransform.identity
             })
         }
     }
     
     // MARK: - 懒加载
     /// 头部视图
-    private lazy var headerView: UIView = {
+    fileprivate lazy var headerView: UIView = {
         let view = UIView()
         view.backgroundColor = COLOR_NAV_BG
         return view
     }()
     
     /// 头像
-    private lazy var avatarButton: UIButton = {
-        let button = UIButton(type: .Custom)
+    fileprivate lazy var avatarButton: UIButton = {
+        let button = UIButton(type: .custom)
         button.layer.cornerRadius = 41.5
-        button.layer.borderColor = COLOR_ALL_BG.CGColor
+        button.layer.borderColor = COLOR_ALL_BG.cgColor
         button.layer.borderWidth = 3
         button.layer.masksToBounds = true
         button.adjustsImageWhenHighlighted = false
-        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), for: .touchUpInside)
         return button
     }()
     
     /// 昵称
-    private lazy var nicknameButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setTitleColor(UIColor.colorWithHexString("444444"), forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(18)
+    fileprivate lazy var nicknameButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitleColor(UIColor.colorWithHexString("444444"), for: UIControlState())
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         return button
     }()
     
     /// 性别
-    private lazy var sexImageView: UIImageView = {
+    fileprivate lazy var sexImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
     
     /// 粉丝
-    private lazy var followersLabel: UILabel = {
+    fileprivate lazy var followersLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.colorWithHexString("7b9cac")
-        label.font = UIFont.systemFontOfSize(15)
+        label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
     
     /// 竖线
-    private lazy var lineView: UIView = {
+    fileprivate lazy var lineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.colorWithHexString("7b9cac")
         return view
     }()
     
     /// 关注
-    private lazy var followingLabel: UILabel = {
+    fileprivate lazy var followingLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.colorWithHexString("7b9cac")
-        label.font = UIFont.systemFontOfSize(15)
+        label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
     
     /// 个性签名
-    private lazy var sayLabel: UILabel = {
+    fileprivate lazy var sayLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.textColor = UIColor.colorWithHexString("444444")
-        label.font = UIFont.systemFontOfSize(18)
+        label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
     
     /// 关注按钮
-    private lazy var followButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setImage(UIImage(named: "bierenziliao_icon_guanzhu"), forState: .Normal)
-        button.setTitleColor(UIColor.colorWithHexString("41ca61"), forState: .Normal)
-        button.addTarget(self, action: #selector(didTappedFollowButton), forControlEvents: .TouchUpInside)
-        button.layer.borderColor = UIColor(white: 0.5, alpha: 0.2).CGColor
+    fileprivate lazy var followButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "bierenziliao_icon_guanzhu"), for: UIControlState())
+        button.setTitleColor(UIColor.colorWithHexString("41ca61"), for: UIControlState())
+        button.addTarget(self, action: #selector(didTappedFollowButton), for: .touchUpInside)
+        button.layer.borderColor = UIColor(white: 0.5, alpha: 0.2).cgColor
         button.layer.borderWidth = 0.5
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)

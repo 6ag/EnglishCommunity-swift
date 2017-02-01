@@ -16,9 +16,9 @@ import UIKit
  - Downloading:     正在下载
  */
 enum VideoState {
-    case AlreadyDownload
-    case NoDownload
-    case Downloading
+    case alreadyDownload
+    case noDownload
+    case downloading
 }
 
 class JFVideo: NSObject {
@@ -48,31 +48,31 @@ class JFVideo: NSObject {
     var progress: CGFloat = 0.0
     
     /// 视频的状态
-    var state = VideoState.NoDownload
+    var state = VideoState.noDownload
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
     /**
      加载指定视频信息的视频播放列表
      
      - parameter video_info_id: 视频信息id
      */
-    class func loadVideoList(video_info_id: Int, finished: (videos: [JFVideo]?) -> ()) {
+    class func loadVideoList(_ video_info_id: Int, finished: @escaping (_ videos: [JFVideo]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "video_info_id" : video_info_id
+            "video_info_id" : video_info_id as AnyObject
         ]
         
         JFNetworkTools.shareNetworkTool.get(GET_VIDEO_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error, parameters)
-                finished(videos: nil)
+                finished(nil)
                 return
             }
             
@@ -82,14 +82,14 @@ class JFVideo: NSObject {
             for dict in data {
                 let video = JFVideo(dict: dict)
                 JFDALManager.shareManager.getVideo(JFVideo.getVideoId(video.videoUrl!), finished: { (have) in
-                    video.state = have ? VideoState.AlreadyDownload : VideoState.NoDownload
+                    video.state = have ? VideoState.alreadyDownload : VideoState.noDownload
                 })
                 videos.append(video)
             }
             
             // 默认选中第一个
             videos[0].videoListSelected = true
-            finished(videos: videos)
+            finished(videos)
         }
     }
     
@@ -99,15 +99,15 @@ class JFVideo: NSObject {
      - parameter youKuUrl: 优酷网页地址
      - parameter finished: 完成回调
      */
-    class func parseVideoUrl(youKuUrl: String, finished: (url: String?) -> ()) {
+    class func parseVideoUrl(_ youKuUrl: String, finished: @escaping (_ url: String?) -> ()) {
         
         JFNetworkTools.shareNetworkTool.get(PARSE_YOUKU_VIDEO, parameters: ["url" : youKuUrl]) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
-                finished(url: nil)
+            guard let result = result, result["status"] == "success" else {
+                finished(nil)
                 return
             }
-            finished(url: result["result"]["videoUrl"].stringValue)
+            finished(result["result"]["videoUrl"].stringValue)
         }
         
     }
@@ -119,10 +119,10 @@ class JFVideo: NSObject {
      
      - returns: id
      */
-    class func getVideoId(videoUrl: String) -> String {
+    class func getVideoId(_ videoUrl: String) -> String {
         // 获取视频id
-        var id = (videoUrl as NSString).stringByReplacingOccurrencesOfString("http://v.youku.com/v_show/id_", withString: "")
-        id = (id as NSString).stringByReplacingOccurrencesOfString(".html", withString: "")
+        var id = (videoUrl as NSString).replacingOccurrences(of: "http://v.youku.com/v_show/id_", with: "")
+        id = (id as NSString).replacingOccurrences(of: ".html", with: "")
         return id
     }
     
@@ -132,12 +132,12 @@ class JFVideo: NSObject {
      - parameter youKuUrl: 优酷网页地址
      - parameter finished: 完成回调
      */
-    class func getVideoDownloadList(youKuUrl: String, finished: (urls: [String]?) -> ()) {
+    class func getVideoDownloadList(_ youKuUrl: String, finished: @escaping (_ urls: [String]?) -> ()) {
         
         JFNetworkTools.shareNetworkTool.getWithToken(GET_VIDEO_DOWNLOAD_LIST, parameters: ["url" : youKuUrl]) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
-                finished(urls: nil)
+            guard let result = result, result["status"] == "success" else {
+                finished(nil)
                 return
             }
             
@@ -146,7 +146,7 @@ class JFVideo: NSObject {
                 return
             }
             
-            finished(urls: normalData)
+            finished(normalData)
         }
         
     }

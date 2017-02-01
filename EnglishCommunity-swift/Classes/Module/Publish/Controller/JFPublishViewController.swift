@@ -13,10 +13,10 @@ class JFPublishViewController: UIViewController {
     
     // MARK: - 属性
     /// 照片选择器控制器view的底部约束
-    private var photoSelectorViewBottomCon: NSLayoutConstraint?
+    fileprivate var photoSelectorViewBottomCon: NSLayoutConstraint?
     
     /// 内容的最大长度
-    private let tweetsMaxLength = 250
+    fileprivate let tweetsMaxLength = 250
     
     /// 选取的将要被at的用户
     var relationUsers: [JFRelationUser]?
@@ -27,38 +27,38 @@ class JFPublishViewController: UIViewController {
         prepareUI()
         
         // 监听键盘frame值改变
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFPublishViewController.willChangeFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(JFPublishViewController.willChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     /**
      键盘frame改变
      */
-    func willChangeFrame(notification: NSNotification) {
+    func willChangeFrame(_ notification: Notification) {
         
         // 获取键盘最终位置
-        let endFrame = notification.userInfo![UIKeyboardFrameEndUserInfoKey]!.CGRectValue
+        let endFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
         
         // 动画时间
-        let duration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let duration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
         
         // 更新约束
-        toolBar.snp_updateConstraints { (make) in
-            make.bottom.equalTo(-(SCREEN_HEIGHT - endFrame.origin.y))
+        toolBar.snp.updateConstraints { (make) in
+            make.bottom.equalTo(-(SCREEN_HEIGHT - (endFrame?.origin.y ?? 0)))
         }
         
-        UIView.animateWithDuration(duration) { () -> Void in
+        UIView.animate(withDuration: duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
-        }
+        }) 
     }
     
     // MARK: - 准备UI
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         view.addSubview(textView)
         view.addSubview(photoSelectorVC.view)
         view.addSubview(toolBar)
@@ -71,7 +71,7 @@ class JFPublishViewController: UIViewController {
         prepareLengthTipLabel()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // 如果照片选择器的view没有显示就弹出键盘
@@ -81,19 +81,19 @@ class JFPublishViewController: UIViewController {
     }
     
     /// 设置导航栏
-    private func setupNavigationBar() {
+    fileprivate func setupNavigationBar() {
         
         navigationItem.title = "来一发"        
         navigationItem.leftBarButtonItem = UIBarButtonItem.leftItem("取消", target: self, action: #selector(JFPublishViewController.close))
         navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("发送", target: self, action: #selector(JFPublishViewController.sendtweets))
-        navigationItem.rightBarButtonItem?.enabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = false
         
     }
     
     /// 设置toolBar
-    private func setupToolBar() {
+    fileprivate func setupToolBar() {
         
-        toolBar.snp_makeConstraints { (make) in
+        toolBar.snp.makeConstraints { (make) in
             make.left.bottom.equalTo(0)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: 44))
         }
@@ -118,15 +118,15 @@ class JFPublishViewController: UIViewController {
             let action = dict["action"]!
             
             let barButton = UIButton()
-            barButton.setImage(UIImage(named: imageName), forState: UIControlState.Normal)
-            barButton.setImage(UIImage(named: "\(imageName)_highlighted"), forState: UIControlState.Highlighted)
-            barButton.addTarget(self, action: Selector(action), forControlEvents: UIControlEvents.TouchUpInside)
+            barButton.setImage(UIImage(named: imageName), for: UIControlState())
+            barButton.setImage(UIImage(named: "\(imageName)_highlighted"), for: UIControlState.highlighted)
+            barButton.addTarget(self, action: Selector(action), for: UIControlEvents.touchUpInside)
             barButton.sizeToFit()
             let item = UIBarButtonItem(customView: barButton)
             items.append(item)
             
             // 添加弹簧
-            items.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil))
+            items.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil))
             
             index += 1
         }
@@ -138,11 +138,11 @@ class JFPublishViewController: UIViewController {
     }
     
     /// 设置textView
-    private func setupTextView() {
+    fileprivate func setupTextView() {
         
-        textView.snp_makeConstraints { (make) in
+        textView.snp.makeConstraints { (make) in
             make.left.top.right.equalTo(0)
-            make.bottom.equalTo(toolBar.snp_top)
+            make.bottom.equalTo(toolBar.snp.top)
         }
         
     }
@@ -150,9 +150,9 @@ class JFPublishViewController: UIViewController {
     /// 准备 显示微博剩余长度 label
     func prepareLengthTipLabel() {
         
-        lengthTipLabel.snp_makeConstraints { (make) in
+        lengthTipLabel.snp.makeConstraints { (make) in
             make.right.equalTo(-8)
-            make.bottom.equalTo(toolBar.snp_top).offset(-8)
+            make.bottom.equalTo(toolBar.snp.top).offset(-8)
         }
         
     }
@@ -163,18 +163,18 @@ class JFPublishViewController: UIViewController {
         // 照片选择器控制器的view
         let photoSelectorView = photoSelectorVC.view
         
-        photoSelectorView.translatesAutoresizingMaskIntoConstraints = false
+        photoSelectorView?.translatesAutoresizingMaskIntoConstraints = false
         
         let views = ["psv": photoSelectorView]
         // 添加约束
         // 水平
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[psv]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[psv]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         
         // 高度
-        view.addConstraint(NSLayoutConstraint(item: photoSelectorView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Height, multiplier: 0.6, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: photoSelectorView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.height, multiplier: 0.6, constant: 0))
         
         // 底部重合，偏移photoSelectorView的高度
-        photoSelectorViewBottomCon = NSLayoutConstraint(item: photoSelectorView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: view.frame.height * 0.6)
+        photoSelectorViewBottomCon = NSLayoutConstraint(item: photoSelectorView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: view.frame.height * 0.6)
         
         view.addConstraint(photoSelectorViewBottomCon!)
     }
@@ -192,9 +192,9 @@ class JFPublishViewController: UIViewController {
         // 退下键盘
         textView.resignFirstResponder()
         
-        UIView.animateWithDuration(0.25) { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.view.layoutIfNeeded()
-        }
+        }) 
     }
     
     /**
@@ -210,9 +210,9 @@ class JFPublishViewController: UIViewController {
         // 退下键盘
         textView.resignFirstResponder()
         
-        UIView.animateWithDuration(0.25) { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.view.layoutIfNeeded()
-        }
+        }) 
     }
     
     /**
@@ -251,7 +251,7 @@ class JFPublishViewController: UIViewController {
     func emoticon() {
         
         textView.resignFirstResponder()
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(250 * USEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(250 * USEC_PER_SEC)) / Double(NSEC_PER_SEC)) { () -> Void in
             self.textView.inputView = self.textView.inputView == nil ? self.emotionView : nil
             if self.textView.inputView == nil {
 //                self.emotionButton.setImage(UIImage(named: "emotion_btn_icon"), forState: .Normal)
@@ -264,7 +264,7 @@ class JFPublishViewController: UIViewController {
     }
     
     /// 关闭控制器
-    @objc private func close() {
+    @objc fileprivate func close() {
         
         // 关闭键盘
         textView.resignFirstResponder()
@@ -272,7 +272,7 @@ class JFPublishViewController: UIViewController {
         // 关闭sv提示
         JFProgressHUD.dismiss()
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     /**
@@ -292,10 +292,10 @@ class JFPublishViewController: UIViewController {
         var resultStrings = [String]()
         do {
             let pattern = "@\\S*"
-            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
-            let results = regex.matchesInString(text, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, text.characters.count))
+            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
+            let results = regex.matches(in: text, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, text.characters.count))
             for result in results {
-                resultStrings.append(String((text as NSString).substringWithRange(result.range).stringByReplacingOccurrencesOfString("@", withString: "")))
+                resultStrings.append(String((text as NSString).substring(with: result.range).replacingOccurrences(of: "@", with: "")))
             }
         } catch {
             
@@ -307,8 +307,8 @@ class JFPublishViewController: UIViewController {
             for relationUser in relationUsers {
                 if resultStrings.contains(relationUser.relationNickname!) {
                     let atUser: [String : AnyObject] = [
-                        "id" : relationUser.relationUserId,
-                        "nickname" : relationUser.relationNickname!
+                        "id" : relationUser.relationUserId as AnyObject,
+                        "nickname" : relationUser.relationNickname! as AnyObject
                     ]
                     atUsers.append(atUser)
                 }
@@ -318,7 +318,7 @@ class JFPublishViewController: UIViewController {
         JFProgressHUD.showWithStatus("正在发送中...")
         JFNetworkTools.shareNetworkTool.sendTweets(text, images: images, atUsers: atUsers) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error)
                 JFProgressHUD.showInfoWithStatus("没发出去")
                 return
@@ -331,20 +331,20 @@ class JFPublishViewController: UIViewController {
     
     // MARK: - 懒加载
     /// toolBar
-    private lazy var toolBar: UIToolbar = {
+    fileprivate lazy var toolBar: UIToolbar = {
         let toolBar = UIToolbar()
         toolBar.backgroundColor = UIColor(white: 0.8, alpha: 1)
         return toolBar
     }()
     
     /// textView
-    private lazy var textView: JFPlaceholderTextView = {
+    fileprivate lazy var textView: JFPlaceholderTextView = {
         let textView = JFPlaceholderTextView()
         
         // 当textView被拖动的时候就会将键盘退回,textView能拖动
-        textView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
-        textView.font = UIFont.systemFontOfSize(16)
-        textView.textColor = UIColor.blackColor()
+        textView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.textColor = UIColor.black
         textView.bounces = true
         textView.alwaysBounceVertical = true
         textView.placeholder = "今天你来一发了吗？"
@@ -353,23 +353,23 @@ class JFPublishViewController: UIViewController {
     }()
     
     /// 表情键盘
-    private lazy var emotionView: JFEmoticonView = {
+    fileprivate lazy var emotionView: JFEmoticonView = {
         let view = JFEmoticonView()
         view.textView = self.textView
         return view
     }()
     
     /// 显示微博剩余长度
-    private lazy var lengthTipLabel: UILabel = {
+    fileprivate lazy var lengthTipLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(12)
-        label.textColor = UIColor.lightGrayColor()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.lightGray
         label.text = String(self.tweetsMaxLength)
         return label
     }()
     
     /// 照片选择器的控制器
-    private lazy var photoSelectorVC: JFPhotoSelectorViewController = {
+    fileprivate lazy var photoSelectorVC: JFPhotoSelectorViewController = {
         let controller = JFPhotoSelectorViewController()
         self.addChildViewController(controller)
         return controller
@@ -379,10 +379,10 @@ class JFPublishViewController: UIViewController {
 // MARK: - UITextViewDelegate
 extension JFPublishViewController: UITextViewDelegate {
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         
         // 当textView 没有文本的时候,发送按钮不可用
-        navigationItem.rightBarButtonItem?.enabled = textView.hasText()
+        navigationItem.rightBarButtonItem?.isEnabled = textView.hasText
         
         // 剩余长度
         let length = tweetsMaxLength - textView.emoticonText().characters.count
@@ -390,6 +390,6 @@ extension JFPublishViewController: UITextViewDelegate {
         lengthTipLabel.text = String(length)
         
         // 判断 length 大于等于0显示灰色, 小于0显示红色
-        lengthTipLabel.textColor = length < 0 ? UIColor.redColor() : UIColor.lightGrayColor()
+        lengthTipLabel.textColor = length < 0 ? UIColor.red : UIColor.lightGray
     }
 }

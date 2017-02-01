@@ -17,11 +17,11 @@ extension String {
      */
     func timeStampToString() -> String {
         let string = NSString(string: self)
-        let timeSta: NSTimeInterval = string.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta: TimeInterval = string.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = NSDate(timeIntervalSince1970: timeSta)
-        return dfmatter.stringFromDate(date)
+        let date = Date(timeIntervalSince1970: timeSta)
+        return dfmatter.string(from: date)
     }
     
     /**
@@ -29,10 +29,10 @@ extension String {
      
      - returns: NSDate
      */
-    func timeStampToDate() -> NSDate {
+    func timeStampToDate() -> Date {
         let string = NSString(string: self)
-        let timeSta: NSTimeInterval = string.doubleValue
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let timeSta: TimeInterval = string.doubleValue
+        let date = Date(timeIntervalSince1970: timeSta)
         return date
     }
     
@@ -42,10 +42,10 @@ extension String {
      - returns: 时间戳字符串
      */
     func stringToTimeStamp() -> String {
-        let dfmatter = NSDateFormatter()
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = dfmatter.dateFromString(self)
-        let dateStamp: NSTimeInterval = date!.timeIntervalSince1970
+        let date = dfmatter.date(from: self)
+        let dateStamp: TimeInterval = date!.timeIntervalSince1970
         let dateSt:Int = Int(dateStamp)
         return String(dateSt)
     }
@@ -58,12 +58,12 @@ extension String {
     func checkAtUserNickname() -> [String]? {
         do {
             let pattern = "@\\S*"
-            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
-            let results = regex.matchesInString(self, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, self.characters.count))
+            let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
+            let results = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.characters.count))
             
             var resultStrings = [String]()
             for result in results {
-                resultStrings.append(String((self as NSString).substringWithRange(result.range)))
+                resultStrings.append(String((self as NSString).substring(with: result.range)))
             }
             return resultStrings
         }

@@ -10,10 +10,10 @@ import UIKit
 import YYWebImage
 
 protocol JFTweetListCellDelegate: NSObjectProtocol {
-    func tweetListCell(cell: JFTweetListCell, didTappedAvatarButton button: UIButton)
-    func tweetListCell(cell: JFTweetListCell, didTappedLikeButton button: UIButton)
-    func tweetListCell(cell: JFTweetListCell, didTappedSuperLink url: String)
-    func tweetListCell(cell: JFTweetListCell, didTappedAtUser nickname: String, sequence: Int)
+    func tweetListCell(_ cell: JFTweetListCell, didTappedAvatarButton button: UIButton)
+    func tweetListCell(_ cell: JFTweetListCell, didTappedLikeButton button: UIButton)
+    func tweetListCell(_ cell: JFTweetListCell, didTappedSuperLink url: String)
+    func tweetListCell(_ cell: JFTweetListCell, didTappedAtUser nickname: String, sequence: Int)
 }
 
 class JFTweetListCell: UITableViewCell {
@@ -28,7 +28,7 @@ class JFTweetListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let grayColor = UIColor.grayColor()
+    let grayColor = UIColor.gray
     
     weak var tweetListCellDelegate: JFTweetListCellDelegate?
     
@@ -39,22 +39,22 @@ class JFTweetListCell: UITableViewCell {
                 return
             }
             
-            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: tweet.author!.avatar!), forState: .Normal, options: YYWebImageOptions(rawValue: 0))
-            nicknameLabel.text = tweet.author!.nickname!
-            contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet.content!, font: contentLabel.font)
+            avatarButton.setBackgroundImage(urlString: tweet.author?.avatar, size: CGSize(width: 40, height: 40))
+            nicknameLabel.text = tweet.author?.nickname
+            contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(tweet.content ?? "", font: contentLabel.font)
             pictureView.images = tweet.images
             publishTimeLabel.text = tweet.publishTime?.timeStampToDate().dateToDescription()
             appClientLabel.text = tweet.appClient == 0 ? "iOS客户端" : "Android客户端"
-            likeButton.setTitle("\(tweet.likeCount)", forState: .Normal)
-            likeButton.selected = tweet.liked == 1
-            commentButton.setTitle("\(tweet.commentCount)", forState: .Normal)
+            likeButton.setTitle("\(tweet.likeCount)", for: UIControlState())
+            likeButton.isSelected = tweet.liked == 1
+            commentButton.setTitle("\(tweet.commentCount)", for: UIControlState())
             sexImageView.image = tweet.author!.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             
             let margin: CGFloat = 10
             let width = (SCREEN_WIDTH - MARGIN * 2 - margin * 2) / 3
             
             // 更新配图区域尺寸
-            pictureView.snp_updateConstraints { (make) in
+            pictureView.snp.updateConstraints { (make) in
                 make.size.equalTo(pictureView.calculateViewSize(width, itemHeight: width, margin: margin))
             }
         }
@@ -63,9 +63,9 @@ class JFTweetListCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
-        selectionStyle = .None
+        selectionStyle = .none
         contentView.backgroundColor = COLOR_ALL_BG
         contentView.addSubview(avatarButton)
         contentView.addSubview(nicknameLabel)
@@ -78,87 +78,92 @@ class JFTweetListCell: UITableViewCell {
         contentView.addSubview(likeButton)
         contentView.addSubview(lineView)
         
-        avatarButton.snp_makeConstraints { (make) in
+        avatarButton.snp.makeConstraints { (make) in
             make.left.top.equalTo(MARGIN)
             make.size.equalTo(CGSize(width: 40, height: 40))
         }
         
-        nicknameLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(avatarButton.snp_right).offset(MARGIN * 0.5)
-            make.top.equalTo(avatarButton.snp_top).offset(MARGIN * 0.25)
+        nicknameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(avatarButton.snp.right).offset(MARGIN * 0.5)
+            make.top.equalTo(avatarButton.snp.top).offset(MARGIN * 0.25)
         }
         
-        sexImageView.snp_makeConstraints { (make) in
-            make.left.equalTo(nicknameLabel.snp_right).offset(5)
+        sexImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(nicknameLabel.snp.right).offset(5)
             make.centerY.equalTo(nicknameLabel)
             make.size.equalTo(CGSize(width: 12, height: 12))
         }
         
-        publishTimeLabel.snp_makeConstraints { (make) in
+        publishTimeLabel.snp.makeConstraints { (make) in
             make.left.equalTo(nicknameLabel)
-            make.top.equalTo(nicknameLabel.snp_bottom).offset(MARGIN * 0.25)
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(MARGIN * 0.25)
         }
         
-        contentLabel.snp_makeConstraints { (make) in
+        contentLabel.snp.makeConstraints { (make) in
             make.left.equalTo(avatarButton)
-            make.top.equalTo(avatarButton.snp_bottom).offset(MARGIN * 0.5)
+            make.top.equalTo(avatarButton.snp.bottom).offset(MARGIN * 0.5)
             make.width.equalTo(SCREEN_WIDTH - 2.5 * MARGIN - 40)
         }
         
-        pictureView.snp_makeConstraints { (make) in
+        pictureView.snp.makeConstraints { (make) in
             make.left.equalTo(contentLabel)
-            make.top.equalTo(contentLabel.snp_bottom).offset(MARGIN * 0.5)
+            make.top.equalTo(contentLabel.snp.bottom).offset(MARGIN * 0.5)
             make.width.equalTo(SCREEN_WIDTH)
             make.height.equalTo(40)
         }
         
-        appClientLabel.snp_makeConstraints { (make) in
+        appClientLabel.snp.makeConstraints { (make) in
             make.left.equalTo(contentLabel)
-            make.top.equalTo(pictureView.snp_bottom).offset(MARGIN * 0.5)
+            make.top.equalTo(pictureView.snp.bottom).offset(MARGIN * 0.5)
         }
         
-        commentButton.snp_makeConstraints { (make) in
-            make.right.equalTo(contentView.snp_right).offset(-MARGIN)
+        commentButton.snp.makeConstraints { (make) in
+            make.right.equalTo(contentView.snp.right).offset(-MARGIN)
             make.centerY.equalTo(appClientLabel)
             make.size.equalTo(CGSize(width: 50, height: 20))
         }
         
-        likeButton.snp_makeConstraints { (make) in
-            make.right.equalTo(commentButton.snp_left)
+        likeButton.snp.makeConstraints { (make) in
+            make.right.equalTo(commentButton.snp.left)
             make.centerY.equalTo(appClientLabel)
             make.size.equalTo(CGSize(width: 50, height: 20))
         }
         
-        lineView.snp_makeConstraints { (make) in
+        lineView.snp.makeConstraints { (make) in
             make.left.equalTo(MARGIN)
             make.right.equalTo(-MARGIN)
             make.bottom.equalTo(-0.5)
             make.height.equalTo(0.5)
         }
         
+        // 离屏渲染
+        layer.drawsAsynchronously = true
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+        
     }
     
     /**
      计算cell行高
      */
-    func getRowHeight(tweet: JFTweet) -> CGFloat {
+    func getRowHeight(_ tweet: JFTweet) -> CGFloat {
         self.tweet = tweet
         layoutIfNeeded()
-        return CGRectGetMaxY(appClientLabel.frame) + 15
+        return appClientLabel.frame.maxY + 15
     }
     
     // MARK: - 点击事件
     /**
      点击头像按钮
      */
-    @objc private func didTappedAvatarButton(button: UIButton) {
+    @objc fileprivate func didTappedAvatarButton(_ button: UIButton) {
         tweetListCellDelegate?.tweetListCell(self, didTappedAvatarButton: button)
     }
     
     /**
      点击赞按钮
      */
-    @objc private func didTappedLikeButton(button: UIButton) {
+    @objc fileprivate func didTappedLikeButton(_ button: UIButton) {
         setupButtonSpringAnimation(button)
         tweetListCellDelegate?.tweetListCell(self, didTappedLikeButton: button)
     }
@@ -166,7 +171,7 @@ class JFTweetListCell: UITableViewCell {
     /**
      修改cell点击后高亮颜色
      */
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
@@ -178,80 +183,78 @@ class JFTweetListCell: UITableViewCell {
     
     // MARK: - 懒加载
     /// 头像
-    private lazy var avatarButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), forControlEvents: .TouchUpInside)
+    fileprivate lazy var avatarButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), for: .touchUpInside)
         return button
     }()
     
     /// 昵称
-    private lazy var nicknameLabel: UILabel = {
+    fileprivate lazy var nicknameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFontOfSize(16)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
     /// 性别
-    private lazy var sexImageView: UIImageView = {
+    fileprivate lazy var sexImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
     
     /// 动弹文字内容
-    private lazy var contentLabel: FFLabel = {
+    fileprivate lazy var contentLabel: FFLabel = {
         let label = FFLabel()
         label.numberOfLines = 0
-        label.font = UIFont.systemFontOfSize(14)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.labelDelegate = self
         return label
     }()
     
     /// 动弹配图
-    private lazy var pictureView = JFTweetPictureView()
+    fileprivate lazy var pictureView = JFTweetPictureView()
     
     /// 动弹发布时间
-    private lazy var publishTimeLabel: UILabel = {
+    fileprivate lazy var publishTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(12)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = self.grayColor
         return label
     }()
     
     /// app客户端类型
-    private lazy var appClientLabel: UILabel = {
+    fileprivate lazy var appClientLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(12)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = self.grayColor
         return label
     }()
     
     /// 动弹赞按钮
-    private lazy var likeButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setImage(UIImage(named: "star_icon_normal"), forState: .Normal)
-        button.setImage(UIImage(named: "star_icon_selected"), forState: .Highlighted)
-        button.setImage(UIImage(named: "dongtai_yizan"), forState: .Selected)
-        button.titleLabel?.font = UIFont.systemFontOfSize(12)
-        button.setTitleColor(self.grayColor, forState: .Normal)
+    fileprivate lazy var likeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "star_icon_normal"), for: UIControlState())
+        button.setImage(UIImage(named: "star_icon_selected"), for: .highlighted)
+        button.setImage(UIImage(named: "dongtai_yizan"), for: .selected)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.setTitleColor(self.grayColor, for: UIControlState())
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        button.addTarget(self, action: #selector(didTappedLikeButton(_:)), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(didTappedLikeButton(_:)), for: .touchUpInside)
         return button
     }()
     
     /// 动弹评论按钮
-    private lazy var commentButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setImage(UIImage(named: "comment_icon"), forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(12)
-        button.setTitleColor(self.grayColor, forState: .Normal)
+    fileprivate lazy var commentButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "comment_icon"), for: UIControlState())
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.setTitleColor(self.grayColor, for: UIControlState())
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         return button
     }()
     
     /// 分割线
-    private lazy var lineView: UIView = {
+    fileprivate lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = COLOR_ALL_CELL_SEPARATOR
         return lineView
@@ -268,7 +271,7 @@ extension JFTweetListCell: FFLabelDelegate {
      - parameter label: 所在的label
      - parameter text:  被选中的文字
      */
-    func labelDidSelectedLinkText(label: FFLabel, text: String) {
+    func labelDidSelectedLinkText(_ label: FFLabel, text: String) {
         
         // 点击了 超链接
         if text.hasPrefix("http") {
@@ -281,8 +284,8 @@ extension JFTweetListCell: FFLabelDelegate {
                 return
             }
             
-            if let sequence = content.checkAtUserNickname()?.indexOf(text) {
-                let nickname = text.stringByReplacingOccurrencesOfString("@", withString: "")
+            if let sequence = content.checkAtUserNickname()?.index(of: text) {
+                let nickname = text.replacingOccurrences(of: "@", with: "")
                 tweetListCellDelegate?.tweetListCell(self, didTappedAtUser: nickname, sequence: Int(sequence))
             }
             

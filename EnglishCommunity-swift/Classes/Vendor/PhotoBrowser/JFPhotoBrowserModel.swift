@@ -11,7 +11,7 @@ import UIKit
 class JFPhotoBrowserModel: NSObject {
 
     /// 大图
-    var url: NSURL?
+    var url: URL?
     
     /// 对应小图的Imageview
     var imageView: UIImageView?

@@ -13,13 +13,13 @@ class JFPhotoBrowserViewController: UIViewController {
     
     // MARK: - 属性
     /// 重用标识
-    private let cellIdentifier = "photoCellIdentifier"
+    fileprivate let cellIdentifier = "photoCellIdentifier"
     
     /// 图片模型数组
-    private var photoModels: [JFPhotoBrowserModel]
+    fileprivate var photoModels: [JFPhotoBrowserModel]
     
     /// 当前选中的图片下标
-    private var selectedIndex: Int
+    fileprivate var selectedIndex: Int
     
     // MARK: - 构造函数
     init(models: [JFPhotoBrowserModel], selectedIndex: Int) {
@@ -33,18 +33,18 @@ class JFPhotoBrowserViewController: UIViewController {
     }
     
     // 显示点击对应的大图
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // 滚动到对应的张数
-        let indexPath = NSIndexPath(forItem: selectedIndex, inSection: 0)
-        collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.Left)
+        let indexPath = IndexPath(item: selectedIndex, section: 0)
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.left)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor.clear
         
         prepareUI()
         
@@ -55,19 +55,19 @@ class JFPhotoBrowserViewController: UIViewController {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         view.addSubview(bkgView)
         view.addSubview(collectionView)
         view.addSubview(pageLabel)
         view.addSubview(saveButton)
         
-        pageLabel.snp_makeConstraints { (make) in
+        pageLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(view)
             make.top.equalTo(20)
         }
         
-        saveButton.snp_makeConstraints { (make) in
+        saveButton.snp.makeConstraints { (make) in
             make.right.equalTo(-8)
             make.bottom.equalTo(-8)
             make.size.equalTo(CGSize(width: 50, height: 50))
@@ -82,8 +82,8 @@ class JFPhotoBrowserViewController: UIViewController {
     func save() {
         
         // 获取正在显示的cell
-        let indexPath = collectionView.indexPathsForVisibleItems().first!
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! JFPhotoBrowserCell
+        let indexPath = collectionView.indexPathsForVisibleItems.first!
+        let cell = collectionView.cellForItem(at: indexPath) as! JFPhotoBrowserCell
         
         if let image = cell.imageView.image {
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(JFPhotoBrowserViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
@@ -93,7 +93,7 @@ class JFPhotoBrowserViewController: UIViewController {
     /**
      保存图片后的回调
      */
-    func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         
         if error != nil {
             JFProgressHUD.showInfoWithStatus("保存失败")
@@ -111,40 +111,40 @@ class JFPhotoBrowserViewController: UIViewController {
         let space: CGFloat = 10
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = self.view.bounds.size
-        layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        layout.scrollDirection = UICollectionViewScrollDirection.horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: space)
         layout.minimumInteritemSpacing = space
         layout.minimumLineSpacing = space
         
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView.registerClass(JFPhotoBrowserCell.self, forCellWithReuseIdentifier: self.cellIdentifier)
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.register(JFPhotoBrowserCell.self, forCellWithReuseIdentifier: self.cellIdentifier)
         collectionView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH + space, height: SCREEN_HEIGHT)
-        collectionView.backgroundColor = UIColor.clearColor()
+        collectionView.backgroundColor = UIColor.clear
         collectionView.bounces = false
-        collectionView.pagingEnabled = true
+        collectionView.isPagingEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
     }()
     
     /// 保存
-    private lazy var saveButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setImage(UIImage(named: "photo_browser_download"), forState: UIControlState.Normal)
-        button.addTarget(self, action: #selector(JFPhotoBrowserViewController.save), forControlEvents: UIControlEvents.TouchUpInside)
+    fileprivate lazy var saveButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "photo_browser_download"), for: UIControlState())
+        button.addTarget(self, action: #selector(JFPhotoBrowserViewController.save), for: UIControlEvents.touchUpInside)
         return button
     }()
     
     /// 页码的label
-    private lazy var pageLabel: UILabel = {
+    fileprivate lazy var pageLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.whiteColor()
-        label.font = UIFont.systemFontOfSize(15)
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
     
     /// 背景视图,用于修改alpha
-    private lazy var bkgView: UIView = {
+    fileprivate lazy var bkgView: UIView = {
         let view = UIView(frame: self.view.bounds)
         view.backgroundColor = UIColor(white: 0, alpha: 1)
         return view
@@ -155,23 +155,23 @@ class JFPhotoBrowserViewController: UIViewController {
 extension JFPhotoBrowserViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     // 返回cell的个数
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoModels.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! JFPhotoBrowserCell
-        cell.backgroundColor = UIColor.clearColor()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! JFPhotoBrowserCell
+        cell.backgroundColor = UIColor.clear
         cell.photoModel = photoModels[indexPath.item]
         cell.cellDelegate = self
         return cell
     }
     
     // scrolView停止滚动,获取当前显示cell的indexPath
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         // 获取正在显示的cell
-        let indexPath = collectionView.indexPathsForVisibleItems().first!
+        let indexPath = collectionView.indexPathsForVisibleItems.first!
         selectedIndex = indexPath.item
         pageLabel.text = "\(selectedIndex + 1) / \(photoModels.count)"
     }
@@ -195,24 +195,24 @@ extension JFPhotoBrowserViewController: JFPhotoBrowserCellDelegate {
      */
     func cellDismiss() {
         // 关闭是不需要动画
-        dismissViewControllerAnimated(false, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
     
     /**
      单击事件退出
      */
-    func didOneTappedPhotoDetailView(scrollView: UIScrollView) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func didOneTappedPhotoDetailView(_ scrollView: UIScrollView) {
+        dismiss(animated: true, completion: nil)
     }
     
     /**
      双击事件放大
      */
-    func didDoubleTappedPhotoDetailView(scrollView: UIScrollView, touchPoint: CGPoint) -> Void {
+    func didDoubleTappedPhotoDetailView(_ scrollView: UIScrollView, touchPoint: CGPoint) -> Void {
         if scrollView.zoomScale <= 1.0 {
             let scaleX = touchPoint.x + scrollView.contentOffset.x
             let scaleY = touchPoint.y + scrollView.contentOffset.y
-            scrollView.zoomToRect(CGRect(x: scaleX, y: scaleY, width: 10, height: 10), animated: true)
+            scrollView.zoom(to: CGRect(x: scaleX, y: scaleY, width: 10, height: 10), animated: true)
         } else {
             scrollView.setZoomScale(1.0, animated: true)
         }
@@ -223,13 +223,13 @@ extension JFPhotoBrowserViewController: JFPhotoBrowserCellDelegate {
 // MARK: - UIViewControllerTransitioningDelegate
 extension JFPhotoBrowserViewController: UIViewControllerTransitioningDelegate {
     // 返回 控制 modal动画 对象
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         // 创建 控制 modal动画 对象
         return JFPhotoBrowserModalAnimation()
     }
     
     // 控制 dismiss动画 对象
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return JFPhotoBrowserDismissAnimation()
     }
 }
@@ -254,7 +254,7 @@ extension JFPhotoBrowserViewController {
         tempImageView.clipsToBounds = true
         
         // thumbImageView.superview!: 转换前的坐标系 rect: 需要转换的frame toCoordinateSpace: 转换后的坐标系
-        tempImageView.frame = thumbImageView.superview!.convertRect(thumbImageView.frame, toCoordinateSpace: view)
+        tempImageView.frame = thumbImageView.superview!.convert(thumbImageView.frame, to: view)
         
         return tempImageView
     }
@@ -295,8 +295,8 @@ extension JFPhotoBrowserViewController {
      */
     func dismissTempImageView() -> UIImageView? {
         // 获取正在显示的cell
-        let indexPath = collectionView.indexPathsForVisibleItems().first!
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! JFPhotoBrowserCell
+        let indexPath = collectionView.indexPathsForVisibleItems.first!
+        let cell = collectionView.cellForItem(at: indexPath) as! JFPhotoBrowserCell
         
         // 判断图片是否存在
         if cell.imageView.image == nil {
@@ -310,12 +310,12 @@ extension JFPhotoBrowserViewController {
         let tempImageView = UIImageView(image: image)
         
         // 设置过渡视图
-        tempImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        tempImageView.contentMode = UIViewContentMode.scaleAspectFill
         tempImageView.clipsToBounds = true
         
         // 设置frame
         // 转换坐标系
-        let rect = cell.imageView.superview!.convertRect(cell.imageView.frame, toCoordinateSpace: view)
+        let rect = cell.imageView.superview!.convert(cell.imageView.frame, to: view)
         tempImageView.frame = rect
         
         return tempImageView
@@ -330,7 +330,7 @@ extension JFPhotoBrowserViewController {
         let thumbImageView = photoModels[selectedIndex].imageView
         
         // 坐标系转换
-        let rect = thumbImageView!.superview!.convertRect(thumbImageView!.frame, toCoordinateSpace: view)
+        let rect = thumbImageView!.superview!.convert(thumbImageView!.frame, to: view)
         
         return rect
     }

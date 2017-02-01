@@ -31,12 +31,12 @@ class JFPlaceholderTextView: UITextView {
         
         prepareUI()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFPlaceholderTextView.textDidChange), name: UITextViewTextDidChangeNotification, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(JFPlaceholderTextView.textDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: self)
     }
     
     // 移除通知
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // 自己文字改变了
@@ -44,15 +44,15 @@ class JFPlaceholderTextView: UITextView {
         // 能到这里来说明是当前这个textView文本改变了
         // 判断文本是否为空: hasText()
         // 当有文字的时候就隐藏
-        placeholderLabel.hidden = hasText()
+        placeholderLabel.isHidden = hasText
     }
     
     // MARK: - 准备UI
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         // 添加子控件
         addSubview(placeholderLabel)
         
-        placeholderLabel.snp_makeConstraints { (make) in
+        placeholderLabel.snp.makeConstraints { (make) in
             make.left.equalTo(5)
             make.top.equalTo(8)
         }
@@ -60,10 +60,10 @@ class JFPlaceholderTextView: UITextView {
     
     // MARK: - 懒加载
     // 添加占位文本
-    private lazy var placeholderLabel: UILabel = {
+    fileprivate lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(18)
-        label.textColor = UIColor.lightGrayColor()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = UIColor.lightGray
         return label
     }()
 }

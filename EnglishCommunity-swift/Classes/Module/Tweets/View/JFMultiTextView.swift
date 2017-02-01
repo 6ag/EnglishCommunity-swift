@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol JFMultiTextViewDelegate: NSObjectProtocol {
-    func didTappedSendButton(text: String)
+    func didTappedSendButton(_ text: String)
 }
 
 class JFMultiTextView: UIView {
@@ -19,8 +19,8 @@ class JFMultiTextView: UIView {
         super.init(frame: frame)
         prepareUI()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTappedMultiTextView))
         addGestureRecognizer(tap)
     }
@@ -82,28 +82,28 @@ class JFMultiTextView: UIView {
      移除所有通知
      */
     func removeAllNotification() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     /**
      空白部分触摸事件
      */
-    @objc private func didTappedMultiTextView() {
+    @objc fileprivate func didTappedMultiTextView() {
         contract()
     }
     
     /**
      点击了表情按钮
      */
-    @objc private func didTappedEmotionButton() {
+    @objc fileprivate func didTappedEmotionButton() {
         contract()
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(250 * USEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(250 * USEC_PER_SEC)) / Double(NSEC_PER_SEC)) { () -> Void in
             self.textView.inputView = self.textView.inputView == nil ? self.emotionView : nil
             if self.textView.inputView == nil {
-                self.emotionButton.setImage(UIImage(named: "emotion_btn_icon"), forState: .Normal)
+                self.emotionButton.setImage(UIImage(named: "emotion_btn_icon"), for: UIControlState())
             } else {
-                self.emotionButton.setImage(UIImage(named: "keyboard_btn_icon"), forState: .Normal)
+                self.emotionButton.setImage(UIImage(named: "keyboard_btn_icon"), for: UIControlState())
             }
             self.expansion()
         }
@@ -112,7 +112,7 @@ class JFMultiTextView: UIView {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         placeholderLabel.text = placeholderString
         addSubview(backgroundView)
@@ -120,19 +120,19 @@ class JFMultiTextView: UIView {
         backgroundView.addSubview(placeholderLabel)
         backgroundView.addSubview(emotionButton)
         
-        textView.snp_makeConstraints { (make) in
+        textView.snp.makeConstraints { (make) in
             make.left.top.equalTo(5)
             make.bottom.equalTo(-5)
             make.width.equalTo(SCREEN_WIDTH - 45)
         }
         
-        placeholderLabel.snp_makeConstraints { (make) in
+        placeholderLabel.snp.makeConstraints { (make) in
             make.left.equalTo(10)
             make.top.equalTo(5)
             make.height.equalTo(30)
         }
         
-        emotionButton.snp_makeConstraints { (make) in
+        emotionButton.snp.makeConstraints { (make) in
             make.top.right.bottom.equalTo(0)
             make.width.equalTo(normalHeight)
         }
@@ -141,12 +141,12 @@ class JFMultiTextView: UIView {
     /**
      键盘即将显示
      */
-    @objc private func keyboardWillShow(notification: NSNotification) {
+    @objc fileprivate func keyboardWillShow(_ notification: Notification) {
         frame = SCREEN_BOUNDS
         // 获取键盘的高度
         let userInfo = notification.userInfo!
         let value = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
-        let keyboardRect = value.CGRectValue()
+        let keyboardRect = value.cgRectValue
         let height = keyboardRect.size.height
         
         if textView.text.characters.count == 0 {
@@ -160,7 +160,7 @@ class JFMultiTextView: UIView {
     /**
      键盘即将隐藏
      */
-    @objc private func keyboardWillHide(notification: NSNotification) {
+    @objc fileprivate func keyboardWillHide(_ notification: Notification) {
         if textView.text.characters.count == 0 {
             backgroundView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: normalHeight)
             frame = CGRect(x: 0, y: SCREEN_HEIGHT - selfHeight, width: SCREEN_WIDTH, height: normalHeight)
@@ -179,7 +179,7 @@ class JFMultiTextView: UIView {
     lazy var backgroundView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 40))
         view.backgroundColor = COLOR_ALL_BG
-        view.layer.borderColor = UIColor(white: 0.7, alpha: 0.5).CGColor
+        view.layer.borderColor = UIColor(white: 0.7, alpha: 0.5).cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -187,11 +187,11 @@ class JFMultiTextView: UIView {
     /// 文本框
     lazy var textView: UITextView = {
         let textView = UITextView()
-        textView.font = UIFont.systemFontOfSize(self.fontSize)
+        textView.font = UIFont.systemFont(ofSize: self.fontSize)
         textView.delegate = self
         textView.layer.cornerRadius = 5
-        textView.returnKeyType = .Send
-        textView.layer.borderColor = UIColor(white: 0.7, alpha: 0.5).CGColor
+        textView.returnKeyType = .send
+        textView.layer.borderColor = UIColor(white: 0.7, alpha: 0.5).cgColor
         textView.layer.borderWidth = 1
         return textView
     }()
@@ -199,21 +199,21 @@ class JFMultiTextView: UIView {
     /// 占位字符
     lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(self.fontSize)
-        label.textColor = UIColor.lightGrayColor()
+        label.font = UIFont.systemFont(ofSize: self.fontSize)
+        label.textColor = UIColor.lightGray
         return label
     }()
     
     /// 表情按钮
     lazy var emotionButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "emotion_btn_icon"), forState: .Normal)
-        button.addTarget(self, action: #selector(didTappedEmotionButton), forControlEvents: .TouchUpInside)
+        button.setImage(UIImage(named: "emotion_btn_icon"), for: UIControlState())
+        button.addTarget(self, action: #selector(didTappedEmotionButton), for: .touchUpInside)
         return button
     }()
     
     /// 表情键盘
-    private lazy var emotionView: JFEmoticonView = {
+    fileprivate lazy var emotionView: JFEmoticonView = {
         let view = JFEmoticonView()
         view.textView = self.textView
         return view
@@ -227,7 +227,7 @@ extension JFMultiTextView: UITextViewDelegate {
     /**
      textView内容上下滑动
      */
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !status {
             scrollView.contentOffset = CGPoint(x: 0, y: 0)
         }
@@ -236,7 +236,7 @@ extension JFMultiTextView: UITextViewDelegate {
     /**
      文本已经改变
      */
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         
         // 设置占位符和按钮交互
         if textView.text.characters.count == 0 {
@@ -245,10 +245,10 @@ extension JFMultiTextView: UITextViewDelegate {
             placeholderLabel.text = ""
         }
         
-        let size = CGSize(width: SCREEN_WIDTH - 65, height: CGFloat.max)
-        let dict = [NSFontAttributeName : UIFont.systemFontOfSize(fontSize)]
-        let currentHeight = (textView.emoticonText() as NSString).boundingRectWithSize(size, options: [NSStringDrawingOptions.UsesLineFragmentOrigin, NSStringDrawingOptions.UsesFontLeading], attributes: dict, context: nil).size.height
-        let y = CGRectGetMaxY(backgroundView.frame)
+        let size = CGSize(width: SCREEN_WIDTH - 65, height: CGFloat.greatestFiniteMagnitude)
+        let dict = [NSFontAttributeName : UIFont.systemFont(ofSize: fontSize)]
+        let currentHeight = (textView.emoticonText() as NSString).boundingRect(with: size, options: [NSStringDrawingOptions.usesLineFragmentOrigin, NSStringDrawingOptions.usesFontLeading], attributes: dict, context: nil).size.height
+        let y = backgroundView.frame.maxY
         if currentHeight < 19.094 {
             status = false
             backgroundView.frame = CGRect(x: 0, y: y - normalHeight, width: SCREEN_WIDTH, height: normalHeight)
@@ -264,7 +264,7 @@ extension JFMultiTextView: UITextViewDelegate {
     /**
      监听回车按钮
      */
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             delegate?.didTappedSendButton(textView.emoticonText())
             contract()

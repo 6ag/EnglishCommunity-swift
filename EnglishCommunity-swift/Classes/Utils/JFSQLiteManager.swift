@@ -17,12 +17,12 @@ class JFSQLiteManager: NSObject {
     static let shareManager = JFSQLiteManager()
     
     /// sqlite数据库名
-    private let dbName = "videos.db"
+    fileprivate let dbName = "videos.db"
     
     let dbQueue: FMDatabaseQueue
     
     override init() {
-        let documentPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last!
+        let documentPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!
         let dbPath = "\(documentPath)/\(dbName)"
         print(dbPath)
         
@@ -37,7 +37,7 @@ class JFSQLiteManager: NSObject {
      
      - parameter tbname: 表名
      */
-    func createVideoInfosTable(tbname: String) {
+    func createVideoInfosTable(_ tbname: String) {
         
         let sql = "CREATE TABLE IF NOT EXISTS \(tbname) ( \n" +
             "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n" +
@@ -46,7 +46,7 @@ class JFSQLiteManager: NSObject {
         ");"
         
         dbQueue.inDatabase { (db) in
-            if db.executeStatements(sql) {
+            if (db?.executeStatements(sql))! {
                 print("创建 \(tbname) 表成功")
             } else {
                 print("创建 \(tbname) 表失败")

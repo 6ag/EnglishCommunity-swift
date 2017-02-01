@@ -15,13 +15,18 @@ protocol JFTopBarViewDelegate: NSObjectProtocol {
 
 class JFTopBarView: UIView {
     
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak var lineView: UIImageView!
+    weak var delegate: JFTopBarViewDelegate?
+
     @IBAction func didTappedMenuButton() {
         delegate?.didSelectedMenuButton()
-        menuButton.selected = true
-        commentButton.selected = false
+        menuButton.isSelected = true
+        commentButton.isSelected = false
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: UIViewAnimationOptions.CurveLinear, animations: {
-            self.lineView.transform = CGAffineTransformIdentity
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: UIViewAnimationOptions.curveLinear, animations: {
+            self.lineView.transform = CGAffineTransform.identity
         }) { (_) in
             
         }
@@ -29,19 +34,14 @@ class JFTopBarView: UIView {
     
     @IBAction func didTappedCommentButton() {
         delegate?.didSelectedCommentButton()
-        commentButton.selected = true
-        menuButton.selected = false
+        commentButton.isSelected = true
+        menuButton.isSelected = false
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: UIViewAnimationOptions.CurveLinear, animations: {
-            self.lineView.transform = CGAffineTransformMakeTranslation(self.commentButton.x - self.menuButton.x, 0)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 5, options: UIViewAnimationOptions.curveLinear, animations: {
+            self.lineView.transform = CGAffineTransform(translationX: self.commentButton.x - self.menuButton.x, y: 0)
         }) { (_) in
             
         }
     }
     
-    @IBOutlet weak var menuButton: UIButton!
-    @IBOutlet weak var commentButton: UIButton!
-    @IBOutlet weak var lineView: UIImageView!
-    weak var delegate: JFTopBarViewDelegate?
-
 }

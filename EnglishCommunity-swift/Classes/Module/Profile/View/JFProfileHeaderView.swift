@@ -10,7 +10,7 @@ import UIKit
 
 protocol JFProfileHeaderViewDelegate: NSObjectProtocol {
     
-    func didTappedAvatarButton(button: UIButton)
+    func didTappedAvatarButton(_ button: UIButton)
     func didTappedFriendButton()
     func didTappedMessageButton()
     func didTappedInfoButton()
@@ -42,7 +42,7 @@ class JFProfileHeaderView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        avatarButton.layer.borderColor = UIColor.colorWithHexString("58D475").CGColor
+        avatarButton.layer.borderColor = UIColor.colorWithHexString("58D475").cgColor
         avatarButton.layer.borderWidth = 4
         
         redPointLabel.layer.cornerRadius = 7.5

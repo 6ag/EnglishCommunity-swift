@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol JFHomeCellDelegate: NSObjectProtocol {
-    func homeCell(cell: UITableViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    func homeCell(_ cell: UITableViewCell, didSelectItemAtIndexPath indexPath: IndexPath)
 }
 
 class JFHomeCell: UITableViewCell {
@@ -39,42 +39,41 @@ class JFHomeCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         contentView.backgroundColor = COLOR_ALL_BG
         contentView.addSubview(collectionView)
-        collectionView.snp_makeConstraints { (make) in
+        collectionView.snp.makeConstraints { (make) in
             make.edges.equalTo(0)
         }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
         
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        // 离屏渲染 - 异步绘制
+        layer.drawsAsynchronously = true
         
+        // 栅格化 - 异步绘制之后，会生成一张独立的图像，cell在屏幕上滚动的时候，本质滚动的是这张图片
+        layer.shouldRasterize = true
+        
+        // 使用栅格化，需要指定分辨率
+        layer.rasterizationScale = UIScreen.main.scale
     }
     
     // MARK: - 懒加载
     /// collectionView
-    private lazy var collectionView: UICollectionView = {
+    fileprivate lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = LIST_ITEM_PADDING
         layout.minimumLineSpacing = LIST_ITEM_PADDING
         layout.sectionInset = UIEdgeInsets(top: 0, left: LIST_ITEM_PADDING, bottom: 0, right: LIST_ITEM_PADDING)
         layout.itemSize = CGSize(width: LIST_ITEM_WIDTH, height: LIST_ITEM_HEIGHT)
         
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.backgroundColor = COLOR_ALL_BG
-        collectionView.scrollEnabled = false
+        collectionView.isScrollEnabled = false
         collectionView.bounces = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.registerNib(UINib(nibName: "JFHomeCellItem", bundle: nil), forCellWithReuseIdentifier: self.categoryIdentifier)
+        collectionView.register(UINib(nibName: "JFHomeCellItem", bundle: nil), forCellWithReuseIdentifier: self.categoryIdentifier)
         return collectionView
     }()
     
@@ -83,17 +82,17 @@ class JFHomeCell: UITableViewCell {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension JFHomeCell: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return videoCategory?.videoInfos?.count ?? 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let item = collectionView.dequeueReusableCellWithReuseIdentifier(categoryIdentifier, forIndexPath: indexPath) as! JFHomeCellItem
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: categoryIdentifier, for: indexPath) as! JFHomeCellItem
         item.videoInfo = videoCategory!.videoInfos![indexPath.item]
         return item
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.homeCell(self, didSelectItemAtIndexPath: indexPath)
     }
 }

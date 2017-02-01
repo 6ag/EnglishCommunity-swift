@@ -9,8 +9,8 @@
 import UIKit
 
 protocol JFSelectNodeViewDelegate: NSObjectProtocol {
-    func didTappedAppButton(button: UIButton)
-    func didTappedWebButton(button: UIButton)
+    func didTappedAppButton(_ button: UIButton)
+    func didTappedWebButton(_ button: UIButton)
 }
 
 class JFSelectNodeView: UIView {
@@ -33,27 +33,27 @@ class JFSelectNodeView: UIView {
     /**
      点击了app节点
      */
-    @IBAction func didTappedAppButton(sender: UIButton) {
+    @IBAction func didTappedAppButton(_ sender: UIButton) {
         dismiss()
-        appButton.selected = true
-        webButton.selected = false
+        appButton.isSelected = true
+        webButton.isSelected = false
         delegate?.didTappedAppButton(sender)
     }
     
     /**
      点击了web节点
      */
-    @IBAction func didTappedWebButton(sender: UIButton) {
+    @IBAction func didTappedWebButton(_ sender: UIButton) {
         dismiss()
-        webButton.selected = true
-        appButton.selected = false
+        webButton.isSelected = true
+        appButton.isSelected = false
         delegate?.didTappedWebButton(sender)
     }
     
     /**
      点击了背景视图
      */
-    @objc private func didTappedBgView() {
+    @objc fileprivate func didTappedBgView() {
         dismiss()
     }
     
@@ -61,15 +61,15 @@ class JFSelectNodeView: UIView {
      弹出节点选择视图
      */
     func show() {
-        UIApplication.sharedApplication().keyWindow?.addSubview(bgView)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
         bgView.alpha = 0
         frame = CGRect(x: (SCREEN_WIDTH - selfWidth) * 0.5, y: -selfHeight, width: selfWidth, height: selfHeight)
-        UIApplication.sharedApplication().keyWindow?.addSubview(self)
+        UIApplication.shared.keyWindow?.addSubview(self)
         
-        UIView.animateWithDuration(0.4) {
+        UIView.animate(withDuration: 0.4, animations: {
             self.bgView.alpha = 1
             self.frame = CGRect(x: (SCREEN_WIDTH - self.selfWidth) * 0.5, y: (SCREEN_HEIGHT - self.selfHeight) * 0.6, width: self.selfWidth, height: self.selfHeight)
-        }
+        }) 
     }
     
     /**
@@ -77,7 +77,7 @@ class JFSelectNodeView: UIView {
      */
     func dismiss() {
         
-        UIView.animateWithDuration(0.25, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: { 
+        UIView.animate(withDuration: 0.25, delay: 0.25, options: UIViewAnimationOptions(), animations: { 
             self.bgView.alpha = 0
             self.frame = CGRect(x: (SCREEN_WIDTH - self.selfWidth) * 0.5, y: SCREEN_HEIGHT, width: self.selfWidth, height: self.selfHeight)
             }) { (_) in

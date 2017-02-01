@@ -18,7 +18,7 @@ extension UITextView {
         // 将所有遍历的文本拼接起来
         var text = ""
         // enumerationRange: 遍历的范围
-        attributedText.enumerateAttributesInRange(NSRange(location: 0, length: attributedText.length), options: NSAttributedStringEnumerationOptions(rawValue: 0)) { (dict, range, _) -> Void in
+        attributedText.enumerateAttributes(in: NSRange(location: 0, length: attributedText.length), options: NSAttributedString.EnumerationOptions(rawValue: 0)) { (dict, range, _) -> Void in
             
             // 如果dict有 "NSAttachment" key 并且拿出来有值(NSTextAttachment) 表情图片, 没有就是普通的文本
             if let attachment = dict["NSAttachment"] as? JFTextAttachment {
@@ -27,7 +27,7 @@ extension UITextView {
                 text += attachment.name!
             } else {
                 // 普通文本,截取
-                let str = (self.attributedText.string as NSString).substringWithRange(range)
+                let str = (self.attributedText.string as NSString).substring(with: range)
                 text += str
             }
         }
@@ -40,7 +40,7 @@ extension UITextView {
     添加表情到textView
     - parameter emoticon: 要添加的表情
     */
-    func insertEmoticon(emoticon: JFEmoticon) {
+    func insertEmoticon(_ emoticon: JFEmoticon) {
         // 判断如果是删除按钮
         if emoticon.removeEmoticon {
             // 删除文字或表情
@@ -89,7 +89,7 @@ extension UITextView {
             let oldSelectedRange = selectedRange
             
             // range: 替换的范围
-            oldAttrString.replaceCharactersInRange(oldSelectedRange, withAttributedString: attrString)
+            oldAttrString.replaceCharacters(in: oldSelectedRange, with: attrString)
             
             // 赋值给textView的 attributedText
             attributedText = oldAttrString
@@ -102,7 +102,7 @@ extension UITextView {
             delegate?.textViewDidChange?(self)
             
             // 主动发送 UITextViewTextDidChangeNotification
-            NSNotificationCenter.defaultCenter().postNotificationName(UITextViewTextDidChangeNotification, object: self)
+            NotificationCenter.default.post(name: NSNotification.Name.UITextViewTextDidChange, object: self)
         }
     }
 }

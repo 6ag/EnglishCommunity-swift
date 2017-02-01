@@ -23,7 +23,7 @@ class JFProfileCell: UITableViewCell {
     /// 是否显示分割线
     var showLineView: Bool = false {
         didSet {
-            settingLineView.hidden = !showLineView
+            settingLineView.isHidden = !showLineView
         }
     }
     
@@ -46,24 +46,24 @@ class JFProfileCell: UITableViewCell {
             }
             
             // 选中状态
-            selectionStyle = cellModel.isKindOfClass(JFProfileCellArrowModel.self) ? .Default : .None
+            selectionStyle = cellModel.isKind(of: JFProfileCellArrowModel.self) ? .default : .none
             
             // 根据cell类型设置不同UI
-            if cellModel.isKindOfClass(JFProfileCellArrowModel.self) {
+            if cellModel.isKind(of: JFProfileCellArrowModel.self) {
                 
                 // 箭头
                 let settingCellArrow = cellModel as! JFProfileCellArrowModel
                 settingRightLabel.text = settingCellArrow.text
                 accessoryView = rightView
                 
-            } else if cellModel.isKindOfClass(JFProfileCellSwitchModel.self) {
+            } else if cellModel.isKind(of: JFProfileCellSwitchModel.self) {
                 
                 // 开关
                 let settingCellSwitch = cellModel as! JFProfileCellSwitchModel
-                settingSwitchView.on = settingCellSwitch.on
+                settingSwitchView.isOn = settingCellSwitch.on
                 accessoryView = settingSwitchView
                 
-            } else if cellModel.isKindOfClass(JFProfileCellLabelModel.self) {
+            } else if cellModel.isKind(of: JFProfileCellLabelModel.self) {
                 
                 // 文字
                 let settingCellLabel = cellModel as! JFProfileCellLabelModel
@@ -88,15 +88,15 @@ class JFProfileCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
-        selectionStyle = .None
-        textLabel?.font = UIFont.systemFontOfSize(14)
+        selectionStyle = .none
+        textLabel?.font = UIFont.systemFont(ofSize: 14)
         textLabel?.textColor = UIColor.colorWithHexString("444444")
-        textLabel?.backgroundColor = UIColor.clearColor()
+        textLabel?.backgroundColor = UIColor.clear
         
-        detailTextLabel?.font = UIFont.systemFontOfSize(11)
-        detailTextLabel?.textColor = UIColor.blackColor()
+        detailTextLabel?.font = UIFont.systemFont(ofSize: 11)
+        detailTextLabel?.textColor = UIColor.black
         
         contentView.addSubview(settingLineView)
     }
@@ -104,18 +104,18 @@ class JFProfileCell: UITableViewCell {
     /**
      开关切换事件，修改本地偏好设置
      */
-    @objc private func didChangedSwitch(settingSwitch: UISwitch) {
+    @objc fileprivate func didChangedSwitch(_ settingSwitch: UISwitch) {
         let settingCellSwitch = cellModel as! JFProfileCellSwitchModel
-        settingCellSwitch.on = settingSwitch.on
+        settingCellSwitch.on = settingSwitch.isOn
     }
     
     // MARK: - 懒加载
     /// 箭头旁的文字
     lazy var settingRightLabel: UILabel = {
         let settingRightLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
-        settingRightLabel.textColor = UIColor.grayColor()
-        settingRightLabel.textAlignment = .Right
-        settingRightLabel.font = UIFont.systemFontOfSize(12)
+        settingRightLabel.textColor = UIColor.gray
+        settingRightLabel.textAlignment = .right
+        settingRightLabel.font = UIFont.systemFont(ofSize: 12)
         return settingRightLabel
     }()
     
@@ -128,14 +128,14 @@ class JFProfileCell: UITableViewCell {
     /// 开关
     lazy var settingSwitchView: UISwitch = {
         let settingSwitchView = UISwitch()
-        settingSwitchView.addTarget(self, action: #selector(didChangedSwitch(_:)), forControlEvents: .ValueChanged)
+        settingSwitchView.addTarget(self, action: #selector(didChangedSwitch(_:)), for: .valueChanged)
         return settingSwitchView
     }()
     
     /// 分割线
     lazy var settingLineView: UIView = {
         let settingLineView = UIView()
-        settingLineView.backgroundColor = UIColor.blackColor()
+        settingLineView.backgroundColor = UIColor.black
         settingLineView.alpha = 0.1
         return settingLineView
     }()
@@ -143,7 +143,7 @@ class JFProfileCell: UITableViewCell {
     /// 箭头和文字结合
     lazy var rightView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 180, height: 20))
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor.clear
         view.addSubview(self.settingArrowView)
         view.addSubview(self.settingRightLabel)
         self.settingArrowView.frame = CGRect(x: 170, y: 2.5, width: 15, height: 15)

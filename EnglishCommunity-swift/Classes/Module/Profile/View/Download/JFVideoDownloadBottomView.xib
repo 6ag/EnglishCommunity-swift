@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,7 +19,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="219" height="62"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="全选">
-                        <color key="titleColor" red="0.61039663460000004" green="0.61039663460000004" blue="0.61039663460000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.61039663460000004" green="0.61039663460000004" blue="0.61039663460000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <state key="selected" title="取消全选"/>
                     <connections>
@@ -26,14 +30,14 @@
                     <rect key="frame" x="219" y="0.0" width="218" height="62"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="确认下载">
-                        <color key="titleColor" red="0.61039663460000004" green="0.61039663460000004" blue="0.61039663460000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.61039663460000004" green="0.61039663460000004" blue="0.61039663460000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="didTappedConfirmButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="zBy-YR-GAq"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="nBS-1b-res" secondAttribute="trailing" id="0pK-qv-yGu"/>
                 <constraint firstItem="4fK-X0-1UB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6SN-Ca-W3m"/>

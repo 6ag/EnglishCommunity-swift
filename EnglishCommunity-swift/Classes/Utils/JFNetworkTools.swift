@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 /// 网络请求回调
-typealias NetworkFinished = (success: Bool, result: JSON?, error: NSError?) -> ()
+typealias NetworkFinished = (_ success: Bool, _ result: JSON?, _ error: NSError?) -> ()
 
 class JFNetworkTools: NSObject {
     
@@ -25,111 +25,96 @@ extension JFNetworkTools {
     /**
      GET请求
      
-     - parameter APIString:  urlString
+     - parameter urlString:  urlString
      - parameter parameters: 参数
      - parameter finished:   完成回调
      */
-    func get(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+    func get(_ urlString: String, parameters: [String : Any]?, finished: @escaping NetworkFinished) {
         
-        print("\(BASE_URL)\(APIString)")
-        Alamofire.request(.GET, "\(BASE_URL)\(APIString)", parameters: parameters).responseJSON { (response) -> Void in
-            
-            if let data = response.data {
-                let json = JSON(data: data)
-                // print(json)
-                finished(success: true, result: json, error: nil)
-            } else {
-                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
-                finished(success: false, result: nil, error: response.result.error)
-            }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        Alamofire.request(urlString, method: .get, parameters: parameters, headers: nil).responseJSON { (response) in
+            self.handle(response: response, finished: finished)
         }
-        
     }
     
     /**
      POST请求
      
-     - parameter APIString:  urlString
+     - parameter urlString:  urlString
      - parameter parameters: 参数
      - parameter finished:   完成回调
      */
-    func post(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+    func post(_ urlString: String, parameters: [String : Any]?, finished: @escaping NetworkFinished) {
         
-        print("\(BASE_URL)\(APIString)")
-        Alamofire.request(.POST, "\(BASE_URL)\(APIString)", parameters: parameters).responseJSON { (response) -> Void in
-            
-            if let data = response.data {
-                let json = JSON(data: data)
-                // print(json)
-                finished(success: true, result: json, error: nil)
-            } else {
-                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
-                finished(success: false, result: nil, error: response.result.error)
-            }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        Alamofire.request(urlString, method: .post, parameters: parameters, headers: nil).responseJSON { (response) in
+            self.handle(response: response, finished: finished)
         }
     }
     
     /**
      带token的GET请求
      
-     - parameter APIString:  urlString
+     - parameter urlString:  urlString
      - parameter parameters: 参数
      - parameter finished:   完成回调
      */
-    func getWithToken(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+    func getWithToken(_ urlString: String, parameters: [String : Any]?, finished: @escaping NetworkFinished) {
         
         guard let token = JFAccountModel.shareAccount()?.token else {
             return
         }
         
-        print("\(BASE_URL)\(APIString)")
-        Alamofire.request(.GET, "\(BASE_URL)\(APIString)", parameters: parameters, encoding: ParameterEncoding.URL, headers: ["Authorization" : "Bearer \(token)"]).responseJSON { (response) -> Void in
-            
-            if let data = response.data {
-                let json = JSON(data: data)
-                if json["code"].intValue >= 4000 {
-                    JFAccountModel.logout()
-                }
-                // print(json)
-                finished(success: true, result: json, error: nil)
-            } else {
-                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
-                finished(success: false, result: nil, error: response.result.error)
-            }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        Alamofire.request(urlString, method: .get, parameters: parameters, headers: ["Authorization" : "Bearer \(token)"]).responseJSON { (response) in
+            self.handle(response: response, finished: finished)
         }
-        
     }
     
     /**
      带token的POST请求
      
-     - parameter APIString:  urlString
+     - parameter urlString:  urlString
      - parameter parameters: 参数
      - parameter finished:   完成回调
      */
-    func postWithToken(APIString: String, parameters: [String : AnyObject]?, finished: NetworkFinished) {
+    func postWithToken(_ urlString: String, parameters: [String : Any]?, finished: @escaping NetworkFinished) {
         
         guard let token = JFAccountModel.shareAccount()?.token else {
             return
         }
         
-        print("\(BASE_URL)\(APIString)")
-        Alamofire.request(.POST, "\(BASE_URL)\(APIString)", parameters: parameters, encoding: ParameterEncoding.JSON, headers: ["Authorization" : "Bearer \(token)"]).responseJSON { (response) -> Void in
-            
-            if let data = response.data {
-                let json = JSON(data: data)
-                if json["code"].intValue >= 4000 {
-                    JFAccountModel.logout()
-                }
-//                 print(json)
-                finished(success: true, result: json, error: nil)
-            } else {
-                JFProgressHUD.showInfoWithStatus("您的网络不给力哦")
-                finished(success: false, result: nil, error: response.result.error)
-            }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        Alamofire.request(urlString, method: .post, parameters: parameters, headers: ["Authorization" : "Bearer \(token)"]).responseJSON { (response) in
+            self.handle(response: response, finished: finished)
         }
     
     }
+    
+    /// 处理响应结果
+    ///
+    /// - Parameters:
+    ///   - response: 响应对象
+    ///   - finished: 完成回调
+    fileprivate func handle(response: DataResponse<Any>, finished: @escaping NetworkFinished) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        switch response.result {
+        case .success(let value):
+            log(value)
+            let json = JSON(value)
+            if json["code"].intValue >= 4000 {
+                // token失效 退出登录
+                JFAccountModel.logout()
+                finished(false, json, nil)
+            } else {
+                finished(true, json, nil)
+            }
+        case .failure(let error):
+            finished(false, nil, error as NSError?)
+        }
+        
+    }
+    
 }
 
 // MARK: - 抽取业务请求 - 需要token验证
@@ -144,33 +129,29 @@ extension JFNetworkTools {
      - parameter atUsers:   被at用户 [[id : AnyObject, nickname : AnyObject]]?
      - parameter finished:  完成回调
      */
-    func sendTweets(text: String, images: [UIImage]?, atUsers: [[String : AnyObject]]?, finished: NetworkFinished) {
+    func sendTweets(_ text: String, images: [UIImage]?, atUsers: [[String : AnyObject]]?, finished: @escaping NetworkFinished) {
         
         var parameters = [String : AnyObject]()
-        parameters["user_id"] = JFAccountModel.shareAccount()!.id;
-        parameters["content"] = text;
-//        let data = "🏷sdfsf".dataUsingEncoding(NSUTF8StringEncoding)!
-//        print(data)
-//        
-//        let string = String(data: data, encoding: NSUTF8StringEncoding)!
-//        print(string)
+        parameters["user_id"] = JFAccountModel.shareAccount()!.id as AnyObject?;
+        parameters["content"] = text as AnyObject?;
+        
         // 图片
-        if let images = images where images.count > 0 {
+        if let images = images, images.count > 0 {
             var imageBase64s = [String]()
             for image in images {
                 let imageData = UIImageJPEGRepresentation(image, 1)!
-                let imageBase64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue:0))
+                let imageBase64 = imageData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue:0))
                 imageBase64s.append(imageBase64)
             }
             
-            if let json = objectToJson(imageBase64s) {
+            if let json = objectToJson(imageBase64s as AnyObject) {
                 parameters["photos"] = json
             }
         }
         
         // 被at用户
-        if let atUsers = atUsers where atUsers.count > 0 {
-            if let json = objectToJson(atUsers) {
+        if let atUsers = atUsers, atUsers.count > 0 {
+            if let json = objectToJson(atUsers as AnyObject) {
                 parameters["atUsers"] = json
             }
         }
@@ -186,12 +167,12 @@ extension JFNetworkTools {
      - parameter sourceID:  视频信息或动弹的id
      - parameter finished:  完成回调
      */
-    func addOrCancelLikeRecord(type: String, sourceID: Int, finished: NetworkFinished) {
+    func addOrCancelLikeRecord(_ type: String, sourceID: Int, finished: @escaping NetworkFinished) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "type" : type,
-            "source_id" : sourceID
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
+            "type" : type as AnyObject,
+            "source_id" : sourceID as AnyObject
         ]
         
         postWithToken(ADD_OR_CANCEL_LIKE_RECORD, parameters: parameters, finished: finished)
@@ -203,11 +184,11 @@ extension JFNetworkTools {
      - parameter VideoInfoId: 视频信息id
      - parameter finished:    完成回调
      */
-    func addOrCancelCollection(videoInfoId: Int, finished: NetworkFinished) {
+    func addOrCancelCollection(_ videoInfoId: Int, finished: @escaping NetworkFinished) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "video_info_id" : videoInfoId
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
+            "video_info_id" : videoInfoId as AnyObject
         ]
         
         postWithToken(ADD_OR_CANCEL_COLLECTION, parameters: parameters, finished: finished)
@@ -219,11 +200,11 @@ extension JFNetworkTools {
      - parameter relationUserId: 要发生关系用户的id
      - parameter finished:       完成回调
      */
-    func addOrCancelFriend(relationUserId: Int, finished: NetworkFinished) {
+    func addOrCancelFriend(_ relationUserId: Int, finished: @escaping NetworkFinished) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "relation_user_id" : relationUserId
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
+            "relation_user_id" : relationUserId as AnyObject
         ]
         
         postWithToken(ADD_OR_CANCEL_FRIEND, parameters: parameters, finished: finished)
@@ -241,11 +222,11 @@ extension JFNetworkTools {
      - parameter content:  反馈内容
      - parameter finished: 完成回调
      */
-    func postFeedback(contact: String, content: String, finished: NetworkFinished) {
+    func postFeedback(_ contact: String, content: String, finished: @escaping NetworkFinished) {
         
         let parameters: [String : AnyObject] = [
-            "contact" : contact,
-            "content" : content
+            "contact" : contact as AnyObject,
+            "content" : content as AnyObject
         ]
         
         post(POST_FEEDBACK, parameters: parameters, finished: finished)
@@ -256,7 +237,7 @@ extension JFNetworkTools {
      
      - parameter finished: 完成回调
      */
-    func getPlayNode(finished: NetworkFinished) {
+    func getPlayNode(_ finished: @escaping NetworkFinished) {
         get(GET_PALY_NODE, parameters: nil, finished: finished)
     }
 }
@@ -267,10 +248,10 @@ extension JFNetworkTools {
     /**
      对象转json
      */
-    private func objectToJson(object: AnyObject) -> NSString? {
+    fileprivate func objectToJson(_ object: AnyObject) -> NSString? {
         do {
-            let data = try NSJSONSerialization.dataWithJSONObject(object, options: NSJSONWritingOptions.PrettyPrinted)
-            return NSString(data: data, encoding: NSUTF8StringEncoding)
+            let data = try JSONSerialization.data(withJSONObject: object, options: JSONSerialization.WritingOptions.prettyPrinted)
+            return NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         } catch {
             return nil
         }
@@ -282,7 +263,7 @@ extension JFNetworkTools {
      - returns: 0未知 1WiFi 2WAN
      */
     func getCurrentNetworkState() -> Int {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.networkState
     }
 }

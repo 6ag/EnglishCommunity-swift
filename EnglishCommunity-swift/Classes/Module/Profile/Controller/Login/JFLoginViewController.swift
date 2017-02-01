@@ -8,6 +8,41 @@
 
 import UIKit
 import pop
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class JFLoginViewController: UIViewController {
     
@@ -24,50 +59,50 @@ class JFLoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        usernameView.layer.borderColor = UIColor.whiteColor().CGColor
+        usernameView.layer.borderColor = UIColor.white.cgColor
         usernameView.layer.borderWidth = 0.5
-        passwordView.layer.borderColor = UIColor.whiteColor().CGColor
+        passwordView.layer.borderColor = UIColor.white.cgColor
         passwordView.layer.borderWidth = 0.5
         
         // 设置保存的账号
-        usernameField.text = NSUserDefaults.standardUserDefaults().objectForKey("username") as? String
-        passwordField.text = NSUserDefaults.standardUserDefaults().objectForKey("password") as? String
+        usernameField.text = UserDefaults.standard.object(forKey: "username") as? String
+        passwordField.text = UserDefaults.standard.object(forKey: "password") as? String
         
         didChangeTextField(usernameField)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
     /**
      键盘即将显示
      */
-    @objc private func keyboardWillShow(notification: NSNotification) {
+    @objc fileprivate func keyboardWillShow(_ notification: Notification) {
         
         let userInfo = notification.userInfo!
         
-        let beginHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue().size.height
-        let endHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().size.height
+        let beginHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue.size.height
+        let endHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size.height
         
         if beginHeight > 0 && endHeight > 0 {
-            UIView.animateWithDuration(0.25) {
-                self.view.transform = CGAffineTransformMakeTranslation(0, -endHeight + (SCREEN_HEIGHT - CGRectGetMaxY(self.loginButton.frame)) - 10)
-            }
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.transform = CGAffineTransform(translationX: 0, y: -endHeight + (SCREEN_HEIGHT - self.loginButton.frame.maxY) - 10)
+            }) 
         }
         
     }
@@ -75,16 +110,16 @@ class JFLoginViewController: UIViewController {
     /**
      键盘即将隐藏
      */
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        UIView.animateWithDuration(0.25) {
-            self.view.transform = CGAffineTransformIdentity
-        }
+    @objc fileprivate func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.view.transform = CGAffineTransform.identity
+        }) 
     }
     
     /**
      登录按钮点击事件
      */
-    @IBAction func didTappedLoginButton(button: UIButton) {
+    @IBAction func didTappedLoginButton(_ button: UIButton) {
         
         view.endEditing(true)
         
@@ -92,8 +127,8 @@ class JFLoginViewController: UIViewController {
         JFAccountModel.normalAccountLogin("username", username: usernameField.text!, password: passwordField.text!) { (success, tip) in
             if success {
                 JFProgressHUD.dismiss()
-                NSUserDefaults.standardUserDefaults().setObject(self.usernameField.text, forKey: "username")
-                NSUserDefaults.standardUserDefaults().setObject(self.passwordField.text, forKey: "password")
+                UserDefaults.standard.set(self.usernameField.text, forKey: "username")
+                UserDefaults.standard.set(self.passwordField.text, forKey: "password")
                 self.didTappedBackButton()
             } else {
                 JFProgressHUD.showInfoWithStatus(tip)
@@ -101,13 +136,13 @@ class JFLoginViewController: UIViewController {
         }
     }
     
-    @IBAction func didChangeTextField(sender: UITextField) {
+    @IBAction func didChangeTextField(_ sender: UITextField) {
         
         if usernameField.text?.characters.count >= 5 && passwordField.text?.characters.count > 5 {
-            loginButton.enabled = true
+            loginButton.isEnabled = true
             loginButton.backgroundColor = buttonColorNormal
         } else {
-            loginButton.enabled = false
+            loginButton.isEnabled = false
             loginButton.backgroundColor = buttonColorDisabled
         }
     }
@@ -116,13 +151,13 @@ class JFLoginViewController: UIViewController {
      返回
      */
     @IBAction func didTappedBackButton() {
-        dismissViewControllerAnimated(true) {}
+        dismiss(animated: true) {}
     }
     
     /**
      注册
      */
-    @IBAction func didTappedRegisterButton(sender: UIButton) {
+    @IBAction func didTappedRegisterButton(_ sender: UIButton) {
         let registerVc = JFRegisterViewController(nibName: "JFRegisterViewController", bundle: nil)
         registerVc.delegate = self
         navigationController?.pushViewController(registerVc, animated: true)
@@ -131,7 +166,7 @@ class JFLoginViewController: UIViewController {
     /**
      忘记密码
      */
-    @IBAction func didTappedForgotButton(sender: UIButton) {
+    @IBAction func didTappedForgotButton(_ sender: UIButton) {
         let forgotVc = JFForgotViewController(nibName: "JFForgotViewController", bundle: nil)
         navigationController?.pushViewController(forgotVc, animated: true)
     }
@@ -139,10 +174,10 @@ class JFLoginViewController: UIViewController {
     /**
      QQ登录
      */
-    @IBAction func didTappedQQLoginButton(sender: UIButton) {
-        ShareSDK.getUserInfo(SSDKPlatformType.TypeQQ, conditional: nil) { (state, user, error) in
-            if state == SSDKResponseState.Success {
-                self.SDKLoginHandle(state, user: user, type: "qq")
+    @IBAction func didTappedQQLoginButton(_ sender: UIButton) {
+        ShareSDK.getUserInfo(SSDKPlatformType.typeQQ, conditional: nil) { (state, user, error) in
+            if state == SSDKResponseState.success {
+                self.SDKLoginHandle(state, user: user!, type: "qq")
             }
         }
     }
@@ -150,10 +185,10 @@ class JFLoginViewController: UIViewController {
     /**
      微博登录
      */
-    @IBAction func didTappedSinaLoginButton(sender: UIButton) {
-        ShareSDK.getUserInfo(SSDKPlatformType.TypeSinaWeibo, conditional: nil) { (state, user, error) in
-            if state == SSDKResponseState.Success {
-                self.SDKLoginHandle(state, user: user, type: "weibo")
+    @IBAction func didTappedSinaLoginButton(_ sender: UIButton) {
+        ShareSDK.getUserInfo(SSDKPlatformType.typeSinaWeibo, conditional: nil) { (state, user, error) in
+            if state == SSDKResponseState.success {
+                self.SDKLoginHandle(state, user: user!, type: "weibo")
             }
         }
     }
@@ -166,20 +201,20 @@ class JFLoginViewController: UIViewController {
      - parameter error: 错误对象
      - parameter type:  0:qq 1:weibo
      */
-    func SDKLoginHandle(state: SSDKResponseState, user: SSDKUser, type: String) {
+    func SDKLoginHandle(_ state: SSDKResponseState, user: SSDKUser, type: String) {
         
-        let uid = user.uid
-        let token = user.credential.token
-        let nickname = user.nickname
+        let uid = user.uid ?? ""
+        let token = user.credential.token ?? ""
+        let nickname = user.nickname ?? ""
         let avatar = type == "weibo" ? (user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"]! as! String : user.icon) : (user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"]! as! String : user.icon)
         let sex = user.gender.rawValue == 0 ? 1 : 0
         
         JFProgressHUD.showWithStatus("正在登录")
-        JFAccountModel.thirdAccountLogin(type, openid: uid, token: token, nickname: nickname, avatar: avatar, sex: sex, finished: { (success, tip) in
+        JFAccountModel.thirdAccountLogin(type, openid: uid, token: token, nickname: nickname, avatar: avatar ?? "", sex: sex, finished: { (success, tip) in
             if success {
                 JFProgressHUD.dismiss()
-                NSUserDefaults.standardUserDefaults().setObject(self.usernameField.text, forKey: "")
-                NSUserDefaults.standardUserDefaults().setObject(self.passwordField.text, forKey: "")
+                UserDefaults.standard.set(self.usernameField.text, forKey: "")
+                UserDefaults.standard.set(self.passwordField.text, forKey: "")
                 self.didTappedBackButton()
             } else {
                 JFProgressHUD.showInfoWithStatus(tip)
@@ -198,11 +233,11 @@ extension JFLoginViewController: JFRegisterViewControllerDelegate {
      - parameter username: 凭证唯一标示
      - parameter password: 密码
      */
-    func registerSuccess(username: String, password: String) {
+    func registerSuccess(_ username: String, password: String) {
         usernameField.text = username
         passwordField.text = password
         didChangeTextField(usernameField)
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
             self.didTappedLoginButton(self.loginButton)
         }
     }

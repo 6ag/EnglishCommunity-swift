@@ -36,7 +36,7 @@ class JFProfileViewController: UIViewController {
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
         
@@ -45,7 +45,7 @@ class JFProfileViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         updateData()
@@ -54,23 +54,23 @@ class JFProfileViewController: UIViewController {
     /**
      准备tableView
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         view.addSubview(tableView)
         view.addSubview(navigationBarView)
         tableView.addSubview(placeholderButton)
         
         let placeholderView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: headerHeight))
-        placeholderView.userInteractionEnabled = false
+        placeholderView.isUserInteractionEnabled = false
         tableView.tableHeaderView = placeholderView
         tableView.addSubview(headerView)
         
-        navigationBarView.snp_makeConstraints { (make) in
+        navigationBarView.snp.makeConstraints { (make) in
             make.left.top.right.equalTo(0)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH, height: 64))
         }
         
-        placeholderButton.snp_makeConstraints { (make) in
+        placeholderButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(tableView)
             make.centerY.equalTo(tableView).offset(40)
             make.size.equalTo(CGSize(width: SCREEN_WIDTH - 50, height: 150))
@@ -82,7 +82,7 @@ class JFProfileViewController: UIViewController {
     /**
      更新数据
      */
-    private func updateData() {
+    fileprivate func updateData() {
         
         // 更新收藏
         page = 1
@@ -95,7 +95,7 @@ class JFProfileViewController: UIViewController {
     /**
      上拉加载更多
      */
-    @objc private func pullUpMoreData() {
+    @objc fileprivate func pullUpMoreData() {
         page += 1
         loadCollectionVideoInfoList(page, count: 10, method: 1)
     }
@@ -106,7 +106,7 @@ class JFProfileViewController: UIViewController {
      - parameter page:  页码
      - parameter count: 每页数量
      */
-    private func loadCollectionVideoInfoList(page: Int, count: Int, method: Int) {
+    fileprivate func loadCollectionVideoInfoList(_ page: Int, count: Int, method: Int) {
         
         if !JFAccountModel.isLogin() {
             self.changePlaceholderButton()
@@ -137,16 +137,16 @@ class JFProfileViewController: UIViewController {
     /**
      获取未读消息数量
      */
-    private func getUnlookedMessageCount() {
+    fileprivate func getUnlookedMessageCount() {
         
         JFMessageRecord.getUnlookedMessageCount { (success, count) in
             if success {
                 if count != 0 {
                     self.headerView.redPointLabel.text = "\(count)"
-                    self.headerView.redPointLabel.hidden = false
+                    self.headerView.redPointLabel.isHidden = false
                 } else {
                     self.headerView.redPointLabel.text = "0"
-                    self.headerView.redPointLabel.hidden = true
+                    self.headerView.redPointLabel.isHidden = true
                 }
             }
         }
@@ -155,12 +155,12 @@ class JFProfileViewController: UIViewController {
     /**
      清理未读消息数量
      */
-    private func clearUnlookedMessage() {
+    fileprivate func clearUnlookedMessage() {
         
         JFMessageRecord.clearUnlookedMessage { (success) in
             if success {
                 self.headerView.redPointLabel.text = "0"
-                self.headerView.redPointLabel.hidden = true
+                self.headerView.redPointLabel.isHidden = true
             }
         }
     }
@@ -168,34 +168,34 @@ class JFProfileViewController: UIViewController {
     /**
      更新头部数据
      */
-    private func updateHeaderData() {
+    fileprivate func updateHeaderData() {
         if JFAccountModel.isLogin() {
-            headerView.avatarButton.yy_setBackgroundImageWithURL(NSURL(string: JFAccountModel.shareAccount()!.avatar!), forState: UIControlState.Normal, options: YYWebImageOptions(rawValue: 0))
+            headerView.avatarButton.yy_setBackgroundImage(with: URL(string: JFAccountModel.shareAccount()!.avatar!), for: UIControlState(), options: YYWebImageOptions(rawValue: 0))
             headerView.nameLabel.text = JFAccountModel.shareAccount()!.nickname!
         } else {
-            headerView.avatarButton.setBackgroundImage(UIImage(named: "default－portrait"), forState: UIControlState.Normal)
+            headerView.avatarButton.setBackgroundImage(UIImage(named: "default－portrait"), for: UIControlState())
             headerView.nameLabel.text = "点击登录"
             headerView.redPointLabel.text = "0"
-            headerView.redPointLabel.hidden = true
+            headerView.redPointLabel.isHidden = true
         }
     }
     
     /**
      处理占位按钮状态
      */
-    private func changePlaceholderButton() {
+    fileprivate func changePlaceholderButton() {
         
         if JFAccountModel.isLogin() {
             if self.videoInfos.count == 0 {
-                self.placeholderButton.hidden = false
-                self.placeholderButton.selected = true
+                self.placeholderButton.isHidden = false
+                self.placeholderButton.isSelected = true
             } else {
-                self.placeholderButton.hidden = true
-                self.placeholderButton.selected = true
+                self.placeholderButton.isHidden = true
+                self.placeholderButton.isSelected = true
             }
         } else {
-            self.placeholderButton.hidden = false
-            self.placeholderButton.selected = false
+            self.placeholderButton.isHidden = false
+            self.placeholderButton.isSelected = false
             self.videoInfos.removeAll()
             self.tableView.reloadData()
         }
@@ -205,7 +205,7 @@ class JFProfileViewController: UIViewController {
     /**
      点击了占位按钮
      */
-    @objc private func didTappedPlaceholderButton(button: UIButton) {
+    @objc fileprivate func didTappedPlaceholderButton(_ button: UIButton) {
         if isLogin(self) {
             tabBarController?.selectedIndex = 0
         }
@@ -214,20 +214,20 @@ class JFProfileViewController: UIViewController {
     // MARK: - 懒加载
     /// 内容区域
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: SCREEN_BOUNDS, style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: SCREEN_BOUNDS, style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = COLOR_ALL_BG
         tableView.rowHeight = 84
-        tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.collectionIdentifier)
+        tableView.register(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.collectionIdentifier)
         return tableView
     }()
     
     /// 表头部视图
     lazy var headerView: JFProfileHeaderView = {
-        let headerView = NSBundle.mainBundle().loadNibNamed("JFProfileHeaderView", owner: nil, options: nil).last as! JFProfileHeaderView
+        let headerView = Bundle.main.loadNibNamed("JFProfileHeaderView", owner: nil, options: nil)?.last as! JFProfileHeaderView
         headerView.delegate = self
         headerView.frame = CGRect(x: 0, y: -(SCREEN_HEIGHT * 2 - self.headerHeight), width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 2)
         return headerView
@@ -242,11 +242,11 @@ class JFProfileViewController: UIViewController {
     
     /// 没有数据时的占位按钮
     lazy var placeholderButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.hidden = true
-        button.setImage(UIImage(named: "weidenglu"), forState: .Normal)
-        button.setImage(UIImage(named: "placeholder_button_bg"), forState: .Selected)
-        button.addTarget(self, action: #selector(didTappedPlaceholderButton(_:)), forControlEvents: .TouchUpInside)
+        let button = UIButton(type: .custom)
+        button.isHidden = true
+        button.setImage(UIImage(named: "weidenglu"), for: UIControlState())
+        button.setImage(UIImage(named: "placeholder_button_bg"), for: .selected)
+        button.addTarget(self, action: #selector(didTappedPlaceholderButton(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -256,71 +256,71 @@ class JFProfileViewController: UIViewController {
 // MARK: - UITableViewDelegate/UITableViewDatasource
 extension JFProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoInfos.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(collectionIdentifier) as! JFCategoryListCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: collectionIdentifier) as! JFCategoryListCell
         cell.videoInfo = videoInfos[indexPath.row]
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         let playerVc = JFPlayerViewController()
         playerVc.videoInfo = videoInfos[indexPath.item]
         navigationController?.pushViewController(playerVc, animated: true)
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     // 滑动删除事件处理
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        let alertC = UIAlertController(title: "你确定删除这套课程？", message: "删除课程后，对应的离线下载内容也会跟着清除", preferredStyle: UIAlertControllerStyle.Alert)
-        let actionConfirm = UIAlertAction(title: "确定删除", style: UIAlertActionStyle.Cancel) { (action) in
-            if editingStyle == .Delete {
+        let alertC = UIAlertController(title: "你确定删除这套课程？", message: "删除课程后，对应的离线下载内容也会跟着清除", preferredStyle: UIAlertControllerStyle.alert)
+        let actionConfirm = UIAlertAction(title: "确定删除", style: UIAlertActionStyle.cancel) { (action) in
+            if editingStyle == .delete {
                 // 删除视频信息
                 JFProgressHUD.showWithStatus("正在删除")
                 JFNetworkTools.shareNetworkTool.addOrCancelCollection(self.videoInfos[indexPath.row].id, finished: { (success, result, error) in
                     
                     JFProgressHUD.showSuccessWithStatus("操作成功")
-                    guard let result = result where result["status"] == "success" else {
+                    guard let result = result, result["status"] == "success" else {
                         return
                     }
                     
-                    self.videoInfos.removeAtIndex(indexPath.row)
-                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Left)
+                    self.videoInfos.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.left)
                     if self.videoInfos.count == 0 {
-                        self.placeholderButton.hidden = false
+                        self.placeholderButton.isHidden = false
                     } else {
-                        self.placeholderButton.hidden = true
+                        self.placeholderButton.isHidden = true
                     }
                 })
             }
         }
-        let actionCancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Destructive) { (action) in
+        let actionCancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.destructive) { (action) in
             
         }
         alertC.addAction(actionConfirm)
         alertC.addAction(actionCancel)
-        presentViewController(alertC, animated: true) { 
+        present(alertC, animated: true) { 
             
         }
         
     }
     
     // 修改滑动删除的文字
-    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "删除"
     }
     
     // 根据偏移量修改导航栏
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let offsetY = scrollView.contentOffset.y + 20
         navigationBarView.backgroundColor = UIColor(white: 1, alpha: offsetY * (1 / 223.5))
@@ -341,11 +341,11 @@ extension JFProfileViewController: UITableViewDataSource, UITableViewDelegate {
         
         // 头像缩放动画
         if offsetY > 85.5 {
-            headerView.avatarButton.transform = CGAffineTransformMakeScale(1 - 85.5 * (1 / 223.5), 1 - 85.5 * (1 / 223.5))
+            headerView.avatarButton.transform = CGAffineTransform(scaleX: 1 - 85.5 * (1 / 223.5), y: 1 - 85.5 * (1 / 223.5))
         } else if offsetY < -20 {
-            headerView.avatarButton.transform = CGAffineTransformMakeScale(1 - -20 * (1 / 223.5), 1 - -20 * (1 / 223.5))
+            headerView.avatarButton.transform = CGAffineTransform(scaleX: 1 - -20 * (1 / 223.5), y: 1 - -20 * (1 / 223.5))
         } else {
-            headerView.avatarButton.transform = CGAffineTransformMakeScale(1 - offsetY * (1 / 223.5), 1 - offsetY * (1 / 223.5))
+            headerView.avatarButton.transform = CGAffineTransform(scaleX: 1 - offsetY * (1 / 223.5), y: 1 - offsetY * (1 / 223.5))
         }
         
     }
@@ -359,7 +359,7 @@ extension JFProfileViewController: JFProfileNavigationBarViewDelegate {
      点击了设置
      */
     func didTappedSetting() {
-        navigationController?.pushViewController(JFSettingViewController(style: UITableViewStyle.Grouped), animated: true)
+        navigationController?.pushViewController(JFSettingViewController(style: UITableViewStyle.grouped), animated: true)
     }
 }
 
@@ -371,37 +371,37 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      
      - parameter sourceType:  资源类型
      */
-    func setupImagePicker(sourceType: UIImagePickerControllerSourceType) {
+    func setupImagePicker(_ sourceType: UIImagePickerControllerSourceType) {
         imagePickerC.view.backgroundColor = COLOR_ALL_BG
         imagePickerC.delegate = self
         imagePickerC.sourceType = sourceType
         imagePickerC.allowsEditing = true
-        imagePickerC.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        imagePickerC.modalTransitionStyle = UIModalTransitionStyle.coverVertical
     }
     
     /**
      头像按钮点击
      */
-    func didTappedAvatarButton(button: UIButton) {
+    func didTappedAvatarButton(_ button: UIButton) {
         if isLogin(self) {
             let alertC = UIAlertController()
-            let takeAction = UIAlertAction(title: "拍照", style: UIAlertActionStyle.Default, handler: { (action) in
-                if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            let takeAction = UIAlertAction(title: "拍照", style: UIAlertActionStyle.default, handler: { (action) in
+                if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
                     JFProgressHUD.showInfoWithStatus("摄像头不可用")
                     return
                 }
-                self.setupImagePicker(.Camera)
-                self.presentViewController(self.imagePickerC, animated: true, completion: {})
+                self.setupImagePicker(.camera)
+                self.present(self.imagePickerC, animated: true, completion: {})
             })
-            let photoLibraryAction = UIAlertAction(title: "从相册选择照片", style: UIAlertActionStyle.Default, handler: { (action) in
-                if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+            let photoLibraryAction = UIAlertAction(title: "从相册选择照片", style: UIAlertActionStyle.default, handler: { (action) in
+                if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
                     JFProgressHUD.showInfoWithStatus("相册不可用")
                     return
                 }
-                self.setupImagePicker(.PhotoLibrary)
-                self.presentViewController(self.imagePickerC, animated: true, completion: {})
+                self.setupImagePicker(.photoLibrary)
+                self.present(self.imagePickerC, animated: true, completion: {})
             })
-            let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: { (action) in
                 
             })
             alertC.addAction(takeAction)
@@ -412,7 +412,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
                 popover?.sourceView = button
                 popover?.sourceRect = button.bounds
             }
-            self.presentViewController(alertC, animated: true, completion: {})
+            self.present(alertC, animated: true, completion: {})
         }
     }
     
@@ -421,7 +421,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      */
     func didTappedFriendButton() {
         if isLogin(self) {
-            navigationController?.pushViewController(JFFriendViewController(style: UITableViewStyle.Plain), animated: true)
+            navigationController?.pushViewController(JFFriendViewController(style: UITableViewStyle.plain), animated: true)
         }
     }
     
@@ -431,7 +431,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
     func didTappedMessageButton() {
         if isLogin(self) {
             clearUnlookedMessage()
-            navigationController?.pushViewController(JFMessageListViewController(style: UITableViewStyle.Plain), animated: true)
+            navigationController?.pushViewController(JFMessageListViewController(style: UITableViewStyle.plain), animated: true)
         }
     }
     
@@ -440,7 +440,7 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
      */
     func didTappedInfoButton() {
         if isLogin(self) {
-            navigationController?.pushViewController(JFInfomationViewController(style: UITableViewStyle.Plain), animated: true)
+            navigationController?.pushViewController(JFInfomationViewController(style: UITableViewStyle.plain), animated: true)
         }
     }
 }
@@ -449,14 +449,14 @@ extension JFProfileViewController: JFProfileHeaderViewDelegate {
 // MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate
 extension JFProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         let newImage = image.resizeImageWithNewSize(CGSize(width: 150, height: 150))
         uploadUserAvatar(newImage)
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     /**
@@ -464,7 +464,7 @@ extension JFProfileViewController: UINavigationControllerDelegate, UIImagePicker
      
      - parameter image: 头像图片
      */
-    func uploadUserAvatar(image: UIImage) {
+    func uploadUserAvatar(_ image: UIImage) {
         
         JFAccountModel.uploadUserAvatar(image) { (success) in
             if success {

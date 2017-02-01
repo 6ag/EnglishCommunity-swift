@@ -10,10 +10,10 @@ import UIKit
 
 protocol JFDetailBottomBarViewDelegate: NSObjectProtocol {
     
-    func didTappedDownloadButton(button: UIButton)
-    func didTappedShareButton(button: UIButton)
-    func didTappedChangeLineButton(button: UIButton)
-    func didTappedJoinCollectionButton(button: UIButton)
+    func didTappedDownloadButton(_ button: UIButton)
+    func didTappedShareButton(_ button: UIButton)
+    func didTappedChangeLineButton(_ button: UIButton)
+    func didTappedJoinCollectionButton(_ button: UIButton)
 }
 
 class JFDetailBottomBarView: UIView {
@@ -25,19 +25,19 @@ class JFDetailBottomBarView: UIView {
     
     weak var delegate: JFDetailBottomBarViewDelegate?
     
-    @IBAction func didTappedDownloadButton(button: UIButton) {
+    @IBAction func didTappedDownloadButton(_ button: UIButton) {
         delegate?.didTappedDownloadButton(button)
     }
     
-    @IBAction func didTappedShareButton(button: UIButton) {
+    @IBAction func didTappedShareButton(_ button: UIButton) {
         delegate?.didTappedShareButton(button)
     }
     
-    @IBAction func didTappedChangeLineButton(button: UIButton) {
+    @IBAction func didTappedChangeLineButton(_ button: UIButton) {
         delegate?.didTappedChangeLineButton(button)
     }
     
-    @IBAction func didTappedJoinCollectionButton(button: UIButton) {
+    @IBAction func didTappedJoinCollectionButton(_ button: UIButton) {
         delegate?.didTappedJoinCollectionButton(button)
     }
     

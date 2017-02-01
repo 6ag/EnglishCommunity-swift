@@ -20,7 +20,7 @@ class JFTabBarController: UITabBarController {
         prepareVc()
     }
     
-    private func prepareVc() {
+    fileprivate func prepareVc() {
         
         let essenceVc = JFHomeViewController()
         configChildViewController(essenceVc, title: "首页", imageName: "tabbar_video_icon_normal", selectedImageName: "tabbar_video_icon_selected")
@@ -46,12 +46,12 @@ class JFTabBarController: UITabBarController {
      - parameter imageName:           默认图片名
      - parameter selectedImageName:   选中图片名
      */
-    private func configChildViewController(childViewController: UIViewController, title: String, imageName: String, selectedImageName: String) {
+    fileprivate func configChildViewController(_ childViewController: UIViewController, title: String, imageName: String, selectedImageName: String) {
         childViewController.title = title
         childViewController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -3)
-        childViewController.tabBarItem.setTitleTextAttributes([NSFontAttributeName : UIFont.systemFontOfSize(12)], forState: UIControlState.Normal)
-        childViewController.tabBarItem.image = UIImage(named: imageName)?.imageWithRenderingMode(.AlwaysOriginal)
-        childViewController.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.imageWithRenderingMode(.AlwaysOriginal)
+        childViewController.tabBarItem.setTitleTextAttributes([NSFontAttributeName : UIFont.systemFont(ofSize: 12)], for: UIControlState())
+        childViewController.tabBarItem.image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
+        childViewController.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
         let navigationC = JFNavigationController(rootViewController: childViewController)
         addChildViewController(navigationC)
     }
@@ -59,7 +59,7 @@ class JFTabBarController: UITabBarController {
     /**
      哪些控制器可以进行旋转
      */
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         guard let nav = self.viewControllers?[self.selectedIndex] as? JFNavigationController else {
             return false
         }
@@ -67,11 +67,11 @@ class JFTabBarController: UITabBarController {
             return false
         }
         
-        if topVc.isKindOfClass(JFPlayerViewController.classForCoder()) {
+        if topVc.isKind(of: JFPlayerViewController.classForCoder()) {
             return true
         }
         
-        if topVc.isKindOfClass(JFWebPlayerViewController.classForCoder()) {
+        if topVc.isKind(of: JFWebPlayerViewController.classForCoder()) {
             return true
         }
         
@@ -81,23 +81,23 @@ class JFTabBarController: UITabBarController {
     /**
      支持哪些方向的旋转
      */
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         guard let nav = self.viewControllers?[self.selectedIndex] as? JFNavigationController else {
-            return UIInterfaceOrientationMask.Portrait
+            return UIInterfaceOrientationMask.portrait
         }
         guard let topVc = nav.topViewController else {
-            return UIInterfaceOrientationMask.Portrait
+            return UIInterfaceOrientationMask.portrait
         }
         
-        if topVc.isKindOfClass(JFPlayerViewController.classForCoder()) {
-            return [UIInterfaceOrientationMask.Portrait, UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
+        if topVc.isKind(of: JFPlayerViewController.classForCoder()) {
+            return [UIInterfaceOrientationMask.portrait, UIInterfaceOrientationMask.landscapeLeft, UIInterfaceOrientationMask.landscapeRight]
         }
         
-        if topVc.isKindOfClass(JFWebPlayerViewController.classForCoder()) {
-            return [UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
+        if topVc.isKind(of: JFWebPlayerViewController.classForCoder()) {
+            return [UIInterfaceOrientationMask.landscapeLeft, UIInterfaceOrientationMask.landscapeRight]
         }
         
-        return UIInterfaceOrientationMask.Portrait
+        return UIInterfaceOrientationMask.portrait
     }
     
 }
@@ -113,7 +113,7 @@ extension JFTabBarController: JFTabBarDelegate {
         let publishVc = JFNavigationController(rootViewController: JFPublishViewController())
         let loginVc = JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil))
         let vc = JFAccountModel.isLogin() ? publishVc : loginVc
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 }
 

@@ -18,7 +18,7 @@ public protocol JFPlayerControlViewDelegate: class {
      
      - parameter index: definition item index
      */
-    func controlViewDidChooseDefition(index: Int)
+    func controlViewDidChooseDefition(_ index: Int)
     
     /**
      当用户按了重播调用
@@ -71,21 +71,21 @@ class JFPlayerControlView: UIView {
     var maskImageView   = UIImageView()
     
     /// 顶部
-    var backButton  = UIButton(type: UIButtonType.Custom)
+    var backButton  = UIButton(type: UIButtonType.custom)
     var titleLabel  = UILabel()
     var chooseDefitionView = UIView()
     
     /// 底部
-    private var currentTimeLabel = UILabel()
-    private var totalTimeLabel   = UILabel()
+    fileprivate var currentTimeLabel = UILabel()
+    fileprivate var totalTimeLabel   = UILabel()
     
-    private var timeSlider       = JFTimeSlider()
-    private var progressView     = UIProgressView()
+    fileprivate var timeSlider       = JFTimeSlider()
+    fileprivate var progressView     = UIProgressView()
     
-    private var playButton       = UIButton(type: UIButtonType.Custom)
-    private var fullScreenButton = UIButton(type: UIButtonType.Custom)
-    private var slowButton       = UIButton(type: UIButtonType.Custom)
-    private var mirrorButton     = UIButton(type: UIButtonType.Custom)
+    fileprivate var playButton       = UIButton(type: UIButtonType.custom)
+    fileprivate var fullScreenButton = UIButton(type: UIButtonType.custom)
+    fileprivate var slowButton       = UIButton(type: UIButtonType.custom)
+    fileprivate var mirrorButton     = UIButton(type: UIButtonType.custom)
     
     /// 中间部分
     var loadingIndector  = NVActivityIndicatorView(frame:  CGRect(x: 0, y: 0, width: 30, height: 30))
@@ -94,13 +94,13 @@ class JFPlayerControlView: UIView {
     var seekToViewImage  = UIImageView()
     var seekToLabel      = UILabel()
     
-    var centerButton     = UIButton(type: UIButtonType.Custom)
+    var centerButton     = UIButton(type: UIButtonType.custom)
     
     var videoItems: [JFPlayerItemDefinitionItem] = []
     
     var selectedIndex = 0
     
-    private var isSelectecDefitionViewOpened = false
+    fileprivate var isSelectecDefitionViewOpened = false
     
     var isFullScreen = false
     
@@ -123,11 +123,11 @@ class JFPlayerControlView: UIView {
      隐藏播放器UI组件
      */
     func hidePlayerUIComponents() {
-        centerButton.hidden = true
+        centerButton.isHidden = true
         topMaskView.alpha    = 0.0
         bottomMaskView.alpha = 0.0
         
-        chooseDefitionView.snp_updateConstraints { (make) in
+        chooseDefitionView.snp.updateConstraints { (make) in
             make.height.equalTo(35)
         }
         chooseDefitionView.alpha = 0.0
@@ -138,53 +138,53 @@ class JFPlayerControlView: UIView {
      
      - parameter isForFullScreen: 是否是充满全屏的
      */
-    func updateUI(isForFullScreen: Bool) {
+    func updateUI(_ isForFullScreen: Bool) {
         isFullScreen = isForFullScreen
         
         if isForFullScreen {
             if JFPlayerConf.slowAndMirror {
-                self.slowButton.hidden = false
-                self.mirrorButton.hidden = false
+                self.slowButton.isHidden = false
+                self.mirrorButton.isHidden = false
                 
-                fullScreenButton.snp_remakeConstraints { (make) in
+                fullScreenButton.snp.remakeConstraints { (make) in
                     make.width.equalTo(50)
                     make.height.equalTo(50)
                     make.centerY.equalTo(currentTimeLabel)
-                    make.left.equalTo(slowButton.snp_right)
-                    make.right.equalTo(bottomMaskView.snp_right)
+                    make.left.equalTo(slowButton.snp.right)
+                    make.right.equalTo(bottomMaskView.snp.right)
                 }
             }
-            fullScreenButton.setImage(JFImageResourcePath("JFPlayer_portialscreen"), forState: UIControlState.Normal)
-            chooseDefitionView.hidden = false
+            fullScreenButton.setImage(JFImageResourcePath("JFPlayer_portialscreen"), for: UIControlState())
+            chooseDefitionView.isHidden = false
             if JFPlayerConf.topBarShowInCase.rawValue == 2 {
-                topMaskView.hidden = true
+                topMaskView.isHidden = true
             } else {
-                topMaskView.hidden = false
+                topMaskView.isHidden = false
             }
             topMaskView.backgroundColor = maskViewColor
-            titleLabel.hidden = false
-            backButton.hidden = false
+            titleLabel.isHidden = false
+            backButton.isHidden = false
         } else {
             if JFPlayerConf.topBarShowInCase.rawValue >= 1 {
-                topMaskView.hidden = true
+                topMaskView.isHidden = true
             } else {
-                topMaskView.hidden = false
+                topMaskView.isHidden = false
             }
-            chooseDefitionView.hidden = true
+            chooseDefitionView.isHidden = true
             
-            self.slowButton.hidden = true
-            self.mirrorButton.hidden = true
-            fullScreenButton.setImage(JFImageResourcePath("JFPlayer_fullscreen"), forState: UIControlState.Normal)
-            fullScreenButton.snp_remakeConstraints { (make) in
+            self.slowButton.isHidden = true
+            self.mirrorButton.isHidden = true
+            fullScreenButton.setImage(JFImageResourcePath("JFPlayer_fullscreen"), for: UIControlState())
+            fullScreenButton.snp.remakeConstraints { (make) in
                 make.width.equalTo(50)
                 make.height.equalTo(50)
                 make.centerY.equalTo(currentTimeLabel)
-                make.left.equalTo(totalTimeLabel.snp_right)
-                make.right.equalTo(bottomMaskView.snp_right)
+                make.left.equalTo(totalTimeLabel.snp.right)
+                make.right.equalTo(bottomMaskView.snp.right)
             }
             topMaskView.backgroundColor = UIColor(white: 0, alpha: 0.0)
-            titleLabel.hidden = true
-            backButton.hidden = true
+            titleLabel.isHidden = true
+            backButton.isHidden = true
         }
     }
     
@@ -192,22 +192,22 @@ class JFPlayerControlView: UIView {
      视频播放完成后 在视图中间显示一个 重播按钮
      */
     func showPlayToTheEndView() {
-        centerButton.hidden = false
+        centerButton.isHidden = false
     }
     
     /**
      显示正在缓冲动画
      */
     func showLoader() {
-        loadingIndector.hidden = false
-        loadingIndector.startAnimation()
+        loadingIndector.isHidden = false
+        loadingIndector.startAnimating()
     }
     
     /**
      缓冲完成 隐藏缓存动画
      */
     func hideLoader() {
-        loadingIndector.hidden = true
+        loadingIndector.isHidden = true
     }
     
     /**
@@ -216,21 +216,21 @@ class JFPlayerControlView: UIView {
      - parameter toSecound: 需要播放的秒
      - parameter isAdd:     是快进还是快退
      */
-    func showSeekToView(toSecound: NSTimeInterval, isAdd: Bool) {
+    func showSeekToView(_ toSecound: TimeInterval, isAdd: Bool) {
         
-        seekToView.hidden = false
+        seekToView.isHidden = false
         let Min = Int(toSecound / 60)
-        let Sec = Int(toSecound % 60)
+        let Sec = Int(toSecound.truncatingRemainder(dividingBy: 60))
         seekToLabel.text = String(format: "%02d:%02d", Min, Sec)
         let rotate = isAdd ? 0 : CGFloat(M_PI)
-        seekToViewImage.transform = CGAffineTransformMakeRotation(rotate)
+        seekToViewImage.transform = CGAffineTransform(rotationAngle: rotate)
     }
     
     /**
      隐藏 手势时间view
      */
     func hideSeekToView() {
-        seekToView.hidden = true
+        seekToView.isHidden = true
     }
     
     /**
@@ -238,11 +238,11 @@ class JFPlayerControlView: UIView {
      
      - parameter cover: 封面图片的url字符串
      */
-    func showCoverWithLink(cover:String) {
-        if let url = NSURL(string: cover) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                let data = NSData(contentsOfURL: url) //make sure your image in this url does exist, otherwise unwrap in a if let check
-                dispatch_async(dispatch_get_main_queue(), {
+    func showCoverWithLink(_ cover:String) {
+        if let url = URL(string: cover) {
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+                let data = try? Data(contentsOf: url) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                DispatchQueue.main.async(execute: {
                     self.maskImageView.image = UIImage(data: data!)
                     self.hideLoader()
                 });
@@ -254,7 +254,7 @@ class JFPlayerControlView: UIView {
      隐藏封面图片
      */
     func hideCoverImageView() {
-        self.maskImageView.hidden = true
+        self.maskImageView.isHidden = true
     }
     
     /**
@@ -263,7 +263,7 @@ class JFPlayerControlView: UIView {
      - parameter items: <#items description#>
      - parameter index: <#index description#>
      */
-    func prepareChooseDefinitionView(items: [JFPlayerItemDefinitionItem], index: Int) {
+    func prepareChooseDefinitionView(_ items: [JFPlayerItemDefinitionItem], index: Int) {
         self.videoItems = items
         for item in chooseDefitionView.subviews {
             item.removeFromSuperview()
@@ -280,18 +280,18 @@ class JFPlayerControlView: UIView {
                 button.tag = i
             }
             
-            button.setTitle("\(items[button.tag].definitionName)", forState: UIControlState.Normal)
+            button.setTitle("\(items[button.tag].definitionName)", for: UIControlState())
             chooseDefitionView.addSubview(button)
-            button.addTarget(self, action: #selector(self.onDefinitionSelected(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            button.snp_makeConstraints(closure: { (make) in
-                make.top.equalTo(chooseDefitionView.snp_top).offset(35 * i)
+            button.addTarget(self, action: #selector(self.onDefinitionSelected(_:)), for: UIControlEvents.touchUpInside)
+            button.snp.makeConstraints({ (make) in
+                make.top.equalTo(chooseDefitionView.snp.top).offset(35 * i)
                 make.width.equalTo(50)
                 make.height.equalTo(25)
                 make.centerX.equalTo(chooseDefitionView)
             })
             
             if items.count == 1 {
-                button.enabled = false
+                button.isEnabled = false
             }
         }
     }
@@ -301,15 +301,15 @@ class JFPlayerControlView: UIView {
      
      - parameter button: <#button description#>
      */
-    @objc private func onDefinitionSelected(button:UIButton) {
+    @objc fileprivate func onDefinitionSelected(_ button:UIButton) {
         let height = isSelectecDefitionViewOpened ? 35 : videoItems.count * 40
-        chooseDefitionView.snp_updateConstraints { (make) in
+        chooseDefitionView.snp.updateConstraints { (make) in
             make.height.equalTo(height)
         }
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.layoutIfNeeded()
-        }
+        }) 
         isSelectecDefitionViewOpened = !isSelectecDefitionViewOpened
         if selectedIndex != button.tag {
             selectedIndex = button.tag
@@ -321,8 +321,8 @@ class JFPlayerControlView: UIView {
     /**
      重播
      */
-    @objc private func onReplyButtonPressed() {
-        centerButton.hidden = true
+    @objc fileprivate func onReplyButtonPressed() {
+        centerButton.isHidden = true
         delegate?.controlViewDidPressOnReply()
     }
     
@@ -342,12 +342,12 @@ class JFPlayerControlView: UIView {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         // 主体
         addSubview(mainMaskView)
         mainMaskView.addSubview(topMaskView)
         mainMaskView.addSubview(bottomMaskView)
-        mainMaskView.insertSubview(maskImageView, atIndex: 0)
+        mainMaskView.insertSubview(maskImageView, at: 0)
         
         bottomMaskView.backgroundColor = maskViewColor
         
@@ -356,11 +356,11 @@ class JFPlayerControlView: UIView {
         topMaskView.addSubview(titleLabel)
         addSubview(chooseDefitionView)
         
-        backButton.setImage(JFImageResourcePath("JFPlayer_back"), forState: UIControlState.Normal)
+        backButton.setImage(JFImageResourcePath("JFPlayer_back"), for: UIControlState())
         
-        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.textColor = UIColor.white
         titleLabel.text      = ""
-        titleLabel.font      = UIFont.systemFontOfSize(16)
+        titleLabel.font      = UIFont.systemFont(ofSize: 16)
         
         chooseDefitionView.clipsToBounds = true
         
@@ -374,50 +374,50 @@ class JFPlayerControlView: UIView {
         bottomMaskView.addSubview(mirrorButton)
         bottomMaskView.addSubview(slowButton)
         
-        playButton.setImage(JFImageResourcePath("JFPlayer_play"), forState: UIControlState.Normal)
-        playButton.setImage(JFImageResourcePath("JFPlayer_pause"), forState: UIControlState.Selected)
+        playButton.setImage(JFImageResourcePath("JFPlayer_play"), for: UIControlState())
+        playButton.setImage(JFImageResourcePath("JFPlayer_pause"), for: UIControlState.selected)
         
-        currentTimeLabel.textColor  = UIColor.whiteColor()
-        currentTimeLabel.font       = UIFont.systemFontOfSize(12)
+        currentTimeLabel.textColor  = UIColor.white
+        currentTimeLabel.font       = UIFont.systemFont(ofSize: 12)
         currentTimeLabel.text       = "00:00"
-        currentTimeLabel.textAlignment = NSTextAlignment.Center
+        currentTimeLabel.textAlignment = NSTextAlignment.center
         
-        totalTimeLabel.textColor    = UIColor.whiteColor()
-        totalTimeLabel.font         = UIFont.systemFontOfSize(12)
+        totalTimeLabel.textColor    = UIColor.white
+        totalTimeLabel.font         = UIFont.systemFont(ofSize: 12)
         totalTimeLabel.text         = "00:00"
-        totalTimeLabel.textAlignment   = NSTextAlignment.Center
+        totalTimeLabel.textAlignment   = NSTextAlignment.center
         
         timeSlider.maximumValue = 1.0
         timeSlider.minimumValue = 0.0
         timeSlider.value        = 0.0
-        timeSlider.setThumbImage(JFImageResourcePath("JFPlayer_slider_thumb"), forState: UIControlState.Normal)
+        timeSlider.setThumbImage(JFImageResourcePath("JFPlayer_slider_thumb"), for: UIControlState())
         
-        timeSlider.maximumTrackTintColor = UIColor.clearColor()
+        timeSlider.maximumTrackTintColor = UIColor.clear
         timeSlider.minimumTrackTintColor = JFPlayerConf.tintColor
         
         progressView.tintColor      = UIColor ( red: 1.0, green: 1.0, blue: 1.0, alpha: 0.6 )
         progressView.trackTintColor = UIColor ( red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3 )
         
-        fullScreenButton.setImage(JFImageResourcePath("JFPlayer_fullscreen"), forState: UIControlState.Normal)
+        fullScreenButton.setImage(JFImageResourcePath("JFPlayer_fullscreen"), for: UIControlState())
         
         mirrorButton.layer.borderWidth = 1
-        mirrorButton.layer.borderColor = UIColor(red: 204.0 / 255.0, green: 204.0 / 255.0, blue: 204.0 / 255.0, alpha: 1.0).CGColor
+        mirrorButton.layer.borderColor = UIColor(red: 204.0 / 255.0, green: 204.0 / 255.0, blue: 204.0 / 255.0, alpha: 1.0).cgColor
         mirrorButton.layer.cornerRadius = 2.0
-        mirrorButton.setTitle("镜像", forState: UIControlState.Normal)
-        mirrorButton.titleLabel?.font = UIFont.systemFontOfSize(14)
-        mirrorButton.hidden = true
+        mirrorButton.setTitle("镜像", for: UIControlState())
+        mirrorButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        mirrorButton.isHidden = true
         
         slowButton.layer.borderWidth = 1
-        slowButton.layer.borderColor = UIColor(red: 204.0 / 255.0, green: 204.0 / 255.0, blue: 204.0 / 255.0, alpha: 1.0).CGColor
+        slowButton.layer.borderColor = UIColor(red: 204.0 / 255.0, green: 204.0 / 255.0, blue: 204.0 / 255.0, alpha: 1.0).cgColor
         slowButton.layer.cornerRadius = 2.0
-        slowButton.setTitle("1.0X", forState: UIControlState.Normal)
-        slowButton.titleLabel?.font = UIFont.systemFontOfSize(14)
-        mirrorButton.hidden = true
+        slowButton.setTitle("1.0X", for: UIControlState())
+        slowButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        mirrorButton.isHidden = true
         
         // 中间
         mainMaskView.addSubview(loadingIndector)
         
-        loadingIndector.hidesWhenStopped = true
+//        loadingIndector.hidesWhenStopped = true
         loadingIndector.type             = JFPlayerConf.loaderType
         loadingIndector.color            = JFPlayerConf.tintColor
         
@@ -427,142 +427,142 @@ class JFPlayerControlView: UIView {
         seekToView.addSubview(seekToViewImage)
         seekToView.addSubview(seekToLabel)
         
-        seekToLabel.font                = UIFont.systemFontOfSize(13)
+        seekToLabel.font                = UIFont.systemFont(ofSize: 13)
         seekToLabel.textColor           = UIColor ( red: 0.9098, green: 0.9098, blue: 0.9098, alpha: 1.0 )
         seekToView.backgroundColor      = UIColor ( red: 0.0, green: 0.0, blue: 0.0, alpha: 0.7 )
         seekToView.layer.cornerRadius   = 4
         seekToView.layer.masksToBounds  = true
-        seekToView.hidden               = true
+        seekToView.isHidden               = true
         
         seekToViewImage.image = JFImageResourcePath("JFPlayer_seek_to_image")
         
         self.addSubview(centerButton)
-        centerButton.hidden = true
-        centerButton.setImage(JFImageResourcePath("JFPlayer_replay"), forState: UIControlState.Normal)
-        centerButton.addTarget(self, action: #selector(self.onReplyButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
+        centerButton.isHidden = true
+        centerButton.setImage(JFImageResourcePath("JFPlayer_replay"), for: UIControlState())
+        centerButton.addTarget(self, action: #selector(self.onReplyButtonPressed), for: UIControlEvents.touchUpInside)
     }
     
     /**
      添加UI
      */
-    private func addSnapKitConstraint() {
+    fileprivate func addSnapKitConstraint() {
         
         // 主体
-        mainMaskView.snp_makeConstraints { (make) in
+        mainMaskView.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
         
-        maskImageView.snp_makeConstraints { (make) in
+        maskImageView.snp.makeConstraints { (make) in
             make.edges.equalTo(mainMaskView)
         }
         
-        topMaskView.snp_makeConstraints { (make) in
+        topMaskView.snp.makeConstraints { (make) in
             make.top.left.right.equalTo(mainMaskView)
             make.height.equalTo(65)
         }
         
-        bottomMaskView.snp_makeConstraints { (make) in
+        bottomMaskView.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(mainMaskView)
             make.height.equalTo(50)
         }
         
         // 顶部
-        backButton.snp_makeConstraints { (make) in
+        backButton.snp.makeConstraints { (make) in
             make.width.height.equalTo(50)
             make.left.bottom.equalTo(topMaskView)
         }
         
-        titleLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(backButton.snp_right)
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(backButton.snp.right)
             make.centerY.equalTo(backButton)
         }
         
-        chooseDefitionView.snp_makeConstraints { (make) in
-            make.right.equalTo(topMaskView.snp_right).offset(-10)
-            make.top.equalTo(titleLabel.snp_top).offset(-4)
+        chooseDefitionView.snp.makeConstraints { (make) in
+            make.right.equalTo(topMaskView.snp.right).offset(-10)
+            make.top.equalTo(titleLabel.snp.top).offset(-4)
             make.width.equalTo(60)
             make.height.equalTo(30)
         }
         
         // 底部
-        playButton.snp_makeConstraints { (make) in
+        playButton.snp.makeConstraints { (make) in
             make.width.equalTo(50)
             make.height.equalTo(50)
             make.left.bottom.equalTo(bottomMaskView)
         }
         
-        currentTimeLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(playButton.snp_right)
+        currentTimeLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(playButton.snp.right)
             make.centerY.equalTo(playButton)
             make.width.equalTo(40)
         }
         
-        timeSlider.snp_makeConstraints { (make) in
+        timeSlider.snp.makeConstraints { (make) in
             make.centerY.equalTo(currentTimeLabel)
-            make.left.equalTo(currentTimeLabel.snp_right).offset(10).priority(750)
+            make.left.equalTo(currentTimeLabel.snp.right).offset(10).priority(750)
             make.height.equalTo(30)
         }
         
-        progressView.snp_makeConstraints { (make) in
+        progressView.snp.makeConstraints { (make) in
             make.centerY.left.right.equalTo(timeSlider)
             make.height.equalTo(2)
         }
         
-        totalTimeLabel.snp_makeConstraints { (make) in
+        totalTimeLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(currentTimeLabel)
-            make.left.equalTo(timeSlider.snp_right).offset(5)
+            make.left.equalTo(timeSlider.snp.right).offset(5)
             make.width.equalTo(40)
         }
         
-        mirrorButton.snp_makeConstraints { (make) in
+        mirrorButton.snp.makeConstraints { (make) in
             make.width.equalTo(50)
             make.height.equalTo(30)
-            make.left.equalTo(totalTimeLabel.snp_right).offset(10)
+            make.left.equalTo(totalTimeLabel.snp.right).offset(10)
             make.centerY.equalTo(currentTimeLabel)
         }
         
-        slowButton.snp_makeConstraints { (make) in
+        slowButton.snp.makeConstraints { (make) in
             make.width.equalTo(50)
             make.height.equalTo(30)
-            make.left.equalTo(mirrorButton.snp_right).offset(10)
+            make.left.equalTo(mirrorButton.snp.right).offset(10)
             make.centerY.equalTo(currentTimeLabel)
         }
         
-        fullScreenButton.snp_makeConstraints { (make) in
+        fullScreenButton.snp.makeConstraints { (make) in
             make.width.equalTo(50)
             make.height.equalTo(50)
             make.centerY.equalTo(currentTimeLabel)
-            make.left.equalTo(totalTimeLabel.snp_right)
-            make.right.equalTo(bottomMaskView.snp_right)
+            make.left.equalTo(totalTimeLabel.snp.right)
+            make.right.equalTo(bottomMaskView.snp.right)
         }
         
         // 中间
-        loadingIndector.snp_makeConstraints { (make) in
-            make.centerX.equalTo(mainMaskView.snp_centerX).offset(-15)
-            make.centerY.equalTo(mainMaskView.snp_centerY).offset(-15)
+        loadingIndector.snp.makeConstraints { (make) in
+            make.centerX.equalTo(mainMaskView.snp.centerX).offset(-15)
+            make.centerY.equalTo(mainMaskView.snp.centerY).offset(-15)
         }
         
-        seekToView.snp_makeConstraints { (make) in
-            make.center.equalTo(self.snp_center)
+        seekToView.snp.makeConstraints { (make) in
+            make.center.equalTo(self.snp.center)
             make.width.equalTo(100)
             make.height.equalTo(40)
         }
         
-        seekToViewImage.snp_makeConstraints { (make) in
-            make.left.equalTo(seekToView.snp_left).offset(15)
-            make.centerY.equalTo(seekToView.snp_centerY)
+        seekToViewImage.snp.makeConstraints { (make) in
+            make.left.equalTo(seekToView.snp.left).offset(15)
+            make.centerY.equalTo(seekToView.snp.centerY)
             make.height.equalTo(15)
             make.width.equalTo(25)
         }
         
-        seekToLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(seekToViewImage.snp_right).offset(10)
-            make.centerY.equalTo(seekToView.snp_centerY)
+        seekToLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(seekToViewImage.snp.right).offset(10)
+            make.centerY.equalTo(seekToView.snp.centerY)
         }
         
-        centerButton.snp_makeConstraints { (make) in
-            make.centerX.equalTo(mainMaskView.snp_centerX)
-            make.centerY.equalTo(mainMaskView.snp_centerY)
+        centerButton.snp.makeConstraints { (make) in
+            make.centerX.equalTo(mainMaskView.snp.centerX)
+            make.centerY.equalTo(mainMaskView.snp.centerY)
             make.width.height.equalTo(50)
         }
         
@@ -571,26 +571,26 @@ class JFPlayerControlView: UIView {
     /**
      创建UIImage
      */
-    private func JFImageResourcePath(fileName: String) -> UIImage? {
+    fileprivate func JFImageResourcePath(_ fileName: String) -> UIImage? {
         return UIImage(named: fileName)
     }
 }
 
 /// 时间滑条
-public class JFTimeSlider: UISlider {
+open class JFTimeSlider: UISlider {
     
-    override public func trackRectForBounds(bounds: CGRect) -> CGRect {
+    override open func trackRect(forBounds bounds: CGRect) -> CGRect {
         let trackHeigt:CGFloat = 2
         let position = CGPoint(x: 0 , y: 14)
         let customBounds = CGRect(origin: position, size: CGSize(width: bounds.size.width, height: trackHeigt))
-        super.trackRectForBounds(customBounds)
+        super.trackRect(forBounds: customBounds)
         return customBounds
     }
     
-    override public func thumbRectForBounds(bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
-        let rect = super.thumbRectForBounds(bounds, trackRect: rect, value: value)
+    override open func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+        let rect = super.thumbRect(forBounds: bounds, trackRect: rect, value: value)
         let newx = rect.origin.x - 10
-        let newRect = CGRectMake(newx, 0, 30, 30)
+        let newRect = CGRect(x: newx, y: 0, width: 30, height: 30)
         return newRect
     }
 }

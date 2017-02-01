@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class JFPlayerItem {
+open class JFPlayerItem {
     
     var title: String
     var resource: [JFPlayerItemDefinitionItem]
@@ -21,10 +21,10 @@ public class JFPlayerItem {
     }
 }
 
-public class JFPlayerItemDefinitionItem {
+open class JFPlayerItemDefinitionItem {
     
-    public var playURL: NSURL
-    public var definitionName: String
+    open var playURL: URL
+    open var definitionName: String
     
     /**
      初始化播放资源
@@ -32,7 +32,7 @@ public class JFPlayerItemDefinitionItem {
      - parameter url:         资源URL
      - parameter qualityName: 资源清晰度标签
      */
-    public init(url: NSURL, definitionName: String) {
+    public init(url: URL, definitionName: String) {
         self.playURL        = url
         self.definitionName = definitionName
     }

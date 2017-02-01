@@ -31,7 +31,7 @@ class JFTabBar: UITabBar {
     /**
      +号按钮点击事件
      */
-    @objc private func didTappedAddButton(button: UIButton) {
+    @objc fileprivate func didTappedAddButton(_ button: UIButton) {
         tabBarDelegate?.didTappedAddButton()
     }
     
@@ -48,10 +48,10 @@ class JFTabBar: UITabBar {
         
         var index = 0
         for view in subviews {
-            if !view.isKindOfClass(NSClassFromString("UITabBarButton")!) {
+            if !view.isKind(of: NSClassFromString("UITabBarButton")!) {
                 // 隐藏tabBar顶部横线
-                if view.isKindOfClass(NSClassFromString("UIImageView")!) && view.bounds.size.height <= 1 {
-                    view.hidden = true
+                if view.isKind(of: NSClassFromString("UIImageView")!) && view.bounds.size.height <= 1 {
+                    view.isHidden = true
                 }
                 continue
             }
@@ -65,22 +65,22 @@ class JFTabBar: UITabBar {
     /**
      处理tabBar子控件的事件响应
      */
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 //        if point.y < 0 && point.x >= SCREEN_WIDTH / 5 * 2 && point.x <= SCREEN_WIDTH / 5 * 3 {
 //            return addButton
 //        }
-        return super.hitTest(point, withEvent: event)
+        return super.hitTest(point, with: event)
     }
     
     // MARK: - 懒加载
     /// 中间 + 号按钮
     lazy var addButton: UIButton = {
-        let addButton = UIButton(type: .Custom)
-        addButton.setImage(UIImage(named: "tabbar_publish_icon_normal"), forState: .Normal)
-        addButton.setImage(UIImage(named: "tabbar_publish_icon_selected"), forState: .Highlighted)
+        let addButton = UIButton(type: .custom)
+        addButton.setImage(UIImage(named: "tabbar_publish_icon_normal"), for: UIControlState())
+        addButton.setImage(UIImage(named: "tabbar_publish_icon_selected"), for: .highlighted)
         addButton.size = CGSize(width: SCREEN_WIDTH / 5, height: SCREEN_WIDTH / 5)
         addButton.center = CGPoint(x: SCREEN_WIDTH * 0.5, y: 49 * 0.5 - 8)
-        addButton.addTarget(self, action: #selector(didTappedAddButton(_:)), forControlEvents: .TouchUpInside)
+        addButton.addTarget(self, action: #selector(didTappedAddButton(_:)), for: .touchUpInside)
         return addButton
     }()
     

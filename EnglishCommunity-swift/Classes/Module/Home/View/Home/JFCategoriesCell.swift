@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol JFCategoriesCellDelegate: NSObjectProtocol {
-    func categoriesCell(cell: UITableViewCell, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    func categoriesCell(_ cell: UITableViewCell, didSelectItemAtIndexPath indexPath: IndexPath)
 }
 
 class JFCategoriesCell: UITableViewCell {
@@ -40,39 +40,29 @@ class JFCategoriesCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         contentView.addSubview(collectionView)
-        collectionView.snp_makeConstraints { (make) in
+        collectionView.snp.makeConstraints { (make) in
             make.edges.equalTo(0)
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-    }
-    
     // MARK: - 懒加载
     /// collectionView
-    private lazy var collectionView: UICollectionView = {
+    fileprivate lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1.5
         layout.minimumLineSpacing = 1.5
-        layout.scrollDirection = .Horizontal
+        layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: SCREEN_WIDTH * 0.21, height: SCREEN_WIDTH * 0.19)
         
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.whiteColor()
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = UIColor.white
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.registerNib(UINib(nibName: "JFCategoriesCellItem", bundle: nil), forCellWithReuseIdentifier: self.categoryIdentifier)
+        collectionView.register(UINib(nibName: "JFCategoriesCellItem", bundle: nil), forCellWithReuseIdentifier: self.categoryIdentifier)
         return collectionView
     }()
     
@@ -81,17 +71,17 @@ class JFCategoriesCell: UITableViewCell {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 extension JFCategoriesCell: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return videoCategories!.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let item = collectionView.dequeueReusableCellWithReuseIdentifier(categoryIdentifier, forIndexPath: indexPath) as! JFCategoriesCellItem
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: categoryIdentifier, for: indexPath) as! JFCategoriesCellItem
         item.category = videoCategories![indexPath.item]
         return item
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.categoriesCell(self, didSelectItemAtIndexPath: indexPath)
     }
 }

@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class JFTweetDetailViewController: UIViewController {
     
@@ -36,7 +60,7 @@ class JFTweetDetailViewController: UIViewController {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         title = "动态详情"
         automaticallyAdjustsScrollViewInsets = false
@@ -49,7 +73,7 @@ class JFTweetDetailViewController: UIViewController {
     /**
      上拉加载更多
      */
-    @objc private func pullUpMoreData() {
+    @objc fileprivate func pullUpMoreData() {
         page += 1
         updateData("tweet", page: page, method: 1, source_id: tweet!.id)
     }
@@ -57,7 +81,7 @@ class JFTweetDetailViewController: UIViewController {
     /**
      更新评论数据
      */
-    private func updateData(type: String, page: Int, method: Int, source_id: Int) {
+    fileprivate func updateData(_ type: String, page: Int, method: Int, source_id: Int) {
         
         JFComment.loadCommentList(page, type: type, source_id: source_id) { (comments) in
             
@@ -90,12 +114,12 @@ class JFTweetDetailViewController: UIViewController {
 
     /// 内容区域
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 40), style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64 - 40), style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = COLOR_ALL_BG
-        tableView.registerNib(UINib(nibName: "JFCommentCell", bundle: nil), forCellReuseIdentifier: self.commentIdentifier)
+        tableView.register(UINib(nibName: "JFCommentCell", bundle: nil), forCellReuseIdentifier: self.commentIdentifier)
         return tableView
     }()
     
@@ -111,30 +135,30 @@ class JFTweetDetailViewController: UIViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFTweetDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let comment = comments[indexPath.row]
         if Int(comment.rowHeight) == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(commentIdentifier) as! JFCommentCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: commentIdentifier) as! JFCommentCell
             let height = cell.getRowHeight(comment)
             comment.rowHeight = height
         }
         return comment.rowHeight
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(commentIdentifier) as! JFCommentCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: commentIdentifier) as! JFCommentCell
         cell.comment = comments[indexPath.row]
         cell.delegate = self
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         // 即将回复的评论
         revertComment = comments[indexPath.row]
@@ -149,7 +173,7 @@ extension JFTweetDetailViewController: UITableViewDataSource, UITableViewDelegat
 // MARK: - JFCommentCellDelegate
 extension JFTweetDetailViewController: JFCommentCellDelegate {
     
-    func commentCell(cell: JFCommentCell, didTappedAtUser nickname: String, sequence: Int) {
+    func commentCell(_ cell: JFCommentCell, didTappedAtUser nickname: String, sequence: Int) {
         guard let atUser = cell.comment?.extendsAuthor else {
             return
         }
@@ -161,7 +185,7 @@ extension JFTweetDetailViewController: JFCommentCellDelegate {
         }
     }
     
-    func commentCell(cell: JFCommentCell, didTappedAvatarButton button: UIButton) {
+    func commentCell(_ cell: JFCommentCell, didTappedAvatarButton button: UIButton) {
         guard let author = cell.comment?.author else {
             return
         }
@@ -175,7 +199,7 @@ extension JFTweetDetailViewController: JFCommentCellDelegate {
 // MARK: - JFTweetDetailHeaderViewDelegate
 extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
     
-    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedAvatarButton button: UIButton) {
+    func tweetDetailHeaderView(_ headerView: JFTweetDetailHeaderView, didTappedAvatarButton button: UIButton) {
         
         guard let author = headerView.tweet?.author else {
             return
@@ -186,17 +210,17 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         navigationController?.pushViewController(otherUser, animated: true)
     }
     
-    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedLikeButton button: UIButton) {
+    func tweetDetailHeaderView(_ headerView: JFTweetDetailHeaderView, didTappedLikeButton button: UIButton) {
         // 未登录
         if !JFAccountModel.isLogin() {
-            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: nil)
+            present(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: nil)
             return
         }
         
         // 已经登录
         JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord("tweet", sourceID: headerView.tweet!.id) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 return
             }
             
@@ -215,11 +239,11 @@ extension JFTweetDetailViewController: JFTweetDetailHeaderViewDelegate {
         }
     }
     
-    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedSuperLink url: String) {
+    func tweetDetailHeaderView(_ headerView: JFTweetDetailHeaderView, didTappedSuperLink url: String) {
         print(headerView.tweet?.id, url)
     }
     
-    func tweetDetailHeaderView(headerView: JFTweetDetailHeaderView, didTappedAtUser nickname: String, sequence: Int) {
+    func tweetDetailHeaderView(_ headerView: JFTweetDetailHeaderView, didTappedAtUser nickname: String, sequence: Int) {
         
         guard let atUsers = headerView.tweet?.atUsers else {
             return
@@ -243,7 +267,7 @@ extension JFTweetDetailViewController: JFMultiTextViewDelegate {
      
      - parameter text: 输入的内容
      */
-    func didTappedSendButton(text: String) {
+    func didTappedSendButton(_ text: String) {
         
         let pid = revertComment?.id ?? 0
         revertComment = nil

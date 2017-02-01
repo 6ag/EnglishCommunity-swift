@@ -18,8 +18,9 @@ class JFHomeCellItem: UICollectionViewCell {
     
     var videoInfo: JFVideoInfo? {
         didSet {
-            photoImageView.yy_imageURL = NSURL(string: videoInfo!.cover!)
-            titleLabel.text = videoInfo!.title!
+            guard let videoInfo = videoInfo else { return }
+            photoImageView.setImage(urlString: videoInfo.cover, placeholderImage: nil)
+            titleLabel.text = videoInfo.title
         }
     }
     

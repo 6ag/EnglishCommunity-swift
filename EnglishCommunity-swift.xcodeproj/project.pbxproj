@@ -131,7 +131,14 @@
 		B25278FB1D824A8D0069052A /* JFVideoDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25278FA1D824A8D0069052A /* JFVideoDownloadViewController.swift */; };
 		B25279631D8269CC0069052A /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = B252795F1D8269CC0069052A /* mongoose.c */; };
 		B25279641D8269CC0069052A /* MongooseDaemon.m in Sources */ = {isa = PBXBuildFile; fileRef = B25279621D8269CC0069052A /* MongooseDaemon.m */; };
-		B27B98D81D9253E1007B1626 /* jpush-ios-2.1.9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B27B98D71D9253E1007B1626 /* jpush-ios-2.1.9.a */; };
+		B253551D1E41B40300147217 /* jcore-ios-1.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B253551A1E41B40300147217 /* jcore-ios-1.0.0.a */; };
+		B253551E1E41B40300147217 /* jpush-ios-3.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B253551B1E41B40300147217 /* jpush-ios-3.0.0.a */; };
+		B25355201E41B41600147217 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B253551F1E41B41600147217 /* libresolv.tbd */; };
+		B25355221E41B50300147217 /* JFShareItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25355211E41B50300147217 /* JFShareItemModel.swift */; };
+		B25355251E41B50D00147217 /* JFShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25355231E41B50D00147217 /* JFShareView.swift */; };
+		B25355261E41B50D00147217 /* JFShareItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25355241E41B50D00147217 /* JFShareItemCell.swift */; };
+		B25355281E41B6A500147217 /* UIImageViewWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25355271E41B6A500147217 /* UIImageViewWebImage.swift */; };
+		B253552A1E41D0BE00147217 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25355291E41D0BE00147217 /* UIButtonExtension.swift */; };
 		B283D1AB1D6A01A900702A75 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AA1D6A01A900702A75 /* libicucore.tbd */; };
 		B283D1AD1D6A01BD00702A75 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AC1D6A01BD00702A75 /* JavaScriptCore.framework */; };
 		B283D1AF1D6A01C800702A75 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B283D1AE1D6A01C800702A75 /* ImageIO.framework */; };
@@ -337,8 +344,16 @@
 		B25279601D8269CC0069052A /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mongoose.h; sourceTree = "<group>"; };
 		B25279611D8269CC0069052A /* MongooseDaemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MongooseDaemon.h; sourceTree = "<group>"; };
 		B25279621D8269CC0069052A /* MongooseDaemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MongooseDaemon.m; sourceTree = "<group>"; };
-		B27B98D61D9253E1007B1626 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
-		B27B98D71D9253E1007B1626 /* jpush-ios-2.1.9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.9.a"; sourceTree = "<group>"; };
+		B253551A1E41B40300147217 /* jcore-ios-1.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jcore-ios-1.0.0.a"; sourceTree = "<group>"; };
+		B253551B1E41B40300147217 /* jpush-ios-3.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.0.a"; sourceTree = "<group>"; };
+		B253551C1E41B40300147217 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		B253551F1E41B41600147217 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		B25355211E41B50300147217 /* JFShareItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFShareItemModel.swift; sourceTree = "<group>"; };
+		B25355231E41B50D00147217 /* JFShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFShareView.swift; sourceTree = "<group>"; };
+		B25355241E41B50D00147217 /* JFShareItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFShareItemCell.swift; sourceTree = "<group>"; };
+		B25355271E41B6A500147217 /* UIImageViewWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewWebImage.swift; sourceTree = "<group>"; };
+		B25355291E41D0BE00147217 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		B253552B1E41DFCE00147217 /* EnglishCommunity-swift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "EnglishCommunity-swift.entitlements"; sourceTree = "<group>"; };
 		B283D1A91D69FED500702A75 /* EnglishCommunity-swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EnglishCommunity-swift-Bridging-Header.h"; sourceTree = "<group>"; };
 		B283D1AA1D6A01A900702A75 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		B283D1AC1D6A01BD00702A75 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -412,12 +427,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B25355201E41B41600147217 /* libresolv.tbd in Frameworks */,
 				B283D1B91D6A021A00702A75 /* CFNetwork.framework in Frameworks */,
 				B283D1B71D6A020100702A75 /* Security.framework in Frameworks */,
 				B22F2C101D9235AB008C66B6 /* IJKMediaFramework.framework in Frameworks */,
 				B283D1B51D6A01F100702A75 /* libsqlite3.tbd in Frameworks */,
 				B283D1B31D6A01E200702A75 /* libiconv.tbd in Frameworks */,
 				B283D1B11D6A01D400702A75 /* libstdc++.tbd in Frameworks */,
+				B253551E1E41B40300147217 /* jpush-ios-3.0.0.a in Frameworks */,
 				B283D1AF1D6A01C800702A75 /* ImageIO.framework in Frameworks */,
 				B283D1AD1D6A01BD00702A75 /* JavaScriptCore.framework in Frameworks */,
 				B283D1AB1D6A01A900702A75 /* libicucore.tbd in Frameworks */,
@@ -426,10 +443,10 @@
 				B20007CD1D4F925E006DA9B0 /* AudioToolbox.framework in Frameworks */,
 				B20007CB1D4F9256006DA9B0 /* AVFoundation.framework in Frameworks */,
 				B20007C91D4F9250006DA9B0 /* QuartzCore.framework in Frameworks */,
+				B253551D1E41B40300147217 /* jcore-ios-1.0.0.a in Frameworks */,
 				B20007C71D4F9249006DA9B0 /* CoreGraphics.framework in Frameworks */,
 				B20007C51D4F9240006DA9B0 /* CoreMedia.framework in Frameworks */,
 				B20007C31D4F9239006DA9B0 /* CoreVideo.framework in Frameworks */,
-				B27B98D81D9253E1007B1626 /* jpush-ios-2.1.9.a in Frameworks */,
 				B20007C11D4F9233006DA9B0 /* MediaPlayer.framework in Frameworks */,
 				B20007BF1D4F9226006DA9B0 /* MobileCoreServices.framework in Frameworks */,
 				B20007BD1D4F921D006DA9B0 /* OpenGLES.framework in Frameworks */,
@@ -453,6 +470,7 @@
 		89D49F2DF53D8D609BE64AC4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B253551F1E41B41600147217 /* libresolv.tbd */,
 				B283D1B81D6A021A00702A75 /* CFNetwork.framework */,
 				B283D1B61D6A020100702A75 /* Security.framework */,
 				B283D1B41D6A01F100702A75 /* libsqlite3.tbd */,
@@ -481,6 +499,8 @@
 		B213E3DF1D54D40A00589058 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				B25355231E41B50D00147217 /* JFShareView.swift */,
+				B25355241E41B50D00147217 /* JFShareItemCell.swift */,
 				B218AE351D816D8F00FFD470 /* JFProgressView.swift */,
 				B21436381D551BE300F201AF /* JFTopBarView.swift */,
 				B214363A1D551BEB00F201AF /* JFTopBarView.xib */,
@@ -521,6 +541,7 @@
 		B21501BF1D5364C9005E4670 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B25355211E41B50300147217 /* JFShareItemModel.swift */,
 				B2512A6A1D54394000476D0E /* JFVideoCategory.swift */,
 				B2512A6C1D54396700476D0E /* JFVideoInfo.swift */,
 				B2512A721D54426B00476D0E /* JFVideo.swift */,
@@ -712,6 +733,7 @@
 		B2190AFF1D4F85C4007FC0E9 /* EnglishCommunity-swift */ = {
 			isa = PBXGroup;
 			children = (
+				B253552B1E41DFCE00147217 /* EnglishCommunity-swift.entitlements */,
 				B2190B071D4F85C4007FC0E9 /* Assets.xcassets */,
 				B2190B091D4F85C4007FC0E9 /* LaunchScreen.storyboard */,
 				B2190B0C1D4F85C4007FC0E9 /* Info.plist */,
@@ -911,6 +933,7 @@
 		B28D93D51D534AA700128D20 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				B25355271E41B6A500147217 /* UIImageViewWebImage.swift */,
 				B2C9A6911D62B17B000B08C4 /* FFLabel.swift */,
 				B2FC66E01D5C67510032703D /* NSDateExtension.swift */,
 				B2FC66D41D5C16EA0032703D /* StringExtension.swift */,
@@ -918,6 +941,7 @@
 				B21501CF1D536697005E4670 /* UIBarButtionItem.swift */,
 				B21501D01D536697005E4670 /* UIViewExtension.swift */,
 				B2F50AB41D646694006A91E6 /* UIColorExtension.swift */,
+				B25355291E41D0BE00147217 /* UIButtonExtension.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1100,8 +1124,9 @@
 		B2F1BA2D1D6A8F3A003DF045 /* JPush */ = {
 			isa = PBXGroup;
 			children = (
-				B27B98D61D9253E1007B1626 /* JPUSHService.h */,
-				B27B98D71D9253E1007B1626 /* jpush-ios-2.1.9.a */,
+				B253551A1E41B40300147217 /* jcore-ios-1.0.0.a */,
+				B253551B1E41B40300147217 /* jpush-ios-3.0.0.a */,
+				B253551C1E41B40300147217 /* JPUSHService.h */,
 			);
 			path = JPush;
 			sourceTree = "<group>";
@@ -1188,11 +1213,13 @@
 			attributes = {
 				CLASSPREFIX = JF;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = zhoujianfeng;
 				TargetAttributes = {
 					B2190AFC1D4F85C4007FC0E9 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 35PE24U644;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1344,6 +1371,8 @@
 				B25279641D8269CC0069052A /* MongooseDaemon.m in Sources */,
 				B20FD0EF1D6C16C4008DEF0C /* JFMessageRecordCell.swift in Sources */,
 				B2156C891D66AF840033DBB6 /* JFSelectFriendViewController.swift in Sources */,
+				B25355281E41B6A500147217 /* UIImageViewWebImage.swift in Sources */,
+				B25355221E41B50300147217 /* JFShareItemModel.swift in Sources */,
 				B2156C651D66AE3A0033DBB6 /* JFForgotViewController.swift in Sources */,
 				B2887D751D6D6235009CB44B /* JFVideoDownloadCell.swift in Sources */,
 				B2156C8C1D66AF840033DBB6 /* JFSelectFriendCell.swift in Sources */,
@@ -1358,10 +1387,12 @@
 				B2156C671D66AE3A0033DBB6 /* JFLoginViewController.swift in Sources */,
 				B2B770FC1D61689E0042AA5E /* JFPhotoBrowserCell.swift in Sources */,
 				B249AE341D607D41005C0A41 /* JFTweet.swift in Sources */,
+				B25355251E41B50D00147217 /* JFShareView.swift in Sources */,
 				B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */,
 				B21436391D551BE300F201AF /* JFTopBarView.swift in Sources */,
 				B2887D7E1D6D778D009CB44B /* JFDownloadManager.swift in Sources */,
 				B2C9A6921D62B17B000B08C4 /* FFLabel.swift in Sources */,
+				B253552A1E41D0BE00147217 /* UIButtonExtension.swift in Sources */,
 				B2DA01191D654E0C0095AB7D /* JFCategoryListCell.swift in Sources */,
 				B24C11991D6DF44000AE0646 /* JFWebPlayerViewController.swift in Sources */,
 				B2512A6B1D54394000476D0E /* JFVideoCategory.swift in Sources */,
@@ -1393,6 +1424,7 @@
 				B25279631D8269CC0069052A /* mongoose.c in Sources */,
 				B2FC66D61D5C16EA0032703D /* StringExtension.swift in Sources */,
 				B285F5081D5AFB69004F23A6 /* JFFPSLabel.swift in Sources */,
+				B25355261E41B50D00147217 /* JFShareItemCell.swift in Sources */,
 				B2B771101D61A0790042AA5E /* JFEmoticon.swift in Sources */,
 				B2887D711D6D6235009CB44B /* JFTopStoreInfoView.swift in Sources */,
 				B2BEBF031D6CBA1F00D4B13B /* JFSearchViewController.swift in Sources */,
@@ -1482,8 +1514,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1528,8 +1562,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1548,6 +1584,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1557,7 +1594,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 99A939157BA8A50076C427E7 /* Pods-EnglishCommunity-swift.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "EnglishCommunity-swift/EnglishCommunity-swift.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 35PE24U644;
@@ -1579,6 +1618,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnglishCommunity-swift/Classes/Application/EnglishCommunity-swift-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1587,7 +1627,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 516DACE58489A1F72B519807 /* Pods-EnglishCommunity-swift.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "EnglishCommunity-swift/EnglishCommunity-swift.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 35PE24U644;
@@ -1609,6 +1651,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnglishCommunity-swift/Classes/Application/EnglishCommunity-swift-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

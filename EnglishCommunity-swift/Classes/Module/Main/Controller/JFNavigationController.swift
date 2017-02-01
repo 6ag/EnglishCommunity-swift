@@ -22,14 +22,14 @@ class JFNavigationController: UINavigationController {
         
         let navBar = navigationBar
         navBar.barTintColor = COLOR_NAV_BG
-        navBar.translucent = false
-        navBar.barStyle = UIBarStyle.Black
-        navBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        navBar.isTranslucent = false
+        navBar.barStyle = UIBarStyle.black
+        navBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navBar.shadowImage = UIImage()
         
         // 导航栏背景色
         navigationBar.titleTextAttributes = [
-            NSFontAttributeName : UIFont.systemFontOfSize(18),
+            NSFontAttributeName : UIFont.systemFont(ofSize: 18),
             NSForegroundColorAttributeName : COLOR_NAV_ITEM_NORMAL
         ]
         
@@ -41,7 +41,7 @@ class JFNavigationController: UINavigationController {
      - parameter viewController: 需要push的控制器
      - parameter animated:       是否有push动画
      */
-    override func pushViewController(viewController: UIViewController, animated: Bool) {
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         if childViewControllers.count > 0 {
             viewController.navigationItem.leftBarButtonItem = UIBarButtonItem.leftItem("top_navigation_back_normal", highlightedImage: "top_navigation_back_normal", target: self, action: #selector(didTappedBackButton(_:)))
             viewController.hidesBottomBarWhenPushed = true
@@ -54,8 +54,8 @@ class JFNavigationController: UINavigationController {
     /**
      返回事件
      */
-    @objc private func didTappedBackButton(button: UIBarButtonItem) {
-        popViewControllerAnimated(true)
+    @objc fileprivate func didTappedBackButton(_ button: UIBarButtonItem) {
+        popViewController(animated: true)
     }
     
 }

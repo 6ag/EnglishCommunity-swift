@@ -26,12 +26,12 @@ class JFSearchViewController: UIViewController {
         prepareUI()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         searchTextField.endEditing(true)
         super.viewWillDisappear(animated)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -39,7 +39,8 @@ class JFSearchViewController: UIViewController {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
+        
         view.backgroundColor = COLOR_ALL_BG
         navigationItem.titleView = searchTextField
         view.addSubview(tableView)
@@ -48,14 +49,14 @@ class JFSearchViewController: UIViewController {
     /**
      准备tableView
      */
-    private func prepareTableView() {
+    fileprivate func prepareTableView() {
         view.addSubview(tableView)
     }
     
     /**
      上拉加载更多数据
      */
-    @objc private func loadMoreData() {
+    @objc fileprivate func loadMoreData() {
         pageIndex += 1
         loadSearchResult(searchTextField.text!, pageIndex: pageIndex)
     }
@@ -67,7 +68,7 @@ class JFSearchViewController: UIViewController {
      - parameter pageIndex: 页码
      */
     
-    private func loadSearchResult(keyword: String, pageIndex: Int) {
+    fileprivate func loadSearchResult(_ keyword: String, pageIndex: Int) {
         
         JFVideoInfo.searchVideoInfoList(keyword, page: pageIndex) { (videoInfos) in
             self.tableView.mj_footer.endRefreshing()
@@ -86,9 +87,9 @@ class JFSearchViewController: UIViewController {
     
     // MARK: - 懒加载
     /// 搜索框
-    private lazy var searchTextField: UISearchBar = {
+    fileprivate lazy var searchTextField: UISearchBar = {
         let searchTextField = UISearchBar(frame: CGRect(x: 20, y: 5, width: SCREEN_WIDTH - 40, height: 34))
-        searchTextField.searchBarStyle = .Prominent
+        searchTextField.searchBarStyle = .prominent
         searchTextField.delegate = self
         searchTextField.placeholder = "请输入课程关键词"
         return searchTextField
@@ -96,12 +97,12 @@ class JFSearchViewController: UIViewController {
     
     // MARK: - 懒加载
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = COLOR_ALL_BG
-        tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.videoListIdentifier)
+        tableView.register(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.videoListIdentifier)
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(loadMoreData))
         return tableView
     }()
@@ -112,12 +113,12 @@ class JFSearchViewController: UIViewController {
 extension JFSearchViewController: UISearchBarDelegate {
     
     // 已经改变搜索文字
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
     }
     
     // 点击了搜索按钮
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchTextField.endEditing(true)
         self.videoInfos.removeAll()
         loadMoreData()
@@ -128,22 +129,22 @@ extension JFSearchViewController: UISearchBarDelegate {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoInfos.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 84
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(videoListIdentifier) as! JFCategoryListCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: videoListIdentifier) as! JFCategoryListCell
         cell.videoInfo = videoInfos[indexPath.row]
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let playerVc = JFPlayerViewController()
         playerVc.videoInfo = videoInfos[indexPath.item]
         navigationController?.pushViewController(playerVc, animated: true)

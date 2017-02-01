@@ -13,24 +13,24 @@ import IJKMediaFramework
 
 /// 播放器状态
 enum JFPlayerState {
-    case Unknown         // 未知
-    case Playable        // 可以播放
-    case PlaythroughOK   // 从头到尾播放OK
-    case Stalled         // 熄火
-    case PlaybackEnded   // 播放正常结束
-    case PlaybackError   // 播放错误
-    case UserExited      // 用户退出
-    case Stopped         // 停止
-    case Paused          // 暂停
-    case Playing         // 正在播放
-    case Interrupted     // 中断
-    case SeekingForward  // 快退
-    case SeekingBackward // 快进
-    case NotSetURL       // 未设置URL
-    case Buffering       // 缓冲中
-    case BufferFinished  // 缓冲完毕
-    case FullScreen      // 全屏
-    case CompactScreen   // 竖屏
+    case unknown         // 未知
+    case playable        // 可以播放
+    case playthroughOK   // 从头到尾播放OK
+    case stalled         // 熄火
+    case playbackEnded   // 播放正常结束
+    case playbackError   // 播放错误
+    case userExited      // 用户退出
+    case stopped         // 停止
+    case paused          // 暂停
+    case playing         // 正在播放
+    case interrupted     // 中断
+    case seekingForward  // 快退
+    case seekingBackward // 快进
+    case notSetURL       // 未设置URL
+    case buffering       // 缓冲中
+    case bufferFinished  // 缓冲完毕
+    case fullScreen      // 全屏
+    case compactScreen   // 竖屏
 }
 
 /**
@@ -40,8 +40,8 @@ enum JFPlayerState {
  - Vertical:   垂直
  */
 enum JFPanDirection: Int {
-    case Horizontal = 0
-    case Vertical   = 1
+    case horizontal = 0
+    case vertical   = 1
 }
 
 /**
@@ -51,13 +51,13 @@ enum JFPanDirection: Int {
  - JFPlayerItem: JFPlayerItem模型
  */
 enum JFPlayerItemType {
-    case URL
-    case JFPlayerItem
+    case url
+    case jfPlayerItem
 }
 
 protocol JFPlayerDelegate: NSObjectProtocol {
     
-    func player(player: JFPlayer, playerStateChanged state: JFPlayerState)
+    func player(_ player: JFPlayer, playerStateChanged state: JFPlayerState)
 }
 
 class JFPlayer: UIView {
@@ -65,52 +65,52 @@ class JFPlayer: UIView {
     weak var delegate: JFPlayerDelegate?
     
     /// 更新时间和缓冲进度的定时器
-    var timer: NSTimer!
+    var timer: Timer!
     
     /// 当前播放的视频的URL
-    var currentPlayURL: NSURL!
+    var currentPlayURL: URL!
     
     /// 播放器
-    private var player: IJKMediaPlayback!
+    fileprivate var player: IJKMediaPlayback!
     
     /// 播放器控制视图
-    private var controlView: JFPlayerControlView!
+    fileprivate var controlView: JFPlayerControlView!
     
     /// 是否是全屏状态
-    private var isFullScreen: Bool {
+    fileprivate var isFullScreen: Bool {
         get {
             // 如果状态栏方向是横向则是全屏
-            return UIApplication.sharedApplication().statusBarOrientation.isLandscape
+            return UIApplication.shared.statusBarOrientation.isLandscape
         }
     }
     
     /// 滑动方向
-    private var panDirection = JFPanDirection.Horizontal
+    fileprivate var panDirection = JFPanDirection.horizontal
     
     /// 音量滑竿 - 真机才有
-    private var volumeViewSlider: UISlider!
+    fileprivate var volumeViewSlider: UISlider!
     
-    private let JFPlayerAnimationTimeInterval: Double = 4.0
-    private let JFPlayerControlBarAutoFadeOutTimeInterval: Double = 0.5
+    fileprivate let JFPlayerAnimationTimeInterval: Double = 4.0
+    fileprivate let JFPlayerControlBarAutoFadeOutTimeInterval: Double = 0.5
     
     /// 用来保存时间状态
-    private var sumTime: NSTimeInterval = 0
+    fileprivate var sumTime: TimeInterval = 0
     
-    private var isSliderSliding = false // 是否正在滑动滑条
-    private var isVolume        = false // 是否是调整音量
-    private var isMaskShowing   = false // 控制器UI是否显示
-    private var isMirrored      = false // 是否开启镜像
+    fileprivate var isSliderSliding = false // 是否正在滑动滑条
+    fileprivate var isVolume        = false // 是否是调整音量
+    fileprivate var isMaskShowing   = false // 控制器UI是否显示
+    fileprivate var isMirrored      = false // 是否开启镜像
     
     /// 当前播放速度的下标
-    private var currentPlayIndex = 1
+    fileprivate var currentPlayIndex = 1
     /// 支持的播放速度
-    private var speeds: [Float] = [0.5, 1.0, 1.3, 1.5, 1.7, 2.0]
+    fileprivate var speeds: [Float] = [0.5, 1.0, 1.3, 1.5, 1.7, 2.0]
     
     /**
      准备UI数据
      */
-    private func prepareUI() {
-        self.backgroundColor = UIColor.blackColor()
+    fileprivate func prepareUI() {
+        self.backgroundColor = UIColor.black
         
         configureVolume()
         controlView =  JFPlayerControlView()
@@ -118,7 +118,7 @@ class JFPlayer: UIView {
         controlView.updateUI(isFullScreen)
         controlView.delegate = self
         
-        controlView.getView.snp_makeConstraints { (make) in
+        controlView.getView.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
         
@@ -130,30 +130,30 @@ class JFPlayer: UIView {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panDirection(_:)))
         addGestureRecognizer(panGesture)
         
-        controlView.playerPlayButton?.addTarget(self, action: #selector(self.playButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        controlView.playerFullScreenButton?.addTarget(self, action: #selector(self.fullScreenButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        controlView.playerBackButton?.addTarget(self, action: #selector(self.backButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        controlView.playerPlayButton?.addTarget(self, action: #selector(self.playButtonPressed(_:)), for: UIControlEvents.touchUpInside)
+        controlView.playerFullScreenButton?.addTarget(self, action: #selector(self.fullScreenButtonPressed(_:)), for: UIControlEvents.touchUpInside)
+        controlView.playerBackButton?.addTarget(self, action: #selector(self.backButtonPressed(_:)), for: UIControlEvents.touchUpInside)
         
         // 时间滑条
-        controlView.playerTimeSlider?.addTarget(self, action: #selector(progressSliderTouchBegan(_:)), forControlEvents: UIControlEvents.TouchDown)
-        controlView.playerTimeSlider?.addTarget(self, action: #selector(progressSliderValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        controlView.playerTimeSlider?.addTarget(self, action: #selector(progressSliderTouchEnded(_:)), forControlEvents: [UIControlEvents.TouchUpInside,UIControlEvents.TouchCancel, UIControlEvents.TouchUpOutside])
+        controlView.playerTimeSlider?.addTarget(self, action: #selector(progressSliderTouchBegan(_:)), for: UIControlEvents.touchDown)
+        controlView.playerTimeSlider?.addTarget(self, action: #selector(progressSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
+        controlView.playerTimeSlider?.addTarget(self, action: #selector(progressSliderTouchEnded(_:)), for: [UIControlEvents.touchUpInside,UIControlEvents.touchCancel, UIControlEvents.touchUpOutside])
         
-        controlView.playerSlowButton?.addTarget(self, action: #selector(slowButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        controlView.playerMirrorButton?.addTarget(self, action: #selector(mirrorButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        controlView.playerSlowButton?.addTarget(self, action: #selector(slowButtonPressed(_:)), for: .touchUpInside)
+        controlView.playerMirrorButton?.addTarget(self, action: #selector(mirrorButtonPressed(_:)), for: .touchUpInside)
         
         // 屏幕旋转监听
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onOrientationChanged), name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onOrientationChanged), name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
         
         // 更新播放时间的定时器
-        timer = NSTimer(timeInterval: 1.0, target: self, selector: #selector(updatePlayTime), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+        timer = Timer(timeInterval: 1.0, target: self, selector: #selector(updatePlayTime), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: RunLoopMode.commonModes)
     }
     
     /**
      配置音量调节视图 - 真机才有效果
      */
-    private func configureVolume() {
+    fileprivate func configureVolume() {
         let volumeView = MPVolumeView()
         for view in volumeView.subviews {
             if let slider = view as? UISlider {
@@ -168,7 +168,7 @@ class JFPlayer: UIView {
      - parameter url:   视频URL
      - parameter title: 视频标题
      */
-    func playWithURL(url: NSURL, title: String = "") {
+    func playWithURL(_ url: URL, title: String = "") {
         
         // 保存当前播放的URL
         currentPlayURL = url
@@ -176,10 +176,10 @@ class JFPlayer: UIView {
         let options = IJKFFOptions()
         // 开启硬解码
         options.setPlayerOptionValue("1", forKey: "videotoolbox")
-        player = IJKFFMoviePlayerController(contentURL: url, withOptions: options)
-        player.scalingMode = IJKMPMovieScalingMode.AspectFill
-        controlView.insertSubview(player.view, atIndex: 0)
-        player.view.snp_makeConstraints { (make) in
+        player = IJKFFMoviePlayerController(contentURL: url, with: options)
+        player.scalingMode = IJKMPMovieScalingMode.aspectFill
+        controlView.insertSubview(player.view, at: 0)
+        player.view.snp.makeConstraints { (make) in
             make.edges.equalTo(controlView)
         }
         
@@ -187,7 +187,7 @@ class JFPlayer: UIView {
         
         // 没有自动播放就播放
         player.prepareToPlay()
-        controlView.playerPlayButton?.selected = true
+        controlView.playerPlayButton?.isSelected = true
         installMovieNotificationObservers()
         controlView.showLoader()
         
@@ -205,19 +205,19 @@ class JFPlayer: UIView {
      - parameter title: 视频标题
      - parameter definitionIndex: 起始清晰度
      */
-    func playWithPlayerItem(item: JFPlayerItem, definitionIndex: Int = 0) {
+    func playWithPlayerItem(_ item: JFPlayerItem, definitionIndex: Int = 0) {
         
         // 保存当前播放的URL
-        currentPlayURL = item.resource[definitionIndex].playURL
+        currentPlayURL = item.resource[definitionIndex].playURL as URL
         prepareUI()
         
         let options = IJKFFOptions()
         // 开启硬解码
         options.setPlayerOptionValue("1", forKey: "videotoolbox")
-        player = IJKFFMoviePlayerController(contentURL: item.resource[definitionIndex].playURL, withOptions: options)
-        player.scalingMode = IJKMPMovieScalingMode.AspectFill
-        controlView.insertSubview(player.view, atIndex: 0)
-        player.view.snp_makeConstraints { (make) in
+        player = IJKFFMoviePlayerController(contentURL: item.resource[definitionIndex].playURL as URL, with: options)
+        player.scalingMode = IJKMPMovieScalingMode.aspectFill
+        controlView.insertSubview(player.view, at: 0)
+        player.view.snp.makeConstraints { (make) in
             make.edges.equalTo(controlView)
         }
         
@@ -226,7 +226,7 @@ class JFPlayer: UIView {
         
         // 没有自动播放就播放
         player.prepareToPlay()
-        controlView.playerPlayButton?.selected = true
+        controlView.playerPlayButton?.isSelected = true
         installMovieNotificationObservers()
         controlView.showLoader()
         
@@ -253,7 +253,7 @@ class JFPlayer: UIView {
         if let player = player {
             if !player.isPlaying() {
                 player.play()
-                controlView.playerPlayButton?.selected = true
+                controlView.playerPlayButton?.isSelected = true
             }
         }
     }
@@ -265,7 +265,7 @@ class JFPlayer: UIView {
         if let player = player {
             if player.isPlaying() {
                 player.pause()
-                controlView.playerPlayButton?.selected = false
+                controlView.playerPlayButton?.isSelected = false
                 cancelAutoFadeOutControlBar()
             }
         }
@@ -280,7 +280,7 @@ class JFPlayer: UIView {
             controlView.removeFromSuperview()
             timer.invalidate()
             removeMovieNotificationObservers()
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
+            UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.fade)
         }
         
     }
@@ -293,21 +293,21 @@ extension JFPlayer {
     /**
      创建定时器
      */
-    private func startTimer() {
-        timer.fireDate = NSDate.distantPast()
+    fileprivate func startTimer() {
+        timer.fireDate = Date.distantPast
     }
     
     /**
      销毁定时器
      */
-    private func pauseTimer() {
-        timer.fireDate = NSDate.distantFuture()
+    fileprivate func pauseTimer() {
+        timer.fireDate = Date.distantFuture
     }
     
     /**
      敲击手势 隐藏/显示
      */
-    @objc private func tapGestureTapped(sender: UIGestureRecognizer) {
+    @objc fileprivate func tapGestureTapped(_ sender: UIGestureRecognizer) {
         if isMaskShowing {
             hideControlViewAnimated()
             autoFadeOutControlBar()
@@ -319,73 +319,73 @@ extension JFPlayer {
     /**
      开始自动隐藏UI倒计时
      */
-    @objc private func autoFadeOutControlBar() {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(hideControlViewAnimated), object: nil)
-        performSelector(#selector(hideControlViewAnimated), withObject: nil, afterDelay: JFPlayerAnimationTimeInterval)
+    @objc fileprivate func autoFadeOutControlBar() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideControlViewAnimated), object: nil)
+        perform(#selector(hideControlViewAnimated), with: nil, afterDelay: JFPlayerAnimationTimeInterval)
     }
     
     /**
      取消UI自动隐藏操作
      */
-    @objc private func cancelAutoFadeOutControlBar() {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self)
+    @objc fileprivate func cancelAutoFadeOutControlBar() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
     
     /**
      显示控制UI视图
      */
-    @objc private func showControlViewAnimated() {
-        UIView.animateWithDuration(JFPlayerControlBarAutoFadeOutTimeInterval, animations: {
+    @objc fileprivate func showControlViewAnimated() {
+        UIView.animate(withDuration: JFPlayerControlBarAutoFadeOutTimeInterval, animations: {
             self.controlView.showPlayerUIComponents()
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
-        }) { (_) in
+            UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.fade)
+        }, completion: { (_) in
             self.autoFadeOutControlBar()
             self.isMaskShowing = true
-        }
+        }) 
     }
     
     /**
      隐藏控制UI视图
      */
-    @objc private func hideControlViewAnimated() {
-        UIView.animateWithDuration(JFPlayerControlBarAutoFadeOutTimeInterval, animations: {
+    @objc fileprivate func hideControlViewAnimated() {
+        UIView.animate(withDuration: JFPlayerControlBarAutoFadeOutTimeInterval, animations: {
             self.controlView.hidePlayerUIComponents()
             if self.isFullScreen {
-                UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+                UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.fade)
             }
-        }) { (_) in
+        }, completion: { (_) in
             self.isMaskShowing = false
-        }
+        }) 
     }
     
     /**
      滑动手势 调节播放时间/音量
      */
-    @objc private func panDirection(pan: UIPanGestureRecognizer) {
+    @objc fileprivate func panDirection(_ pan: UIPanGestureRecognizer) {
         
         // 根据在view上Pan的位置，确定是调音量还是亮度
-        let locationPoint = pan.locationInView(self)
+        let locationPoint = pan.location(in: self)
         
         // 我们要响应水平移动和垂直移动
         // 根据上次和本次移动的位置，算出一个速率的point
-        let velocityPoint = pan.velocityInView(self)
+        let velocityPoint = pan.velocity(in: self)
         
         // 判断是垂直移动还是水平移动
         switch pan.state {
-        case UIGestureRecognizerState.Began:
+        case UIGestureRecognizerState.began:
             
             // 使用绝对值来判断移动的方向
             let x = fabs(velocityPoint.x)
             let y = fabs(velocityPoint.y)
             
             if x > y {
-                panDirection = JFPanDirection.Horizontal
+                panDirection = JFPanDirection.horizontal
                 
                 // 记录当前播放的时间
                 sumTime = player.currentPlaybackTime
                 
             } else {
-                panDirection = JFPanDirection.Vertical
+                panDirection = JFPanDirection.vertical
                 
                 if locationPoint.x > self.bounds.size.width / 2 {
                     isVolume = true
@@ -394,22 +394,22 @@ extension JFPlayer {
                 }
             }
             
-        case UIGestureRecognizerState.Changed:
+        case UIGestureRecognizerState.changed:
             
             cancelAutoFadeOutControlBar()
             switch self.panDirection {
-            case JFPanDirection.Horizontal:
+            case JFPanDirection.horizontal:
                 horizontalMoved(velocityPoint.x)
-            case JFPanDirection.Vertical:
+            case JFPanDirection.vertical:
                 verticalMoved(velocityPoint.y)
             }
             
-        case UIGestureRecognizerState.Ended:
+        case UIGestureRecognizerState.ended:
             
             // 移动结束也需要判断垂直或者平移
             // 比如水平移动结束时，要快进到指定位置，如果这里没有判断，当我们调节音量完之后，会出现屏幕跳动的bug
             switch (panDirection) {
-            case JFPanDirection.Horizontal:
+            case JFPanDirection.horizontal:
                 
                 controlView.hideSeekToView()
                 isSliderSliding = false
@@ -419,7 +419,7 @@ extension JFPlayer {
                 // 把sumTime滞空，不然会越加越多
                 sumTime = 0.0
                 
-            case JFPanDirection.Vertical:
+            case JFPanDirection.vertical:
                 isVolume = false
             }
         default:
@@ -430,20 +430,20 @@ extension JFPlayer {
     /**
      垂直滑动调节音量 - 需要真机才有效果
      */
-    private func verticalMoved(value: CGFloat) {
+    fileprivate func verticalMoved(_ value: CGFloat) {
         // 滑动左边则调节亮度 滑动右边则调节声音
-        isVolume ? (volumeViewSlider.value -= Float(value / 10000)) : (UIScreen.mainScreen().brightness -= value / 10000)
+        isVolume ? (volumeViewSlider.value -= Float(value / 10000)) : (UIScreen.main.brightness -= value / 10000)
     }
     
     /**
      水平滑动调节播放时间
      */
-    private func horizontalMoved(value: CGFloat) {
+    fileprivate func horizontalMoved(_ value: CGFloat) {
         
         isSliderSliding = true
         
         // 每次滑动需要叠加时间，通过一定的比例，使滑动一直处于统一水平
-        sumTime = sumTime + NSTimeInterval(value) / 100.0 * (player.duration / 400)
+        sumTime = sumTime + TimeInterval(value) / 100.0 * (player.duration / 400)
         
         // 防止出现NAN
         if player.duration == 0 {
@@ -466,14 +466,14 @@ extension JFPlayer {
     /**
      进度条开始滑动 手按下
      */
-    @objc private func progressSliderTouchBegan(sender: UISlider)  {
+    @objc fileprivate func progressSliderTouchBegan(_ sender: UISlider)  {
         isSliderSliding = true
     }
     
     /**
      进度条值改变 滑动中。。。
      */
-    @objc private func progressSliderValueChanged(sender: UISlider)  {
+    @objc fileprivate func progressSliderValueChanged(_ sender: UISlider)  {
         cancelAutoFadeOutControlBar()
         controlView.playerCurrentTimeLabel?.text = formatSecondsToString(player.duration * Double(sender.value))
     }
@@ -481,7 +481,7 @@ extension JFPlayer {
     /**
      进度条滑动结束 手松开
      */
-    @objc private func progressSliderTouchEnded(sender: UISlider)  {
+    @objc fileprivate func progressSliderTouchEnded(_ sender: UISlider)  {
         
         isSliderSliding = false
         autoFadeOutControlBar()
@@ -492,7 +492,7 @@ extension JFPlayer {
     /**
      点击了返回箭头
      */
-    @objc private func backButtonPressed(button: UIButton) {
+    @objc fileprivate func backButtonPressed(_ button: UIButton) {
         if isFullScreen {
             fullScreenButtonPressed(nil)
         }
@@ -501,8 +501,8 @@ extension JFPlayer {
     /**
      点击播放/暂停按钮
      */
-    @objc private func playButtonPressed(button: UIButton) {
-        if button.selected {
+    @objc fileprivate func playButtonPressed(_ button: UIButton) {
+        if button.isSelected {
             pause()
         } else {
             play()
@@ -512,7 +512,7 @@ extension JFPlayer {
     /**
      点击了慢放
      */
-    @objc private func slowButtonPressed(button: UIButton) {
+    @objc fileprivate func slowButtonPressed(_ button: UIButton) {
         
         // 调到下一个速度
         currentPlayIndex += 1
@@ -521,45 +521,45 @@ extension JFPlayer {
         // 自动隐藏UI并设置播放速度和按钮文字
         autoFadeOutControlBar()
         player.playbackRate = speeds[currentPlayIndex]
-        controlView.playerSlowButton?.setTitle("\(speeds[currentPlayIndex])X", forState: .Normal)
+        controlView.playerSlowButton?.setTitle("\(speeds[currentPlayIndex])X", for: UIControlState())
     }
     
     /**
      点击了镜像
      */
-    @objc private func mirrorButtonPressed(button: UIButton) {
+    @objc fileprivate func mirrorButtonPressed(_ button: UIButton) {
         autoFadeOutControlBar()
         if isMirrored {
-            transform = CGAffineTransformMakeScale(1.0, 1.0)
+            transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             isMirrored = false
-            controlView.playerMirrorButton?.setTitle("镜像", forState: .Normal)
+            controlView.playerMirrorButton?.setTitle("镜像", for: UIControlState())
         } else {
-            transform = CGAffineTransformMakeScale(-1.0, 1.0)
+            transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             isMirrored = true
-            controlView.playerMirrorButton?.setTitle("正常", forState: .Normal)
+            controlView.playerMirrorButton?.setTitle("正常", for: UIControlState())
         }
     }
     
     /**
      监听屏幕方向发生改变 - 屏幕旋转时自动切换
      */
-    @objc private func onOrientationChanged() {
+    @objc fileprivate func onOrientationChanged() {
         controlView.updateUI(isFullScreen)
-        delegate?.player(self, playerStateChanged: isFullScreen ? JFPlayerState.FullScreen : JFPlayerState.CompactScreen)
+        delegate?.player(self, playerStateChanged: isFullScreen ? JFPlayerState.fullScreen : JFPlayerState.compactScreen)
     }
     
     /**
      切换全屏按钮点击事件 - 手动点击旋转
      */
-    @objc private func fullScreenButtonPressed(button: UIButton?) {
+    @objc fileprivate func fullScreenButtonPressed(_ button: UIButton?) {
         if isFullScreen {
-            UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
-            UIApplication.sharedApplication().setStatusBarOrientation(UIInterfaceOrientation.Portrait, animated: false)
+            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+            UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.fade)
+            UIApplication.shared.setStatusBarOrientation(UIInterfaceOrientation.portrait, animated: false)
         } else {
-            UIDevice.currentDevice().setValue(UIInterfaceOrientation.LandscapeRight.rawValue, forKey: "orientation")
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
-            UIApplication.sharedApplication().setStatusBarOrientation(UIInterfaceOrientation.LandscapeRight, animated: false)
+            UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+            UIApplication.shared.setStatusBarHidden(false, with: UIStatusBarAnimation.fade)
+            UIApplication.shared.setStatusBarOrientation(UIInterfaceOrientation.landscapeRight, animated: false)
         }
     }
     
@@ -570,16 +570,16 @@ extension JFPlayer {
      
      - returns: 时间格式字符串
      */
-    private func formatSecondsToString(secounds: NSTimeInterval) -> String {
+    fileprivate func formatSecondsToString(_ secounds: TimeInterval) -> String {
         let Min = Int(secounds / 60)
-        let Sec = Int(secounds % 60)
+        let Sec = Int(secounds.truncatingRemainder(dividingBy: 60))
         return String(format: "%02d:%02d", Min, Sec)
     }
     
     /**
      更新播放时间label
      */
-    @objc private func updatePlayTime() {
+    @objc fileprivate func updatePlayTime() {
         
         JFPlayerManager.shared.log("updatePlayTime - \(player.currentPlaybackTime) - \(player.duration)")
         
@@ -605,8 +605,8 @@ extension JFPlayer {
      
      - parameter second: 需要调整到的秒
      */
-    private func seekToTime(second: Int) {
-        player.currentPlaybackTime = NSTimeInterval(second)
+    fileprivate func seekToTime(_ second: Int) {
+        player.currentPlaybackTime = TimeInterval(second)
     }
     
 }
@@ -617,7 +617,7 @@ extension JFPlayer: JFPlayerControlViewDelegate {
     /**
      选择清晰度/节点
      */
-    func controlViewDidChooseDefition(index: Int) {
+    func controlViewDidChooseDefition(_ index: Int) {
         print("controlViewDidChooseDefition")
     }
     
@@ -638,74 +638,74 @@ extension JFPlayer {
     /**
      注册通知
      */
-    private func installMovieNotificationObservers() {
+    fileprivate func installMovieNotificationObservers() {
         
         // 播放器加载状态改变
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loadStateDidChange(_:)), name: IJKMPMoviePlayerLoadStateDidChangeNotification, object: player)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadStateDidChange(_:)), name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object: player)
         
         // 播放器完成播放
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(moviePlayBackDidFinish(_:)), name: IJKMPMoviePlayerPlaybackDidFinishNotification, object: player)
+        NotificationCenter.default.addObserver(self, selector: #selector(moviePlayBackDidFinish(_:)), name: NSNotification.Name.IJKMPMoviePlayerPlaybackDidFinish, object: player)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(mediaIsPreparedToPlayDidChange(_:)), name: IJKMPMediaPlaybackIsPreparedToPlayDidChangeNotification, object: player)
+        NotificationCenter.default.addObserver(self, selector: #selector(mediaIsPreparedToPlayDidChange(_:)), name: NSNotification.Name.IJKMPMediaPlaybackIsPreparedToPlayDidChange, object: player)
         
         // 播放器状态改变
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(moviePlayBackStateDidChange(_:)), name: IJKMPMoviePlayerPlaybackStateDidChangeNotification, object: player)
+        NotificationCenter.default.addObserver(self, selector: #selector(moviePlayBackStateDidChange(_:)), name: NSNotification.Name.IJKMPMoviePlayerPlaybackStateDidChange, object: player)
     }
     
     /**
      移除通知
      */
-    private func removeMovieNotificationObservers() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: IJKMPMoviePlayerLoadStateDidChangeNotification, object: player)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: IJKMPMoviePlayerPlaybackDidFinishNotification, object: player)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: IJKMPMediaPlaybackIsPreparedToPlayDidChangeNotification, object: player)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: IJKMPMoviePlayerPlaybackStateDidChangeNotification, object: player)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
+    fileprivate func removeMovieNotificationObservers() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.IJKMPMoviePlayerLoadStateDidChange, object: player)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.IJKMPMoviePlayerPlaybackDidFinish, object: player)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.IJKMPMediaPlaybackIsPreparedToPlayDidChange, object: player)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.IJKMPMoviePlayerPlaybackStateDidChange, object: player)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
     }
     
     /**
      加载状态发生改变监听
      */
-    @objc private func loadStateDidChange(notification: NSNotification) {
+    @objc fileprivate func loadStateDidChange(_ notification: Notification) {
         
         let loadState = player.loadState
         
         switch loadState {
-        case IJKMPMovieLoadState.Unknown:
+        case IJKMPMovieLoadState():
             JFPlayerManager.shared.log("加载状态 - 未知")
             
             // 显示加载UI
             controlView.showLoader()
             
             // 回调加载状态
-            delegate?.player(self, playerStateChanged: .Unknown)
+            delegate?.player(self, playerStateChanged: .unknown)
             
-        case IJKMPMovieLoadState.Playable:
+        case IJKMPMovieLoadState.playable:
             JFPlayerManager.shared.log("加载状态 - 可播放")
             
             // 隐藏加载UI
             controlView.hideLoader()
             
             // 回调加载状态
-            delegate?.player(self, playerStateChanged: .Playable)
+            delegate?.player(self, playerStateChanged: .playable)
             
-        case IJKMPMovieLoadState.PlaythroughOK:
+        case IJKMPMovieLoadState.playthroughOK:
             JFPlayerManager.shared.log("加载状态 - 播放")
             
             // 隐藏加载UI
             controlView.hideLoader()
             
             // 回调加载状态
-            delegate?.player(self, playerStateChanged: .PlaythroughOK)
+            delegate?.player(self, playerStateChanged: .playthroughOK)
             
-        case IJKMPMovieLoadState.Stalled:
+        case IJKMPMovieLoadState.stalled:
             JFPlayerManager.shared.log("加载状态 - 熄火")
             
             // 显示加载UI
             controlView.showLoader()
             
             // 回调加载状态
-            delegate?.player(self, playerStateChanged: .Stalled)
+            delegate?.player(self, playerStateChanged: .stalled)
             
         default:
             print("加载状态改变")
@@ -717,27 +717,27 @@ extension JFPlayer {
     /**
      视频播放完成监听
      */
-    @objc private func moviePlayBackDidFinish(notification: NSNotification) {
+    @objc fileprivate func moviePlayBackDidFinish(_ notification: Notification) {
         
         let reason = IJKMPMovieFinishReason(rawValue: Int(notification.userInfo!["IJKMPMoviePlayerPlaybackDidFinishReasonUserInfoKey"]! as! NSNumber))!
         switch reason {
-        case IJKMPMovieFinishReason.PlaybackEnded:
+        case IJKMPMovieFinishReason.playbackEnded:
             JFPlayerManager.shared.log("播放结束")
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .PlaybackEnded)
+            delegate?.player(self, playerStateChanged: .playbackEnded)
             
-        case IJKMPMovieFinishReason.PlaybackError:
+        case IJKMPMovieFinishReason.playbackError:
             JFPlayerManager.shared.log("播放错误")
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .PlaybackError)
+            delegate?.player(self, playerStateChanged: .playbackError)
             
-        case IJKMPMovieFinishReason.UserExited:
+        case IJKMPMovieFinishReason.userExited:
             JFPlayerManager.shared.log("用户退出")
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .UserExited)
+            delegate?.player(self, playerStateChanged: .userExited)
             
         }
         
@@ -748,29 +748,29 @@ extension JFPlayer {
         controlView.hideLoader()
     }
     
-    @objc private func mediaIsPreparedToPlayDidChange(notification: NSNotification) {
+    @objc fileprivate func mediaIsPreparedToPlayDidChange(_ notification: Notification) {
         JFPlayerManager.shared.log("mediaIsPreparedToPlayDidChange")
     }
     
     /**
      视频播放状态改变监听
      */
-    @objc private func moviePlayBackStateDidChange(notification: NSNotification) {
+    @objc fileprivate func moviePlayBackStateDidChange(_ notification: Notification) {
         
         switch player.playbackState {
-        case IJKMPMoviePlaybackState.Stopped:
+        case IJKMPMoviePlaybackState.stopped:
             JFPlayerManager.shared.log("已经停止")
             
             // 暂停定时器
             pauseTimer()
             
             // 切换到暂停图标
-            controlView.playerPlayButton?.selected = false
+            controlView.playerPlayButton?.isSelected = false
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .Stopped)
+            delegate?.player(self, playerStateChanged: .stopped)
             
-        case IJKMPMoviePlaybackState.Playing:
+        case IJKMPMoviePlaybackState.playing:
             JFPlayerManager.shared.log("正在播放")
             
             // 开启定时器并隐藏加载UI
@@ -781,49 +781,49 @@ extension JFPlayer {
             autoFadeOutControlBar()
             
             // 切换到播放图标
-            controlView.playerPlayButton?.selected = true
+            controlView.playerPlayButton?.isSelected = true
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .Playing)
+            delegate?.player(self, playerStateChanged: .playing)
             
-        case IJKMPMoviePlaybackState.Paused:
+        case IJKMPMoviePlaybackState.paused:
             JFPlayerManager.shared.log("已经暂停")
             
             // 暂停定时器
             pauseTimer()
             
             // 切换到暂停图标
-            controlView.playerPlayButton?.selected = false
+            controlView.playerPlayButton?.isSelected = false
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .Paused)
+            delegate?.player(self, playerStateChanged: .paused)
             
-        case IJKMPMoviePlaybackState.Interrupted:
+        case IJKMPMoviePlaybackState.interrupted:
             JFPlayerManager.shared.log("已经中断")
             
             // 暂停定时器
             pauseTimer()
             
             // 切换到暂停图标
-            controlView.playerPlayButton?.selected = false
+            controlView.playerPlayButton?.isSelected = false
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .Interrupted)
+            delegate?.player(self, playerStateChanged: .interrupted)
             
-        case IJKMPMoviePlaybackState.SeekingForward:
+        case IJKMPMoviePlaybackState.seekingForward:
             JFPlayerManager.shared.log("已经快退")
             
             // 切换到暂停图标
-            controlView.playerPlayButton?.selected = false
+            controlView.playerPlayButton?.isSelected = false
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .SeekingForward)
+            delegate?.player(self, playerStateChanged: .seekingForward)
             
-        case IJKMPMoviePlaybackState.SeekingBackward:
+        case IJKMPMoviePlaybackState.seekingBackward:
             JFPlayerManager.shared.log("已经快退")
             
             // 回调播放器状态
-            delegate?.player(self, playerStateChanged: .SeekingBackward)
+            delegate?.player(self, playerStateChanged: .seekingBackward)
             
         }
         

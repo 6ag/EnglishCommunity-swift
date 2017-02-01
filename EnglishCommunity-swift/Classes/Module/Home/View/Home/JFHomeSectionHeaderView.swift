@@ -9,7 +9,7 @@
 import UIKit
 
 protocol JFHomeSectionHeaderViewDelegate: NSObjectProtocol {
-    func didTappedMoreButton(section: Int)
+    func didTappedMoreButton(_ section: Int)
 }
 
 class JFHomeSectionHeaderView: UIView {
@@ -25,7 +25,7 @@ class JFHomeSectionHeaderView: UIView {
     /**
      点击了更多按钮
      */
-    @IBAction func didTappedMoreButton(sender: UIButton) {
+    @IBAction func didTappedMoreButton(_ sender: UIButton) {
         delegate?.didTappedMoreButton(section)
     }
     

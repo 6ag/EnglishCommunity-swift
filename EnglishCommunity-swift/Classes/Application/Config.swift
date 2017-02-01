@@ -11,7 +11,7 @@ import MJRefresh
 import pop
 import SwiftyJSON
 
-let SCREEN_BOUNDS = UIScreen.mainScreen().bounds
+let SCREEN_BOUNDS = UIScreen.main.bounds
 let SCREEN_WIDTH = SCREEN_BOUNDS.width
 let SCREEN_HEIGHT = SCREEN_BOUNDS.height
 
@@ -73,13 +73,88 @@ let BANNER_UNIT_ID = "ca-app-pub-3941303619697740/4039136115"
 var PLAY_NODE = "app"
 
 /// m3u8存放根目录
-let DOWNLOAD_PATH = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/DownloadVideos/"
+let DOWNLOAD_PATH = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! + "/DownloadVideos/"
 
 /// 首页分类json缓存文件路径
-let CATEGORIES_JSON_PATH = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/categories.json"
+let CATEGORIES_JSON_PATH = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! + "/categories.json"
 
 /// 首页banner json缓存文件路径
-let BANNER_JSON_PATH = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last! + "/banner.json"
+let BANNER_JSON_PATH = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last! + "/banner.json"
+
+/// 打印日志封装 - 打包的时候注释掉
+///
+/// - Parameter string: 需要打印的字符串
+func log(_ string: Any?) {
+    print(string ?? "")
+}
+
+/// 基于iPhone6垂直方向适配
+///
+/// - Parameter size: iPhone6垂直方向尺寸
+/// - Returns: 其他型号尺寸
+func layoutVertical(iPhone6: CGFloat) -> CGFloat {
+    
+    var newHeight: CGFloat = 0
+    
+    switch iPhoneModel.getCurrentModel() {
+    case .iPhone5:
+        newHeight = iPhone6 * (568.0 / 667.0)
+    case .iPhone6:
+        newHeight = iPhone6
+    case .iPhone6p:
+        newHeight = iPhone6 * (736.0 / 667.0)
+    default:
+        newHeight = iPhone6 * (1024.0 / 667.0 * 0.9)
+    }
+    
+    return newHeight
+    
+}
+
+/// 基于iPhone6水平方向适配
+///
+/// - Parameter iPhone6: iPhone6水平方向尺寸
+/// - Returns: 其他型号尺寸
+func layoutHorizontal(iPhone6: CGFloat) -> CGFloat {
+    
+    var newWidth: CGFloat = 0
+    
+    switch iPhoneModel.getCurrentModel() {
+    case .iPhone5:
+        newWidth = iPhone6 * (320.0 / 375.0)
+    case .iPhone6:
+        newWidth = iPhone6
+    case .iPhone6p:
+        newWidth = iPhone6 * (414.0 / 375.0)
+    default:
+        newWidth = iPhone6 * (768.0 / 375.0 * 0.9)
+    }
+    
+    return newWidth
+    
+}
+
+/// 基于iPhone6字体的屏幕适配
+///
+/// - Parameter iPhone6: iPhone字体大小
+/// - Returns: 其他型号字体
+func layoutFont(iPhone6: CGFloat) -> CGFloat {
+    
+    var newFont: CGFloat = 0
+    
+    switch iPhoneModel.getCurrentModel() {
+    case .iPhone5:
+        newFont = iPhone6 * (320.0 / 375.0)
+    case .iPhone6:
+        newFont = iPhone6
+    case .iPhone6p:
+        newFont = iPhone6 * (414.0 / 375.0)
+    default:
+        newFont = iPhone6 * 1.2
+    }
+    
+    return newFont
+}
 
 /**
  手机型号枚举
@@ -116,43 +191,43 @@ enum iPhoneModel {
 /**
  RGB颜色构造
  */
-func RGB(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
+func RGB(_ r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
     return UIColor(red: r / 255.0, green: g/255.0, blue: b/255.0, alpha: alpha)
 }
 
 /**
  给控件添加弹簧动画
  */
-func setupButtonSpringAnimation(view: UIView) {
+func setupButtonSpringAnimation(_ view: UIView) {
     let sprintAnimation = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
-    sprintAnimation.fromValue = NSValue(CGPoint: CGPoint(x: 0.8, y: 0.8))
-    sprintAnimation.toValue = NSValue(CGPoint: CGPoint(x: 1, y: 1))
-    sprintAnimation.velocity = NSValue(CGPoint: CGPoint(x: 30, y: 30))
-    sprintAnimation.springBounciness = 20
-    view.pop_addAnimation(sprintAnimation, forKey: "springAnimation")
+    sprintAnimation?.fromValue = NSValue(cgPoint: CGPoint(x: 0.8, y: 0.8))
+    sprintAnimation?.toValue = NSValue(cgPoint: CGPoint(x: 1, y: 1))
+    sprintAnimation?.velocity = NSValue(cgPoint: CGPoint(x: 30, y: 30))
+    sprintAnimation?.springBounciness = 20
+    view.pop_add(sprintAnimation, forKey: "springAnimation")
 }
 
 /**
  快速创建上拉加载更多控件
  */
-func setupFooterRefresh(target: AnyObject, action: Selector) -> MJRefreshFooter {
+func setupFooterRefresh(_ target: AnyObject, action: Selector) -> MJRefreshFooter {
     let footerRefresh = MJRefreshBackNormalFooter(refreshingTarget: target, refreshingAction: action)
-    footerRefresh.automaticallyHidden = true
-    footerRefresh.setTitle("正在加载", forState: MJRefreshState.Refreshing)
-    footerRefresh.setTitle("可以松开了", forState: MJRefreshState.Pulling)
-    footerRefresh.setTitle("上拉加载更多", forState: MJRefreshState.Idle)
-    footerRefresh.setTitle("没有啦~~~", forState: MJRefreshState.NoMoreData)
-    return footerRefresh
+    footerRefresh?.isAutomaticallyHidden = true
+    footerRefresh?.setTitle("正在加载", for: MJRefreshState.refreshing)
+    footerRefresh?.setTitle("可以松开了", for: MJRefreshState.pulling)
+    footerRefresh?.setTitle("上拉加载更多", for: MJRefreshState.idle)
+    footerRefresh?.setTitle("没有啦~~~", for: MJRefreshState.noMoreData)
+    return footerRefresh!
 }
 
 /**
  快速创建下拉加载最新控件
  */
-func setupHeaderRefresh(target: AnyObject, action: Selector) -> MJRefreshNormalHeader {
+func setupHeaderRefresh(_ target: AnyObject, action: Selector) -> MJRefreshNormalHeader {
     let headerRefresh = MJRefreshNormalHeader(refreshingTarget: target, refreshingAction: action)
-    headerRefresh.lastUpdatedTimeLabel.hidden = true
-    headerRefresh.stateLabel.hidden = true
-    return headerRefresh
+    headerRefresh?.lastUpdatedTimeLabel.isHidden = true
+    headerRefresh?.stateLabel.isHidden = true
+    return headerRefresh!
 }
 
 /**
@@ -162,13 +237,13 @@ func setupHeaderRefresh(target: AnyObject, action: Selector) -> MJRefreshNormalH
  
  - returns: 是否已经登录
  */
-func isLogin(controller: UIViewController) -> Bool {
+func isLogin(_ controller: UIViewController) -> Bool {
     
     if JFAccountModel.isLogin() {
         return true
     } else {
         let loginVc = JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil))
-        controller.presentViewController(loginVc, animated: true, completion: { 
+        controller.present(loginVc, animated: true, completion: { 
             print("弹出登录界面")
         })
         return false
@@ -181,10 +256,10 @@ func isLogin(controller: UIViewController) -> Bool {
  - parameter json:     JSON对象
  - parameter jsonPath: json文件路径
  */
-func saveJson(json: JSON, jsonPath: String) {
+func saveJson(_ json: JSON, jsonPath: String) {
     do {
         if let json = json.rawString() {
-            try json.writeToFile(jsonPath, atomically: true, encoding: NSUTF8StringEncoding)
+            try json.write(toFile: jsonPath, atomically: true, encoding: String.Encoding.utf8)
             print("缓存数据成功", jsonPath)
         }
     } catch {
@@ -197,11 +272,11 @@ func saveJson(json: JSON, jsonPath: String) {
  
  - parameter jsonPath: 要删除的json文件路径
  */
-func removeJson(jsonPath: String) {
-    let fileManager = NSFileManager.defaultManager()
-    if fileManager.fileExistsAtPath(jsonPath) {
+func removeJson(_ jsonPath: String) {
+    let fileManager = FileManager.default
+    if fileManager.fileExists(atPath: jsonPath) {
         do {
-            try fileManager.removeItemAtPath(jsonPath)
+            try fileManager.removeItem(atPath: jsonPath)
             print("删除成功", jsonPath)
         } catch {
             print("删除失败", jsonPath)
@@ -216,8 +291,8 @@ func removeJson(jsonPath: String) {
  
  - returns: JSON对象
  */
-func getJson(jsonPath: String) -> JSON? {
-    if let data = NSData(contentsOfFile: jsonPath) {
+func getJson(_ jsonPath: String) -> JSON? {
+    if let data = try? Data(contentsOf: URL(fileURLWithPath: jsonPath)) {
         print("获取缓存数据成功", jsonPath)
         let json = JSON(data: data)
         return json

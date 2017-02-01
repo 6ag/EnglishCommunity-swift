@@ -36,37 +36,37 @@ class JFDetailHeaderView: UIView {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.white
         addSubview(titleLabel)
         addSubview(teacherIconImageView)
         addSubview(teacherLabel)
         addSubview(joinCountLabel)
         addSubview(videoCountLabel)
         
-        titleLabel.snp_makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(16)
             make.top.equalTo(13)
         }
         
-        teacherIconImageView.snp_makeConstraints { (make) in
+        teacherIconImageView.snp.makeConstraints { (make) in
             make.left.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp_bottom).offset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
             make.size.equalTo(CGSize(width: 10, height: 10))
         }
         
-        teacherLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(teacherIconImageView.snp_right).offset(7)
+        teacherLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(teacherIconImageView.snp.right).offset(7)
             make.centerY.equalTo(teacherIconImageView)
         }
         
-        joinCountLabel.snp_makeConstraints { (make) in
+        joinCountLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
             make.centerY.equalTo(teacherLabel)
         }
         
-        videoCountLabel.snp_makeConstraints { (make) in
+        videoCountLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(teacherLabel)
             make.right.equalTo(-16)
         }
@@ -76,7 +76,7 @@ class JFDetailHeaderView: UIView {
     /// 课程标题
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(14)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.colorWithHexString("323733")
         return label
     }()
@@ -91,7 +91,7 @@ class JFDetailHeaderView: UIView {
     /// 讲师
     lazy var teacherLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(12)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.colorWithHexString("B8C2BA")
         return label
     }()
@@ -99,7 +99,7 @@ class JFDetailHeaderView: UIView {
     /// 收藏数量
     lazy var joinCountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(12)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.colorWithHexString("B8C2BA")
         return label
     }()
@@ -107,7 +107,7 @@ class JFDetailHeaderView: UIView {
     /// 视频数量
     lazy var videoCountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(12)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.colorWithHexString("B8C2BA")
         return label
     }()

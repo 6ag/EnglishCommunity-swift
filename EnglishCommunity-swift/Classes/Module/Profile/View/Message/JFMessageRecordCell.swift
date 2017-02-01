@@ -11,7 +11,7 @@ import YYWebImage
 import SnapKit
 
 protocol JFMessageRecordCellDelegate: NSObjectProtocol {
-    func messageRecordCell(cell: JFMessageRecordCell, didTappedAvatarButton button: UIButton)
+    func messageRecordCell(_ cell: JFMessageRecordCell, didTappedAvatarButton button: UIButton)
 }
 
 class JFMessageRecordCell: UITableViewCell {
@@ -34,34 +34,34 @@ class JFMessageRecordCell: UITableViewCell {
                 return
             }
             
-            sourceContentLabel.hidden = false
-            avatarButton.yy_setImageWithURL(NSURL(string: messageRecord.byUser!.avatar!), forState: .Normal, options: YYWebImageOptions(rawValue: 0))
-            nicknameLabel.text = messageRecord.byUser!.nickname!
+            sourceContentLabel.isHidden = false
+            avatarButton.setBackgroundImage(urlString: messageRecord.byUser?.avatar, size: CGSize(width: 40, height: 40))
+            nicknameLabel.text = messageRecord.byUser?.nickname
             sexImageView.image = messageRecord.byUser!.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             
             if messageRecord.messageType == "comment" {
                 if messageRecord.type == "tweet" {
                     let prefix = NSMutableAttributedString(string: "回复了动态: \n")
-                    prefix.addAttributes([NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : contentLabel.font], range: NSRange(location: 0, length: "回复了动态: \n".characters.count))
-                    prefix.appendAttributedString(JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.content!, font: contentLabel.font))
+                    prefix.addAttributes([NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : contentLabel.font], range: NSRange(location: 0, length: "回复了动态: \n".characters.count))
+                    prefix.append(JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.content!, font: contentLabel.font))
                     contentLabel.attributedText = prefix
                     sourceContentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.sourceContent!, font: sourceContentLabel.font)
                 } else {
                     let prefix = NSMutableAttributedString(string: "回复了你的评论: \n")
-                    prefix.addAttributes([NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : contentLabel.font], range: NSRange(location: 0, length: "回复了评论: \n".characters.count))
-                    prefix.appendAttributedString(JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.content!, font: contentLabel.font))
+                    prefix.addAttributes([NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : contentLabel.font], range: NSRange(location: 0, length: "回复了评论: \n".characters.count))
+                    prefix.append(JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.content!, font: contentLabel.font))
                     contentLabel.attributedText = prefix
                     sourceContentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.sourceContent!, font: sourceContentLabel.font)
                 }
             } else {
                 let prefix = NSMutableAttributedString(string: "在动态中提到了你: \n")
-                prefix.addAttributes([NSForegroundColorAttributeName : UIColor.grayColor(), NSFontAttributeName : contentLabel.font], range: NSRange(location: 0, length: "在动态中提到了你: \n".characters.count))
-                prefix.appendAttributedString(JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.content!, font: contentLabel.font))
+                prefix.addAttributes([NSForegroundColorAttributeName : UIColor.gray, NSFontAttributeName : contentLabel.font], range: NSRange(location: 0, length: "在动态中提到了你: \n".characters.count))
+                prefix.append(JFEmoticon.emoticonStringToEmoticonAttrString(messageRecord.content!, font: contentLabel.font))
                 contentLabel.attributedText = prefix
-                sourceContentLabel.hidden = true
+                sourceContentLabel.isHidden = true
             }
             
-            publishTimeLabel.text = messageRecord.publishTime!.timeStampToDate().dateToDescription()
+            publishTimeLabel.text = messageRecord.publishTime?.timeStampToDate().dateToDescription()
             
         }
     }
@@ -69,9 +69,9 @@ class JFMessageRecordCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
-        selectionStyle = .None
+        selectionStyle = .none
         contentView.addSubview(avatarButton)
         contentView.addSubview(nicknameLabel)
         contentView.addSubview(sexImageView)
@@ -80,67 +80,72 @@ class JFMessageRecordCell: UITableViewCell {
         contentView.addSubview(publishTimeLabel)
         contentView.addSubview(lineView)
         
-        avatarButton.snp_makeConstraints { (make) in
+        avatarButton.snp.makeConstraints { (make) in
             make.left.top.equalTo(5)
             make.size.equalTo(CGSize(width: 40, height: 40))
         }
         
-        nicknameLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(avatarButton.snp_right).offset(5)
-            make.top.equalTo(avatarButton.snp_top)
+        nicknameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(avatarButton.snp.right).offset(5)
+            make.top.equalTo(avatarButton.snp.top)
         }
         
-        sexImageView.snp_makeConstraints { (make) in
+        sexImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(nicknameLabel)
-            make.left.equalTo(nicknameLabel.snp_right).offset(5)
+            make.left.equalTo(nicknameLabel.snp.right).offset(5)
             make.size.equalTo(CGSize(width: 12, height: 12))
         }
         
-        publishTimeLabel.snp_makeConstraints { (make) in
+        publishTimeLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(nicknameLabel)
             make.right.equalTo(-5)
         }
         
-        contentLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(nicknameLabel.snp_left)
-            make.top.equalTo(nicknameLabel.snp_bottom).offset(5)
+        contentLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(nicknameLabel.snp.left)
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(5)
             make.width.equalTo(SCREEN_WIDTH - 60)
         }
         
-        sourceContentLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(nicknameLabel.snp_left)
-            make.top.equalTo(contentLabel.snp_bottom).offset(5)
+        sourceContentLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(nicknameLabel.snp.left)
+            make.top.equalTo(contentLabel.snp.bottom).offset(5)
             make.width.equalTo(SCREEN_WIDTH - 60)
         }
         
-        lineView.snp_makeConstraints { (make) in
+        lineView.snp.makeConstraints { (make) in
             make.left.right.equalTo(0)
-            make.top.equalTo(sourceContentLabel.snp_bottom).offset(10)
+            make.top.equalTo(sourceContentLabel.snp.bottom).offset(10)
             make.height.equalTo(0.5)
         }
+        
+        // 离屏渲染
+        layer.drawsAsynchronously = true
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
         
     }
     
     /**
      计算cell行高
      */
-    func getRowHeight(messageRecord: JFMessageRecord) -> CGFloat {
+    func getRowHeight(_ messageRecord: JFMessageRecord) -> CGFloat {
         self.messageRecord = messageRecord
         layoutIfNeeded()
-        return CGRectGetMaxY(lineView.frame)
+        return lineView.frame.maxY
     }
     
     /**
      点击头像按钮
      */
-    @objc private func didTappedAvatarButton(button: UIButton) {
+    @objc fileprivate func didTappedAvatarButton(_ button: UIButton) {
         delegate?.messageRecordCell(self, didTappedAvatarButton: button)
     }
     
     /**
      修改cell点击后高亮颜色
      */
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
@@ -152,54 +157,52 @@ class JFMessageRecordCell: UITableViewCell {
     
     // MARK: - 懒加载
     /// 头像
-    private lazy var avatarButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), forControlEvents: .TouchUpInside)
+    fileprivate lazy var avatarButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.addTarget(self, action: #selector(didTappedAvatarButton(_:)), for: .touchUpInside)
         return button
     }()
     
     /// 昵称
-    private lazy var nicknameLabel: UILabel = {
+    fileprivate lazy var nicknameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFontOfSize(16)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
     /// 性别
-    private lazy var sexImageView: UIImageView = {
+    fileprivate lazy var sexImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
     
     /// 回复内容
-    private lazy var contentLabel: UILabel = {
+    fileprivate lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont.systemFontOfSize(14)
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
     /// 来源内容
-    private lazy var sourceContentLabel: UILabel = {
+    fileprivate lazy var sourceContentLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont.systemFontOfSize(14)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.backgroundColor = UIColor(white: 0.8, alpha: 0.3)
         return label
     }()
     
     /// 发布时间
-    private lazy var publishTimeLabel: UILabel = {
+    fileprivate lazy var publishTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(12)
-        label.textColor = UIColor.grayColor()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.gray
         return label
     }()
     
     /// 分割线
-    private lazy var lineView: UIView = {
+    fileprivate lazy var lineView: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = COLOR_ALL_CELL_SEPARATOR
         return lineView

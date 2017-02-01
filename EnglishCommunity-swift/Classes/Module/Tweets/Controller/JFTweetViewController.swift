@@ -37,17 +37,17 @@ class JFTweetViewController: UIViewController {
         tableView.mj_header.beginRefreshing()
         
         // 监听点击图片的通知
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JFTweetViewController.selectedPicture(_:)), name: JFPictureViewCellSelectedPictureNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(JFTweetViewController.selectedPicture(_:)), name: NSNotification.Name(rawValue: JFPictureViewCellSelectedPictureNotification), object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: JFPictureViewCellSelectedPictureNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: JFPictureViewCellSelectedPictureNotification), object: nil)
     }
     
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         prepareNavigationBar()
         view.backgroundColor = COLOR_ALL_BG
@@ -57,21 +57,21 @@ class JFTweetViewController: UIViewController {
     /**
      准备导航栏
      */
-    private func prepareNavigationBar() {
+    fileprivate func prepareNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem.rightItem("MainTagSubIcon", highlightedImage: "MainTagSubIcon", target: self, action: #selector(didTappedRightBarButton(_:)))
     }
     
     /**
      点击了右边按钮
      */
-    @objc private func didTappedRightBarButton(barButtonItem: UIBarButtonItem) {
+    @objc fileprivate func didTappedRightBarButton(_ barButtonItem: UIBarButtonItem) {
         navigationController?.pushViewController(UIViewController(), animated: true)
     }
     
     /**
      下拉刷新
      */
-    @objc private func pullDownRefresh() {
+    @objc fileprivate func pullDownRefresh() {
         page = 1
         updateData(type, page: page, method: 0)
     }
@@ -79,7 +79,7 @@ class JFTweetViewController: UIViewController {
     /**
      上拉加载更多
      */
-    @objc private func pullUpMoreData() {
+    @objc fileprivate func pullUpMoreData() {
         page += 1
         updateData(type, page: page, method: 1)
     }
@@ -87,7 +87,7 @@ class JFTweetViewController: UIViewController {
     /**
      更新数据
      */
-    private func updateData(type: String, page: Int, method: Int) {
+    fileprivate func updateData(_ type: String, page: Int, method: Int) {
         
         JFTweet.loadTrendsList(type, page: page) { (tweets) in
             
@@ -103,14 +103,13 @@ class JFTweetViewController: UIViewController {
                 self.tweets = tweets
                 
                 // 异步播放刷新音效
-                let when = dispatch_time(DISPATCH_TIME_NOW, Int64(0.75 * Double(NSEC_PER_SEC)))
-                dispatch_after(when, dispatch_get_global_queue(0, 0)) {
+                DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 0.75, execute: {
                     var soundID: SystemSoundID = 0
-                    let path = NSBundle.mainBundle().pathForResource("refresh", ofType: "wav")!
-                    let baseURL = NSURL(fileURLWithPath: path)
-                    AudioServicesCreateSystemSoundID(baseURL, &soundID)
+                    let path = Bundle.main.path(forResource: "refresh", ofType: "wav")!
+                    let baseURL = URL(fileURLWithPath: path)
+                    AudioServicesCreateSystemSoundID(baseURL as CFURL, &soundID)
                     AudioServicesPlaySystemSound(soundID)
-                }
+                })
             } else {
                 self.tweets += tweets
             }
@@ -121,12 +120,12 @@ class JFTweetViewController: UIViewController {
 
     /// 内容区域
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 60), style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 60), style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = COLOR_ALL_CELL_NORMAL
-        tableView.registerClass(JFTweetListCell.classForCoder(), forCellReuseIdentifier: self.tweetIdentifier)
+        tableView.register(JFTweetListCell.classForCoder(), forCellReuseIdentifier: self.tweetIdentifier)
         return tableView
     }()
     
@@ -135,30 +134,30 @@ class JFTweetViewController: UIViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFTweetViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let tweet = tweets[indexPath.row]
         if Int(tweet.rowHeight) == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(tweetIdentifier) as! JFTweetListCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: tweetIdentifier) as! JFTweetListCell
             let height = cell.getRowHeight(tweet)
             tweet.rowHeight = height
         }
         return tweet.rowHeight
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(tweetIdentifier) as! JFTweetListCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: tweetIdentifier) as! JFTweetListCell
         cell.tweet = tweets[indexPath.row]
         cell.tweetListCellDelegate = self
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         let detailVc = JFTweetDetailViewController()
         detailVc.tweet = tweets[indexPath.row]
@@ -173,7 +172,7 @@ extension JFTweetViewController: JFTweetListCellDelegate {
     /**
      点击了 头像
      */
-    func tweetListCell(cell: JFTweetListCell, didTappedAvatarButton button: UIButton) {
+    func tweetListCell(_ cell: JFTweetListCell, didTappedAvatarButton button: UIButton) {
         
         guard let author = cell.tweet?.author else {
             return
@@ -187,18 +186,18 @@ extension JFTweetViewController: JFTweetListCellDelegate {
     /**
      点击了 赞按钮
      */
-    func tweetListCell(cell: JFTweetListCell, didTappedLikeButton button: UIButton) {
+    func tweetListCell(_ cell: JFTweetListCell, didTappedLikeButton button: UIButton) {
         
         // 未登录
         if !JFAccountModel.isLogin() {
-            presentViewController(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: nil)
+            present(JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil)), animated: true, completion: nil)
             return
         }
         
         // 已经登录
         JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord("tweet", sourceID: cell.tweet!.id) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error)
                 return
             }
@@ -220,14 +219,14 @@ extension JFTweetViewController: JFTweetListCellDelegate {
     /**
      点击了 超链接
      */
-    func tweetListCell(cell: JFTweetListCell, didTappedSuperLink url: String) {
+    func tweetListCell(_ cell: JFTweetListCell, didTappedSuperLink url: String) {
         print(cell.tweet?.id, url)
     }
     
     /**
      点击了 @昵称
      */
-    func tweetListCell(cell: JFTweetListCell, didTappedAtUser nickname: String, sequence: Int) {
+    func tweetListCell(_ cell: JFTweetListCell, didTappedAtUser nickname: String, sequence: Int) {
         
         guard let atUsers = cell.tweet?.atUsers else {
             return
@@ -247,7 +246,7 @@ extension JFTweetViewController: JFTweetListCellDelegate {
     /**
      选择了动弹配图
      */
-    func selectedPicture(notification: NSNotification) {
+    func selectedPicture(_ notification: Notification) {
         guard let models = notification.userInfo?[JFPictureViewCellSelectedPictureModelKey] as? [JFPhotoBrowserModel] else {
             return
         }
@@ -257,20 +256,20 @@ extension JFTweetViewController: JFTweetListCellDelegate {
         
         let photoBrowserVC = JFPhotoBrowserViewController(models: models, selectedIndex: index)
         photoBrowserVC.transitioningDelegate = photoBrowserVC
-        photoBrowserVC.modalPresentationStyle = UIModalPresentationStyle.Custom
-        presentViewController(photoBrowserVC, animated: true, completion: nil)
+        photoBrowserVC.modalPresentationStyle = UIModalPresentationStyle.custom
+        present(photoBrowserVC, animated: true, completion: nil)
     }
 }
 
 // MARK: - UITabBarDelegate
 extension JFTweetViewController: UITabBarControllerDelegate {
     
-    internal func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    internal func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         lastSelectedIndex = tabBarController.selectedIndex
         return true
     }
     
-    internal func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    internal func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
         if tabBarController.selectedIndex == lastSelectedIndex {
             tableView.mj_header.beginRefreshing()

@@ -28,12 +28,12 @@ class JFRelationUser: NSObject {
     /// 是否已经选中
     var selected: Bool = false
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
     /**
      获取朋友关系列表
@@ -41,18 +41,18 @@ class JFRelationUser: NSObject {
      - parameter relation: 0粉丝 1关注
      - parameter finished: 完成回调
      */
-    class func getFriendList(relation: Int, finished: (relationUsers: [JFRelationUser]?) -> ()) {
+    class func getFriendList(_ relation: Int, finished: @escaping (_ relationUsers: [JFRelationUser]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "relation" : relation
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
+            "relation" : relation as AnyObject
         ]
         
         JFNetworkTools.shareNetworkTool.getWithToken(GET_FRIEND_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error, parameters)
-                finished(relationUsers: nil)
+                finished(nil)
                 return
             }
             
@@ -64,7 +64,7 @@ class JFRelationUser: NSObject {
                 relationUsers.append(relationUser)
             }
             
-            finished(relationUsers: relationUsers)
+            finished(relationUsers)
             
         }
         

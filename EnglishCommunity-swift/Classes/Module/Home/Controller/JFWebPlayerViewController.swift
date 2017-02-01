@@ -25,7 +25,7 @@ class JFWebPlayerViewController: UIViewController {
             let playerHTML = "<iframe height=\(SCREEN_WIDTH - 44) width=\(SCREEN_HEIGHT - 20) src='http://player.youku.com/embed/\(JFVideo.getVideoId(videoUrl))' frameborder=0 'allowfullscreen'></iframe>"
             
             JFProgressHUD.show()
-            webView.loadHTMLString(playerHTML, baseURL: NSURL(string: videoUrl))
+            webView.loadHTMLString(playerHTML, baseURL: URL(string: videoUrl))
         }
     }
 
@@ -34,19 +34,19 @@ class JFWebPlayerViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        UIDevice.currentDevice().setValue(UIInterfaceOrientation.LandscapeRight.rawValue, forKey: "orientation")
-        UIApplication.sharedApplication().setStatusBarOrientation(UIInterfaceOrientation.LandscapeRight, animated: false)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
+        UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+        UIApplication.shared.setStatusBarOrientation(UIInterfaceOrientation.landscapeRight, animated: false)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-        UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
-        UIApplication.sharedApplication().setStatusBarOrientation(UIInterfaceOrientation.Portrait, animated: false)
+        UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        UIApplication.shared.setStatusBarOrientation(UIInterfaceOrientation.portrait, animated: false)
     }
     
     /// webView - 显示正文的
@@ -62,12 +62,12 @@ class JFWebPlayerViewController: UIViewController {
 // MARK: - UIWebViewDelegate
 extension JFWebPlayerViewController: UIWebViewDelegate {
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         JFProgressHUD.dismiss()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-        print(error.debugDescription)
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+//        print(error.debugDescription)
     }
 
 }

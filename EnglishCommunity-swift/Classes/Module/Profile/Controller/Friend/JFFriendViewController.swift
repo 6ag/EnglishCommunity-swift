@@ -21,15 +21,15 @@ class JFFriendViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.titleView = segmentedControl
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.rowHeight = 60
         tableView.backgroundColor = COLOR_ALL_BG
-        tableView.registerClass(JFFriendCell.classForCoder(), forCellReuseIdentifier: friendCellIdentifier)
+        tableView.register(JFFriendCell.classForCoder(), forCellReuseIdentifier: friendCellIdentifier)
         tableView.mj_header = setupHeaderRefresh(self, action: #selector(loadFriendList))
         tableView.mj_header.beginRefreshing()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -37,7 +37,7 @@ class JFFriendViewController: UITableViewController {
     /**
      加载数据
      */
-    @objc private func loadFriendList() {
+    @objc fileprivate func loadFriendList() {
         
         JFRelationUser.getFriendList(relation) { (relationUsers) in
             
@@ -57,20 +57,20 @@ class JFFriendViewController: UITableViewController {
     /**
      点击了标题选项
      */
-    @objc private func didChangedSelected(segmentedControl: UISegmentedControl) {
+    @objc fileprivate func didChangedSelected(_ segmentedControl: UISegmentedControl) {
         relation = segmentedControl.selectedSegmentIndex == 0 ? 1 : 0
         tableView.mj_header.beginRefreshing()
     }
     
     // MARK: - 懒加载
     /// 自定义标题
-    private lazy var segmentedControl: UISegmentedControl = {
+    fileprivate lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["关注", "粉丝"])
         segmentedControl.frame = CGRect(x: 0, y: 0, width: 120, height: 30)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.backgroundColor = COLOR_NAV_BG
-        segmentedControl.tintColor = UIColor.whiteColor()
-        segmentedControl.addTarget(self, action: #selector(didChangedSelected(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        segmentedControl.tintColor = UIColor.white
+        segmentedControl.addTarget(self, action: #selector(didChangedSelected(_:)), for: UIControlEvents.valueChanged)
         return segmentedControl
     }()
     
@@ -79,18 +79,18 @@ class JFFriendViewController: UITableViewController {
 // MARK: - Table view data source
 extension JFFriendViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return relationUsers.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(friendCellIdentifier) as! JFFriendCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: friendCellIdentifier) as! JFFriendCell
         cell.relationUser = relationUsers[indexPath.row]
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         let otherUser = JFOtherUserViewController()
         otherUser.userId = relationUsers[indexPath.row].relationUserId

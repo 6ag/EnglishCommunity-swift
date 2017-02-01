@@ -14,7 +14,7 @@ class JFSelectFriendViewController: UIViewController {
     let selectFriendIdentifier = "selectFriendIdentifier"
     
     /// 返回时回调选中的用户数据
-    var callback: ((relationUsers: [JFRelationUser]?) -> ())?
+    var callback: ((_ relationUsers: [JFRelationUser]?) -> ())?
     
     var relationUsers = [JFRelationUser]()
     
@@ -28,7 +28,7 @@ class JFSelectFriendViewController: UIViewController {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         title = "选择@好友"
         view.backgroundColor = COLOR_ALL_BG
@@ -39,14 +39,14 @@ class JFSelectFriendViewController: UIViewController {
     /**
      准备导航栏
      */
-    private func prepareNavigationBar() {
+    fileprivate func prepareNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.leftItem("top_navigation_back_normal", highlightedImage: "top_navigation_back_normal", target: self, action: #selector(didTappedBackBarButton(_:)))
     }
     
     /**
      返回
      */
-    @objc private func didTappedBackBarButton(barButtonItem: UIBarButtonItem) {
+    @objc fileprivate func didTappedBackBarButton(_ barButtonItem: UIBarButtonItem) {
         
         var relationUsers = [JFRelationUser]()
         for relationUser in self.relationUsers {
@@ -57,16 +57,16 @@ class JFSelectFriendViewController: UIViewController {
         
         /// 回调选中的用户数据
         if let callback = callback {
-            callback(relationUsers: relationUsers)
+            callback(relationUsers)
         }
         
-        navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewController(animated: true)
     }
     
     /**
      加载数据
      */
-    private func loadData() {
+    fileprivate func loadData() {
         
         JFRelationUser.getFriendList(1) { (relationUsers) in
             guard let relationUsers = relationUsers else {
@@ -80,12 +80,12 @@ class JFSelectFriendViewController: UIViewController {
     
     /// 内容区域
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = COLOR_ALL_BG
-        tableView.registerClass(JFSelectFriendCell.classForCoder(), forCellReuseIdentifier: self.selectFriendIdentifier)
+        tableView.register(JFSelectFriendCell.classForCoder(), forCellReuseIdentifier: self.selectFriendIdentifier)
         return tableView
     }()
     
@@ -94,25 +94,25 @@ class JFSelectFriendViewController: UIViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFSelectFriendViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return relationUsers.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(selectFriendIdentifier, forIndexPath: indexPath) as! JFSelectFriendCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: selectFriendIdentifier, for: indexPath) as! JFSelectFriendCell
         cell.relationUser = relationUsers[indexPath.row]
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! JFSelectFriendCell
-        cell.selectorButton.selected = !cell.selectorButton.selected
-        relationUsers[indexPath.row].selected = cell.selectorButton.selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = tableView.cellForRow(at: indexPath) as! JFSelectFriendCell
+        cell.selectorButton.isSelected = !cell.selectorButton.isSelected
+        relationUsers[indexPath.row].selected = cell.selectorButton.isSelected
     }
     
 }

@@ -39,7 +39,7 @@ class JFGrammarViewController: UIViewController {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         navigationItem.title = "有声语法大全"
         view.backgroundColor = COLOR_ALL_BG
@@ -49,7 +49,7 @@ class JFGrammarViewController: UIViewController {
     /**
      下拉刷新
      */
-    @objc private func pullDownRefresh() {
+    @objc fileprivate func pullDownRefresh() {
         page = 1
         updateData(page, method: 0)
     }
@@ -57,7 +57,7 @@ class JFGrammarViewController: UIViewController {
     /**
      上拉加载更多
      */
-    @objc private func pullUpMoreData() {
+    @objc fileprivate func pullUpMoreData() {
         page += 1
         updateData(page, method: 1)
     }
@@ -68,7 +68,7 @@ class JFGrammarViewController: UIViewController {
      - parameter page:   页码
      - parameter method: 加载方式
      */
-    private func updateData(page: Int, method: Int) {
+    fileprivate func updateData(_ page: Int, method: Int) {
         
         JFGrammar.loadGrammarData(page) { (grammars) in
             
@@ -92,12 +92,12 @@ class JFGrammarViewController: UIViewController {
     
     /// 内容区域
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 60), style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 60), style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = COLOR_ALL_BG
-        tableView.registerClass(JFGrammarListCell.classForCoder(), forCellReuseIdentifier: self.grammarIdentifier)
+        tableView.register(JFGrammarListCell.classForCoder(), forCellReuseIdentifier: self.grammarIdentifier)
         return tableView
     }()
 }
@@ -108,7 +108,7 @@ extension JFGrammarViewController: GADInterstitialDelegate {
     /**
      当插页广告dismiss后初始化插页广告对象
      */
-    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         interstitial = createAndLoadInterstitial()
     }
     
@@ -120,7 +120,7 @@ extension JFGrammarViewController: GADInterstitialDelegate {
     func createAndLoadInterstitial() -> GADInterstitial {
         let interstitial = GADInterstitial(adUnitID: INTERSTITIAL_UNIT_ID)
         interstitial.delegate = self
-        interstitial.loadRequest(GADRequest())
+        interstitial.load(GADRequest())
         return interstitial
     }
     
@@ -129,24 +129,24 @@ extension JFGrammarViewController: GADInterstitialDelegate {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFGrammarViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return grammars.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(grammarIdentifier) as! JFGrammarListCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: grammarIdentifier) as! JFGrammarListCell
         cell.grammar = grammars[indexPath.row]
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         // 满足条件才显示广告
         if JFAccountModel.shareAccount()?.adDsabled != 1 {
             // 弹出插页广告
             if interstitial.isReady {
-                interstitial.presentFromRootViewController(self)
+                interstitial.present(fromRootViewController: self)
                 return
             }
         }

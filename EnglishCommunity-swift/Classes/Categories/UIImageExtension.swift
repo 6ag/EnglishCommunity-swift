@@ -17,7 +17,7 @@ extension UIImage {
      
      - returns: 返回缩放后的图片
      */
-    func equalScaleWithWidth(newWidth: CGFloat) -> CGSize {
+    func equalScaleWithWidth(_ newWidth: CGFloat) -> CGSize {
         // 新的高度 / 新的宽度 = 原来的高度 / 原来的宽度
         let newHeight = newWidth * (size.height * scale) / (size.width * scale)
         let newSize = CGSize(width: newWidth, height: newHeight)
@@ -31,7 +31,7 @@ extension UIImage {
      
      - returns: 返回缩放后的图片
      */
-    func equalScaleWithWHeight(newHeight: CGFloat) -> CGSize {
+    func equalScaleWithWHeight(_ newHeight: CGFloat) -> CGSize {
         // 新的高度 / 新的宽度 = 原来的高度 / 原来的宽度
         let newWidth = newHeight / (size.height * scale) * (size.width * scale)
         let newSize = CGSize(width: newWidth, height: newHeight)
@@ -45,9 +45,9 @@ extension UIImage {
      
      - returns: 返回缩放后的图片
      */
-    func resizeImageWithNewSize(newSize: CGSize) -> UIImage {
+    func resizeImageWithNewSize(_ newSize: CGSize) -> UIImage {
         
-        var rect = CGRectZero
+        var rect = CGRect.zero
         let oldSize = self.size
         
         if newSize.width / newSize.height > oldSize.width / oldSize.height {
@@ -64,13 +64,13 @@ extension UIImage {
         
         UIGraphicsBeginImageContext(newSize)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, UIColor.clearColor().CGColor)
+        context?.setFillColor(UIColor.clear.cgColor)
         UIRectFill(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-        self.drawInRect(rect)
+        self.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return newImage
+        return newImage!
     }
     
     /**
@@ -99,7 +99,7 @@ extension UIImage {
         UIGraphicsBeginImageContext(newSize)
         
         // 将当前图片绘制到rect上面
-        drawInRect(CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
         
         // 从上下文获取绘制好的图片
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -107,6 +107,71 @@ extension UIImage {
         // 关闭上下文
         UIGraphicsEndImageContext()
         
-        return newImage
+        return newImage!
     }
+    
+    /// 重新绘制图片
+    ///
+    /// - Parameters:
+    ///   - image: 原图
+    ///   - size: 绘制尺寸
+    /// - Returns: 新图
+    func redrawImage(size: CGSize?) -> UIImage? {
+        
+        // 绘制区域
+        let rect = CGRect(origin: CGPoint(), size: size ?? CGSize.zero)
+        
+        // 开启图形上下文 size:绘图的尺寸 opaque:不透明 scale:屏幕分辨率系数,0会选择当前设备的屏幕分辨率系数
+        UIGraphicsBeginImageContextWithOptions(rect.size, true, 0)
+        
+        // 绘制 在指定区域拉伸并绘制
+        draw(in: rect)
+        
+        // 从图形上下文获取图片
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // 关闭上下文
+        UIGraphicsEndImageContext()
+        
+        return result
+    }
+    
+    /// 重新绘制圆形图片
+    ///
+    /// - Parameters:
+    ///   - image: 原图
+    ///   - size: 绘制尺寸
+    ///   - bgColor: 裁剪区域外的背景颜色
+    /// - Returns: 新图
+    func redrawOvalImage(size: CGSize?, bgColor: UIColor?) -> UIImage? {
+        
+        // 绘制区域
+        let rect = CGRect(origin: CGPoint(), size: size ?? CGSize.zero)
+        
+        // 开启图形上下文 size:绘图的尺寸 opaque:不透明 scale:屏幕分辨率系数,0会选择当前设备的屏幕分辨率系数
+        UIGraphicsBeginImageContextWithOptions(rect.size, true, 0)
+        
+        // 背景颜色填充
+        bgColor?.setFill()
+        UIRectFill(rect)
+        
+        // 圆形路径
+        let path = UIBezierPath(ovalIn: rect)
+        
+        // 进行路径裁切，后续的绘图都会出现在这个圆形路径内部
+        path.addClip()
+        
+        // 绘制图像 在指定区域拉伸并绘制
+        draw(in: rect)
+        
+        // 从图形上下文获取图片
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // 关闭上下文
+        UIGraphicsEndImageContext()
+        
+        return result
+    }
+
+    
 }

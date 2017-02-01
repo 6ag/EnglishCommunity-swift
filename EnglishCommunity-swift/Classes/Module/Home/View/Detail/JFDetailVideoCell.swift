@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol JFDetailVideoCellDelegate: NSObjectProtocol {
-    func didTappedDownloadButton(cell: JFDetailVideoCell, button: UIButton)
+    func didTappedDownloadButton(_ cell: JFDetailVideoCell, button: UIButton)
 }
 
 class JFDetailVideoCell: UITableViewCell {
@@ -27,17 +27,17 @@ class JFDetailVideoCell: UITableViewCell {
             
             // 改变状态
             switch model.state {
-            case VideoState.NoDownload:
+            case VideoState.noDownload:
                 
-                downloadButton.selected = false
+                downloadButton.isSelected = false
                 progressView.removeFromSuperview()
                 
-            case VideoState.AlreadyDownload:
+            case VideoState.alreadyDownload:
                 
-                downloadButton.selected = true
+                downloadButton.isSelected = true
                 progressView.removeFromSuperview()
                 
-            case VideoState.Downloading:
+            case VideoState.downloading:
                 
                 if progressView.superview == nil {
                     downloadButton.addSubview(progressView)
@@ -51,17 +51,17 @@ class JFDetailVideoCell: UITableViewCell {
         }
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         videoTitleLabel.textColor = selected ? UIColor.colorWithHexString("41ca61") : UIColor.colorWithHexString("6b6b6b")
-        indicatorButton.selected = selected
+        indicatorButton.isSelected = selected
     }
     
     /**
      点击了下载按钮
      */
-    @IBAction func didTappedDownloadButton(sender: UIButton) {
+    @IBAction func didTappedDownloadButton(_ sender: UIButton) {
         delegate?.didTappedDownloadButton(self, button: sender)
     }
     
@@ -72,8 +72,8 @@ class JFDetailVideoCell: UITableViewCell {
     /// 进度圈
     lazy var progressView: JFProgressView = {
         let progressView = JFProgressView(frame: CGRect(x: 12, y: 12, width: 20, height: 20))
-        progressView.userInteractionEnabled = false
-        progressView.backgroundColor = UIColor.whiteColor()
+        progressView.isUserInteractionEnabled = false
+        progressView.backgroundColor = UIColor.white
         self.downloadButton.addSubview(progressView)
         return progressView
     }()

@@ -21,12 +21,12 @@ class JFGrammar: NSObject {
     /// 音频
     var mp3: String?
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
     /**
      加载语法数据
@@ -34,17 +34,17 @@ class JFGrammar: NSObject {
      - parameter page:     页码
      - parameter finished: 完成回调
      */
-    class func loadGrammarData(page: Int, finished: (grammars: [JFGrammar]?) -> ()) {
+    class func loadGrammarData(_ page: Int, finished: @escaping (_ grammars: [JFGrammar]?) -> ()) {
         
-        let parameters: [String : AnyObject] = [
+        let parameters: [String : Any] = [
             "page" : page,
             "count" : 30,
         ]
         
         JFNetworkTools.shareNetworkTool.get(GET_GRAMMAR_MANUAL, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
-                finished(grammars: nil)
+            guard let result = result, result["status"] == "success" else {
+                finished(nil)
                 return
             }
             
@@ -55,7 +55,7 @@ class JFGrammar: NSObject {
                 grammars.append(JFGrammar(dict: dict))
             }
             
-            finished(grammars: grammars)
+            finished(grammars)
         }
     }
 }

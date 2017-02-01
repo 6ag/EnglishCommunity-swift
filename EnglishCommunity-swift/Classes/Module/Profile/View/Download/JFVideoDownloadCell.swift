@@ -27,7 +27,7 @@ class JFVideoDownloadCell: UITableViewCell {
                 return
             }
             
-            selectorButton.selected = video.downloadListSelected
+            selectorButton.isSelected = video.downloadListSelected
             videoTitleLabel.text = video.title ?? ""
         }
     }
@@ -35,27 +35,27 @@ class JFVideoDownloadCell: UITableViewCell {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         contentView.addSubview(selectorButton)
         contentView.addSubview(videoTitleLabel)
         
-        selectorButton.snp_makeConstraints { (make) in
+        selectorButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(contentView)
             make.left.equalTo(MARGIN)
             make.size.equalTo(CGSize(width: 20, height: 20))
         }
         
-        videoTitleLabel.snp_makeConstraints { (make) in
+        videoTitleLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(selectorButton)
-            make.left.equalTo(selectorButton.snp_right).offset(MARGIN * 0.5)
+            make.left.equalTo(selectorButton.snp.right).offset(MARGIN * 0.5)
         }
     }
     
     /**
      修改cell点击后高亮颜色
      */
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
@@ -68,16 +68,16 @@ class JFVideoDownloadCell: UITableViewCell {
     // MARK: - 懒加载
     /// 选择图标
     lazy var selectorButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setBackgroundImage(UIImage(named: "publish_select_normal"), forState: .Normal)
-        button.setBackgroundImage(UIImage(named: "publish_select_selected"), forState: .Selected)
-        button.userInteractionEnabled = false
+        let button = UIButton(type: .custom)
+        button.setBackgroundImage(UIImage(named: "publish_select_normal"), for: UIControlState())
+        button.setBackgroundImage(UIImage(named: "publish_select_selected"), for: .selected)
+        button.isUserInteractionEnabled = false
         return button
     }()
     
     lazy var videoTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(13)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.colorWithHexString("6b6b6b")
         return label
     }()

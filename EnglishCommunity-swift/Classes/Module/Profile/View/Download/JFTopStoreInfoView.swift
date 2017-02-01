@@ -9,7 +9,7 @@
 import UIKit
 
 protocol JFTopStoreInfoViewDelegate: NSObjectProtocol {
-    func didTappedCloseButton(button: UIButton)
+    func didTappedCloseButton(_ button: UIButton)
 }
 
 class JFTopStoreInfoView: UIView {
@@ -27,7 +27,7 @@ class JFTopStoreInfoView: UIView {
     /**
      关闭按钮点击事件
      */
-    @IBAction func didTappedCloseButton(sender: UIButton) {
+    @IBAction func didTappedCloseButton(_ sender: UIButton) {
         delegate?.didTappedCloseButton(sender)
     }
     

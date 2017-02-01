@@ -19,13 +19,13 @@ extension UIBarButtonItem {
      
      - returns: barButtonItem
      */
-    class func leftItem(title: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
-        let itemButton = UIButton(type: .Custom)
+    class func leftItem(_ title: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let itemButton = UIButton(type: .custom)
         itemButton.size = CGSize(width: 50, height: 44)
-        itemButton.contentHorizontalAlignment = .Left
-        itemButton.setTitle(title, forState: .Normal)
-        itemButton.titleLabel?.font = UIFont.systemFontOfSize(18)
-        itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        itemButton.contentHorizontalAlignment = .left
+        itemButton.setTitle(title, for: UIControlState())
+        itemButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        itemButton.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: itemButton)
     }
     
@@ -38,15 +38,15 @@ extension UIBarButtonItem {
      
      - returns: barButtonItem
      */
-    class func rightItem(title: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
-        let itemButton = UIButton(type: .Custom)
+    class func rightItem(_ title: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let itemButton = UIButton(type: .custom)
         itemButton.size = CGSize(width: 50, height: 44)
-        itemButton.contentHorizontalAlignment = .Right
-        itemButton.setTitle(title, forState: .Normal)
-        itemButton.titleLabel?.font = UIFont.systemFontOfSize(16)
-        itemButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        itemButton.setTitleColor(UIColor(white: 0.9, alpha: 1), forState: .Disabled)
-        itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        itemButton.contentHorizontalAlignment = .right
+        itemButton.setTitle(title, for: UIControlState())
+        itemButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        itemButton.setTitleColor(UIColor.white, for: UIControlState())
+        itemButton.setTitleColor(UIColor(white: 0.9, alpha: 1), for: .disabled)
+        itemButton.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: itemButton)
     }
     
@@ -60,13 +60,13 @@ extension UIBarButtonItem {
      
      - returns: barButtonItem
      */
-    class func leftItem(normalImage: String, highlightedImage: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
-        let itemButton = UIButton(type: .Custom)
+    class func leftItem(_ normalImage: String, highlightedImage: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let itemButton = UIButton(type: .custom)
         itemButton.size = CGSize(width: 50, height: 44)
-        itemButton.contentHorizontalAlignment = .Left
-        itemButton.setImage(UIImage(named: normalImage), forState: .Normal)
-        itemButton.setImage(UIImage(named: highlightedImage), forState: .Highlighted)
-        itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        itemButton.contentHorizontalAlignment = .left
+        itemButton.setImage(UIImage(named: normalImage), for: UIControlState())
+        itemButton.setImage(UIImage(named: highlightedImage), for: .highlighted)
+        itemButton.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: itemButton)
     }
     
@@ -80,14 +80,14 @@ extension UIBarButtonItem {
      
      - returns: barButtonItem
      */
-    class func rightItem(normalImage: String, highlightedImage: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
-        let itemButton = UIButton(type: .Custom)
+    class func rightItem(_ normalImage: String, highlightedImage: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let itemButton = UIButton(type: .custom)
         itemButton.size = CGSize(width: 50, height: 44)
-        itemButton.contentHorizontalAlignment = .Right
+        itemButton.contentHorizontalAlignment = .right
         itemButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
-        itemButton.setImage(UIImage(named: normalImage), forState: .Normal)
-        itemButton.setImage(UIImage(named: highlightedImage), forState: .Highlighted)
-        itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        itemButton.setImage(UIImage(named: normalImage), for: UIControlState())
+        itemButton.setImage(UIImage(named: highlightedImage), for: .highlighted)
+        itemButton.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: itemButton)
     }
     
@@ -102,17 +102,17 @@ extension UIBarButtonItem {
      
      - returns: barButtonItem
      */
-    class func item(title: String, normalImage: String, highlightedImage: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
-        let itemButton = UIButton(type: .Custom)
-        itemButton.setTitle("返回", forState: .Normal)
+    class func item(_ title: String, normalImage: String, highlightedImage: String, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let itemButton = UIButton(type: .custom)
+        itemButton.setTitle("返回", for: UIControlState())
         itemButton.size = CGSize(width: 50, height: 44)
-        itemButton.setTitleColor(COLOR_NAV_ITEM_NORMAL, forState: .Normal)
-        itemButton.setTitleColor(COLOR_NAV_ITEM_HIGH, forState: .Highlighted)
-        itemButton.contentHorizontalAlignment = .Left
+        itemButton.setTitleColor(COLOR_NAV_ITEM_NORMAL, for: UIControlState())
+        itemButton.setTitleColor(COLOR_NAV_ITEM_HIGH, for: .highlighted)
+        itemButton.contentHorizontalAlignment = .left
         itemButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
-        itemButton.setImage(UIImage(named: normalImage), forState: .Normal)
-        itemButton.setImage(UIImage(named: highlightedImage), forState: .Highlighted)
-        itemButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        itemButton.setImage(UIImage(named: normalImage), for: UIControlState())
+        itemButton.setImage(UIImage(named: highlightedImage), for: .highlighted)
+        itemButton.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: itemButton)
     }
     

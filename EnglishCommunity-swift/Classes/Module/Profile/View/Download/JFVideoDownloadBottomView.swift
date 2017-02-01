@@ -9,8 +9,8 @@
 import UIKit
 
 protocol JFVideoDownloadBottomViewDelegate: NSObjectProtocol {
-    func didTappedSelectButton(button: UIButton)
-    func didTappedConfirmButton(button: UIButton)
+    func didTappedSelectButton(_ button: UIButton)
+    func didTappedConfirmButton(_ button: UIButton)
 }
 
 class JFVideoDownloadBottomView: UIView {
@@ -20,14 +20,14 @@ class JFVideoDownloadBottomView: UIView {
     /**
      点击选择
      */
-    @IBAction func didTappedSelectButton(sender: UIButton) {
+    @IBAction func didTappedSelectButton(_ sender: UIButton) {
         delegate?.didTappedSelectButton(sender)
     }
 
     /**
      点击确认下载
      */
-    @IBAction func didTappedConfirmButton(sender: UIButton) {
+    @IBAction func didTappedConfirmButton(_ sender: UIButton) {
         delegate?.didTappedConfirmButton(sender)
     }
 }

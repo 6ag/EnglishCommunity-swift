@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class JFForgotViewController: UIViewController {
     
@@ -22,79 +46,79 @@ class JFForgotViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        usernameView.layer.borderColor = UIColor.whiteColor().CGColor
+        usernameView.layer.borderColor = UIColor.white.cgColor
         usernameView.layer.borderWidth = 0.5
-        emailView.layer.borderColor = UIColor.whiteColor().CGColor
+        emailView.layer.borderColor = UIColor.white.cgColor
         emailView.layer.borderWidth = 0.5
         didChangeTextField(usernameField)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     /**
      键盘即将显示
      */
-    @objc private func keyboardWillShow(notification: NSNotification) {
+    @objc fileprivate func keyboardWillShow(_ notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let beginHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue().size.height
-        let endHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().size.height
+        let beginHeight = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue.size.height
+        let endHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size.height
         
         if beginHeight > 0 && endHeight > 0 {
-            UIView.animateWithDuration(0.25) {
-                self.view.transform = CGAffineTransformMakeTranslation(0, -endHeight + (SCREEN_HEIGHT - CGRectGetMaxY(self.retrieveButton.frame)) - 10)
-            }
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.transform = CGAffineTransform(translationX: 0, y: -endHeight + (SCREEN_HEIGHT - self.retrieveButton.frame.maxY) - 10)
+            }) 
         }
     }
     
     /**
      键盘即将隐藏
      */
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        UIView.animateWithDuration(0.25) {
-            self.view.transform = CGAffineTransformIdentity
-        }
+    @objc fileprivate func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.view.transform = CGAffineTransform.identity
+        }) 
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
-    @IBAction func didChangeTextField(sender: UITextField) {
+    @IBAction func didChangeTextField(_ sender: UITextField) {
         if usernameField.text?.characters.count >= 5 && emailField.text?.characters.count >= 5 {
-            retrieveButton.enabled = true
+            retrieveButton.isEnabled = true
             retrieveButton.backgroundColor = buttonColorNormal
         } else {
-            retrieveButton.enabled = false
+            retrieveButton.isEnabled = false
             retrieveButton.backgroundColor = buttonColorDisabled
         }
     }
     
     @IBAction func didTappedBackButton() {
         view.endEditing(true)
-        navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func didTappedRetrieveButton(sender: UIButton) {
+    @IBAction func didTappedRetrieveButton(_ sender: UIButton) {
         view.endEditing(true)
         
         JFProgressHUD.showWithStatus("正在发送")
         JFAccountModel.retrievePasswordEmail(self.usernameField.text!, email: self.emailField.text!) { (success, tip) in
             if success {
                 JFProgressHUD.showSuccessWithStatus("发送成功，请查看邮箱")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             } else {
                 JFProgressHUD.showInfoWithStatus(tip)
             }

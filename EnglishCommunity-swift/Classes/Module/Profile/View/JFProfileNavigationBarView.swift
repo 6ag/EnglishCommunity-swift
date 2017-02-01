@@ -27,17 +27,17 @@ class JFProfileNavigationBarView: UIView {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         addSubview(titleLabel)
         addSubview(settingButton)
         
-        titleLabel.snp_makeConstraints { (make) in
+        titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
             make.top.equalTo(30)
         }
         
-        settingButton.snp_makeConstraints { (make) in
+        settingButton.snp.makeConstraints { (make) in
             make.right.equalTo(-5)
             make.top.equalTo(20)
             make.size.equalTo(CGSize(width: 44, height: 44))
@@ -49,25 +49,25 @@ class JFProfileNavigationBarView: UIView {
     /**
      标题和状态栏改变
      */
-    func titleColorChange(normal: Bool) {
+    func titleColorChange(_ normal: Bool) {
         if normal {
-            titleLabel.hidden = true
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+            titleLabel.isHidden = true
+            UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: true)
         } else {
-            titleLabel.hidden = false
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+            titleLabel.isHidden = false
+            UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
         }
     }
     
     /**
      item改变
      */
-    func itemColorChange(normal: Bool) {
+    func itemColorChange(_ normal: Bool) {
         if normal {
-            settingButton.setImage(UIImage(named: "profile_setting_icon_normal"), forState: .Normal)
+            settingButton.setImage(UIImage(named: "profile_setting_icon_normal"), for: UIControlState())
 //            settingButton.setImage(UIImage(named: "profile_setting_icon_highlighted"), forState: .Highlighted)
         } else {
-            settingButton.setImage(UIImage(named: "profile_setting_icon_dark"), forState: .Normal)
+            settingButton.setImage(UIImage(named: "profile_setting_icon_dark"), for: UIControlState())
 //            settingButton.setImage(UIImage(named: "profile_setting_icon_highlighted"), forState: .Highlighted)
         }
     }
@@ -75,7 +75,7 @@ class JFProfileNavigationBarView: UIView {
     /**
      点击了设置
      */
-    @objc private func didTappedSetting() {
+    @objc fileprivate func didTappedSetting() {
         delegate?.didTappedSetting()
     }
     
@@ -83,17 +83,17 @@ class JFProfileNavigationBarView: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "收藏课程"
-        label.font = UIFont.systemFontOfSize(18)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = UIColor.colorWithHexString("24262F")
-        label.hidden = true
+        label.isHidden = true
         return label
     }()
     
     lazy var settingButton: UIButton = {
-        let button = UIButton(type: .Custom)
-        button.setImage(UIImage(named: "profile_setting_icon_normal"), forState: .Normal)
-        button.setImage(UIImage(named: "profile_setting_icon_highlighted"), forState: .Highlighted)
-        button.addTarget(self, action: #selector(didTappedSetting), forControlEvents: .TouchUpInside)
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "profile_setting_icon_normal"), for: UIControlState())
+        button.setImage(UIImage(named: "profile_setting_icon_highlighted"), for: .highlighted)
+        button.addTarget(self, action: #selector(didTappedSetting), for: .touchUpInside)
         return button
     }()
 }

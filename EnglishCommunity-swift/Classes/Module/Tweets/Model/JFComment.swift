@@ -22,12 +22,12 @@ class JFCommentAuthor: NSObject {
     /// 性别
     var sex = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
 }
 
 /// 评论被回复的人
@@ -44,12 +44,12 @@ class JFCommentExtendsAuthor: NSObject {
     /// 性别
     var sex = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
 }
 
 /// 评论模型
@@ -79,14 +79,14 @@ class JFComment: NSObject {
     /// 缓存高度
     var rowHeight: CGFloat = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
-    override func setValue(value: AnyObject?, forKey key: String) {
+    override func setValue(_ value: Any?, forKey key: String) {
         
         if key == "author" {
             author = JFCommentAuthor(dict: value as! [String : AnyObject])
@@ -107,19 +107,19 @@ class JFComment: NSObject {
      - parameter source_id: 评论资源id
      - parameter finished:  完成回调
      */
-    class func loadCommentList(page: Int, type: String, source_id: Int, finished: (comments: [JFComment]?) -> ()) {
+    class func loadCommentList(_ page: Int, type: String, source_id: Int, finished: @escaping (_ comments: [JFComment]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "page" : page,
-            "type" : type,
-            "source_id" : source_id,
-            "count" : 10,
+            "page" : page as AnyObject,
+            "type" : type as AnyObject,
+            "source_id" : source_id as AnyObject,
+            "count" : 10 as AnyObject,
             ]
         
         JFNetworkTools.shareNetworkTool.get(GET_COMMENT_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
-                finished(comments: nil)
+            guard let result = result, result["status"] == "success" else {
+                finished(nil)
                 return
             }
             
@@ -131,7 +131,7 @@ class JFComment: NSObject {
                 comments.append(trends)
             }
             
-            finished(comments: comments)
+            finished(comments)
         }
     }
 
@@ -145,24 +145,24 @@ class JFComment: NSObject {
      - parameter pid:      回复评论id
      - parameter finished: 完成回调
      */
-    class func publishComment(type: String, sourceId: Int, content: String, pid: Int = 0, finished: (success: Bool) -> ()) {
+    class func publishComment(_ type: String, sourceId: Int, content: String, pid: Int = 0, finished: @escaping (_ success: Bool) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "user_id" : JFAccountModel.shareAccount()!.id,
-            "type" : type,
-            "source_id" : sourceId,
-            "content" : content,
-            "pid" : pid
+            "user_id" : JFAccountModel.shareAccount()!.id as AnyObject,
+            "type" : type as AnyObject,
+            "source_id" : sourceId as AnyObject,
+            "content" : content as AnyObject,
+            "pid" : pid as AnyObject
             ]
         
         JFNetworkTools.shareNetworkTool.postWithToken(POST_COMMENT, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
-                finished(success: false)
+            guard let result = result, result["status"] == "success" else {
+                finished(false)
                 return
             }
             
-            finished(success: true)
+            finished(true)
         }
     }
 }

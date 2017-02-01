@@ -33,7 +33,7 @@ class JFCategoryViewController: UIViewController {
         tableView.mj_header.beginRefreshing()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -41,7 +41,7 @@ class JFCategoryViewController: UIViewController {
     /**
      准备UI
      */
-    private func prepareUI() {
+    fileprivate func prepareUI() {
         
         view.backgroundColor = COLOR_ALL_BG
         view.addSubview(tableView)
@@ -50,7 +50,7 @@ class JFCategoryViewController: UIViewController {
     /**
      下拉刷新
      */
-    @objc private func pullDownRefresh() {
+    @objc fileprivate func pullDownRefresh() {
         page = 1
         updateData(category!.id, page: page, method: 0)
     }
@@ -58,7 +58,7 @@ class JFCategoryViewController: UIViewController {
     /**
      上拉加载更多
      */
-    @objc private func pullUpMoreData() {
+    @objc fileprivate func pullUpMoreData() {
         page += 1
         updateData(category!.id, page: page, method: 1)
     }
@@ -68,9 +68,9 @@ class JFCategoryViewController: UIViewController {
      
      - parameter category_id: 分类id
      */
-    private func updateData(category_id: Int, page: Int, method: Int) {
+    fileprivate func updateData(_ category_id: Int, page: Int, method: Int) {
         
-        JFVideoInfo.loadVideoInfoList(page, count: 10, category_id: category_id, recommend: 0) { (videoInfos) in
+        JFVideoInfo.loadVideoInfoList(page, count: 20, category_id: category_id, recommend: 0) { (videoInfos) in
             
             self.tableView.mj_header.endRefreshing()
             self.tableView.mj_footer.endRefreshing()
@@ -94,14 +94,14 @@ class JFCategoryViewController: UIViewController {
 
     // MARK: - 懒加载
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.Plain)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT - 64), style: UITableViewStyle.plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.rowHeight = 84
         tableView.backgroundColor = COLOR_ALL_BG
-        tableView.registerNib(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.categoryIdentifier)
-        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: self.adIdentifier)
+        tableView.register(UINib(nibName: "JFCategoryListCell", bundle: nil), forCellReuseIdentifier: self.categoryIdentifier)
+        tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: self.adIdentifier)
         return tableView
     }()
 }
@@ -109,34 +109,34 @@ class JFCategoryViewController: UIViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFCategoryViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoInfos.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // 每隔10个创建一个广告
         if indexPath.row % 10 == 0 && indexPath.row != 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(adIdentifier)!
-            let nativeView = JFAdManager.shareDbManager().getNativeView(self)
+            let cell = tableView.dequeueReusableCell(withIdentifier: adIdentifier)!
+            let nativeView = JFAdManager.shared.getNativeView(self)
             nativeView.backgroundColor = COLOR_ALL_CELL_NORMAL
             cell.contentView.addSubview(nativeView)
-            nativeView.snp_makeConstraints(closure: { (make) in
+            nativeView.snp.makeConstraints({ (make) in
                 make.edges.equalTo(cell.contentView)
             })
             cell.contentView.backgroundColor = COLOR_ALL_CELL_NORMAL
             return cell
         } else {
             let videoInfo = videoInfos[indexPath.row - indexPath.row / 10]
-            let cell = tableView.dequeueReusableCellWithIdentifier(categoryIdentifier) as! JFCategoryListCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: categoryIdentifier) as! JFCategoryListCell
             cell.videoInfo = videoInfo
             return cell
         }
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.row % 10 == 0 && indexPath.row != 0 {
             // 点击了广告

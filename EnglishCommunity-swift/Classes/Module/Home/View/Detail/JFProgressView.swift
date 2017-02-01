@@ -29,7 +29,7 @@ class JFProgressView: UIView {
     /// 进度条颜色
     var progressColor = COLOR_NAV_BG
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         // 背景
         let trackPath = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius), radius: radius - lineWidth, startAngle: CGFloat(-M_PI_2), endAngle: CGFloat(M_PI * 2), clockwise: true)
@@ -41,7 +41,7 @@ class JFProgressView: UIView {
         let endAngle = CGFloat(M_PI * 2) * progress - CGFloat(M_PI_2)
         let progressPath = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius), radius: radius - lineWidth, startAngle: CGFloat(-M_PI_2), endAngle: endAngle, clockwise: true)
         progressPath.lineWidth = lineWidth
-        progressPath.lineCapStyle = CGLineCap.Round
+        progressPath.lineCapStyle = CGLineCap.round
         progressColor.setStroke()
         progressPath.stroke()
     }

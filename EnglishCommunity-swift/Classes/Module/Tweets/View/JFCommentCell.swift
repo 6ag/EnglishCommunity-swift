@@ -10,8 +10,8 @@ import UIKit
 import YYWebImage
 
 protocol JFCommentCellDelegate: NSObjectProtocol {
-    func commentCell(cell: JFCommentCell, didTappedAvatarButton button: UIButton)
-    func commentCell(cell: JFCommentCell, didTappedAtUser nickname: String, sequence: Int)
+    func commentCell(_ cell: JFCommentCell, didTappedAvatarButton button: UIButton)
+    func commentCell(_ cell: JFCommentCell, didTappedAtUser nickname: String, sequence: Int)
 }
 
 class JFCommentCell: UITableViewCell {
@@ -29,16 +29,15 @@ class JFCommentCell: UITableViewCell {
                 return
             }
             
-            let contentString = JFEmoticon.emoticonStringToEmoticonAttrString(comment.content!, font: contentLabel.font)
             if let extendsAuthor = comment.extendsAuthor {
-                let contentString = "回复 @\(extendsAuthor.nickname!) : \(comment.content!)"
+                let contentString = "回复 @\(extendsAuthor.nickname ?? "") : \(comment.content ?? "")"
                 contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(contentString, font: contentLabel.font)
             } else {
-                contentLabel.attributedText = contentString
+                contentLabel.attributedText = JFEmoticon.emoticonStringToEmoticonAttrString(comment.content ?? "", font: contentLabel.font)
             }
             
-            avatarButton.yy_setBackgroundImageWithURL(NSURL(string: author.avatar!), forState: .Normal, options: YYWebImageOptions.AllowBackgroundTask)
-            nicknameLabel.text = author.nickname!
+            avatarButton.setBackgroundImage(urlString: author.avatar, size: CGSize(width: 30, height: 30))
+            nicknameLabel.text = author.nickname
             sexImageView.image = author.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             publishTimeLabel.text = comment.publishTime?.timeStampToDate().dateToDescription()
         }
@@ -46,19 +45,24 @@ class JFCommentCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         contentView.backgroundColor = COLOR_ALL_BG
         contentLabel.labelDelegate = self
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        contentLabel.preferredMaxLayoutWidth = SCREEN_WIDTH - MARGIN * 2
+        
+        // 离屏渲染 - 异步绘制
+        layer.drawsAsynchronously = true
+        
+        // 栅格化 - 异步绘制之后，会生成一张独立的图像，cell在屏幕上滚动的时候，本质滚动的是这张图片
+        layer.shouldRasterize = true
+        
+        // 使用栅格化，需要指定分辨率
+        layer.rasterizationScale = UIScreen.main.scale
     }
     
     /**
      修改cell点击后高亮颜色
      */
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         
         if highlighted {
@@ -71,14 +75,14 @@ class JFCommentCell: UITableViewCell {
     /**
      计算行高 - 暂时这个cell高度是固定的，所以这个方法不用
      */
-    func getRowHeight(comment: JFComment) -> CGFloat {
+    func getRowHeight(_ comment: JFComment) -> CGFloat {
         self.comment = comment
         setNeedsLayout()
         layoutIfNeeded()
-        return CGRectGetMaxY(contentLabel.frame) + 15
+        return contentLabel.frame.maxY + 15
     }
     
-    @IBAction func didTappedAvatarButton(sender: UIButton) {
+    @IBAction func didTappedAvatarButton(_ sender: UIButton) {
         delegate?.commentCell(self, didTappedAvatarButton: sender)
     }
     
@@ -98,7 +102,7 @@ extension JFCommentCell: FFLabelDelegate {
      - parameter label: 所在的label
      - parameter text:  被选中的文字
      */
-    func labelDidSelectedLinkText(label: FFLabel, text: String) {
+    func labelDidSelectedLinkText(_ label: FFLabel, text: String) {
         
         // 点击了 @昵称
         if text.hasPrefix("@") {
@@ -106,8 +110,8 @@ extension JFCommentCell: FFLabelDelegate {
                 return
             }
             
-            if let sequence = content.checkAtUserNickname()?.indexOf(text) {
-                let nickname = text.stringByReplacingOccurrencesOfString("@", withString: "")
+            if let sequence = content.checkAtUserNickname()?.index(of: text) {
+                let nickname = text.replacingOccurrences(of: "@", with: "")
                 delegate?.commentCell(self, didTappedAtUser: nickname, sequence: Int(sequence))
             }
             

@@ -14,7 +14,7 @@ class JFImageView: UIImageView {
         didSet {
             // 当设置的缩放比例小于指定的最小缩放比例时.重新设置
             if transform.a < 0.5 {
-                transform = CGAffineTransformMakeScale(0.5, 0.5)
+                transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             }
         }
     }

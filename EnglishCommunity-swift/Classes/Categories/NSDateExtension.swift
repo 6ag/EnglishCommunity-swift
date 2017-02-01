@@ -8,19 +8,19 @@
 
 import Foundation
 
-extension NSDate {
+extension Date {
     
     /**
      格式化NSDate为字符串
      */
     func dateToDescription() -> String {
         // ios比较日期使用 NSCalendar
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current
         
         // 判断是否是今天
         if calendar.isDateInToday(self) {
             // 获取系统当前日期和self比较,相差多少秒
-            let delta = Int(NSDate().timeIntervalSinceDate(self))
+            let delta = Int(Date().timeIntervalSince(self))
             
             // 判断是否是一分钟内
             if delta < 60 {
@@ -44,9 +44,9 @@ extension NSDate {
             // date1: 比较的时间1
             // toDate: 比较的时间2
             // toUnitGranularity: 比较的单位
-            let result = calendar.compareDate(self, toDate: NSDate(), toUnitGranularity: NSCalendarUnit.Year)
+            let result = (calendar as NSCalendar).compare(self, to: Date(), toUnitGranularity: NSCalendar.Unit.year)
             // 表示同一年
-            if result == NSComparisonResult.OrderedSame {
+            if result == ComparisonResult.orderedSame {
                 // 一年内
                 // MM-dd HH:mm(一年内)
                 fmt = "MM-dd HH:mm"
@@ -57,14 +57,14 @@ extension NSDate {
         }
         
         // 让系统的NSDate根据指定的格式转成字符串
-        let df = NSDateFormatter()
+        let df = DateFormatter()
         
         // 指定格式
         df.dateFormat = fmt
-        df.locale = NSLocale(localeIdentifier: "cn")
+        df.locale = Locale(identifier: "cn")
         
         // 将系统时间转成指定格式的字符串
-        let dateStirng = df.stringFromDate(self)
+        let dateStirng = df.string(from: self)
         return dateStirng
     }
 }

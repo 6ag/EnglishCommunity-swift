@@ -23,12 +23,12 @@ class JFTweetAuthor: NSObject {
     /// 性别
     var sex = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
 }
 
 /// 动弹图片模型
@@ -40,12 +40,12 @@ class JFTweetImage: NSObject {
     /// 缩略图尺寸图片
     var thumb: String?
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
 }
 
 /// 动弹被at的用户模型
@@ -60,12 +60,12 @@ class JFTweetAtUser: NSObject {
     /// at的顺序
     var sequence = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
 }
 
 /// 动弹模型
@@ -107,14 +107,14 @@ class JFTweet: NSObject {
     /// 缓存行高
     var rowHeight: CGFloat = 0
     
-    init(dict: [String : AnyObject]) {
+    init(dict: [String : Any]) {
         super.init()
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
-    override func setValue(value: AnyObject?, forKey key: String) {
+    override func setValue(_ value: Any?, forKey key: String) {
         
         if key == "author" {
             self.author = JFTweetAuthor(dict: value as! [String : AnyObject])
@@ -146,14 +146,14 @@ class JFTweet: NSObject {
      - parameter tweetsArray: 动弹模型数组
      - parameter finished:    完成回调
      */
-    class func cacheWebImage(tweets: [JFTweet]?, finished: (tweets: [JFTweet]?) -> ()) {
+    class func cacheWebImage(_ tweets: [JFTweet]?, finished: @escaping (_ tweets: [JFTweet]?) -> ()) {
         
         guard let tweets = tweets else {
-            finished(tweets: nil)
+            finished(nil)
             return
         }
         
-        let group = dispatch_group_create()
+        let group = DispatchGroup()
         
         for tweet in tweets {
             let count = tweet.images?.count ?? 0
@@ -162,28 +162,28 @@ class JFTweet: NSObject {
             }
             
             // 判断是否有图片需要下载
-            if let images = tweet.images where tweet.images?.count == 1 {
+            if let images = tweet.images, tweet.images?.count == 1 {
                 
-                dispatch_group_enter(group)
+                group.enter()
                 
                 let urlString = images.first!.thumb!
                 
-                if !YYImageCache.sharedCache().containsImageForKey(urlString) {
-                    YYWebImageManager(cache: YYImageCache.sharedCache(), queue: NSOperationQueue()).requestImageWithURL(NSURL(string: urlString)!, options: YYWebImageOptions.UseNSURLCache, progress: { (_, _) in
+                if !YYImageCache.shared().containsImage(forKey: urlString) {
+                    YYWebImageManager(cache: YYImageCache.shared(), queue: OperationQueue()).requestImage(with: URL(string: urlString)!, options: YYWebImageOptions.useNSURLCache, progress: { (_, _) in
                         }, transform: { (image, url) -> UIImage? in
                             return image
                         }, completion: { (image, url, type, stage, error) in
-                            dispatch_group_leave(group)
+                            group.leave()
                     })
                 } else {
-                    dispatch_group_leave(group)
+                    group.leave()
                 }
                 
             }
         }
         
-        dispatch_group_notify(group, dispatch_get_main_queue()) { () -> Void in
-            finished(tweets: tweets)
+        group.notify(queue: DispatchQueue.main) { () -> Void in
+            finished(tweets)
         }
     }
     
@@ -195,20 +195,20 @@ class JFTweet: NSObject {
      - parameter page:     页码
      - parameter finished: 完成回调
      */
-    class func loadTrendsList(type: String, page: Int, finished: (tweets: [JFTweet]?) -> ()) {
+    class func loadTrendsList(_ type: String, page: Int, finished: @escaping (_ tweets: [JFTweet]?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "type" : type,
-            "page" : page,
-            "user_id" : JFAccountModel.shareAccount()?.id ?? 0,
-            "count" : 20,
+            "type" : type as AnyObject,
+            "page" : page as AnyObject,
+            "user_id" : JFAccountModel.shareAccount()?.id as AnyObject? ?? 0 as AnyObject,
+            "count" : 20 as AnyObject,
             ]
         
         JFNetworkTools.shareNetworkTool.get(GET_TWEETS_LIST, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
+            guard let result = result, result["status"] == "success" else {
                 print(success, error, parameters)
-                finished(tweets: nil)
+                finished(nil)
                 return
             }
             
@@ -230,22 +230,22 @@ class JFTweet: NSObject {
      - parameter tweet_id: 动弹id
      - parameter finished: 完成回调
      */
-    class func loadTrendsDetail(tweet_id: Int, finished: (tweet: JFTweet?) -> ()) {
+    class func loadTrendsDetail(_ tweet_id: Int, finished: @escaping (_ tweet: JFTweet?) -> ()) {
         
         let parameters: [String : AnyObject] = [
-            "tweet_id" : tweet_id,
-            "user_id" : JFAccountModel.shareAccount()?.id ?? 0
+            "tweet_id" : tweet_id as AnyObject,
+            "user_id" : JFAccountModel.shareAccount()?.id as AnyObject? ?? 0 as AnyObject
             ]
         
         JFNetworkTools.shareNetworkTool.get(GET_TWEETS_DETAIL, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["status"] == "success" else {
-                finished(tweet: nil)
+            guard let result = result, result["status"] == "success" else {
+                finished(nil)
                 return
             }
             
             let dict = result["result"].dictionaryObject!
-            finished(tweet: JFTweet(dict: dict))
+            finished(JFTweet(dict: dict))
         }
     }
     
