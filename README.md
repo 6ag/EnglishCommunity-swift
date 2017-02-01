@@ -1,6 +1,6 @@
 # 自学英语社区
 
-使用 `swift2.2` 编写的一个英语学习社区app，后台采用牛逼的PHP框架 `laravel 5.2` 开发。
+使用 `swift3.0` 编写的一个英语学习社区app，后台采用牛逼的PHP框架 `laravel 5.2` 开发。
 
 ## 相关连接
 
@@ -16,10 +16,10 @@
 
 ## 开发环境
 
-- swift2.2
-- Xcode7.3.1
-- cocoapods 1.0.1
-- mac os 10.11.6
+- swift3.0
+- Xcode8.2.1
+- cocoapods 1.1.0.beta.2
+- mac os 10.12.2
 
 ## 如何使用
 
@@ -34,7 +34,7 @@
 
 ## 效果预览
 
-### 首页 tableView 嵌套 collectionView
+### 首页
 
 ![image](https://github.com/6ag/EnglishCommunity-swift/blob/master/Show/home.PNG)
 
