@@ -156,7 +156,7 @@ extension JFNetworkTools {
             }
         }
         
-        print(parameters)
+        log(parameters)
         postWithToken(POST_TWEETS, parameters: parameters, finished: finished)
     }
     

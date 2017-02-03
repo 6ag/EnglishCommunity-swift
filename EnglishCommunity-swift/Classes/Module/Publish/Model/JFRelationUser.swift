@@ -51,7 +51,6 @@ class JFRelationUser: NSObject {
         JFNetworkTools.shareNetworkTool.getWithToken(GET_FRIEND_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result, result["status"] == "success" else {
-                print(success, error, parameters)
                 finished(nil)
                 return
             }

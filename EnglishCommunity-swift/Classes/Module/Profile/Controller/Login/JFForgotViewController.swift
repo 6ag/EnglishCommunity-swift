@@ -7,30 +7,6 @@
 //
 
 import UIKit
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
 
 class JFForgotViewController: UIViewController {
     
@@ -41,11 +17,13 @@ class JFForgotViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var retrieveButton: UIButton!
     let buttonColorNormal = UIColor.colorWithHexString("00ac59")
-    let buttonColorDisabled = UIColor.colorWithHexString("6d8579")
+    let buttonColorDisabled = UIColor.colorWithHexString("a2e256")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        usernameField.attributedPlaceholder = NSAttributedString(string: "用户名", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        emailField.attributedPlaceholder = NSAttributedString(string: "邮箱", attributes: [NSForegroundColorAttributeName : UIColor.white])
         usernameView.layer.borderColor = UIColor.white.cgColor
         usernameView.layer.borderWidth = 0.5
         emailView.layer.borderColor = UIColor.white.cgColor
@@ -97,7 +75,7 @@ class JFForgotViewController: UIViewController {
     }
     
     @IBAction func didChangeTextField(_ sender: UITextField) {
-        if usernameField.text?.characters.count >= 5 && emailField.text?.characters.count >= 5 {
+        if usernameField.text?.characters.count ?? 0 >= 5 && emailField.text?.characters.count ?? 0 >= 5 {
             retrieveButton.isEnabled = true
             retrieveButton.backgroundColor = buttonColorNormal
         } else {
@@ -108,7 +86,7 @@ class JFForgotViewController: UIViewController {
     
     @IBAction func didTappedBackButton() {
         view.endEditing(true)
-        navigationController?.popViewController(animated: true)
+        _ = navigationController?.popViewController(animated: true)
     }
     
     @IBAction func didTappedRetrieveButton(_ sender: UIButton) {

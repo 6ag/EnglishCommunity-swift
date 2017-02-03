@@ -35,9 +35,9 @@ class JFMessageRecordCell: UITableViewCell {
             }
             
             sourceContentLabel.isHidden = false
-            avatarButton.setBackgroundImage(urlString: messageRecord.byUser?.avatar, size: CGSize(width: 40, height: 40))
+            avatarButton.setBackgroundImage(urlString: messageRecord.byUser?.avatar, size: CGSize(width: 35, height: 35))
             nicknameLabel.text = messageRecord.byUser?.nickname
-            sexImageView.image = messageRecord.byUser!.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
+            sexImageView.image = messageRecord.byUser?.sex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             
             if messageRecord.messageType == "comment" {
                 if messageRecord.type == "tweet" {
@@ -82,7 +82,7 @@ class JFMessageRecordCell: UITableViewCell {
         
         avatarButton.snp.makeConstraints { (make) in
             make.left.top.equalTo(5)
-            make.size.equalTo(CGSize(width: 40, height: 40))
+            make.size.equalTo(CGSize(width: 35, height: 35))
         }
         
         nicknameLabel.snp.makeConstraints { (make) in

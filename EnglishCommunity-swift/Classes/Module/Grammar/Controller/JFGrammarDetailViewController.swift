@@ -73,7 +73,7 @@ class JFGrammarDetailViewController: UIViewController {
     }
     
     deinit {
-        print("销毁")
+        log("销毁")
     }
 
     /**
@@ -115,11 +115,11 @@ class JFGrammarDetailViewController: UIViewController {
         if keyPath == "status" {
             switch player!.status {
             case AVPlayerStatus.unknown:
-                print("未知状态")
+                log("未知状态")
             case AVPlayerStatus.failed:
-                print("加载失败")
+                log("加载失败")
             case AVPlayerStatus.readyToPlay:
-                print("可以播放")
+                log("可以播放")
             }
         }
     }

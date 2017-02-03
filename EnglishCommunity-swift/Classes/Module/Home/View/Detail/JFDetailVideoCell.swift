@@ -44,7 +44,7 @@ class JFDetailVideoCell: UITableViewCell {
                 }
                 
                 progressView.progress = model.progress / 100.0
-                print(progressView.progress)
+                log(progressView.progress)
                 
             }
             

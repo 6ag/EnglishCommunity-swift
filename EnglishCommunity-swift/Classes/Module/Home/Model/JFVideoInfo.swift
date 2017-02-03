@@ -125,7 +125,6 @@ class JFVideoInfo: NSObject {
         JFNetworkTools.shareNetworkTool.get(GET_VIDEO_INFOS_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result, result["status"] == "success" else {
-                print(success, error, parameters)
                 finished(nil)
                 return
             }
@@ -163,7 +162,6 @@ class JFVideoInfo: NSObject {
         JFNetworkTools.shareNetworkTool.get(GET_VIDEO_INFO_DETAIL, parameters: parameters) { (success, result, error) in
             
             guard let result = result, result["status"] == "success" else {
-                print(success, error, parameters)
                 finished(nil)
                 return
             }
@@ -194,7 +192,6 @@ class JFVideoInfo: NSObject {
         JFNetworkTools.shareNetworkTool.getWithToken(GET_COLLECTION_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result, result["status"] == "success" else {
-                print(success, error, parameters)
                 finished(nil)
                 return
             }

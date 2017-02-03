@@ -114,7 +114,7 @@ extension JFSearchViewController: UISearchBarDelegate {
     
     // 已经改变搜索文字
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        log(searchText)
     }
     
     // 点击了搜索按钮

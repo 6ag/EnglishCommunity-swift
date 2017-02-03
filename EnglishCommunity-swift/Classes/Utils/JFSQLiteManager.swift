@@ -24,7 +24,7 @@ class JFSQLiteManager: NSObject {
     override init() {
         let documentPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!
         let dbPath = "\(documentPath)/\(dbName)"
-        print(dbPath)
+        log(dbPath)
         
         dbQueue = FMDatabaseQueue(path: dbPath)
         super.init()
@@ -47,9 +47,9 @@ class JFSQLiteManager: NSObject {
         
         dbQueue.inDatabase { (db) in
             if (db?.executeStatements(sql))! {
-                print("创建 \(tbname) 表成功")
+                log("创建 \(tbname) 表成功")
             } else {
-                print("创建 \(tbname) 表失败")
+                log("创建 \(tbname) 表失败")
             }
         }
     }

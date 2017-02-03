@@ -26,7 +26,7 @@ extension JFDALManager {
         
         getVideo(videoVid) { (have) in
             if have {
-                print(videoVid, "已经存在")
+                log(videoVid + " 已经存在")
                 return
             }
         }
@@ -34,7 +34,7 @@ extension JFDALManager {
         let sql = "INSERT INTO \(VIDEOS_TABLE) (video_vid) VALUES (\"\(videoVid)\");"
         JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
             if (db?.executeStatements(sql))! {
-                print("插入成功")
+                log("插入成功")
             }
         }
         
@@ -75,7 +75,7 @@ extension JFDALManager {
         JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
             if (db?.executeStatements(sql))! {
                 finished(true)
-                print("移除成功")
+                log("移除成功")
             } else {
                 finished(false)
             }
@@ -93,7 +93,7 @@ extension JFDALManager {
         JFSQLiteManager.shareManager.dbQueue.inDatabase { (db) in
             if (db?.executeStatements(sql))! {
                 finished(true)
-                print("清除视频缓存数据成功")
+                log("清除视频缓存数据成功")
             } else {
                 finished(false)
             }

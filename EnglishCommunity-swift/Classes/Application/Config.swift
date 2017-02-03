@@ -199,12 +199,12 @@ func RGB(_ r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
  给控件添加弹簧动画
  */
 func setupButtonSpringAnimation(_ view: UIView) {
-    let sprintAnimation = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
-    sprintAnimation?.fromValue = NSValue(cgPoint: CGPoint(x: 0.8, y: 0.8))
-    sprintAnimation?.toValue = NSValue(cgPoint: CGPoint(x: 1, y: 1))
-    sprintAnimation?.velocity = NSValue(cgPoint: CGPoint(x: 30, y: 30))
-    sprintAnimation?.springBounciness = 20
-    view.pop_add(sprintAnimation, forKey: "springAnimation")
+    let slogAnimation = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
+    slogAnimation?.fromValue = NSValue(cgPoint: CGPoint(x: 0.8, y: 0.8))
+    slogAnimation?.toValue = NSValue(cgPoint: CGPoint(x: 1, y: 1))
+    slogAnimation?.velocity = NSValue(cgPoint: CGPoint(x: 30, y: 30))
+    slogAnimation?.springBounciness = 20
+    view.pop_add(slogAnimation, forKey: "springAnimation")
 }
 
 /**
@@ -244,7 +244,7 @@ func isLogin(_ controller: UIViewController) -> Bool {
     } else {
         let loginVc = JFNavigationController(rootViewController: JFLoginViewController(nibName: "JFLoginViewController", bundle: nil))
         controller.present(loginVc, animated: true, completion: { 
-            print("弹出登录界面")
+            log("弹出登录界面")
         })
         return false
     }
@@ -260,10 +260,10 @@ func saveJson(_ json: JSON, jsonPath: String) {
     do {
         if let json = json.rawString() {
             try json.write(toFile: jsonPath, atomically: true, encoding: String.Encoding.utf8)
-            print("缓存数据成功", jsonPath)
+            log("缓存数据成功 \(jsonPath)")
         }
     } catch {
-        print("缓存数据失败", jsonPath)
+        log("缓存数据失败 \(jsonPath)")
     }
 }
 
@@ -277,9 +277,9 @@ func removeJson(_ jsonPath: String) {
     if fileManager.fileExists(atPath: jsonPath) {
         do {
             try fileManager.removeItem(atPath: jsonPath)
-            print("删除成功", jsonPath)
+            log("删除成功 \(jsonPath)")
         } catch {
-            print("删除失败", jsonPath)
+            log("删除失败 \(jsonPath)")
         }
     }
 }
@@ -293,11 +293,11 @@ func removeJson(_ jsonPath: String) {
  */
 func getJson(_ jsonPath: String) -> JSON? {
     if let data = try? Data(contentsOf: URL(fileURLWithPath: jsonPath)) {
-        print("获取缓存数据成功", jsonPath)
+        log("获取缓存数据成功 \(jsonPath)")
         let json = JSON(data: data)
         return json
     }
-    print("获取缓存数据失败", jsonPath)
+    log("获取缓存数据失败 \(jsonPath)")
     return nil
 }
 

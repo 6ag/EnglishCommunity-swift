@@ -8,41 +8,6 @@
 
 import UIKit
 import pop
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 class JFLoginViewController: UIViewController {
     
@@ -54,11 +19,13 @@ class JFLoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     
     let buttonColorNormal = UIColor.colorWithHexString("00ac59")
-    let buttonColorDisabled = UIColor.colorWithHexString("6d8579")
+    let buttonColorDisabled = UIColor.colorWithHexString("a2e256")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        usernameField.attributedPlaceholder = NSAttributedString(string: "用户名/邮箱/手机号码", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        passwordField.attributedPlaceholder = NSAttributedString(string: "密码", attributes: [NSForegroundColorAttributeName : UIColor.white])
         usernameView.layer.borderColor = UIColor.white.cgColor
         usernameView.layer.borderWidth = 0.5
         passwordView.layer.borderColor = UIColor.white.cgColor
@@ -138,7 +105,7 @@ class JFLoginViewController: UIViewController {
     
     @IBAction func didChangeTextField(_ sender: UITextField) {
         
-        if usernameField.text?.characters.count >= 5 && passwordField.text?.characters.count > 5 {
+        if usernameField.text?.characters.count ?? 0 >= 5 && passwordField.text?.characters.count ?? 0 > 5 {
             loginButton.isEnabled = true
             loginButton.backgroundColor = buttonColorNormal
         } else {
@@ -206,7 +173,7 @@ class JFLoginViewController: UIViewController {
         let uid = user.uid ?? ""
         let token = user.credential.token ?? ""
         let nickname = user.nickname ?? ""
-        let avatar = type == "weibo" ? (user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"]! as! String : user.icon) : (user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"]! as! String : user.icon)
+        let avatar = type == "weibo" ? (user.rawData["avatar_hd"] != nil ? user.rawData["avatar_hd"] as? String : user.icon) : (user.rawData["figureurl_qq_2"] != nil ? user.rawData["figureurl_qq_2"] as? String : user.icon)
         let sex = user.gender.rawValue == 0 ? 1 : 0
         
         JFProgressHUD.showWithStatus("正在登录")

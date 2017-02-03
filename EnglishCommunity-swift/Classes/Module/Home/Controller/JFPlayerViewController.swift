@@ -99,7 +99,7 @@ class JFPlayerViewController: UIViewController {
     }
     
     deinit {
-        print("播放控制器销毁")
+        log("播放控制器销毁")
         JFDownloadManager.shareManager.delegate = nil
         player.prepareToDealloc()
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
@@ -272,7 +272,7 @@ class JFPlayerViewController: UIViewController {
             let videoVid = JFVideo.getVideoId(video.videoUrl ?? "")
             if let url = URL(string: "http://localhost:8080/Documents/DownloadVideos/\(videoVid)/movie.m3u8") {
                 self.player.playWithURL(url, title: video.title!)
-                print(url)
+                log(url)
             }
         } else {
             if UserDefaults.standard.bool(forKey: KEY_ALLOW_CELLULAR_PLAY) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
@@ -853,11 +853,11 @@ extension JFPlayerViewController: JFShareViewDelegate {
         ShareSDK.share(platformType, parameters: shareParames) { (state, _, entity, error) in
             switch state {
             case SSDKResponseState.success:
-                print("分享成功")
+                log("分享成功")
             case SSDKResponseState.fail:
-                print("授权失败,错误描述:\(error)")
+                log("授权失败,错误描述:\(error)")
             case SSDKResponseState.cancel:
-                print("操作取消")
+                log("操作取消")
             default:
                 break
             }
@@ -1033,10 +1033,10 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
                         if fileManager.fileExists(atPath: path) {
                             do {
                                 try fileManager.removeItem(atPath: path)
-                                print("删除成功")
+                                log("删除成功")
                                 self.videoStateChange(0, videoInfoId: self.videoInfo?.id ?? 0, index: indexPath.row, state: VideoState.noDownload)
                             } catch {
-                                print("删除失败")
+                                log("删除失败")
                             }
                         }
                     }

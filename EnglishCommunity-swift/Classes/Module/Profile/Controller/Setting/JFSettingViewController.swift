@@ -173,7 +173,7 @@ class JFSettingViewController: JFBaseTableViewController {
             if success {
                 self.present(store, animated: true, completion: nil)
             } else {
-                print(error)
+                log(error)
             }
         }
     }

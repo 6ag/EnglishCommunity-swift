@@ -88,19 +88,19 @@ class JFDownloadManager: NSObject {
 extension JFDownloadManager: SCM3U8VideoDownloadDelegate {
     
     func m3U8VideoDownloadFail(withVideoId videoId: String!, videoInfoId: Int, index: Int) {
-        print("下载失败 \(videoId)")
+        log("下载失败 \(videoId)")
         removeDownloadManager(videoId)
         delegate?.M3U8VideoDownloadFailWithVideoId(videoId, videoInfoId: videoInfoId, index: index)
     }
     
     func m3U8VideoDownloadParseFail(withVideoId videoId: String!, videoInfoId: Int, index: Int) {
-        print("解析视频失败 \(videoId)")
+        log("解析视频失败 \(videoId)")
         removeDownloadManager(videoId)
         delegate?.M3U8VideoDownloadParseFailWithVideoId(videoId, videoInfoId: videoInfoId, index: index)
     }
     
     func m3U8VideoDownloadFinish(withVideoId videoId: String!, localPath path: String!, videoInfoId: Int, index: Int) {
-        print("下载完成 \(videoId) \(path)")
+        log("下载完成 \(videoId) \(path)")
         JFDALManager.shareManager.insertVideo(videoId)
         removeDownloadManager(videoId)
         delegate?.M3U8VideoDownloadFinishWithVideoId(videoId, localPath: path, videoInfoId: videoInfoId, index: index)

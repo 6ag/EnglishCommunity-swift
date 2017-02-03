@@ -88,6 +88,7 @@ class JFGrammarViewController: UIViewController {
             
             self.tableView.reloadData()
         }
+        
     }
     
     /// 内容区域
@@ -96,7 +97,9 @@ class JFGrammarViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.rowHeight = 60
         tableView.backgroundColor = COLOR_ALL_BG
+        tableView.contentInset = UIEdgeInsets(top: 3, left: 0, bottom: 0, right: 0)
         tableView.register(JFGrammarListCell.classForCoder(), forCellReuseIdentifier: self.grammarIdentifier)
         return tableView
     }()

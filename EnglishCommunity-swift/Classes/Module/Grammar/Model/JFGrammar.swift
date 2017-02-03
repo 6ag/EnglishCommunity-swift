@@ -21,6 +21,9 @@ class JFGrammar: NSObject {
     /// 音频
     var mp3: String?
     
+    /// cell背景颜色16进制
+    var bgHex: String?
+    
     init(dict: [String : Any]) {
         super.init()
         setValuesForKeys(dict)
@@ -50,9 +53,12 @@ class JFGrammar: NSObject {
             
             let data = result["result"]["data"].arrayObject as! [[String : AnyObject]]
             var grammars = [JFGrammar]()
+            let bgHexs = ["41ca61", "66dc60", "83dc60", "a3dc60", "b8dc60", "a3dc60", "83dc60", "66dc60"]
             
-            for dict in data {
-                grammars.append(JFGrammar(dict: dict))
+            for (index, dict) in data.enumerated() {
+                let grammar = JFGrammar(dict: dict)
+                grammar.bgHex = bgHexs[index % bgHexs.count]
+                grammars.append(grammar)
             }
             
             finished(grammars)

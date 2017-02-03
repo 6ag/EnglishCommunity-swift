@@ -30,7 +30,7 @@ class JFSelectFriendCell: UITableViewCell {
             nicknameLabel.text = relationUser.relationNickname ?? ""
             sexImageView.image = relationUser.relationSex == 0 ? UIImage(named: "girl_dongtai") : UIImage(named: "boy_dongtai")
             
-            print(relationUser.relationSex)
+            log(relationUser.relationSex)
         }
     }
     

@@ -114,7 +114,7 @@ class JFAccountModel: NSObject, NSCoding {
         do {
             try FileManager.default.removeItem(atPath: JFAccountModel.accountPath)
         } catch {
-            print("退出异常")
+            log("退出异常")
         }
     }
     
@@ -321,7 +321,7 @@ extension JFAccountModel {
         
         JFNetworkTools.shareNetworkTool.post(LOGIN, parameters: parameters) { (success, result, error) in
             
-            print(result)
+            log(result)
             guard let result = result else {
                 finished(false, "您的网络不给力哦")
                 return

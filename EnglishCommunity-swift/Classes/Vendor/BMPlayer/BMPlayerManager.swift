@@ -47,7 +47,7 @@ open class BMPlayerManager {
      */
     func log(_ info:String) {
         if allowLog {
-            print(info)
+            log(info)
         }
     }
 }

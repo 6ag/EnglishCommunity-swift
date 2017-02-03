@@ -80,13 +80,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate {
         
         switch curReach.currentReachabilityStatus() {
         case NetworkStatus.NotReachable:
-            print("无网络")
+            log("无网络")
         case NetworkStatus.ReachableViaWiFi:
             networkState = 1
-            print("WiFi")
+            log("WiFi")
         case NetworkStatus.ReachableViaWWAN:
             networkState = 2
-            print("WAN")
+            log("WAN")
         }
         
     }
@@ -217,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate {
      注册远程通知失败
      */
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("did Fail To Register For Remote Notifications With Error: \(error)")
+        log("did Fail To Register For Remote Notifications With Error: \(error)")
     }
     
     /**

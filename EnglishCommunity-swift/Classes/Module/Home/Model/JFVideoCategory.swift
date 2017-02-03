@@ -79,7 +79,6 @@ class JFVideoCategory: NSObject {
         JFNetworkTools.shareNetworkTool.get(GET_ALL_CATEGORIES, parameters: parameters) { (success, result, error) in
             
             guard let result = result, result["status"] == "success" else {
-                print(success, error, parameters)
                 finished(nil)
                 return
             }

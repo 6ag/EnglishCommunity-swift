@@ -7,41 +7,6 @@
 //
 
 import UIKit
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 protocol JFRegisterViewControllerDelegate: NSObjectProtocol {
     func registerSuccess(_ username: String, password: String)
@@ -58,13 +23,16 @@ class JFRegisterViewController: UIViewController {
     @IBOutlet weak var passwordField2: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     let buttonColorNormal = UIColor.colorWithHexString("00ac59")
-    let buttonColorDisabled = UIColor.colorWithHexString("6d8579")
+    let buttonColorDisabled = UIColor.colorWithHexString("a2e256")
     
     weak var delegate: JFRegisterViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        usernameField.attributedPlaceholder = NSAttributedString(string: "用户名", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        passwordField1.attributedPlaceholder = NSAttributedString(string: "密码", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        passwordField2.attributedPlaceholder = NSAttributedString(string: "再次输入密码", attributes: [NSForegroundColorAttributeName : UIColor.white])
         usernameView.layer.borderColor = UIColor.white.cgColor
         usernameView.layer.borderWidth = 0.5
         passwordView1.layer.borderColor = UIColor.white.cgColor
@@ -118,7 +86,7 @@ class JFRegisterViewController: UIViewController {
     }
     
     @IBAction func didChangeTextField(_ sender: UITextField) {
-        if usernameField.text?.characters.count >= 5 && passwordField1.text?.characters.count > 5 && passwordField2.text?.characters.count > 5 {
+        if usernameField.text?.characters.count ?? 0 >= 5 && passwordField1.text?.characters.count ?? 0 > 5 && passwordField2.text?.characters.count ?? 0 > 5 {
             registerButton.isEnabled = true
             registerButton.backgroundColor = buttonColorNormal
         } else {
@@ -129,7 +97,7 @@ class JFRegisterViewController: UIViewController {
     
     @IBAction func didTappedBackButton() {
         view.endEditing(true)
-        navigationController?.popViewController(animated: true)
+        _ = navigationController?.popViewController(animated: true)
     }
     
     @IBAction func didTappedLoginButton(_ sender: UIButton) {

@@ -198,7 +198,6 @@ extension JFTweetViewController: JFTweetListCellDelegate {
         JFNetworkTools.shareNetworkTool.addOrCancelLikeRecord("tweet", sourceID: cell.tweet!.id) { (success, result, error) in
             
             guard let result = result, result["status"] == "success" else {
-                print(success, error)
                 return
             }
             

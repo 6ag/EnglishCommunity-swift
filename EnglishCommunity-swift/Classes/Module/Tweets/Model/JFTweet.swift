@@ -207,7 +207,6 @@ class JFTweet: NSObject {
         JFNetworkTools.shareNetworkTool.get(GET_TWEETS_LIST, parameters: parameters) { (success, result, error) in
             
             guard let result = result, result["status"] == "success" else {
-                print(success, error, parameters)
                 finished(nil)
                 return
             }
