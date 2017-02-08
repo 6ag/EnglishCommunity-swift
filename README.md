@@ -24,7 +24,7 @@
 ## 如何使用
 
 - 拷贝项目到本地，【翻墙后】在项目根目录执行 `pod install` 安装项目依赖库。
-- 本app使用  `ijkplayer` 封装的 `JFPlayer` 或 `BMPlayer`。
+- 本app使用  `ijkplayer` 封装的 `JFPlayer` 或 `BMPlayer`，如果使用 `BMPlayer` 需要自己删除 `JFPlayer` ，反之亦然。
 -  （默认是这个）如果使用 `BMPlayer` 则无需导入 `JFPlayer` ，只需要把下载下来的 `BMPlayer` 文件夹里的文件导入项目即可。
 - 如果要使用 `JFPlayer` ，则需要导入 `JFPlayer` 目录到项目中，并替换 `JFPlayerViewController.swift` 文件。百度网盘: [百度网盘](https://pan.baidu.com/s/1o84Klz8) 提取密码: `svcf` 。
 ## 提醒
