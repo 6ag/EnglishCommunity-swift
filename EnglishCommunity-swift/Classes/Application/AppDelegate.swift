@@ -28,8 +28,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate {
         setupGlobalData()         // 配置全局数据
         setupShareSDK()           // 配置shareSDK
         setupReachability()       // 配置网络检测
-        
+        checkShowShare()        // 检查是否能够显示分享
+        setupMobClick()         // 设置友盟统计
+        setupADManager()        // 设置广告管理者
         return true
+    }
+    
+    /// 初始化广告管理者
+    fileprivate func setupADManager() {
+        JFAdConfiguration.shared.config(
+            applicationId: "ca-app-pub-3941303619697740~9852864912",
+            interstitialId: "ca-app-pub-3941303619697740/5655470113",
+            bannerId: "ca-app-pub-3941303619697740/4039136115",
+            nativeId: "ca-app-pub-3941303619697740/7991657719",
+            timeInterval: 60)
+    }
+    
+    /// 检查是否需要弹出分享
+    fileprivate func checkShowShare() {
+        
+        // 如果正在更新版本中，则隐藏功能
+        JFAppStoreApp.getAppStoreApp { (app, isUpdatingVersion) in
+            if let app = app {
+                UserDefaults.standard.set(isUpdatingVersion, forKey: "isUpdatingVersion")
+                log("app.version = \(app.version ?? "")")
+            } else {
+                // 请求出了问题，为了防止意外，也当成正在更新版本中
+                UserDefaults.standard.set(true, forKey: "isUpdatingVersion")
+            }
+        }
+        
+    }
+    
+    /// 初始化友盟统计
+    fileprivate func setupMobClick() {
+        let config = UMAnalyticsConfig.sharedInstance()
+        config?.appKey = UM_APP_KEY
+        config?.channelId = "App Store"
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        MobClick.setAppVersion(currentVersion)
+        MobClick.start(withConfigure: config)
     }
     
     /**

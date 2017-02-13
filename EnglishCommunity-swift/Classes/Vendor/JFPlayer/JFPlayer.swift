@@ -618,14 +618,14 @@ extension JFPlayer: JFPlayerControlViewDelegate {
      选择清晰度/节点
      */
     func controlViewDidChooseDefition(_ index: Int) {
-        print("controlViewDidChooseDefition")
+        log("controlViewDidChooseDefition")
     }
     
     /**
      重播
      */
     func controlViewDidPressOnReply() {
-        print("controlViewDidPressOnReply")
+        log("controlViewDidPressOnReply")
         
         prepareToDealloc()
         playWithURL(currentPlayURL)
@@ -708,7 +708,7 @@ extension JFPlayer {
             delegate?.player(self, playerStateChanged: .stalled)
             
         default:
-            print("加载状态改变")
+            log("加载状态改变")
             return
         }
         

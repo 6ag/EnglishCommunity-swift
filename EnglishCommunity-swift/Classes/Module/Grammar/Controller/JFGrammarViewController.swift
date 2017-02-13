@@ -21,9 +21,6 @@ class JFGrammarViewController: UIViewController {
     /// 动弹列表cell重用标识
     let grammarIdentifier = "grammarIdentifier"
     
-    // 插页广告
-    var interstitial: GADInterstitial!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,8 +29,6 @@ class JFGrammarViewController: UIViewController {
         tableView.mj_footer = setupFooterRefresh(self, action: #selector(pullUpMoreData))
         tableView.mj_header.beginRefreshing()
         
-        // 创建并加载插页广告
-        interstitial = createAndLoadInterstitial()
     }
     
     /**
@@ -41,7 +36,7 @@ class JFGrammarViewController: UIViewController {
      */
     fileprivate func prepareUI() {
         
-        navigationItem.title = "有声语法大全"
+        navigationItem.title = "有声语法手册"
         view.backgroundColor = COLOR_ALL_BG
         view.addSubview(tableView)
     }
@@ -105,30 +100,6 @@ class JFGrammarViewController: UIViewController {
     }()
 }
 
-// MARK: - GADInterstitialDelegate 插页广告相关方法
-extension JFGrammarViewController: GADInterstitialDelegate {
-    
-    /**
-     当插页广告dismiss后初始化插页广告对象
-     */
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        interstitial = createAndLoadInterstitial()
-    }
-    
-    /**
-     初始化插页广告
-     
-     - returns: 插页广告对象
-     */
-    func createAndLoadInterstitial() -> GADInterstitial {
-        let interstitial = GADInterstitial(adUnitID: INTERSTITIAL_UNIT_ID)
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
-    }
-    
-}
-
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension JFGrammarViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -148,9 +119,8 @@ extension JFGrammarViewController: UITableViewDataSource, UITableViewDelegate {
         // 满足条件才显示广告
         if JFAccountModel.shareAccount()?.adDsabled != 1 {
             // 弹出插页广告
-            if interstitial.isReady {
+            if let interstitial = JFAdManager.shared.getReadyIntersitial() {
                 interstitial.present(fromRootViewController: self)
-                return
             }
         }
         

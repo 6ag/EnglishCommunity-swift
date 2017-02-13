@@ -36,9 +36,6 @@ class JFPlayerViewController: UIViewController {
     /// 视频列表评论标识
     let videoCellIdentifier = "videoCellIdentifier"
     
-    // 插页广告
-    var interstitial: GADInterstitial!
-    
     /// 视频播放节点 默认播放节点从全局获取
     var nodeIndex = (PLAY_NODE == "app" ? 0 : 1) {
         didSet (oldValue) {
@@ -72,13 +69,11 @@ class JFPlayerViewController: UIViewController {
         
         prepareUI()
         
-        // 创建并加载插页广告
-        interstitial = createAndLoadInterstitial()
-        
         // 屏幕旋转监听
         NotificationCenter.default.addObserver(self, selector: #selector(onOrientationChanged(_:)), name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
         
         JFDownloadManager.shareManager.delegate = self
+        JFAdManager.shared.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -259,9 +254,9 @@ class JFPlayerViewController: UIViewController {
     fileprivate func playVideo(_ video: JFVideo) {
         
         // 满足条件才显示广告
-        if JFAccountModel.shareAccount()?.adDsabled != 1 {
+        if JFAccountModel.shareAccount()?.adDsabled != 1 && currentIndex != 0 {
             // 弹出插页广告
-            if interstitial.isReady {
+            if let interstitial = JFAdManager.shared.getReadyIntersitial() {
                 interstitial.present(fromRootViewController: self)
                 return
             }
@@ -304,7 +299,7 @@ class JFPlayerViewController: UIViewController {
             
             JFVideo.parseVideoUrl(video.videoUrl ?? "") { (url) in
                 guard let url = url else {
-                    JFProgressHUD.showInfoWithStatus("播放失败，请更换节点")
+                    JFProgressHUD.showInfoWithStatus("播放失败，您可以尝试更换节点或重试")
                     return
                 }
                 self.player.playWithURL(URL(string: url)!, title: video.title ?? "")
@@ -519,6 +514,15 @@ class JFPlayerViewController: UIViewController {
     
 }
 
+// MARK: - 广告回调
+extension JFPlayerViewController: JFAdManagerDelegate {
+    
+    // 广告消失后自动播放当前视频
+    func interstitialDidDismiss() {
+        playVideoOfNodeIndex()
+    }
+}
+
 // MARK: - BMPlayerDelegate
 extension JFPlayerViewController: BMPlayerDelegate {
     
@@ -534,31 +538,6 @@ extension JFPlayerViewController: BMPlayerDelegate {
         }
         
     }
-}
-
-// MARK: - GADInterstitialDelegate 插页广告相关方法
-extension JFPlayerViewController: GADInterstitialDelegate {
-    
-    /**
-     当插页广告dismiss后初始化插页广告对象
-     */
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        playVideoOfNodeIndex()
-        interstitial = createAndLoadInterstitial()
-    }
-    
-    /**
-     初始化插页广告
-     
-     - returns: 插页广告对象
-     */
-    func createAndLoadInterstitial() -> GADInterstitial {
-        let interstitial = GADInterstitial(adUnitID: INTERSTITIAL_UNIT_ID)
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
-    }
-    
 }
 
 // MARK: - 屏幕旋转
@@ -673,7 +652,7 @@ extension JFPlayerViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 let alertController = UIAlertController(title: "您未登录", message: "为了营造一个良好的学习社区,您需要登录后才能继续观看更多视频哦！", preferredStyle: UIAlertControllerStyle.alert)
                 let confirm = UIAlertAction(title: "确定登录", style: UIAlertActionStyle.destructive, handler: { (action) in
-                    isLogin(self)
+                    _ = isLogin(self)
                 })
                 let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: { (action) in })
                 alertController.addAction(confirm)
@@ -767,6 +746,12 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      */
     func didTappedDownloadButton(_ button: UIButton) {
         
+        // 第一次使用得先分享一次
+        if isShouldShowShareView() {
+            showShareView()
+            return
+        }
+        
         if UserDefaults.standard.bool(forKey: KEY_ALLOW_CELLULAR_DOWNLOAD) || JFNetworkTools.shareNetworkTool.getCurrentNetworkState() <= 1 {
             let videoDownloadVc = JFVideoDownloadViewController()
             videoDownloadVc.videos = videos
@@ -807,6 +792,13 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
      加入收藏
      */
     func didTappedJoinCollectionButton(_ button: UIButton) {
+        
+        // 第一次使用得先分享一次
+        if isShouldShowShareView() {
+            showShareView()
+            return
+        }
+        
         if isLogin(self) {
             JFNetworkTools.shareNetworkTool.addOrCancelCollection(videoInfo!.id) { (success, result, error) in
                 guard let result = result, result["status"] == "success" else {
@@ -828,6 +820,32 @@ extension JFPlayerViewController: JFDetailBottomBarViewDelegate {
 
 // MARK: - JFShareViewDelegate
 extension JFPlayerViewController: JFShareViewDelegate {
+    
+    /// 是否能够显示分享视图
+    ///
+    /// - Returns: true则显示
+    fileprivate func isShouldShowShareView() -> Bool {
+        if !UserDefaults.standard.bool(forKey: "isShouldSave") && !UserDefaults.standard.bool(forKey: "isUpdatingVersion") {
+            return true
+        }
+        return false
+    }
+    
+    /// 分享视图
+    fileprivate func showShareView() {
+        let alertC = UIAlertController(title: "第一次操作需要先分享一次哦", message: "独乐乐不如众乐乐，好东西要分享给朋友们哦！跪谢支持", preferredStyle: .alert)
+        alertC.addAction(UIAlertAction(title: "立即分享", style: .default, handler: { [weak self] (_) in
+            if JFShareItemModel.loadShareItems().count == 0 {
+                JFProgressHUD.showInfoWithStatus("没有可分享内容")
+                return
+            }
+            // 弹出分享视图
+            self?.shareView.showShareView()
+        }))
+        alertC.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        present(alertC, animated: true, completion: nil)
+        return
+    }
     
     func share(type: JFShareType) {
         
@@ -853,7 +871,8 @@ extension JFPlayerViewController: JFShareViewDelegate {
         ShareSDK.share(platformType, parameters: shareParames) { (state, _, entity, error) in
             switch state {
             case SSDKResponseState.success:
-                log("分享成功")
+                JFProgressHUD.showSuccessWithStatus("分享成功，谢谢支持")
+                UserDefaults.standard.set(true, forKey: "isShouldSave")
             case SSDKResponseState.fail:
                 log("授权失败,错误描述:\(error)")
             case SSDKResponseState.cancel:
@@ -991,10 +1010,16 @@ extension JFPlayerViewController: JFDetailVideoCellDelegate {
      */
     func didTappedDownloadButton(_ cell: JFDetailVideoCell, button: UIButton) {
         
+        // 第一次使用得先分享一次
+        if isShouldShowShareView() {
+            showShareView()
+            return
+        }
+        
         if !JFAccountModel.isLogin() {
             let alertC = UIAlertController(title: "只有注册用户才能操作哦", message: "登录后可以无限制观看和下载视频教程哦", preferredStyle: UIAlertControllerStyle.alert)
             let confirm = UIAlertAction(title: "登录", style: UIAlertActionStyle.destructive, handler: { (action) in
-                isLogin(self)
+                _ = isLogin(self)
             })
             let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: { (action) in })
             alertC.addAction(confirm)

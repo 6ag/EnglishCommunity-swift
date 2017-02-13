@@ -24,6 +24,9 @@
 //新浪微博SDK头文件
 #import "WeiboSDK.h"
 
+// 友盟统计
+#import "UMMobClick/MobClick.h"
+
 // 检测磁盘容量
 #import "JFStoreInfoTool.h"
 

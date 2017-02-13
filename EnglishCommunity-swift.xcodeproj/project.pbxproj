@@ -111,6 +111,8 @@
 		B238B4141D5DBBBB00E4307A /* JFGrammarListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */; };
 		B238B4161D5DBD4A00E4307A /* JFGrammarDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */; };
 		B23C3E951DAC75A6002E6121 /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B23C3E941DAC75A6002E6121 /* Emoticons.bundle */; };
+		B241B8041E51FF1900897637 /* JFAppStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241B8031E51FF1900897637 /* JFAppStoreApp.swift */; };
+		B241B8061E52011800897637 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B241B8051E52011700897637 /* UMMobClick.framework */; };
 		B249AE311D607D41005C0A41 /* JFTweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE251D607D41005C0A41 /* JFTweetDetailViewController.swift */; };
 		B249AE321D607D41005C0A41 /* JFTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE261D607D41005C0A41 /* JFTweetViewController.swift */; };
 		B249AE331D607D41005C0A41 /* JFComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AE281D607D41005C0A41 /* JFComment.swift */; };
@@ -322,6 +324,8 @@
 		B238B4131D5DBBBB00E4307A /* JFGrammarListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarListCell.swift; sourceTree = "<group>"; };
 		B238B4151D5DBD4A00E4307A /* JFGrammarDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFGrammarDetailViewController.swift; sourceTree = "<group>"; };
 		B23C3E941DAC75A6002E6121 /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
+		B241B8031E51FF1900897637 /* JFAppStoreApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFAppStoreApp.swift; sourceTree = "<group>"; };
+		B241B8051E52011700897637 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		B249AE251D607D41005C0A41 /* JFTweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetDetailViewController.swift; sourceTree = "<group>"; };
 		B249AE261D607D41005C0A41 /* JFTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTweetViewController.swift; sourceTree = "<group>"; };
 		B249AE281D607D41005C0A41 /* JFComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFComment.swift; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 				B20007C31D4F9239006DA9B0 /* CoreVideo.framework in Frameworks */,
 				B20007C11D4F9233006DA9B0 /* MediaPlayer.framework in Frameworks */,
 				B20007BF1D4F9226006DA9B0 /* MobileCoreServices.framework in Frameworks */,
+				B241B8061E52011800897637 /* UMMobClick.framework in Frameworks */,
 				B20007BD1D4F921D006DA9B0 /* OpenGLES.framework in Frameworks */,
 				B20007BB1D4F9211006DA9B0 /* VideoToolbox.framework in Frameworks */,
 				65A184ABE0EB0640D12A2B4E /* Pods_EnglishCommunity_swift.framework in Frameworks */,
@@ -949,6 +954,7 @@
 		B28D93D61D534AA700128D20 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B241B8031E51FF1900897637 /* JFAppStoreApp.swift */,
 				B2FC66D21D5C167E0032703D /* JFAccountModel.swift */,
 			);
 			path = Model;
@@ -1021,6 +1027,7 @@
 		B28D93DD1D534AA700128D20 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B241B8051E52011700897637 /* UMMobClick.framework */,
 				B2B80B281D99FD4D00F178D6 /* BMPlayer */,
 				B22F2BF61D9235AB008C66B6 /* JFPlayer */,
 				B220F0041D82DEE400AE4CB2 /* M3U8 */,
@@ -1413,6 +1420,7 @@
 				B2B770FA1D61689E0042AA5E /* JFPhotoBrowserModalAnimation.swift in Sources */,
 				B249AE371D607D41005C0A41 /* JFTweetDetailHeaderView.swift in Sources */,
 				B21501D51D5366A4005E4670 /* JFNetworkTools.swift in Sources */,
+				B241B8041E51FF1900897637 /* JFAppStoreApp.swift in Sources */,
 				B220F0171D82DEE400AE4CB2 /* SCM3U8VideoDownload.m in Sources */,
 				B2156C8B1D66AF840033DBB6 /* JFPlaceholderTextView.swift in Sources */,
 				B2156C591D66ADF90033DBB6 /* JFFriendViewController.swift in Sources */,
@@ -1605,6 +1613,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/EnglishCommunity-swift",
 					"$(PROJECT_DIR)/EnglishCommunity-swift/Classes/Vendor/JFPlayer",
+					"$(PROJECT_DIR)/EnglishCommunity-swift/Classes/Vendor",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				INFOPLIST_FILE = "EnglishCommunity-swift/Info.plist";
@@ -1638,6 +1647,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/EnglishCommunity-swift",
 					"$(PROJECT_DIR)/EnglishCommunity-swift/Classes/Vendor/JFPlayer",
+					"$(PROJECT_DIR)/EnglishCommunity-swift/Classes/Vendor",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				INFOPLIST_FILE = "EnglishCommunity-swift/Info.plist";

@@ -118,7 +118,7 @@ extension JFCategoryViewController: UITableViewDataSource, UITableViewDelegate {
         // 每隔10个创建一个广告
         if indexPath.row % 10 == 0 && indexPath.row != 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: adIdentifier)!
-            let nativeView = JFAdManager.shared.getNativeView(self)
+            let nativeView = JFAdManager.shared.createNativeExpressView(self)
             nativeView.backgroundColor = COLOR_ALL_CELL_NORMAL
             cell.contentView.addSubview(nativeView)
             nativeView.snp.makeConstraints({ (make) in

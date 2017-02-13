@@ -60,15 +60,6 @@ let KEY_ALLOW_CELLULAR_PLAY = "KEY_ALLOW_CELLULAR_PLAY"
 /// 是否允许蜂窝网下载视频
 let KEY_ALLOW_CELLULAR_DOWNLOAD = "KEY_ALLOW_CELLULAR_DOWNLOAD"
 
-/// 原生广告id
-let NATIVE_UNIT_ID = "ca-app-pub-3941303619697740/7991657719"
-
-/// 插页广告id
-let INTERSTITIAL_UNIT_ID = "ca-app-pub-3941303619697740/5655470113"
-
-/// 横幅广告id
-let BANNER_UNIT_ID = "ca-app-pub-3941303619697740/4039136115"
-
 /// 播放节点，默认是app播放
 var PLAY_NODE = "app"
 
@@ -85,7 +76,7 @@ let BANNER_JSON_PATH = NSSearchPathForDirectoriesInDomains(FileManager.SearchPat
 ///
 /// - Parameter string: 需要打印的字符串
 func log(_ string: Any?) {
-    print(string ?? "")
+//    print(string ?? "")
 }
 
 /// 基于iPhone6垂直方向适配
@@ -306,6 +297,9 @@ let JFDidReceiveRemoteNotificationOfJPush = "JFDidReceiveRemoteNotificationOfJPu
 
 /// 应用id
 let APPLE_ID = "1146271758"
+
+/// 友盟
+let UM_APP_KEY = "58a1ca3f07fe6543880023c6"
 
 /// shareSDK
 let SHARESDK_APP_KEY = "1653cf104db38"

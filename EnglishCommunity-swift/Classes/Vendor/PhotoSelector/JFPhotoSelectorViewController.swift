@@ -86,7 +86,7 @@ class JFPhotoSelectorViewController: UICollectionViewController, JFPhotoSelector
      */
     func takePhoto() {
         if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            print("摄像头不可用")
+            log("摄像头不可用")
             return
         }
         
@@ -102,7 +102,7 @@ class JFPhotoSelectorViewController: UICollectionViewController, JFPhotoSelector
      */
     func selectPhoto() {
         if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-            print("相册不可用")
+            log("相册不可用")
             return
         }
         

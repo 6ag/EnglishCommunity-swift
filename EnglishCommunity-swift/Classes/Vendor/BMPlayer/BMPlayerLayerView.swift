@@ -21,8 +21,10 @@ open class BMPlayerLayerView: UIView {
     open weak var delegate: BMPlayerLayerViewDelegate?
     
     /// 视频URL
-    open var videoURL: URL! {
-        didSet { onSetVideoURL() }
+    open var videoURL: URL? {
+        didSet {
+            onSetVideoURL()
+        }
     }
     
     /// 视频跳转秒数置0
@@ -225,6 +227,10 @@ open class BMPlayerLayerView: UIView {
     }
     
     fileprivate func configPlayer(){
+        guard let videoURL = videoURL else {
+            JFProgressHUD.showErrorWithStatus("播放失败，请重新选择播放节数")
+            return
+        }
         self.playerItem = AVPlayerItem(url: videoURL)
         
         self.player     = AVPlayer(playerItem: playerItem!)
