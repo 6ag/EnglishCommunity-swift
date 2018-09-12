@@ -8,12 +8,6 @@
 - 后台仓库 [EnglishCommunity-laravel](https://github.com/6ag/EnglishCommunity-laravel) 
 - API接口文档 [apidoc](http://english.6ag.cn/apidoc/) 
 
-## AppStore
-
-<a target='_blank' href='https://itunes.apple.com/app/id1146271758'>
-<img src='http://ww2.sinaimg.cn/large/0060lm7Tgw1f1hgrs1ebwj308102q0sp.jpg' width='144' height='49' />
-</a>
-
 ## 开发环境
 
 - swift3.0
